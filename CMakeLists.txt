@@ -22,6 +22,8 @@ set(SOURCE_FILES
         src/GameEngine/GameEngine.h
         src/ECS/EntityManager.cpp
         src/ECS/EntityManager.h
+        src/UI/Menu.cpp
+        src/UI/Menu.h
 )
 
 # Create the executable

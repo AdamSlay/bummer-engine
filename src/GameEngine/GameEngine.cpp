@@ -1,5 +1,6 @@
 
 #include "GameEngine.h"
+#include "../UI/Menu.h"
 
 void game_loop(SDL_Renderer* renderer, TTF_Font* font, bool& quit) {
     SDL_Event e;
@@ -17,8 +18,14 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font, bool& quit) {
                 }
             }
         }
+        // Clear the renderer
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
         SDL_RenderClear(renderer);
+
+        // Set up the start screen
+        start_menu(renderer, font);
+
+        // Render the screen
         SDL_RenderPresent(renderer);
     }
 }
