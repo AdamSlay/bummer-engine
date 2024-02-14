@@ -1,0 +1,11 @@
+
+#ifndef BUMMERENGINE_ENTITYMANAGER_H
+#define BUMMERENGINE_ENTITYMANAGER_H
+
+
+class EntityManager {
+
+};
+
+
+#endif //BUMMERENGINE_ENTITYMANAGER_H
