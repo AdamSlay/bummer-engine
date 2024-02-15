@@ -1,9 +1,13 @@
-#include "ResourceUtils.h"
 #include <iostream>
+
 #include "SDL2/SDL_Image.h"
 
-int SCREEN_WIDTH = 640;
-int SCREEN_HEIGHT = 480;
+#include "../Config.h"
+#include "ResourceUtils.h"
+
+Config* config = Config::getInstance();
+int SCREEN_WIDTH = config->getScreenWidth();
+int SCREEN_HEIGHT = config->getScreenHeight();
 
 int initialize_resource(SDL_Window*& window, SDL_Renderer*& renderer, TTF_Font*& font) {
     /**

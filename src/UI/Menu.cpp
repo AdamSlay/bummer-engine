@@ -1,6 +1,11 @@
 #include <iostream>
 
+#include "../Config.h"
 #include "Menu.h"
+
+extern Config* config;
+extern int SCREEN_WIDTH;
+extern int SCREEN_HEIGHT;
 
 void start_menu(SDL_Renderer* renderer, TTF_Font* font) {
     /**
@@ -29,8 +34,8 @@ void start_menu(SDL_Renderer* renderer, TTF_Font* font) {
     SDL_FreeSurface(textSurface);
 
     // Set the position of the text then create a rectangle to render the text to
-    int x = 100;
-    int y = 140;
+    int x = (SCREEN_WIDTH / 2) - (textWidth / 2);
+    int y = (SCREEN_HEIGHT / 2) - (textHeight / 2);
     SDL_Rect renderQuad = {x, y, textWidth, textHeight};
 
     // Copy the texture to the renderer then destroy the texture

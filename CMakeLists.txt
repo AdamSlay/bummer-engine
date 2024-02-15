@@ -24,6 +24,8 @@ set(SOURCE_FILES
         src/ECS/EntityManager.h
         src/UI/Menu.cpp
         src/UI/Menu.h
+        src/Config.cpp
+        src/Config.h
 )
 
 # Create the executable
