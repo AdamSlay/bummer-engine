@@ -5,10 +5,6 @@
 #include "../Config.h"
 #include "ResourceUtils.h"
 
-Config* config = Config::getInstance();
-int SCREEN_WIDTH = config->getScreenWidth();
-int SCREEN_HEIGHT = config->getScreenHeight();
-
 int initialize_resource(SDL_Window*& window, SDL_Renderer*& renderer, TTF_Font*& font) {
     /**
      * Initialize SDL2, SDL2_image, and SDL2_ttf

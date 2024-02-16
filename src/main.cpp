@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "Config.h"
 #include "GameEngine/GameEngine.h"
 #include "Resources/ResourceUtils.h"
 
@@ -10,6 +11,7 @@ int main(int argc, char* argv[]) {
     /**
      * Main function for the game
      */
+    loadConfig("../etc/run_config.json");
 
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;

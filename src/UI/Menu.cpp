@@ -3,9 +3,6 @@
 #include "../Config.h"
 #include "Menu.h"
 
-extern Config* config;
-extern int SCREEN_WIDTH;
-extern int SCREEN_HEIGHT;
 
 void start_menu(SDL_Renderer* renderer, TTF_Font* font) {
     /**

@@ -1,24 +1,18 @@
-#include "Config.h"
-#include <string>
 #include <fstream>
+#include <string>
 
-Config* Config::instance = 0;
+#include <nlohmann/json.hpp>
 
-Config::Config() {
-    std::ifstream configFile("../etc/run_config.json");
-    configFile >> configData;
-}
+#include "Config.h"
 
-Config* Config::getInstance() {
-    if (!instance)
-        instance = new Config;
-    return instance;
-}
+int SCREEN_WIDTH;
+int SCREEN_HEIGHT;
 
-int Config::getScreenWidth() {
-    return configData["SCREEN_WIDTH"];
-}
+void loadConfig(const std::string& path) {
+    std::ifstream file(path);
+    nlohmann::json j;
+    file >> j;
 
-int Config::getScreenHeight() {
-    return configData["SCREEN_HEIGHT"];
+    SCREEN_WIDTH = j["SCREEN_WIDTH"];
+    SCREEN_HEIGHT = j["SCREEN_HEIGHT"];
 }

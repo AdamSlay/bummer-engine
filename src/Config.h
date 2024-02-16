@@ -1,22 +1,14 @@
+#pragma once
+
 #ifndef BUMMERENGINE_CONFIG_H
 #define BUMMERENGINE_CONFIG_H
 
+#include <string>
 #include <nlohmann/json.hpp>
 
-class Config {
-private:
-    static Config* instance;
-    nlohmann::json configData;
+extern int SCREEN_WIDTH;
+extern int SCREEN_HEIGHT;
 
-    Config();
-
-public:
-    static Config* getInstance();
-
-    int getScreenWidth();
-
-    int getScreenHeight();
-};
-
+void loadConfig(const std::string& path);
 
 #endif //BUMMERENGINE_CONFIG_H
