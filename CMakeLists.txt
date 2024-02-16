@@ -15,7 +15,6 @@ find_package(nlohmann_json 3.2.0 REQUIRED)
 
 # Set the source files for your project
 set(SOURCE_FILES
-        src/main.cpp
         src/Resources/ResourceUtils.cpp
         src/Resources/ResourceUtils.h
         src/GameEngine/GameEngine.cpp
@@ -28,13 +27,23 @@ set(SOURCE_FILES
         src/Config.h
 )
 
+add_library(BummerLib ${SOURCE_FILES})
+
 # Create the executable
-add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+add_executable(${PROJECT_NAME} src/main.cpp)
 
 # Link the SDL2 framework
-target_link_libraries(BummerEngine PRIVATE
+target_link_libraries(BummerLib PUBLIC
         SDL2::SDL2
         $<IF:$<TARGET_EXISTS:SDL2_image::SDL2_image>,SDL2_image::SDL2_image,SDL2_image::SDL2_image-static>
         $<IF:$<TARGET_EXISTS:SDL2_ttf::SDL2_ttf>,SDL2_ttf::SDL2_ttf,SDL2_ttf::SDL2_ttf-static>
         nlohmann_json::nlohmann_json
 )
+
+target_link_libraries(${PROJECT_NAME} PRIVATE BummerLib)
+
+# Enable testing
+enable_testing()
+
+# Add your test subdirectory
+add_subdirectory(tests)
