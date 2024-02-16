@@ -10,8 +10,10 @@
 int main(int argc, char* argv[]) {
     /**
      * Main function for the game
+     *
+     * config path is relative to the project root per bin/build-n-run.sh
      */
-    loadConfig("../etc/run_config.json");
+    loadConfig("etc/run_config.json");
 
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;

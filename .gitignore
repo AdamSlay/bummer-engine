@@ -1,6 +1,7 @@
+bin/
 build/
+cmake-build-debug/
+.cursorignore
 .idea/
 .vscode/
 vcpkg/
-cmake-build-debug/
-.cursorignore
