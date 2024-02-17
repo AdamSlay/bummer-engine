@@ -8,6 +8,7 @@ The engine comes with a simple `build.sh` script that uses `vcpkg` to install th
 ```bash
 chmod +x build.sh
 ./build.sh
+./build/BummerEngine
 ```
 This will create a `build` directory containing the compiled binary: `BummerEngine`.
 Execute the binary to run the engine.
