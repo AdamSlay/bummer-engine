@@ -26,8 +26,8 @@ void start_menu(SDL_Renderer* renderer, TTF_Font* font) {
     }
 
     // Get the width and height of the text then free the surface
-    int textWidth = textSurface->w + 200;
-    int textHeight = textSurface->h + 45;
+    int textWidth = textSurface->w;
+    int textHeight = textSurface->h;
     SDL_FreeSurface(textSurface);
 
     // Set the position of the text then create a rectangle to render the text to

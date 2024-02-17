@@ -42,8 +42,7 @@ int initialize_resource(SDL_Window*& window, SDL_Renderer*& renderer, TTF_Font*&
         return 5;
     }
 
-    // TODO: Font path should be specified in a config file
-    font = TTF_OpenFont("../assets/fonts/SuperFunky.ttf", 24);
+    font = TTF_OpenFont(FONT_PATH.c_str(), FONT_SIZE);
     if (font == nullptr) {
         std::cout << "Failed to load font! \nError: " << TTF_GetError() << std::endl;
         return 6;

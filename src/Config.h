@@ -8,6 +8,8 @@
 
 extern int SCREEN_WIDTH;
 extern int SCREEN_HEIGHT;
+extern std::string FONT_PATH;
+extern int FONT_SIZE;
 
 void loadConfig(const std::string& path);
 

@@ -9,6 +9,8 @@
 
 int SCREEN_WIDTH;
 int SCREEN_HEIGHT;
+std::string FONT_PATH;
+int FONT_SIZE;
 
 void loadConfig(const std::string& path) {
     std::ifstream file(path);
@@ -26,4 +28,6 @@ void loadConfig(const std::string& path) {
 
     SCREEN_WIDTH = j["SCREEN_WIDTH"];
     SCREEN_HEIGHT = j["SCREEN_HEIGHT"];
+    FONT_PATH = j["FONT_PATH"].get<std::string>();
+    FONT_SIZE = j["FONT_SIZE"];
 }
