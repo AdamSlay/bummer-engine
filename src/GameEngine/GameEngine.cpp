@@ -15,19 +15,22 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     SDL_Event e;
     bool quit = false;
     while (!quit) {
-        // Poll events
         poll_events(e, quit);
 
-        // Clear the renderer
         SDL_SetRenderDrawColor(renderer, 104,102,182, 0xFF);
         SDL_RenderClear(renderer);
-
-        // Render the screen
+        // Copy game to renderer here
         SDL_RenderPresent(renderer);
     }
 }
 
 void render_splash_screen(SDL_Renderer* renderer, TTF_Font* font) {
+    /**
+     * Render the splash screen
+     *
+     * @param renderer: The renderer to render the splash screen to
+     * @param font: The font to use for the splash screen
+     */
     SDL_SetRenderDrawColor(renderer, 104,102,182, 0xFF);
     SDL_RenderClear(renderer);
     splash_screen(renderer, font);
