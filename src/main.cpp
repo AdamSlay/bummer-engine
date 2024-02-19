@@ -21,6 +21,8 @@ int main(int argc, char* argv[]) {
     if (initialize_resource(window, renderer, font) != 0) {
         return 1;
     }
+    SDL_RaiseWindow(window);  // Raise the window to the top of the stack
+    SDL_PumpEvents();  // Pump event queue so the window is visible asap
 
     game_loop(renderer, font);
 
