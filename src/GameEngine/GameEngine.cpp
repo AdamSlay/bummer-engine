@@ -26,7 +26,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
 void render_splash_screen(SDL_Renderer* renderer, TTF_Font* font) {
     /**
-     * Render the splash screen
+     * Render the splash screen on startup
      *
      * @param renderer: The renderer to render the splash screen to
      * @param font: The font to use for the splash screen
