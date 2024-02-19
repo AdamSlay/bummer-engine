@@ -4,6 +4,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
-void game_loop(SDL_Renderer* renderer, TTF_Font* font, bool& quit);
+void game_loop(SDL_Renderer* renderer, TTF_Font* font);
 
 #endif //BUMMERENGINE_GAMEENGINE_H

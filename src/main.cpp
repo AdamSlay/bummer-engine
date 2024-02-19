@@ -22,10 +22,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    bool quit = false;
-    while (!quit) {
-        game_loop(renderer, font, quit);
-    }
+    game_loop(renderer, font);
 
     close(renderer, window, font);
 

@@ -1,8 +1,11 @@
 #include "GameEngine.h"
 #include "../UI/Menu.h"
 
-void game_loop(SDL_Renderer* renderer, TTF_Font* font, bool& quit) {
+
+void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     SDL_Event e;
+    bool splash = false;
+    bool quit = false;
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
             if (e.type == SDL_QUIT) {
@@ -18,11 +21,16 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font, bool& quit) {
             }
         }
         // Clear the renderer
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
+        SDL_SetRenderDrawColor(renderer, 104,102,182, 0xFF);
         SDL_RenderClear(renderer);
 
-        // Set up the start screen
-        splash_screen(renderer, font);
+        // Present the splash screen at the start of the game
+        if (!splash) {
+            splash = true;
+            splash_screen(renderer, font);
+            SDL_RenderPresent(renderer);
+            SDL_Delay(5000);
+        }
 
         // Render the screen
         SDL_RenderPresent(renderer);
