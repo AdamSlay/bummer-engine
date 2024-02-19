@@ -22,7 +22,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font, bool& quit) {
         SDL_RenderClear(renderer);
 
         // Set up the start screen
-        start_menu(renderer, font);
+        splash_screen(renderer, font);
 
         // Render the screen
         SDL_RenderPresent(renderer);

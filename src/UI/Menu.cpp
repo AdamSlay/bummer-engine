@@ -4,15 +4,29 @@
 #include "Menu.h"
 
 
-void start_menu(SDL_Renderer* renderer, TTF_Font* font) {
+void splash_screen(SDL_Renderer* renderer, TTF_Font* font) {
+    std::string mainText = "Bummer Engine";
+    int textWidth, textHeight;
+    TTF_SizeText(font, mainText.c_str(), &textWidth, &textHeight);
+    int mainX = (SCREEN_WIDTH / 2) - (textWidth / 2);
+    int mainY = (SCREEN_HEIGHT / 2) - (textHeight / 2);
+    SDL_Color bb_yellow = {255, 245, 140};
+    render_text(renderer, font, mainText, bb_yellow, mainX, mainY);
+
+    std::string poweredByText = "powered by";
+    TTF_SizeText(font, mainText.c_str(), &textWidth, &textHeight);
+    int poweredByX = (SCREEN_WIDTH / 2) - (textWidth / 2) + 50;
+    int poweredByY = mainY - FONT_SIZE - 10;
+    SDL_Color bb_blue = {145, 145, 255};
+    render_text(renderer, font, poweredByText, bb_blue, poweredByX, poweredByY);
+}
+
+void render_text(SDL_Renderer* renderer, TTF_Font* font, const std::string& text, SDL_Color color, int x, int y, int wrapLength) {
     /**
-     * Set up the start menu for the game
+     * Render text to the screen
      */
 
     // Set up the surface for the text
-    std::string text = "Bummer Engine";
-    SDL_Color color = {255, 245, 140};
-    int wrapLength = 0;  // 0 means only wrap on newlines
     SDL_Surface* textSurface = TTF_RenderUTF8_Blended_Wrapped(font, text.c_str(), color, wrapLength);
     if (textSurface == nullptr) {
         std::cout << "Unable to render text surface! SDL_ttf Error: " << TTF_GetError() << std::endl;
@@ -32,8 +46,6 @@ void start_menu(SDL_Renderer* renderer, TTF_Font* font) {
     SDL_FreeSurface(textSurface);
 
     // Set the position of the text then create a rectangle to render the text to
-    int x = (SCREEN_WIDTH / 2) - (textWidth / 2);  // Center the text
-    int y = (SCREEN_HEIGHT / 2) - (textHeight / 2);
     SDL_Rect renderQuad = {x, y, textWidth, textHeight};
 
     // Copy the texture to the renderer then destroy the texture
