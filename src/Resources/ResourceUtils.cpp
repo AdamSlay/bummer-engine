@@ -56,7 +56,7 @@ void close(SDL_Renderer*& renderer, SDL_Window*& window, TTF_Font*& font) {
      * Free renderer and window resources, quit SDL2 and SDL2_image
      */
 
-    //Destroy window/renderer
+    // Destroy window/renderer
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     renderer = nullptr;
