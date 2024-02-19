@@ -5,6 +5,12 @@
 
 
 void splash_screen(SDL_Renderer* renderer, TTF_Font* font) {
+    /**
+     * Render the splash screen
+     *
+     * @param renderer: The renderer to render the splash screen to
+     * @param font: The font to use for the splash screen
+     */
     std::string mainText = "Bummer Engine";
     int textWidth, textHeight;
     TTF_SizeText(font, mainText.c_str(), &textWidth, &textHeight);
@@ -24,6 +30,14 @@ void splash_screen(SDL_Renderer* renderer, TTF_Font* font) {
 void render_text(SDL_Renderer* renderer, TTF_Font* font, const std::string& text, SDL_Color color, int x, int y, int wrapLength) {
     /**
      * Render text to the screen
+     *
+     * @param renderer: The renderer to render the text to
+     * @param font: The font to use for the text
+     * @param text: The text to render
+     * @param color: The color of the text
+     * @param x: The x position of the text
+     * @param y: The y position of the text
+     * @param wrapLength: The length to wrap the text at
      */
 
     // Set up the surface for the text

@@ -3,6 +3,13 @@
 
 
 void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
+    /**
+     * Main game loop
+     *
+     * @param renderer: The SDL renderer
+     * @param font: The TTF font
+     */
+
     SDL_Event e;
     bool splash = false;
     bool quit = false;
