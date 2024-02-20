@@ -12,3 +12,7 @@ chmod +x build.sh
 ```
 This will create a `build` directory containing the compiled binary: `BummerEngine`.
 Execute the binary to run the engine.
+
+## SDL Documentation
+
+The documentation for SDL2 can be found [here](https://wiki.libsdl.org/SDL2/FrontPage).
