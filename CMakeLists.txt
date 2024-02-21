@@ -19,6 +19,7 @@ set(SOURCE_FILES
         src/Resources/ResourceUtils.h
         src/GameEngine/GameEngine.cpp
         src/GameEngine/GameEngine.h
+        src/ECS/Components.h
         src/ECS/EntityManager.cpp
         src/ECS/EntityManager.h
         src/UI/Menu.cpp
