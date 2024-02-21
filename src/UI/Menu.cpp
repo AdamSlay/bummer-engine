@@ -16,15 +16,15 @@ void splash_screen(SDL_Renderer* renderer, TTF_Font* font) {
     TTF_SizeText(font, mainText.c_str(), &textWidth, &textHeight);
     int mainX = (SCREEN_WIDTH / 2) - (textWidth / 2);
     int mainY = (SCREEN_HEIGHT / 2) - (textHeight / 2);
-    SDL_Color bb_yellow = {252,226,137};
-    render_text(renderer, font, mainText, bb_yellow, mainX, mainY);
+    SDL_Color bb_green = {36, 188, 148};
+    render_text(renderer, font, mainText, bb_green, mainX, mainY);
 
     std::string poweredByText = "powered by";
     TTF_SizeText(font, mainText.c_str(), &textWidth, &textHeight);
     int poweredByX = (SCREEN_WIDTH / 2) - (textWidth / 2) + 50;
     int poweredByY = mainY - FONT_SIZE - 10;
-    SDL_Color bb_green = {36, 188, 148};
-    render_text(renderer, font, poweredByText, bb_green, poweredByX, poweredByY);
+    SDL_Color bb_purple{104, 102, 182, 0xFF};
+    render_text(renderer, font, poweredByText, bb_purple, poweredByX, poweredByY);
 }
 
 void render_text(SDL_Renderer* renderer, TTF_Font* font, const std::string& text, SDL_Color color, int x, int y, int wrapLength) {

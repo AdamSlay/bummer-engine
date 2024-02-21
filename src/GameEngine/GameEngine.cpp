@@ -31,7 +31,7 @@ void render_splash_screen(SDL_Renderer* renderer, TTF_Font* font) {
      * @param renderer: The renderer to render the splash screen to
      * @param font: The font to use for the splash screen
      */
-    SDL_SetRenderDrawColor(renderer, 104,102,182, 0xFF);
+    SDL_SetRenderDrawColor(renderer, 252,226,137, 0xFF);  // bb_yellow
     SDL_RenderClear(renderer);
     splash_screen(renderer, font);
     SDL_RenderPresent(renderer);
