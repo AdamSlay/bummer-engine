@@ -28,6 +28,8 @@ set(SOURCE_FILES
         src/Config.h
         src/Systems/RenderSystem.cpp
         src/Systems/RenderSystem.h
+        src/Resources/TextureManager.cpp
+        src/Resources/TextureManager.h
 )
 
 add_library(BummerLib ${SOURCE_FILES})

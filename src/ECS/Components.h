@@ -15,4 +15,8 @@ struct Scale {
     float scale;
 };
 
+struct Sprite {
+    SDL_Texture* texture;
+};
+
 #endif //BUMMERENGINE_COMPONENTS_H

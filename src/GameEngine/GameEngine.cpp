@@ -1,6 +1,7 @@
 #include "GameEngine.h"
 #include "../UI/Menu.h"
 #include "../ECS/Components.h"
+#include "../Resources/TextureManager.h"
 #include "../Systems/RenderSystem.h"
 
 #include "../Config.h"
@@ -16,6 +17,9 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
     EntityManager entityManager;
     RenderSystem renderSystem;
+    TextureManager textureManager;
+    entityManager.setTextureManager(&textureManager);
+    entityManager.setRenderer(renderer);
 
     // entity manager testing sandbox, just for testing new features
     sandbox(entityManager);
