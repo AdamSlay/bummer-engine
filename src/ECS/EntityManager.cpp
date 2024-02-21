@@ -1,22 +1,5 @@
 #include "EntityManager.h"
-
-template <typename T>
-void Entity::addComponent(T component) {
-    /**
-     * Add a component of type T to the entity
-     *
-     * @param component The component to add
-     */
-    components[std::type_index(typeid(T))] = component;
-}
-
-template <typename T>
-T& Entity::getComponent() {
-    /**
-     * Return a reference to the component of type T
-     */
-    return components[std::type_index(typeid(T))];
-}
+#include "Components.h"
 
 Entity& EntityManager::createEntity() {
     /**
@@ -24,4 +7,14 @@ Entity& EntityManager::createEntity() {
      */
     entities.emplace_back();
     return entities.back();
+}
+
+Entity& EntityManager::createPlatform(int x, int y, int w, int h) {
+    /**
+     * Create a new platform entity, append it to the entities vector and return a reference to it
+     */
+    Entity& platform = createEntity();
+    platform.addComponent<Position>({x, y});
+    platform.addComponent<Collider>({w, h});
+    return platform;
 }
