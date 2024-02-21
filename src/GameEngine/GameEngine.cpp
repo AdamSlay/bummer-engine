@@ -1,9 +1,9 @@
 #include "GameEngine.h"
 #include "../UI/Menu.h"
-#include "../ECS/EntityManager.h"
 #include "../ECS/Components.h"
 #include "../Systems/RenderSystem.h"
 
+#include "../Config.h"
 
 void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     /**
@@ -14,12 +14,11 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
      */
     render_splash_screen(renderer, font);
 
-    // entity manager testing
     EntityManager entityManager;
     RenderSystem renderSystem;
-    Entity& platform = entityManager.createPlatform(400, 400, 200, 50);
-    Entity& platform2 = entityManager.createPlatform(100, 100, 200, 50);
-    // end testing
+
+    // entity manager testing sandbox, just for testing new features
+    sandbox(entityManager);
 
     SDL_Event e;
     bool quit = false;
@@ -28,11 +27,10 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
         // Perform game logic updates here
 
-        SDL_SetRenderDrawColor(renderer, 104,102,182, 0xFF);
+        SDL_SetRenderDrawColor(renderer, 104,102,182, 0xFF);  // bb_purple
         SDL_RenderClear(renderer);
 
         // Copy game to renderer here
-        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
         renderSystem.render(renderer, entityManager);
 
         SDL_RenderPresent(renderer);
@@ -59,4 +57,21 @@ void poll_events(SDL_Event& e, bool& quit) {
             }
         }
     }
+}
+
+void sandbox(EntityManager& entityManager) {
+    /**
+     * Sandbox function for testing new features
+     *
+     * Create level, entities/components, etc.
+     *
+     * Called from game_loop(), before the main game loop starts
+     *
+     * @param entityManager: The entity manager
+     */
+    int groundX = 50;
+    int groundY = SCREEN_HEIGHT - 50;
+    int groundW = SCREEN_WIDTH - 100;
+    int groundH = 50;
+    Entity& platform = entityManager.createPlatform(groundX, groundY, groundW, groundH);
 }
