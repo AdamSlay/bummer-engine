@@ -12,14 +12,13 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
      * @param renderer: The SDL renderer
      * @param font: The TTF font
      */
-//    render_splash_screen(renderer, font);
+    render_splash_screen(renderer, font);
 
     // entity manager testing
     EntityManager entityManager;
     RenderSystem renderSystem;
     Entity& platform = entityManager.createPlatform(400, 400, 200, 50);
     Entity& platform2 = entityManager.createPlatform(100, 100, 200, 50);
-
     // end testing
 
     SDL_Event e;
