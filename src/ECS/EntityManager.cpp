@@ -9,6 +9,13 @@ Entity& EntityManager::createEntity() {
     return entities.back();
 }
 
+std::vector<Entity>& EntityManager::getEntities() {
+    /**
+     * Return a reference to the entities vector
+     */
+    return entities;
+}
+
 Entity& EntityManager::createPlatform(int x, int y, int w, int h) {
     /**
      * Create a new platform entity, append it to the entities vector and return a reference to it

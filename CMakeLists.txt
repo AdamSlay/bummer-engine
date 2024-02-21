@@ -26,6 +26,8 @@ set(SOURCE_FILES
         src/UI/Menu.h
         src/Config.cpp
         src/Config.h
+        src/Systems/RenderSystem.cpp
+        src/Systems/RenderSystem.h
 )
 
 add_library(BummerLib ${SOURCE_FILES})

@@ -2,6 +2,7 @@
 #include "../UI/Menu.h"
 #include "../ECS/EntityManager.h"
 #include "../ECS/Components.h"
+#include "../Systems/RenderSystem.h"
 
 
 void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
@@ -15,7 +16,9 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
     // entity manager testing
     EntityManager entityManager;
-    Entity& platform = entityManager.createPlatform(100, 100, 200, 50);
+    RenderSystem renderSystem;
+    Entity& platform = entityManager.createPlatform(400, 400, 200, 50);
+    Entity& platform2 = entityManager.createPlatform(100, 100, 200, 50);
 
     // end testing
 
@@ -30,13 +33,8 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
         SDL_RenderClear(renderer);
 
         // Copy game to renderer here
-        int platX = platform.getComponent<Position>().x;
-        int platY = platform.getComponent<Position>().y;
-        int platW = platform.getComponent<Collider>().width;
-        int platH = platform.getComponent<Collider>().height;
-        SDL_Rect rect = {platX, platY, platW, platH};
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-        SDL_RenderFillRect(renderer, &rect);
+        renderSystem.render(renderer, entityManager);
 
         SDL_RenderPresent(renderer);
     }

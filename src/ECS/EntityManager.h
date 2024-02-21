@@ -8,15 +8,30 @@ class Entity
 {
 public:
     template <typename T>
-    void addComponent(T component)
-    {
+    void addComponent(T component) {
+        /**
+         * Add a component of type T to the entity
+        */
         components[std::type_index(typeid(T))] = new T(component);
     }
 
     template <typename T>
-    T &getComponent()
-    {
+    T &getComponent() {
+        /**
+         * Get a reference to the component of type T
+        */
         return *static_cast<T *>(components[std::type_index(typeid(T))]);
+    }
+
+    template <typename T>
+    bool hasComponent() {
+        /**
+         * Check if the entity has a component of type T
+        */
+        // .find() is a member function of std::unordered_map that returns an iterator to the element if found
+        // otherwise it returns an iterator to the position after the end of the map, ie components.end()
+        // return true if the iterator is not equal to components.end(), meaning the component was found
+        return components.find(std::type_index(typeid(T))) != components.end();
     }
 
 private:
@@ -26,6 +41,7 @@ private:
 class EntityManager {
 public:
     Entity& createEntity();
+    std::vector<Entity>& getEntities();
     Entity& createPlatform(int x, int y, int w, int h);
 
 private:
