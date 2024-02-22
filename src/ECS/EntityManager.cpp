@@ -2,19 +2,19 @@
 #include "Components.h"
 #include "../Resources/TextureManager.h"
 
-void EntityManager::setTextureManager(TextureManager* tm) {
+void EntityManager::setTextureManager(TextureManager* texManager) {
     /**
      * Set the texture manager for the EntityManager
      */
-    this->textureManager = tm;
+    this->textureManager = texManager;
 }
 
 
-void EntityManager::setRenderer(SDL_Renderer* renderer) {
+void EntityManager::setRenderer(SDL_Renderer* ecsRenderer) {
     /**
      * Set the renderer for the EntityManager
      */
-    this->renderer = renderer;
+    this->renderer = ecsRenderer;
 }
 
 
@@ -41,6 +41,7 @@ Entity& EntityManager::createPlatform(int x, int y, int w, int h) {
     platform.addComponent<Position>({x, y});
     platform.addComponent<Collider>({w, h});
     SDL_Texture* texture = textureManager->loadTexture(renderer, "assets/platform.png");
-    platform.addComponent<Sprite>({texture});
+    SDL_Rect srcRect = {0, 0, 256, 64};
+    platform.addComponent<Sprite>({texture, srcRect});
     return platform;
 }

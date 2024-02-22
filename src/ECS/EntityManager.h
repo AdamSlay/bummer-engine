@@ -45,8 +45,8 @@ public:
     Entity& createEntity();
     std::vector<Entity>& getEntities();
     Entity& createPlatform(int x, int y, int w, int h);
-    void setTextureManager(TextureManager* tm);
-    void setRenderer(SDL_Renderer* renderer);
+    void setTextureManager(TextureManager* texManager);
+    void setRenderer(SDL_Renderer* ecsRenderer);
 
 private:
     std::vector<Entity> entities;

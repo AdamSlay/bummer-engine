@@ -16,8 +16,8 @@ void RenderSystem::render(SDL_Renderer* renderer, EntityManager& entityManager) 
             Position& pos = entity.getComponent<Position>();
             Collider& col = entity.getComponent<Collider>();
             Sprite& spr = entity.getComponent<Sprite>();
-            SDL_Rect rect = {pos.x, pos.y, col.width, col.height};
-            SDL_RenderCopy(renderer, spr.texture, nullptr, &rect);
+            SDL_Rect destRect = {pos.x, pos.y, col.width, col.height};
+            SDL_RenderCopy(renderer, spr.texture, &spr.srcRect, &destRect);
         }
     }
 }
