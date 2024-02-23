@@ -2,6 +2,7 @@
 #include "../UI/Menu.h"
 #include "../ECS/Components.h"
 #include "../Resources/TextureManager.h"
+#include "../Systems/CollisionSystem.h"
 #include "../Systems/MovementSystem.h"
 #include "../Systems/RenderSystem.h"
 
@@ -20,6 +21,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     RenderSystem renderSystem;
     MovementSystem movementSystem;
     TextureManager textureManager;
+    CollisionSystem collisionSystem;
     entityManager.setTextureManager(&textureManager);
     entityManager.setRenderer(renderer);
 
@@ -34,6 +36,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
         // Perform game logic updates here
         movementSystem.update(entityManager);
+        collisionSystem.update(entityManager);
 
         SDL_SetRenderDrawColor(renderer, 104,102,182, 255);  // bb_purple
         SDL_RenderClear(renderer);

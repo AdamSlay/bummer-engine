@@ -32,6 +32,8 @@ set(SOURCE_FILES
         src/Resources/TextureManager.h
         src/Systems/MovementSystem.cpp
         src/Systems/MovementSystem.h
+        src/Systems/CollisionSystem.cpp
+        src/Systems/CollisionSystem.h
 )
 
 add_library(BummerLib ${SOURCE_FILES})
