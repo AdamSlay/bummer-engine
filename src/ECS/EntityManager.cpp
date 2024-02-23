@@ -33,6 +33,21 @@ std::vector<Entity>& EntityManager::getEntities() {
     return entities;
 }
 
+Entity& EntityManager::createPlayer(int x, int y, int w, int h) {
+    /**
+     * Create a new player entity, append it to the entities vector and return a reference to it
+     */
+    Entity& player = createEntity();
+    player.addComponent<Position>({x, y});
+    player.addComponent<Velocity>({0, 0});
+    player.addComponent<Collider>({w, h});
+    player.addComponent<Scale>({1.5});
+    SDL_Texture* texture = textureManager->loadTexture(renderer, "assets/bb_jump_sheet.png");
+    SDL_Rect srcRect = {0, 0, 64, 100};
+    player.addComponent<Sprite>({texture, srcRect});
+    return player;
+}
+
 Entity& EntityManager::createPlatform(int x, int y, int w, int h) {
     /**
      * Create a new platform entity, append it to the entities vector and return a reference to it
@@ -43,5 +58,6 @@ Entity& EntityManager::createPlatform(int x, int y, int w, int h) {
     SDL_Texture* texture = textureManager->loadTexture(renderer, "assets/platform.png");
     SDL_Rect srcRect = {0, 0, 256, 64};
     platform.addComponent<Sprite>({texture, srcRect});
+    platform.addComponent<Scale>({1});
     return platform;
 }

@@ -31,7 +31,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
         // Perform game logic updates here
 
-        SDL_SetRenderDrawColor(renderer, 104,102,182, 0xFF);  // bb_purple
+        SDL_SetRenderDrawColor(renderer, 104,102,182, 255);  // bb_purple
         SDL_RenderClear(renderer);
 
         // Copy game to renderer here
@@ -54,10 +54,14 @@ void poll_events(SDL_Event& e, bool& quit) {
         }
         else if (e.type == SDL_KEYDOWN) {
             switch (e.key.keysym.sym) {
-                case SDLK_s:
-                    return;
-                case SDLK_q:
-                    exit(0);
+                case SDLK_UP:
+                    break;
+                case SDLK_DOWN:
+                    break;
+                case SDLK_LEFT:
+                    break;
+                case SDLK_RIGHT:
+                    break;
             }
         }
     }
@@ -78,4 +82,5 @@ void sandbox(EntityManager& entityManager) {
     int groundW = SCREEN_WIDTH - 100;
     int groundH = 50;
     Entity& platform = entityManager.createPlatform(groundX, groundY, groundW, groundH);
+    Entity& player = entityManager.createPlayer(50, 50, 64, 100);
 }

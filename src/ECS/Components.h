@@ -7,6 +7,10 @@ struct Position {
     int x, y;
 };
 
+struct Velocity {
+    int dx, dy;
+};
+
 struct Collider {
     int width, height;
 };
