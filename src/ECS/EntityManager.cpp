@@ -33,11 +33,24 @@ std::vector<Entity>& EntityManager::getEntities() {
     return entities;
 }
 
+Entity& EntityManager::getPlayer() {
+    /**
+     * Return a reference to the player entity
+     */
+    for (Entity& entity : entities) {
+        if (entity.hasComponent<Player>()) {
+            return entity;
+        }
+    }
+    throw std::runtime_error("Player not found");
+}
+
 Entity& EntityManager::createPlayer(int x, int y, int w, int h) {
     /**
      * Create a new player entity, append it to the entities vector and return a reference to it
      */
     Entity& player = createEntity();
+    player.addComponent<Player>({1});
     player.addComponent<Position>({x, y});
     player.addComponent<Velocity>({0, 0});
     player.addComponent<Collider>({w, h});

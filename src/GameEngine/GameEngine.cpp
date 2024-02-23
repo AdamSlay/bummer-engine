@@ -2,6 +2,7 @@
 #include "../UI/Menu.h"
 #include "../ECS/Components.h"
 #include "../Resources/TextureManager.h"
+#include "../Systems/MovementSystem.h"
 #include "../Systems/RenderSystem.h"
 
 #include "../Config.h"
@@ -13,10 +14,11 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
      * @param renderer: The SDL renderer
      * @param font: The TTF font
      */
-    render_splash_screen(renderer, font);
+//    render_splash_screen(renderer, font);
 
     EntityManager entityManager;
     RenderSystem renderSystem;
+    MovementSystem movementSystem;
     TextureManager textureManager;
     entityManager.setTextureManager(&textureManager);
     entityManager.setRenderer(renderer);
@@ -27,9 +29,11 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     SDL_Event e;
     bool quit = false;
     while (!quit) {
-        poll_events(e, quit);
+        Entity& player = entityManager.getPlayer();
+        poll_events(e, quit, player);
 
         // Perform game logic updates here
+        movementSystem.update(entityManager);
 
         SDL_SetRenderDrawColor(renderer, 104,102,182, 255);  // bb_purple
         SDL_RenderClear(renderer);
@@ -41,7 +45,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     }
 }
 
-void poll_events(SDL_Event& e, bool& quit) {
+void poll_events(SDL_Event& e, bool& quit, Entity& player) {
     /**
      * Polls events and sets the quit flag if the user closes the window
      *
@@ -53,15 +57,35 @@ void poll_events(SDL_Event& e, bool& quit) {
             quit = true;
         }
         else if (e.type == SDL_KEYDOWN) {
+            Velocity& vel = player.getComponent<Velocity>();
             switch (e.key.keysym.sym) {
                 case SDLK_UP:
+                    vel.dy = -5;
                     break;
                 case SDLK_DOWN:
+                    vel.dy = 5;
                     break;
                 case SDLK_LEFT:
+                    vel.dx = -5;
                     break;
                 case SDLK_RIGHT:
+                    vel.dx = 5;
                     break;
+            }
+        }
+        else if (e.type == SDL_KEYUP)
+        {
+            Velocity &vel = player.getComponent<Velocity>();
+            switch (e.key.keysym.sym)
+            {
+            case SDLK_UP:
+            case SDLK_DOWN:
+                vel.dy = 0;
+                break;
+            case SDLK_LEFT:
+            case SDLK_RIGHT:
+                vel.dx = 0;
+                break;
             }
         }
     }

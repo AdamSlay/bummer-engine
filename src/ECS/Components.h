@@ -3,6 +3,10 @@
 
 #include <SDL2/SDL.h>
 
+struct Player {
+    int playerNumber;
+};
+
 struct Position {
     int x, y;
 };
