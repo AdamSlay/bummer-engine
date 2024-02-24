@@ -1,0 +1,22 @@
+#ifndef BUMMERENGINE_COLLISIONSYSTEM_H
+#define BUMMERENGINE_COLLISIONSYSTEM_H
+
+#include "../ECS/EntityManager.h"
+#include "../ECS/Components.h"
+
+
+class CollisionSystem {
+public:
+    void update(EntityManager& entityManager);
+    bool checkCollision(Entity& player, Entity& other);
+    bool checkCollisionX(Entity& player, Entity& other);
+    bool checkCollisionY(Entity& player, Entity& other);
+    void handlePlayerCollisionX(Entity& player, Entity& other);
+    void handlePlayerCollisionY(Entity& player, Entity& other);
+
+private:
+    int collisionBuffer = 1;
+};
+
+
+#endif //BUMMERENGINE_COLLISIONSYSTEM_H

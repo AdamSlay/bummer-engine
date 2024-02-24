@@ -3,6 +3,8 @@
 
 #include <unordered_map>
 #include <typeindex>
+#include <vector>
+#include "../Resources/TextureManager.h"
 
 class Entity
 {
@@ -42,10 +44,16 @@ class EntityManager {
 public:
     Entity& createEntity();
     std::vector<Entity>& getEntities();
+    Entity& createPlayer(int x, int y, int w, int h);
     Entity& createPlatform(int x, int y, int w, int h);
+    void setTextureManager(TextureManager* texManager);
+    void setRenderer(SDL_Renderer* ecsRenderer);
+    Entity& getPlayer();
 
 private:
     std::vector<Entity> entities;
+    TextureManager* textureManager;
+    SDL_Renderer* renderer;
 };
 
 #endif // BUMMERENGINE_ENTITYMANAGER_H
