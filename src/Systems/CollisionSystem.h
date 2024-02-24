@@ -8,8 +8,14 @@
 class CollisionSystem {
 public:
     void update(EntityManager& entityManager);
-    bool checkCollision(Entity& entityA, Entity& entityB);
-    void handlePlayerCollision(Entity& player, Entity& other);
+    bool checkCollision(Entity& player, Entity& other);
+    bool checkCollisionX(Entity& player, Entity& other);
+    bool checkCollisionY(Entity& player, Entity& other);
+    void handlePlayerCollisionX(Entity& player, Entity& other);
+    void handlePlayerCollisionY(Entity& player, Entity& other);
+
+private:
+    int collisionBuffer = 1;
 };
 
 

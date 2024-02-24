@@ -54,7 +54,7 @@ Entity& EntityManager::createPlayer(int x, int y, int w, int h) {
     player.addComponent<Position>({x, y});
     player.addComponent<Velocity>({0, 0});
     player.addComponent<Collider>({w, h});
-    player.addComponent<Scale>({1.5});
+    player.addComponent<Scale>({1});
     SDL_Texture* texture = textureManager->loadTexture(renderer, "assets/bb_jump_sheet.png");
     SDL_Rect srcRect = {0, 0, 64, 100};
     player.addComponent<Sprite>({texture, srcRect});

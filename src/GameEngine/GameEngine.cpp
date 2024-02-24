@@ -41,11 +41,29 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
         SDL_SetRenderDrawColor(renderer, 104,102,182, 255);  // bb_purple
         SDL_RenderClear(renderer);
 
+        render_collider(player, renderer);
+        render_collider(entityManager.getEntities()[0], renderer);
         // Copy game to renderer here
         renderSystem.render(renderer, entityManager);
 
         SDL_RenderPresent(renderer);
     }
+}
+
+void render_collider(Entity& entity, SDL_Renderer* renderer) {
+    /**
+     * Render the collider of an entity
+     *
+     * @param entity: The entity
+     */
+    int x = entity.getComponent<Position>().x;
+    int y = entity.getComponent<Position>().y;
+    int w = entity.getComponent<Collider>().width;
+    int h = entity.getComponent<Collider>().height;
+    SDL_Rect collider = {x, y, w, h};
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    SDL_RenderDrawRect(renderer, &collider);
+
 }
 
 void poll_events(SDL_Event& e, bool& quit, Entity& player) {
@@ -105,7 +123,7 @@ void sandbox(EntityManager& entityManager) {
      * @param entityManager: The entity manager
      */
     int groundX = 50;
-    int groundY = SCREEN_HEIGHT - 50;
+    int groundY = SCREEN_HEIGHT - 200;
     int groundW = SCREEN_WIDTH - 100;
     int groundH = 50;
     Entity& platform = entityManager.createPlatform(groundX, groundY, groundW, groundH);
