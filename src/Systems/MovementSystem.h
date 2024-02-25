@@ -8,6 +8,7 @@ class MovementSystem {
 public:
     void moveX(EntityManager& entityMangaer);
     void moveY(EntityManager& entityManager);
+    void jump(Entity& entity);
 };
 
 

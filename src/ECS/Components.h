@@ -3,6 +3,18 @@
 
 #include <SDL2/SDL.h>
 
+enum class playerStates {
+    IDLE,
+    RUN,
+    JUMP,
+    DOUBLE_JUMP,
+    FALL
+};
+
+struct State {
+    playerStates state;
+};
+
 struct Player {
     int playerNumber;
 };
