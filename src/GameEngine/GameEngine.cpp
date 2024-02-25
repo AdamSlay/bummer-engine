@@ -88,7 +88,9 @@ void poll_events(SDL_Event& e, bool& quit, Entity& player, MovementSystem& movem
             Velocity& vel = player.getComponent<Velocity>();
             switch (e.key.keysym.sym) {
                 case SDLK_UP:
-                    movementSystem.jump(player);
+                    if (e.key.repeat == 0) {
+                        movementSystem.jump(player);
+                    }
                     break;
                 case SDLK_DOWN:
                     vel.dy = 5;
