@@ -1,9 +1,5 @@
 #include "GameEngine.h"
 #include "../UI/Menu.h"
-#include "../ECS/Components.h"
-#include "../Resources/TextureManager.h"
-#include "../Systems/CollisionSystem.h"
-#include "../Systems/MovementSystem.h"
 #include "../Systems/RenderSystem.h"
 
 #include "../Config.h"
@@ -35,10 +31,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
         poll_events(e, quit, player);
 
         // Perform game logic updates here
-        movementSystem.moveX(entityManager);
-        collisionSystem.updateX(entityManager);
-        movementSystem.moveY(entityManager);
-        collisionSystem.updateY(entityManager);
+        move_and_collide(entityManager, movementSystem, collisionSystem);
 
         SDL_SetRenderDrawColor(renderer, 104,102,182, 255);  // bb_purple
         SDL_RenderClear(renderer);
@@ -66,6 +59,18 @@ void render_collider(Entity& entity, SDL_Renderer* renderer) {
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_RenderDrawRect(renderer, &collider);
 
+}
+
+void move_and_collide(EntityManager& entityManager, MovementSystem& movementSystem, CollisionSystem& collisionSystem) {
+    /**
+     * Move entities and check for collisions
+     *
+     * @param entityManager: The entity manager
+     */
+    movementSystem.moveX(entityManager);
+    collisionSystem.updateX(entityManager);
+    movementSystem.moveY(entityManager);
+    collisionSystem.updateY(entityManager);
 }
 
 void poll_events(SDL_Event& e, bool& quit, Entity& player) {
