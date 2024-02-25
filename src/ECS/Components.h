@@ -5,6 +5,7 @@
 
 enum class playerStates {
     IDLE,
+    GROUNDED,
     RUN,
     JUMP,
     DOUBLE_JUMP,

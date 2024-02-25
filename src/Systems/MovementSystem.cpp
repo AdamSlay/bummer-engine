@@ -31,7 +31,7 @@ void MovementSystem::jump(Entity& entity) {
     if (entity.hasComponent<Velocity>() && entity.hasComponent<State>()) {
         Velocity& vel = entity.getComponent<Velocity>();
         State& state = entity.getComponent<State>();
-        if (state.state != playerStates::DOUBLE_JUMP) {
+        if (state.state != playerStates::DOUBLE_JUMP && state.state != playerStates::JUMP) {
             vel.dy = -15;
             std::cout << "State is " << static_cast<int>(state.state) << std::endl;
             state.state = playerStates::JUMP;
