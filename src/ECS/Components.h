@@ -28,4 +28,8 @@ struct Sprite {
     SDL_Rect srcRect;
 };
 
+struct Gravity {
+    float gravity;
+};
+
 #endif //BUMMERENGINE_COMPONENTS_H
