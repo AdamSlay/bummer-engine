@@ -35,8 +35,10 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
         poll_events(e, quit, player);
 
         // Perform game logic updates here
-        movementSystem.update(entityManager);
-        collisionSystem.update(entityManager);
+        movementSystem.moveX(entityManager);
+        collisionSystem.updateX(entityManager);
+        movementSystem.moveY(entityManager);
+        collisionSystem.updateY(entityManager);
 
         SDL_SetRenderDrawColor(renderer, 104,102,182, 255);  // bb_purple
         SDL_RenderClear(renderer);

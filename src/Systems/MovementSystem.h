@@ -7,6 +7,8 @@
 class MovementSystem {
 public:
     void update(EntityManager& entityManager);
+    void moveX(EntityManager& entityMangaer);
+    void moveY(EntityManager& entityManager);
 };
 
 

@@ -7,7 +7,8 @@
 
 class CollisionSystem {
 public:
-    void update(EntityManager& entityManager);
+    void updateX(EntityManager& entityManager);
+    void updateY(EntityManager& entityManager);
     bool checkCollision(Entity& player, Entity& other);
     bool checkCollisionX(Entity& player, Entity& other);
     bool checkCollisionY(Entity& player, Entity& other);
