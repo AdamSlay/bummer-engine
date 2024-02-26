@@ -41,6 +41,7 @@ struct State {
         if (state != newState) {
             state = newState;
             animator.currentFrame = 0;
+            animator.currentImage = 0;
             animator.isPlaying = true;
         }
     }
