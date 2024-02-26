@@ -32,11 +32,11 @@ void MovementSystem::jump(Entity& entity) {
         Velocity& vel = entity.getComponent<Velocity>();
         State& state = entity.getComponent<State>();
         if (state.state != playerStates::DOUBLE_JUMP && state.state != playerStates::JUMP) {
-            vel.dy = -15;
+            vel.dy = -20;
             state.state = playerStates::JUMP;
         }
         else if (state.state == playerStates::JUMP) {
-            vel.dy = -15;
+            vel.dy = -20;
             state.state = playerStates::DOUBLE_JUMP;
         }
     }
