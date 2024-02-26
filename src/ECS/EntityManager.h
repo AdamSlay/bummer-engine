@@ -5,6 +5,7 @@
 #include <typeindex>
 #include <vector>
 #include "../Resources/TextureManager.h"
+#include "../ECS/Components.h"
 
 class Entity
 {
@@ -48,6 +49,7 @@ public:
     Entity& createPlatform(int x, int y, int w, int h);
     void setTextureManager(TextureManager* texManager);
     void setRenderer(SDL_Renderer* ecsRenderer);
+    void configureAnimator(Entity& entity, std::map<playerStates, AnimationClip>& animations);
     Entity& getPlayer();
 
 private:
