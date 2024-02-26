@@ -9,6 +9,8 @@ public:
     void moveX(EntityManager& entityMangaer);
     void moveY(EntityManager& entityManager);
     void jump(Entity& entity);
+    void applyGravity(Entity& entity);
+    void changeJumpState(Entity& entity);
 };
 
 

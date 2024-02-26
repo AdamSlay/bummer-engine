@@ -21,55 +21,18 @@ void MovementSystem::moveX(EntityManager& entityManager) {
     }
 }
 
-void MovementSystem::moveY(EntityManager& entityManager) {
-    /**
-     * Move entities on the Y axis
-     *
-     * @param entityManager: The entity manager
-     */
-    for (Entity& entity : entityManager.getEntities()) {
+void MovementSystem::moveY(EntityManager &entityManager) {
+    for (Entity &entity : entityManager.getEntities()) {
         if (entity.hasComponent<Position>() && entity.hasComponent<Velocity>()) {
-            Position& pos = entity.getComponent<Position>();
-            Velocity& vel = entity.getComponent<Velocity>();
+            Velocity &vel = entity.getComponent<Velocity>();
+            if (vel.dy != 0) {
+                changeJumpState(entity);
+            }
             if (entity.hasComponent<Gravity>()) {
-                // Apply gravity scaling
-                Gravity& gravity = entity.getComponent<Gravity>();
-                if (vel.dy < 0) {
-                    gravity.gravity *= gravity.ascendFactor; // Decrease gravity when ascending
-                    // TODO: Magic numbers
-                    if (gravity.gravity < 0.65) {
-                        gravity.gravity = 0.65;
-                    }
-                    // Change JUMP state depending on vel.dy
-                    if (vel.dy < -3) {
-                        entity.changeState(playerStates::JUMP_ASCEND);
-                    }
-                    else if (vel.dy < -1){
-                        entity.changeState(playerStates::JUMP_APEX_ASCEND);
-                    }
-                    else if (vel.dy < 0) {
-                        entity.changeState(playerStates::JUMP_APEX);
-                    }
-                }
-                else {
-                    if (vel.dy == 0 && entity.getComponent<State>().state == playerStates::JUMP_ASCEND) {
-                        entity.changeState(playerStates::JUMP_APEX);
-                    }
-                    else if (0 < vel.dy && vel.dy < 2) {
-                        entity.changeState(playerStates::JUMP_APEX);
-                    }
-                    else if (0 < vel.dy && vel.dy < 5) {
-                        entity.changeState(playerStates::JUMP_APEX_DESCEND);
-                    }
-                    else if (vel.dy >= 5) {
-                        entity.changeState(playerStates::JUMP_DESCEND);
-                    }
-                    gravity.gravity *= gravity.descendFactor; // Increase gravity when descending
-                }
-                // Apply gravity
-                vel.dy += gravity.gravity;
+                applyGravity(entity);
             }
             // Apply velocity
+            Position &pos = entity.getComponent<Position>();
             pos.y += vel.dy;
         }
     }
@@ -93,6 +56,48 @@ void MovementSystem::jump(Entity& entity) {
             // TODO: Magic number
             vel.dy = -20;
             entity.changeState(playerStates::JUMP_ASCEND);
+        }
+    }
+}
+
+void MovementSystem::applyGravity(Entity &entity) {
+    if (entity.hasComponent<Velocity>() && entity.hasComponent<Gravity>()) {
+        Velocity &vel = entity.getComponent<Velocity>();
+        Gravity &gravity = entity.getComponent<Gravity>();
+        if (vel.dy < 0) {
+            gravity.gravity *= gravity.ascendFactor; // Decrease gravity when ascending
+            if (gravity.gravity < 0.65) {
+                gravity.gravity = 0.65;
+            }
+        }
+        else {
+            gravity.gravity *= gravity.descendFactor; // Increase gravity when descending
+        }
+        // Apply gravity
+        vel.dy += gravity.gravity;
+    }
+}
+
+void MovementSystem::changeJumpState(Entity &entity) {
+    if (entity.hasComponent<Velocity>()) {
+        Velocity &vel = entity.getComponent<Velocity>();
+        if (vel.dy < -3) {
+            entity.changeState(playerStates::JUMP_ASCEND);
+        }
+        else if (vel.dy < -1) {
+            entity.changeState(playerStates::JUMP_APEX_ASCEND);
+        }
+        else if (vel.dy < 0) {
+            entity.changeState(playerStates::JUMP_APEX);
+        }
+        else if (0 < vel.dy && vel.dy < 2) {
+            entity.changeState(playerStates::JUMP_APEX);
+        }
+        else if (0 < vel.dy && vel.dy < 5) {
+            entity.changeState(playerStates::JUMP_APEX_DESCEND);
+        }
+        else if (vel.dy >= 5) {
+            entity.changeState(playerStates::JUMP_DESCEND);
         }
     }
 }
