@@ -135,9 +135,9 @@ Entity& EntityManager::createPlatform(int x, int y, int w, int h) {
      */
     Entity& platform = createEntity();
     platform.addComponent<Position>({x, y});
-    platform.addComponent<Collider>({0, 0, w, h});
+    platform.addComponent<Collider>({10, 0, w - 18, h});
     SDL_Texture* texture = textureManager->loadTexture(renderer, "assets/platform.png");
-    SDL_Rect srcRect = {0, 0, 256, 64};
+    SDL_Rect srcRect = {0, 0, w, h};
     platform.addComponent<Sprite>({texture, srcRect});
     platform.addComponent<Scale>({1});
     return platform;
