@@ -12,7 +12,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
      * @param renderer: The SDL renderer
      * @param font: The TTF font
      */
-//    render_splash_screen(renderer, font);
+    render_splash_screen(renderer, font);
 
     EntityManager entityManager;
     RenderSystem renderSystem;
