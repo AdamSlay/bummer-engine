@@ -37,14 +37,6 @@ struct Animator {
 
 struct State {
     playerStates state;
-    void changeState(playerStates newState, Animator& animator) {
-        if (state != newState) {
-            state = newState;
-            animator.currentFrame = 0;
-            animator.currentImage = 0;
-            animator.isPlaying = true;
-        }
-    }
 };
 
 struct Player {

@@ -167,10 +167,10 @@ void CollisionSystem::handlePlayerCollisionY(Entity& player, Entity& other) {
         posPlayer.y = posOther.y - (playerHeight + collisionBuffer);  // Move the player to the top of the platform
         State& state = player.getComponent<State>();
         if (vel.dx != 0) {
-            state.changeState(playerStates::RUN, player.getComponent<Animator>());
+            player.changeState(playerStates::RUN);
         }
         else {
-            state.changeState(playerStates::IDLE, player.getComponent<Animator>());
+            player.changeState(playerStates::IDLE);
         }
         player.getComponent<Gravity>().gravity = player.getComponent<Gravity>().baseGravity;
     }

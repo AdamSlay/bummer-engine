@@ -36,6 +36,15 @@ public:
         // return true if the iterator is not equal to components.end(), meaning the component was found
         return components.find(std::type_index(typeid(T))) != components.end();
     }
+    void changeState(playerStates newState) {
+        Animator& animator = getComponent<Animator>();
+        if (getComponent<State>().state != newState) {
+            getComponent<State>().state = newState;
+            animator.currentFrame = 0;
+            animator.currentImage = 0;
+            animator.isPlaying = true;
+        }
+    }
 
 private:
     std::unordered_map<std::type_index, void *> components;

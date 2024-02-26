@@ -1,7 +1,5 @@
 #include "AnimationSystem.h"
-#include "../ECS/Components.h"
 
-#include <iostream>
 
 void AnimationSystem::update(EntityManager& entityManager, float deltaTime) {
     for (Entity& entity : entityManager.getEntities()) {
