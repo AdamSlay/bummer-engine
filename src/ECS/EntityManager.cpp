@@ -83,7 +83,6 @@ void EntityManager::configureAnimator(Entity& entity, std::map<playerStates, Ani
      *
      * @param entity: The entity
      */
-    // set up animator
     SDL_Texture* runTexture = textureManager->loadTexture(renderer, "assets/bb_run_sheet.png");
     std::vector<SDL_Rect> runFrames;
     for (int i = 0; i < 8; i++) {
@@ -97,7 +96,7 @@ void EntityManager::configureAnimator(Entity& entity, std::map<playerStates, Ani
         SDL_Rect frame = {i * 64, 0, 64, 100};
         jumpFrames.push_back(frame);
     }
-    AnimationClip jumpClip = {jumpTexture, jumpFrames, 20, false};
+    AnimationClip jumpClip = {jumpTexture, jumpFrames, 6, false};
 
     animations[playerStates::RUN] = runClip;
     animations[playerStates::JUMP] = jumpClip;
