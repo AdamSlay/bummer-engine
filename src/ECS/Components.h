@@ -18,7 +18,7 @@ enum class playerStates {
     FALL
 };
 
-struct JUMPS {
+struct Jumps {
     int jumps;
     int maxJumps;
 };

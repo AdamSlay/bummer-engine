@@ -36,12 +36,34 @@ void MovementSystem::moveY(EntityManager& entityManager) {
                 Gravity& gravity = entity.getComponent<Gravity>();
                 if (vel.dy < 0) {
                     gravity.gravity *= gravity.ascendFactor; // Decrease gravity when ascending
-                    // TODO: Magic number
+                    // TODO: Magic numbers
                     if (gravity.gravity < 0.65) {
                         gravity.gravity = 0.65;
                     }
+                    // Change JUMP state depending on vel.dy
+                    if (vel.dy < -3) {
+                        entity.changeState(playerStates::JUMP_ASCEND);
+                    }
+                    else if (vel.dy < -1){
+                        entity.changeState(playerStates::JUMP_APEX_ASCEND);
+                    }
+                    else if (vel.dy < 0) {
+                        entity.changeState(playerStates::JUMP_APEX);
+                    }
                 }
                 else {
+                    if (vel.dy == 0 && entity.getComponent<State>().state == playerStates::JUMP_ASCEND) {
+                        entity.changeState(playerStates::JUMP_APEX);
+                    }
+                    else if (0 < vel.dy && vel.dy < 2) {
+                        entity.changeState(playerStates::JUMP_APEX);
+                    }
+                    else if (0 < vel.dy && vel.dy < 5) {
+                        entity.changeState(playerStates::JUMP_APEX_DESCEND);
+                    }
+                    else if (vel.dy >= 5) {
+                        entity.changeState(playerStates::JUMP_DESCEND);
+                    }
                     gravity.gravity *= gravity.descendFactor; // Increase gravity when descending
                 }
                 // Apply gravity
@@ -63,7 +85,7 @@ void MovementSystem::jump(Entity& entity) {
         Velocity& vel = entity.getComponent<Velocity>();
         State& state = entity.getComponent<State>();
         Gravity& gravity = entity.getComponent<Gravity>();
-        JUMPS& jumps = entity.getComponent<JUMPS>();
+        Jumps& jumps = entity.getComponent<Jumps>();
 
         if (jumps.jumps != jumps.maxJumps) {
             jumps.jumps++;

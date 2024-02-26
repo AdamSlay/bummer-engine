@@ -69,7 +69,7 @@ Entity& EntityManager::createPlayer(int x, int y, int w, int h) {
     player.addComponent<Scale>({1});
     player.addComponent<Gravity>({1, 1, 0.9, 1.1});
     player.addComponent<State>({playerStates::IDLE});
-    player.addComponent<JUMPS>({0, 2});
+    player.addComponent<Jumps>({0, 2});
 
 
     SDL_Texture* texture = textureManager->loadTexture(renderer, "assets/bb_jump_sheet.png");
@@ -91,17 +91,35 @@ void EntityManager::configureAnimator(Entity& entity, std::map<playerStates, Ani
         runFrames.push_back(frame);
     }
     AnimationClip runClip = {runTexture, runFrames, 4, true};
+    animations[playerStates::RUN] = runClip;
+
     SDL_Texture* jumpTexture = textureManager->loadTexture(renderer, "assets/bb_jump_sheet.png");
     std::vector<SDL_Rect> jumpFrames;
     for (int i = 2; i < 8; i++) {
         SDL_Rect frame = {i * 64, 0, 64, 100};
         jumpFrames.push_back(frame);
     }
-    AnimationClip jumpClip = {jumpTexture, jumpFrames, 6, false};
 
-    animations[playerStates::RUN] = runClip;
-    animations[playerStates::JUMP_ASCEND] = jumpClip;
-    animations[playerStates::DOUBLE_JUMP] = jumpClip;
+    SDL_Rect jumpAscend = jumpFrames[0];
+    AnimationClip jumpAscendClip = {jumpTexture, {jumpAscend}, 1, false};
+    animations[playerStates::JUMP_ASCEND] = jumpAscendClip;
+
+    SDL_Rect jumpAscendApex = jumpFrames[1];
+    AnimationClip jumpAscendApexClip = {jumpTexture, {jumpAscendApex}, 1, false};
+    animations[playerStates::JUMP_APEX_ASCEND] = jumpAscendApexClip;
+
+    SDL_Rect jumpApex = jumpFrames[2];
+    AnimationClip jumpApexClip = {jumpTexture, {jumpApex}, 1, false};
+    animations[playerStates::JUMP_APEX] = jumpApexClip;
+
+    SDL_Rect jumpDescendApex = jumpFrames[3];
+    AnimationClip jumpDescendApexClip = {jumpTexture, {jumpDescendApex}, 1, false};
+    animations[playerStates::JUMP_APEX_DESCEND] = jumpDescendApexClip;
+
+    SDL_Rect jumpDescend = jumpFrames[4];
+    AnimationClip jumpDescendClip = {jumpTexture, {jumpDescend}, 1, false};
+    animations[playerStates::JUMP_DESCEND] = jumpDescendClip;
+
     animations[playerStates::IDLE] = {jumpTexture, {{0, 0, 64, 100}}, 4, true};
     animations[playerStates::GROUNDED] = {jumpTexture, {{0, 0, 64, 100}}, 4, true};
 }
