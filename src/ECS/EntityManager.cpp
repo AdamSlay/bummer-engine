@@ -69,6 +69,7 @@ Entity& EntityManager::createPlayer(int x, int y, int w, int h) {
     player.addComponent<Scale>({1});
     player.addComponent<Gravity>({1, 1, 0.9, 1.1});
     player.addComponent<State>({playerStates::IDLE});
+    player.addComponent<JUMPS>({0, 2});
 
 
     SDL_Texture* texture = textureManager->loadTexture(renderer, "assets/bb_jump_sheet.png");
@@ -99,7 +100,7 @@ void EntityManager::configureAnimator(Entity& entity, std::map<playerStates, Ani
     AnimationClip jumpClip = {jumpTexture, jumpFrames, 6, false};
 
     animations[playerStates::RUN] = runClip;
-    animations[playerStates::JUMP] = jumpClip;
+    animations[playerStates::JUMP_ASCEND] = jumpClip;
     animations[playerStates::DOUBLE_JUMP] = jumpClip;
     animations[playerStates::IDLE] = {jumpTexture, {{0, 0, 64, 100}}, 4, true};
     animations[playerStates::GROUNDED] = {jumpTexture, {{0, 0, 64, 100}}, 4, true};

@@ -9,9 +9,18 @@ enum class playerStates {
     IDLE,
     GROUNDED,
     RUN,
-    JUMP,
+    JUMP_ASCEND,
+    JUMP_DESCEND,
+    JUMP_APEX,
+    JUMP_APEX_DESCEND,
+    JUMP_APEX_ASCEND,
     DOUBLE_JUMP,
     FALL
+};
+
+struct JUMPS {
+    int jumps;
+    int maxJumps;
 };
 
 struct AnimationClip {

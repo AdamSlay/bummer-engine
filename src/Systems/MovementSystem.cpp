@@ -63,18 +63,14 @@ void MovementSystem::jump(Entity& entity) {
         Velocity& vel = entity.getComponent<Velocity>();
         State& state = entity.getComponent<State>();
         Gravity& gravity = entity.getComponent<Gravity>();
+        JUMPS& jumps = entity.getComponent<JUMPS>();
 
-        if (state.state != playerStates::DOUBLE_JUMP && state.state != playerStates::JUMP) {
+        if (jumps.jumps != jumps.maxJumps) {
+            jumps.jumps++;
             gravity.gravity = gravity.baseGravity;
             // TODO: Magic number
             vel.dy = -20;
-            entity.changeState(playerStates::JUMP);
-        }
-        else if (state.state == playerStates::JUMP) {
-            gravity.gravity = gravity.baseGravity;
-            // TODO: Magic number
-            vel.dy = -20;
-            entity.changeState(playerStates::DOUBLE_JUMP);
+            entity.changeState(playerStates::JUMP_ASCEND);
         }
     }
 }
