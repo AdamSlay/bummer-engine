@@ -66,6 +66,31 @@ Entity& EntityManager::createPlayer(int x, int y, int w, int h) {
     player.addComponent<Scale>({1});
     player.addComponent<Gravity>({1, 1, 0.9, 1.1});
     player.addComponent<State>({playerStates::IDLE});
+
+    // set up animator
+    SDL_Texture* runTexture = textureManager->loadTexture(renderer, "assets/bb_run_sheet.png");
+    std::vector<SDL_Rect> runFrames;
+    for (int i = 0; i < 8; i++) {
+        SDL_Rect frame = {i * 64, 0, 64, 100};
+        runFrames.push_back(frame);
+    }
+    AnimationClip runClip = {runTexture, runFrames, 4, true};
+    SDL_Texture* jumpTexture = textureManager->loadTexture(renderer, "assets/bb_jump_sheet.png");
+    std::vector<SDL_Rect> jumpFrames;
+    for (int i = 2; i < 8; i++) {
+        SDL_Rect frame = {i * 64, 0, 64, 100};
+        jumpFrames.push_back(frame);
+    }
+    AnimationClip jumpClip = {jumpTexture, jumpFrames, 20, false};
+
+    std::map<playerStates, AnimationClip> animations;
+    animations[playerStates::RUN] = runClip;
+    animations[playerStates::JUMP] = jumpClip;
+    animations[playerStates::DOUBLE_JUMP] = jumpClip;
+    animations[playerStates::IDLE] = {jumpTexture, {{0, 0, 64, 100}}, 4, true};
+    animations[playerStates::GROUNDED] = {jumpTexture, {{0, 0, 64, 100}}, 4, true};
+    player.addComponent<Animator>({animations, playerStates::IDLE, 0, 0, true});
+
     SDL_Texture* texture = textureManager->loadTexture(renderer, "assets/bb_jump_sheet.png");
     SDL_Rect srcRect = {0, 0, 64, 100};
     player.addComponent<Sprite>({texture, srcRect});

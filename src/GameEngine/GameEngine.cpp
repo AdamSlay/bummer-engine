@@ -1,6 +1,7 @@
 #include "GameEngine.h"
 #include "../UI/Menu.h"
 #include "../Systems/RenderSystem.h"
+#include "../Systems/AnimationSystem.h"
 
 #include "../Config.h"
 
@@ -11,13 +12,14 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
      * @param renderer: The SDL renderer
      * @param font: The TTF font
      */
-    render_splash_screen(renderer, font);
+//    render_splash_screen(renderer, font);
 
     EntityManager entityManager;
     RenderSystem renderSystem;
     MovementSystem movementSystem;
     TextureManager textureManager;
     CollisionSystem collisionSystem;
+    AnimationSystem animationSystem;
     entityManager.setTextureManager(&textureManager);
     entityManager.setRenderer(renderer);
     SDL_GameController* controller = nullptr;
@@ -30,12 +32,22 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
     SDL_Event e;
     bool quit = false;
+    Uint32 lastTime = SDL_GetTicks();
     while (!quit) {
+        Uint32 currentTime = SDL_GetTicks();
+        float deltaTime = (currentTime - lastTime) / 1000.0f;
+        lastTime = currentTime;
+        if (deltaTime < 1000 / 60) {
+            SDL_Delay((1000 / 60) - deltaTime);
+        }
+        
+        
         Entity& player = entityManager.getPlayer();
         poll_events(e, quit, player, movementSystem);
 
         // Perform game logic updates here
         move_and_collide(entityManager, movementSystem, collisionSystem);
+        animationSystem.update(entityManager, deltaTime);
 
         SDL_SetRenderDrawColor(renderer, 104,102,182, 255);  // bb_purple
         SDL_RenderClear(renderer);
@@ -46,6 +58,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
         renderSystem.render(renderer, entityManager);
 
         SDL_RenderPresent(renderer);
+
     }
 }
 
