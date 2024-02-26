@@ -55,7 +55,7 @@ struct Position {
 };
 
 struct Velocity {
-    int dx, dy;
+    int dx, dy, direction;  // 1 for right, -1 for left
 };
 
 struct Collider {

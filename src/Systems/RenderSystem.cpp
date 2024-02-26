@@ -21,7 +21,13 @@ void RenderSystem::render(SDL_Renderer* renderer, EntityManager& entityManager) 
             int scaledW = static_cast<int>(col.width * scale.scale);
             int scaledH = static_cast<int>(col.height * scale.scale);
             SDL_Rect destRect = {pos.x, pos.y, scaledW, scaledH};
-            SDL_RenderCopy(renderer, spr.texture, &spr.srcRect, &destRect);
+            if (entity.hasComponent<Velocity>()) {
+                SDL_RendererFlip flip = (entity.getComponent<Velocity>().direction == -1) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+                SDL_RenderCopyEx(renderer, spr.texture, &spr.srcRect, &destRect, 0.0, nullptr, flip);
+            }
+            else {
+                SDL_RenderCopy(renderer, spr.texture, &spr.srcRect, &destRect);
+            }
         }
     }
 }

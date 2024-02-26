@@ -14,6 +14,9 @@ void MovementSystem::moveX(EntityManager& entityManager) {
             Position& pos = entity.getComponent<Position>();
             Velocity& vel = entity.getComponent<Velocity>();
             pos.x += vel.dx;
+            if (vel.dx != 0) {
+                vel.direction = (vel.dx > 0) ? 1 : -1;
+            }
         }
     }
 }

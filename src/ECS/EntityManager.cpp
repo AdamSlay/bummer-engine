@@ -61,7 +61,7 @@ Entity& EntityManager::createPlayer(int x, int y, int w, int h) {
     Entity& player = createEntity();
     player.addComponent<Player>({1});
     player.addComponent<Position>({x, y});
-    player.addComponent<Velocity>({0, 0});
+    player.addComponent<Velocity>({0, 0, 1});
     player.addComponent<Collider>({w, h});
     player.addComponent<Scale>({1});
     player.addComponent<Gravity>({1, 1, 0.9, 1.1});
