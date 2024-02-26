@@ -5,6 +5,11 @@
 
 
 void CollisionSystem::updateX(EntityManager& entityManager) {
+    /**
+     * Update the X axis collision
+     *
+     * @param entityManager: The entity manager
+     */
     auto& entities = entityManager.getEntities();
     std::vector<Entity> players;
     std::vector<Entity> collisionObjects;
@@ -30,6 +35,11 @@ void CollisionSystem::updateX(EntityManager& entityManager) {
 }
 
 void CollisionSystem::updateY(EntityManager& entityManager) {
+    /**
+     * Update the Y axis collision
+     *
+     * @param entityManager: The entity manager
+     */
     auto& entities = entityManager.getEntities();
     std::vector<Entity> players;
     std::vector<Entity> collisionObjects;
@@ -54,10 +64,22 @@ void CollisionSystem::updateY(EntityManager& entityManager) {
     }
 }
 bool CollisionSystem::checkCollision(Entity &player, Entity &other) {
+    /**
+     * Check if the player is colliding with another entity
+     *
+     * @param player: The player entity
+     * @param other: The other entity
+     */
     return checkCollisionX(player, other) && checkCollisionY(player, other);
 }
 
 bool CollisionSystem::checkCollisionX(Entity &player, Entity &other) {
+    /**
+     * Check if the player is colliding with another entity on the X axis
+     *
+     * @param player: The player entity
+     * @param other: The other entity
+     */
     Position& playerPos = player.getComponent<Position>();
     Collider& playerCol = player.getComponent<Collider>();
     Scale& playerScale = player.getComponent<Scale>();
@@ -78,6 +100,12 @@ bool CollisionSystem::checkCollisionX(Entity &player, Entity &other) {
 }
 
 bool CollisionSystem::checkCollisionY(Entity &player, Entity &other) {
+    /**
+     * Check if the player is colliding with another entity on the Y axis
+     *
+     * @param player: The player entity
+     * @param other: The other entity
+     */
     Position& playerPos = player.getComponent<Position>();
     Collider& playerCol = player.getComponent<Collider>();
     Scale& playerScale = player.getComponent<Scale>();
@@ -98,6 +126,12 @@ bool CollisionSystem::checkCollisionY(Entity &player, Entity &other) {
 }
 
 void CollisionSystem::handlePlayerCollisionX(Entity& player, Entity& other) {
+    /**
+     * Handle player collision with other entities on the X axis
+     *
+     * @param player: The player entity
+     * @param other: The other entity
+     */
     Velocity& vel = player.getComponent<Velocity>();
     Position& posPlayer = player.getComponent<Position>();
     Position& posOther = other.getComponent<Position>();
@@ -116,6 +150,12 @@ void CollisionSystem::handlePlayerCollisionX(Entity& player, Entity& other) {
 }
 
 void CollisionSystem::handlePlayerCollisionY(Entity& player, Entity& other) {
+    /**
+     * Handle player collision with other entities on the Y axis
+     *
+     * @param player: The player entity
+     * @param other: The other entity
+     */
     Velocity& vel = player.getComponent<Velocity>();
     Position& posPlayer = player.getComponent<Position>();
     Position& posOther = other.getComponent<Position>();
@@ -126,6 +166,7 @@ void CollisionSystem::handlePlayerCollisionY(Entity& player, Entity& other) {
         int playerHeight = static_cast<int>(player.getComponent<Collider>().height * player.getComponent<Scale>().scale);
         posPlayer.y = posOther.y - (playerHeight + collisionBuffer);  // Move the player to the top of the platform
         player.getComponent<State>().state = playerStates::GROUNDED;
+        player.getComponent<Gravity>().gravity = player.getComponent<Gravity>().baseGravity;
     }
     else if (vel.dy < 0) {
         // Player is moving up

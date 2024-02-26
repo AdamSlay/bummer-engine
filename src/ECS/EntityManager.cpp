@@ -5,6 +5,8 @@
 void EntityManager::setTextureManager(TextureManager* texManager) {
     /**
      * Set the texture manager for the EntityManager
+     *
+     * @param texManager: The texture manager
      */
     this->textureManager = texManager;
 }
@@ -13,6 +15,8 @@ void EntityManager::setTextureManager(TextureManager* texManager) {
 void EntityManager::setRenderer(SDL_Renderer* ecsRenderer) {
     /**
      * Set the renderer for the EntityManager
+     *
+     * @param ecsRenderer: The SDL renderer
      */
     this->renderer = ecsRenderer;
 }
@@ -48,6 +52,11 @@ Entity& EntityManager::getPlayer() {
 Entity& EntityManager::createPlayer(int x, int y, int w, int h) {
     /**
      * Create a new player entity, append it to the entities vector and return a reference to it
+     *
+     * @param x: The x position of the player
+     * @param y: The y position of the player
+     * @param w: The width of the player
+     * @param h: The height of the player
      */
     Entity& player = createEntity();
     player.addComponent<Player>({1});
@@ -55,7 +64,7 @@ Entity& EntityManager::createPlayer(int x, int y, int w, int h) {
     player.addComponent<Velocity>({0, 0});
     player.addComponent<Collider>({w, h});
     player.addComponent<Scale>({1});
-    player.addComponent<Gravity>({1});
+    player.addComponent<Gravity>({1, 1, 0.9, 1.1});
     player.addComponent<State>({playerStates::IDLE});
     SDL_Texture* texture = textureManager->loadTexture(renderer, "assets/bb_jump_sheet.png");
     SDL_Rect srcRect = {0, 0, 64, 100};
@@ -66,6 +75,11 @@ Entity& EntityManager::createPlayer(int x, int y, int w, int h) {
 Entity& EntityManager::createPlatform(int x, int y, int w, int h) {
     /**
      * Create a new platform entity, append it to the entities vector and return a reference to it
+     *
+     * @param x: The x position of the platform
+     * @param y: The y position of the platform
+     * @param w: The width of the platform
+     * @param h: The height of the platform
      */
     Entity& platform = createEntity();
     platform.addComponent<Position>({x, y});

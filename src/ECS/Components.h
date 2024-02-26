@@ -42,7 +42,10 @@ struct Sprite {
 };
 
 struct Gravity {
+    float baseGravity;
     float gravity;
+    float ascendFactor;
+    float descendFactor;
 };
 
 #endif //BUMMERENGINE_COMPONENTS_H
