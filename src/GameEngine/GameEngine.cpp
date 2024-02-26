@@ -20,6 +20,10 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     CollisionSystem collisionSystem;
     entityManager.setTextureManager(&textureManager);
     entityManager.setRenderer(renderer);
+    SDL_GameController* controller = nullptr;
+    if (SDL_NumJoysticks() > 0) {
+        controller = SDL_GameControllerOpen(0);
+    }
 
     // entity manager testing sandbox, just for testing new features
     sandbox(entityManager);
@@ -81,11 +85,9 @@ void poll_events(SDL_Event& e, bool& quit, Entity& player, MovementSystem& movem
      * @param quit: The quit flag
      */
     while (SDL_PollEvent(&e) != 0) {
-        if (e.type == SDL_QUIT) {
-            quit = true;
-        }
-        else if (e.type == SDL_KEYDOWN) {
-            Velocity& vel = player.getComponent<Velocity>();
+        Velocity& vel = player.getComponent<Velocity>();
+        
+        if (e.type == SDL_KEYDOWN) {
             switch (e.key.keysym.sym) {
                 case SDLK_UP:
                     if (e.key.repeat == 0) {
@@ -105,7 +107,6 @@ void poll_events(SDL_Event& e, bool& quit, Entity& player, MovementSystem& movem
         }
         else if (e.type == SDL_KEYUP)
         {
-            Velocity &vel = player.getComponent<Velocity>();
             switch (e.key.keysym.sym)
             {
             case SDLK_UP:
@@ -117,6 +118,35 @@ void poll_events(SDL_Event& e, bool& quit, Entity& player, MovementSystem& movem
                 vel.dx = 0;
                 break;
             }
+        }
+        else if (e.type == SDL_CONTROLLERBUTTONDOWN)
+        {
+            switch (e.cbutton.button)
+            {
+            case SDL_CONTROLLER_BUTTON_A:
+                movementSystem.jump(player);
+                break;
+            case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+                vel.dx = 5;
+                break;
+            case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+                vel.dx = -5;
+                break;
+            }
+        }
+        else if (e.type == SDL_CONTROLLERBUTTONUP)
+        {
+            Velocity &vel = player.getComponent<Velocity>();
+            switch (e.cbutton.button)
+            {
+            case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+            case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+                vel.dx = 0;
+                break;
+            }
+        }
+        else if (e.type == SDL_QUIT) {
+            quit = true;
         }
     }
 }
