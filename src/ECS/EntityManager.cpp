@@ -65,7 +65,7 @@ Entity& EntityManager::createPlayer(int x, int y, int w, int h) {
     player.addComponent<Player>({1});
     player.addComponent<Position>({x, y});
     player.addComponent<Velocity>({0, 0, 1});
-    player.addComponent<Collider>({w, h});
+    player.addComponent<Collider>({22, 55, w, h});
     player.addComponent<Scale>({1});
     player.addComponent<Gravity>({1, 1, 0.9, 1.1});
     player.addComponent<State>({playerStates::IDLE});
@@ -135,7 +135,7 @@ Entity& EntityManager::createPlatform(int x, int y, int w, int h) {
      */
     Entity& platform = createEntity();
     platform.addComponent<Position>({x, y});
-    platform.addComponent<Collider>({w, h});
+    platform.addComponent<Collider>({0, 0, w, h});
     SDL_Texture* texture = textureManager->loadTexture(renderer, "assets/platform.png");
     SDL_Rect srcRect = {0, 0, 256, 64};
     platform.addComponent<Sprite>({texture, srcRect});

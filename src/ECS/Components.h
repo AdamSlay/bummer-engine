@@ -61,7 +61,7 @@ struct Velocity {
 };
 
 struct Collider {
-    int width, height;
+    int offsetX, offsetY, width, height;
 };
 
 struct Scale {

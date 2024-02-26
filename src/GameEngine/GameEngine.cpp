@@ -62,20 +62,22 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     }
 }
 
-void render_collider(Entity& entity, SDL_Renderer* renderer) {
+void render_collider(Entity &entity, SDL_Renderer *renderer) {
     /**
-     * Render the collider of an entity
+     * Render the collider for an entity
      *
      * @param entity: The entity
+     * @param renderer: The SDL renderer
      */
-    int x = entity.getComponent<Position>().x;
-    int y = entity.getComponent<Position>().y;
-    int w = entity.getComponent<Collider>().width;
-    int h = entity.getComponent<Collider>().height;
+    Position &pos = entity.getComponent<Position>();
+    Collider &col = entity.getComponent<Collider>();
+    int x = pos.x + col.offsetX;
+    int y = pos.y + col.offsetY;
+    int w = col.width;
+    int h = col.height;
     SDL_Rect collider = {x, y, w, h};
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_RenderDrawRect(renderer, &collider);
-
 }
 
 void move_and_collide(EntityManager& entityManager, MovementSystem& movementSystem, CollisionSystem& collisionSystem) {
@@ -179,5 +181,5 @@ void sandbox(EntityManager& entityManager) {
     int groundW = SCREEN_WIDTH - 100;
     int groundH = 50;
     Entity& platform = entityManager.createPlatform(groundX, groundY, groundW, groundH);
-    Entity& player = entityManager.createPlayer(50, 50, 64, 100);
+    Entity& player = entityManager.createPlayer(50, 50, 18, 40);
 }
