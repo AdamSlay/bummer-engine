@@ -41,8 +41,14 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
             SDL_Delay((1000 / 60) - deltaTime);
         }
         
-        
+
         Entity& player = entityManager.getPlayer();
+        // reset player position if it falls off the screen
+        if (player.getComponent<Position>().y > SCREEN_HEIGHT) {
+            player.getComponent<Position>().y = SCREEN_HEIGHT / 4;
+            player.getComponent<Position>().x = SCREEN_WIDTH / 2;
+            player.getComponent<Velocity>().dy = 0;
+        }
         poll_events(e, quit, player, movementSystem);
 
         // Perform game logic updates here
@@ -52,8 +58,8 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
         SDL_SetRenderDrawColor(renderer, 104,102,182, 255);  // bb_purple
         SDL_RenderClear(renderer);
 
-        render_collider(player, renderer);
-        render_collider(entityManager.getEntities()[0], renderer);
+//        render_collider(player, renderer);
+//        render_collider(entityManager.getEntities()[0], renderer);
         // Copy game to renderer here
         renderSystem.render(renderer, entityManager);
 
@@ -157,6 +163,9 @@ void poll_events(SDL_Event& e, bool& quit, Entity& player, MovementSystem& movem
             case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
             case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
                 vel.dx = 0;
+                break;
+            case SDL_CONTROLLER_BUTTON_A:
+                vel.dy = 0;
                 break;
             }
         }
