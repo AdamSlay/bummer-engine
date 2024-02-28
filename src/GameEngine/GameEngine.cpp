@@ -49,7 +49,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
             player.getComponent<Position>().x = SCREEN_WIDTH / 2;
             player.getComponent<Velocity>().dy = 0;
         }
-        poll_events(e, quit, player, movementSystem);
+        player_controller(e, quit, player, movementSystem);
 
         // Perform game logic updates here
         move_and_collide(entityManager, movementSystem, collisionSystem);
@@ -98,7 +98,7 @@ void move_and_collide(EntityManager& entityManager, MovementSystem& movementSyst
     collisionSystem.updateY(entityManager);
 }
 
-void poll_events(SDL_Event& e, bool& quit, Entity& player, MovementSystem& movementSystem) {
+void player_controller(SDL_Event& e, bool& quit, Entity& player, MovementSystem& movementSystem) {
     /**
      * Polls events and sets the quit flag if the user closes the window
      *

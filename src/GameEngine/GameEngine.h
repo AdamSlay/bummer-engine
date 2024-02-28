@@ -12,7 +12,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font);
 void move_and_collide(EntityManager& entityManager, MovementSystem& movementSystem, CollisionSystem& collisionSystem);
 void render_splash_screen(SDL_Renderer* renderer, TTF_Font* font);
 void render_collider(Entity& entity, SDL_Renderer* renderer);
-void poll_events(SDL_Event& e, bool& quit, Entity& player, MovementSystem& movementSystem);
+void player_controller(SDL_Event& e, bool& quit, Entity& player, MovementSystem& movementSystem);
 void sandbox(EntityManager& entityManager);
 
 #endif //BUMMERENGINE_GAMEENGINE_H
