@@ -58,11 +58,8 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
         SDL_SetRenderDrawColor(renderer, 104,102,182, 255);  // bb_purple
         SDL_RenderClear(renderer);
 
-//        render_collider(player, renderer);
-//        render_collider(entityManager.getEntities()[0], renderer);
         // Copy game to renderer here
         renderSystem.render(renderer, entityManager);
-
         SDL_RenderPresent(renderer);
 
     }
