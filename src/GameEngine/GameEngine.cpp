@@ -57,11 +57,26 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
         SDL_SetRenderDrawColor(renderer, 104,102,182, 255);  // bb_purple
         SDL_RenderClear(renderer);
+        render_all_colliders(renderer, entityManager);
 
         // Copy game to renderer here
         renderSystem.render(renderer, entityManager);
         SDL_RenderPresent(renderer);
 
+    }
+}
+
+void render_all_colliders(SDL_Renderer* renderer, EntityManager& entityManager) {
+    /**
+     * Render all colliders for all entities
+     *
+     * @param renderer: The SDL renderer
+     * @param entityManager: The entity manager
+     */
+    for (Entity& entity : entityManager.getEntities()) {
+        if (entity.hasComponent<Collider>()) {
+            render_collider(entity, renderer);
+        }
     }
 }
 
@@ -74,10 +89,11 @@ void render_collider(Entity &entity, SDL_Renderer *renderer) {
      */
     Position &pos = entity.getComponent<Position>();
     Collider &col = entity.getComponent<Collider>();
-    int x = pos.x + col.offsetX;
-    int y = pos.y + col.offsetY;
-    int w = col.width;
-    int h = col.height;
+    Scale& scale = entity.getComponent<Scale>();
+    int x = pos.x + (col.offsetX * scale.scale);
+    int y = pos.y + (col.offsetY * scale.scale);
+    int w = col.width * scale.scale;
+    int h = col.height * scale.scale;
     SDL_Rect collider = {x, y, w, h};
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_RenderDrawRect(renderer, &collider);
@@ -188,4 +204,6 @@ void sandbox(EntityManager& entityManager) {
     int groundH = 50;
     Entity& platform = entityManager.createPlatform(groundX, groundY, groundW, groundH);
     Entity& player = entityManager.createPlayer(50, 50, 18, 40);
+    Entity& platform2 = entityManager.createPlatform(500, 400, 100, 20);
+    Entity& platform3 = entityManager.createPlatform(700, 450, 100, 20);
 }

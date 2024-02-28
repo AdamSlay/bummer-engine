@@ -11,6 +11,7 @@
 void game_loop(SDL_Renderer* renderer, TTF_Font* font);
 void move_and_collide(EntityManager& entityManager, MovementSystem& movementSystem, CollisionSystem& collisionSystem);
 void render_splash_screen(SDL_Renderer* renderer, TTF_Font* font);
+void render_all_colliders(SDL_Renderer* renderer, EntityManager& entityManager);
 void render_collider(Entity& entity, SDL_Renderer* renderer);
 void player_controller(SDL_Event& e, bool& quit, Entity& player, MovementSystem& movementSystem);
 void sandbox(EntityManager& entityManager);
