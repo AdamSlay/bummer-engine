@@ -19,6 +19,7 @@ int main(int argc, char* argv[]) {
     SDL_Renderer* renderer = nullptr;
     TTF_Font* font = nullptr;
     if (initialize_resource(window, renderer, font) != 0) {
+        std::cerr << "Failed to initialize resources" << std::endl;
         return 1;
     }
     SDL_RaiseWindow(window);  // Raise the window to the top of the stack
