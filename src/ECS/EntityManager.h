@@ -37,6 +37,11 @@ public:
         return components.find(std::type_index(typeid(T))) != components.end();
     }
     void changeState(playerStates newState) {
+        /**
+         * Change the state of the entity
+         *
+         * @param newState: The new state
+         */
         Animator& animator = getComponent<Animator>();
         if (getComponent<State>().state != newState) {
             getComponent<State>().state = newState;

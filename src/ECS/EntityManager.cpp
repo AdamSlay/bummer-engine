@@ -84,6 +84,7 @@ void EntityManager::configureAnimator(Entity& entity, std::map<playerStates, Ani
      *
      * @param entity: The entity
      */
+    // Add run animation clips to the animations map
     SDL_Texture* runTexture = textureManager->loadTexture(renderer, "assets/bb_run_sheet.png");
     std::vector<SDL_Rect> runFrames;
     for (int i = 0; i < 8; i++) {
@@ -93,13 +94,14 @@ void EntityManager::configureAnimator(Entity& entity, std::map<playerStates, Ani
     AnimationClip runClip = {runTexture, runFrames, 4, true};
     animations[playerStates::RUN] = runClip;
 
+
+    // Add jump animation clips to the animations map
     SDL_Texture* jumpTexture = textureManager->loadTexture(renderer, "assets/bb_jump_sheet.png");
     std::vector<SDL_Rect> jumpFrames;
     for (int i = 2; i < 8; i++) {
         SDL_Rect frame = {i * 64, 0, 64, 100};
         jumpFrames.push_back(frame);
     }
-
     SDL_Rect jumpAscend = jumpFrames[0];
     AnimationClip jumpAscendClip = {jumpTexture, {jumpAscend}, 1, false};
     animations[playerStates::JUMP_ASCEND] = jumpAscendClip;
@@ -120,6 +122,8 @@ void EntityManager::configureAnimator(Entity& entity, std::map<playerStates, Ani
     AnimationClip jumpDescendClip = {jumpTexture, {jumpDescend}, 1, false};
     animations[playerStates::JUMP_DESCEND] = jumpDescendClip;
 
+
+    // Add idle animation clips to the animations map
     animations[playerStates::IDLE] = {jumpTexture, {{0, 0, 64, 100}}, 4, true};
     animations[playerStates::GROUNDED] = {jumpTexture, {{0, 0, 64, 100}}, 4, true};
 }

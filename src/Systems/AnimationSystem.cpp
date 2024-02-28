@@ -2,6 +2,12 @@
 
 
 void AnimationSystem::update(EntityManager& entityManager, float deltaTime) {
+    /**
+     * Update the animation system
+     *
+     * @param entityManager: The entity manager
+     * @param deltaTime: The time between frames
+     */
     for (Entity& entity : entityManager.getEntities()) {
         if (entity.hasComponent<Animator>() && entity.hasComponent<Sprite>()) {
             Animator& animator = entity.getComponent<Animator>();
@@ -19,7 +25,7 @@ void AnimationSystem::update(EntityManager& entityManager, float deltaTime) {
                             animator.currentImage = 0;
                         } else {
                             animator.currentImage = currentClip.frames.size() - 1;
-                            animator.isPlaying = false;
+                            animator.isPlaying = false;  // gets reset in changeState()
                         }
                     }
                 }

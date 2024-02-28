@@ -22,6 +22,11 @@ void MovementSystem::moveX(EntityManager& entityManager) {
 }
 
 void MovementSystem::moveY(EntityManager &entityManager) {
+    /**
+     * Move entities on the Y axis
+     *
+     * @param entityManager: The entity manager
+     */
     for (Entity &entity : entityManager.getEntities()) {
         if (entity.hasComponent<Position>() && entity.hasComponent<Velocity>()) {
             Velocity &vel = entity.getComponent<Velocity>();
@@ -61,6 +66,11 @@ void MovementSystem::jump(Entity& entity) {
 }
 
 void MovementSystem::applyGravity(Entity &entity) {
+    /**
+     * Apply gravity to the entity
+     *
+     * @param entity: The entity
+     */
     if (entity.hasComponent<Velocity>() && entity.hasComponent<Gravity>()) {
         Velocity &vel = entity.getComponent<Velocity>();
         Gravity &gravity = entity.getComponent<Gravity>();
@@ -79,6 +89,11 @@ void MovementSystem::applyGravity(Entity &entity) {
 }
 
 void MovementSystem::changeJumpState(Entity &entity) {
+    /**
+     * Change the jump state of the entity
+     *
+     * @param entity: The entity
+     */
     if (entity.hasComponent<Velocity>()) {
         Velocity &vel = entity.getComponent<Velocity>();
         if (vel.dy < -3) {

@@ -13,6 +13,11 @@ std::string FONT_PATH;
 int FONT_SIZE;
 
 void loadConfig(const std::string& path) {
+    /**
+     * Load the configuration from a file
+     *
+     * @param path: The path to the configuration file
+     */
     std::ifstream file(path);
     if (!file){
         std::cerr << "Unable to open Config file: " << path << std::endl;
