@@ -118,13 +118,37 @@ void player_controller(SDL_Event& e, bool& quit, Entity& player, MovementSystem&
      * @param e: The SDL event
      * @param quit: The quit flag
      */
-    while (SDL_PollEvent(&e) != 0) {
+    while (SDL_PollEvent(&e) != 0) 
+    {
         Velocity& vel = player.getComponent<Velocity>();
-        
-        if (e.type == SDL_KEYDOWN) {
-            switch (e.key.keysym.sym) {
+
+        const Uint8 *currentKeyStates = SDL_GetKeyboardState(NULL);
+        if (currentKeyStates[SDL_SCANCODE_LEFT])
+        {
+            vel.dx = -5;
+        }
+        if (currentKeyStates[SDL_SCANCODE_RIGHT])
+        {
+            vel.dx = 5;
+        }
+
+        const Uint8* controllerButtonStates = SDL_GetKeyboardState(NULL);
+        if (controllerButtonStates[SDL_CONTROLLER_BUTTON_DPAD_LEFT])
+        {
+            vel.dx = -5;
+        }
+        if (controllerButtonStates[SDL_CONTROLLER_BUTTON_DPAD_RIGHT])
+        {
+            vel.dx = 5;
+        }
+
+        if (e.type == SDL_KEYDOWN) 
+        {
+            switch (e.key.keysym.sym) 
+            {
                 case SDLK_UP:
-                    if (e.key.repeat == 0) {
+                    if (e.key.repeat == 0) 
+                    {
                         movementSystem.jump(player);
                     }
                     break;
@@ -204,6 +228,6 @@ void sandbox(EntityManager& entityManager) {
     int groundH = 50;
     Entity& platform = entityManager.createPlatform(groundX, groundY, groundW, groundH);
     Entity& player = entityManager.createPlayer(50, 50, 18, 40);
-    Entity& platform2 = entityManager.createPlatform(500, 400, 100, 20);
-    Entity& platform3 = entityManager.createPlatform(700, 450, 100, 20);
+    Entity& platform2 = entityManager.createPlatform(500, 400, 128, 32);
+    Entity& platform3 = entityManager.createPlatform(700, 450, 128, 32);
 }
