@@ -92,7 +92,7 @@ void EntityManager::configureAnimator(Entity& entity, std::map<playerStates, Ani
         runFrames.push_back(frame);
     }
     AnimationClip runClip = {runTexture, runFrames, 4, true};
-    animations[playerStates::RUN] = runClip;
+    animations.emplace(playerStates::RUN, runClip);
 
 
     // Add jump animation clips to the animations map
@@ -104,28 +104,29 @@ void EntityManager::configureAnimator(Entity& entity, std::map<playerStates, Ani
     }
     SDL_Rect jumpAscend = jumpFrames[0];
     AnimationClip jumpAscendClip = {jumpTexture, {jumpAscend}, 1, false};
-    animations[playerStates::JUMP_ASCEND] = jumpAscendClip;
+    animations.emplace(playerStates::JUMP_ASCEND, jumpAscendClip);
 
     SDL_Rect jumpAscendApex = jumpFrames[1];
     AnimationClip jumpAscendApexClip = {jumpTexture, {jumpAscendApex}, 1, false};
-    animations[playerStates::JUMP_APEX_ASCEND] = jumpAscendApexClip;
+    animations.emplace(playerStates::JUMP_APEX_ASCEND, jumpAscendApexClip);
 
     SDL_Rect jumpApex = jumpFrames[2];
     AnimationClip jumpApexClip = {jumpTexture, {jumpApex}, 1, false};
-    animations[playerStates::JUMP_APEX] = jumpApexClip;
+    animations.emplace(playerStates::JUMP_APEX, jumpApexClip);
 
     SDL_Rect jumpDescendApex = jumpFrames[3];
     AnimationClip jumpDescendApexClip = {jumpTexture, {jumpDescendApex}, 1, false};
-    animations[playerStates::JUMP_APEX_DESCEND] = jumpDescendApexClip;
+    animations.emplace(playerStates::JUMP_APEX_DESCEND, jumpDescendApexClip);
 
     SDL_Rect jumpDescend = jumpFrames[4];
     AnimationClip jumpDescendClip = {jumpTexture, {jumpDescend}, 1, false};
-    animations[playerStates::JUMP_DESCEND] = jumpDescendClip;
+    animations.emplace(playerStates::JUMP_DESCEND, jumpDescendClip);
 
 
     // Add idle animation clips to the animations map
-    animations[playerStates::IDLE] = {jumpTexture, {{0, 0, 64, 100}}, 4, true};
-    animations[playerStates::GROUNDED] = {jumpTexture, {{0, 0, 64, 100}}, 4, true};
+    AnimationClip idleClip = {jumpTexture, {{0, 0, 64, 100}}, 4, true};
+    animations.emplace(playerStates::IDLE, idleClip);
+    animations.emplace(playerStates::GROUNDED, idleClip);
 }
 
 Entity& EntityManager::createPlatform(int x, int y, int w, int h) {
