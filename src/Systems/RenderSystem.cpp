@@ -15,14 +15,13 @@ void RenderSystem::render(SDL_Renderer* renderer, EntityManager& entityManager) 
     {
         if (entity.hasComponent<Transform>() && entity.hasComponent<Collider>() && entity.hasComponent<Sprite>())
         {
-            Transform &pos = entity.getComponent<Transform>();
+            Transform &transform = entity.getComponent<Transform>();
             Collider &col = entity.getComponent<Collider>();
             Sprite &spr = entity.getComponent<Sprite>();
-            Scale &scale = entity.getComponent<Scale>();
 
-            int scaledW = static_cast<int>(spr.srcRect.w * scale.scale);
-            int scaledH = static_cast<int>(spr.srcRect.h * scale.scale);
-            SDL_Rect destRect = {pos.x, pos.y, scaledW, scaledH};
+            int scaledW = static_cast<int>(spr.srcRect.w * transform.scale);
+            int scaledH = static_cast<int>(spr.srcRect.h * transform.scale);
+            SDL_Rect destRect = {transform.x, transform.y, scaledW, scaledH};
             if (entity.hasComponent<Velocity>()) {
                 SDL_RendererFlip flip = (entity.getComponent<Velocity>().direction == -1) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
                 SDL_RenderCopyEx(renderer, spr.texture, &spr.srcRect, &destRect, 0.0, nullptr, flip);
