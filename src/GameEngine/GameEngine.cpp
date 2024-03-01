@@ -115,7 +115,6 @@ void player_controller(SDL_Event& e, bool& quit, Entity& player, MovementSystem&
     /**
      * Polls events and sets the quit flag if the user closes the window
      *
-     * Should probably be called something else
      *
      * @param e: The SDL event
      * @param quit: The quit flag
