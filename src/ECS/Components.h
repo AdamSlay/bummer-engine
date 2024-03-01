@@ -59,9 +59,10 @@ struct Player {
     Player(int playerNumber) : playerNumber(playerNumber) {}
 };
 
-struct Position {
+struct Transform {
     int x, y;
-    Position(int x, int y) : x(x), y(y) {}
+    float scale;
+    Transform(int x, int y, float scale) : x(x), y(y), scale(scale) {}
 };
 
 struct Velocity {

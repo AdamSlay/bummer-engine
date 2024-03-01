@@ -10,8 +10,8 @@ void MovementSystem::moveX(EntityManager& entityManager) {
      * @param entityManager: The entity manager
      */
     for (Entity& entity : entityManager.getEntities()) {
-        if (entity.hasComponent<Position>() && entity.hasComponent<Velocity>()) {
-            Position& pos = entity.getComponent<Position>();
+        if (entity.hasComponent<Transform>() && entity.hasComponent<Velocity>()) {
+            Transform& pos = entity.getComponent<Transform>();
             Velocity& vel = entity.getComponent<Velocity>();
             pos.x += vel.dx;
             if (vel.dx != 0) {
@@ -28,7 +28,7 @@ void MovementSystem::moveY(EntityManager &entityManager) {
      * @param entityManager: The entity manager
      */
     for (Entity &entity : entityManager.getEntities()) {
-        if (entity.hasComponent<Position>() && entity.hasComponent<Velocity>()) {
+        if (entity.hasComponent<Transform>() && entity.hasComponent<Velocity>()) {
             Velocity &vel = entity.getComponent<Velocity>();
             if (vel.dy != 0) {
                 changeJumpState(entity);
@@ -37,7 +37,7 @@ void MovementSystem::moveY(EntityManager &entityManager) {
                 applyGravity(entity);
             }
             // Apply velocity
-            Position &pos = entity.getComponent<Position>();
+            Transform &pos = entity.getComponent<Transform>();
             pos.y += vel.dy;
         }
     }

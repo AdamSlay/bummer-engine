@@ -18,7 +18,7 @@ void CollisionSystem::updateX(EntityManager& entityManager) {
     for (auto & entity : entities) {
         if (entity.hasComponent<Player>()) {
             players.push_back(entity);
-        } else if (entity.hasComponent<Collider>() && entity.hasComponent<Position>()) {
+        } else if (entity.hasComponent<Collider>() && entity.hasComponent<Transform>()) {
             collisionObjects.push_back(entity);
         }
     }
@@ -48,7 +48,7 @@ void CollisionSystem::updateY(EntityManager& entityManager) {
     for (auto & entity : entities) {
         if (entity.hasComponent<Player>()) {
             players.push_back(entity);
-        } else if (entity.hasComponent<Collider>() && entity.hasComponent<Position>()) {
+        } else if (entity.hasComponent<Collider>() && entity.hasComponent<Transform>()) {
             collisionObjects.push_back(entity);
         }
     }
@@ -80,11 +80,11 @@ bool CollisionSystem::checkCollisionX(Entity &player, Entity &other) {
      * @param player: The player entity
      * @param other: The other entity
      */
-    Position& playerPos = player.getComponent<Position>();
+    Transform& playerPos = player.getComponent<Transform>();
     Collider& playerCol = player.getComponent<Collider>();
     Scale& playerScale = player.getComponent<Scale>();
 
-    Position& otherPos = other.getComponent<Position>();
+    Transform& otherPos = other.getComponent<Transform>();
     Collider& otherCol = other.getComponent<Collider>();
     Scale& otherScale = other.getComponent<Scale>();
 
@@ -109,11 +109,11 @@ bool CollisionSystem::checkCollisionY(Entity &player, Entity &other) {
      * @param player: The player entity
      * @param other: The other entity
      */
-    Position& playerPos = player.getComponent<Position>();
+    Transform& playerPos = player.getComponent<Transform>();
     Collider& playerCol = player.getComponent<Collider>();
     Scale& playerScale = player.getComponent<Scale>();
 
-    Position& otherPos = other.getComponent<Position>();
+    Transform& otherPos = other.getComponent<Transform>();
     Collider& otherCol = other.getComponent<Collider>();
     Scale& otherScale = other.getComponent<Scale>();
 
@@ -139,10 +139,10 @@ void CollisionSystem::handlePlayerCollisionX(Entity& player, Entity& other) {
      * @param other: The other entity
      */
     Velocity& vel = player.getComponent<Velocity>();
-    Position& posPlayer = player.getComponent<Position>();
+    Transform& posPlayer = player.getComponent<Transform>();
     Collider& colPlayer = player.getComponent<Collider>();
     Scale& playerScale = player.getComponent<Scale>();
-    Position& posOther = other.getComponent<Position>();
+    Transform& posOther = other.getComponent<Transform>();
     Collider& colOther = other.getComponent<Collider>();
     Scale& otherScale = other.getComponent<Scale>();
 
@@ -168,10 +168,10 @@ void CollisionSystem::handlePlayerCollisionY(Entity& player, Entity& other) {
      * @param other: The other entity
      */
     Velocity& vel = player.getComponent<Velocity>();
-    Position& posPlayer = player.getComponent<Position>();
+    Transform& posPlayer = player.getComponent<Transform>();
     Collider& colPlayer = player.getComponent<Collider>();
     Scale& playerScale = player.getComponent<Scale>();
-    Position& posOther = other.getComponent<Position>();
+    Transform& posOther = other.getComponent<Transform>();
     Collider& colOther = other.getComponent<Collider>();
     Scale& otherScale = other.getComponent<Scale>();
 

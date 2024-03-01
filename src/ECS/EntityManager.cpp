@@ -63,7 +63,7 @@ Entity& EntityManager::createPlayer(int x, int y, int w, int h) {
     configureAnimator(player, animations);
     player.addComponent<Animator>({animations, playerStates::IDLE, 0, 0, true});
     player.addComponent<Player>({1});
-    player.addComponent<Position>({x, y});
+    player.addComponent<Transform>({x, y, 1.7});
     player.addComponent<Velocity>({0, 0, 1});
     player.addComponent<Collider>({22, 55, w, h});
     player.addComponent<Scale>({1.7});
@@ -139,7 +139,7 @@ Entity& EntityManager::createPlatform(int x, int y, int w, int h) {
      * @param h: The height of the platform
      */
     Entity& platform = createEntity();
-    platform.addComponent<Position>({x, y});
+    platform.addComponent<Transform>({x, y, 1});
     platform.addComponent<Collider>({10, 0, w - 18, h});
     SDL_Texture* texture = textureManager->loadTexture(renderer, "assets/platform.png");
     SDL_Rect srcRect = {0, 0, w, h};

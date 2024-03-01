@@ -13,9 +13,9 @@ void RenderSystem::render(SDL_Renderer* renderer, EntityManager& entityManager) 
 
     for (Entity &entity : entityManager.getEntities())
     {
-        if (entity.hasComponent<Position>() && entity.hasComponent<Collider>() && entity.hasComponent<Sprite>())
+        if (entity.hasComponent<Transform>() && entity.hasComponent<Collider>() && entity.hasComponent<Sprite>())
         {
-            Position &pos = entity.getComponent<Position>();
+            Transform &pos = entity.getComponent<Transform>();
             Collider &col = entity.getComponent<Collider>();
             Sprite &spr = entity.getComponent<Sprite>();
             Scale &scale = entity.getComponent<Scale>();

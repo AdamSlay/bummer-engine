@@ -44,9 +44,9 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
         Entity& player = entityManager.getPlayer();
         // reset player position if it falls off the screen
-        if (player.getComponent<Position>().y > SCREEN_HEIGHT) {
-            player.getComponent<Position>().y = SCREEN_HEIGHT / 4;
-            player.getComponent<Position>().x = SCREEN_WIDTH / 2;
+        if (player.getComponent<Transform>().y > SCREEN_HEIGHT) {
+            player.getComponent<Transform>().y = SCREEN_HEIGHT / 4;
+            player.getComponent<Transform>().x = SCREEN_WIDTH / 2;
             player.getComponent<Velocity>().dy = 0;
         }
         player_controller(e, quit, player, movementSystem);
@@ -87,7 +87,7 @@ void render_collider(Entity &entity, SDL_Renderer *renderer) {
      * @param entity: The entity
      * @param renderer: The SDL renderer
      */
-    Position &pos = entity.getComponent<Position>();
+    Transform &pos = entity.getComponent<Transform>();
     Collider &col = entity.getComponent<Collider>();
     Scale& scale = entity.getComponent<Scale>();
     int x = pos.x + (col.offsetX * scale.scale);
