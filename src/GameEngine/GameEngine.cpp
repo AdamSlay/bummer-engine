@@ -87,13 +87,12 @@ void render_collider(Entity &entity, SDL_Renderer *renderer) {
      * @param entity: The entity
      * @param renderer: The SDL renderer
      */
-    Transform &pos = entity.getComponent<Transform>();
+    Transform &transform = entity.getComponent<Transform>();
     Collider &col = entity.getComponent<Collider>();
-    Scale& scale = entity.getComponent<Scale>();
-    int x = pos.x + (col.offsetX * scale.scale);
-    int y = pos.y + (col.offsetY * scale.scale);
-    int w = col.width * scale.scale;
-    int h = col.height * scale.scale;
+    int x = transform.x + (col.offsetX * transform.scale);
+    int y = transform.y + (col.offsetY * transform.scale);
+    int w = col.width * transform.scale;
+    int h = col.height * transform.scale;
     SDL_Rect collider = {x, y, w, h};
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_RenderDrawRect(renderer, &collider);

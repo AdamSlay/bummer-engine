@@ -76,11 +76,6 @@ struct Collider {
         : offsetX(offsetX), offsetY(offsetY), width(width), height(height) {}
 };
 
-struct Scale {
-    float scale;
-    Scale(float scale) : scale(scale) {}
-};
-
 struct Sprite {
     SDL_Texture* texture;
     SDL_Rect srcRect;
