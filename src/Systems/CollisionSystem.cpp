@@ -81,19 +81,17 @@ bool CollisionSystem::checkCollisionX(Entity &player, Entity &other) {
      * @param player: The player entity
      * @param other: The other entity
      */
-    Transform& playerPos = player.getComponent<Transform>();
+    Transform& playerTrans = player.getComponent<Transform>();
     Collider& playerCol = player.getComponent<Collider>();
-    Scale& playerScale = player.getComponent<Scale>();
 
-    Transform& otherPos = other.getComponent<Transform>();
+    Transform& otherTrans = other.getComponent<Transform>();
     Collider& otherCol = other.getComponent<Collider>();
-    Scale& otherScale = other.getComponent<Scale>();
 
-    float playerX = playerPos.x + playerCol.offsetX * playerScale.scale;
-    float otherX = otherPos.x + otherCol.offsetX * otherScale.scale;
+    float playerX = playerTrans.x + playerCol.offsetX * playerTrans.scale;
+    float otherX = otherTrans.x + otherCol.offsetX * otherTrans.scale;
 
-    float scaledWidthPlayer = playerCol.width * playerScale.scale;
-    float scaledWidthOther = otherCol.width * otherScale.scale;
+    float scaledWidthPlayer = playerCol.width * playerTrans.scale;
+    float scaledWidthOther = otherCol.width * otherTrans.scale;
 
     if (playerX + scaledWidthPlayer < otherX ||  // player is left of obj
         playerX > otherX + scaledWidthOther) {  // player is right of obj
@@ -110,19 +108,17 @@ bool CollisionSystem::checkCollisionY(Entity &player, Entity &other) {
      * @param player: The player entity
      * @param other: The other entity
      */
-    Transform& playerPos = player.getComponent<Transform>();
+    Transform& playerTrans = player.getComponent<Transform>();
     Collider& playerCol = player.getComponent<Collider>();
-    Scale& playerScale = player.getComponent<Scale>();
 
-    Transform& otherPos = other.getComponent<Transform>();
+    Transform& otherTrans = other.getComponent<Transform>();
     Collider& otherCol = other.getComponent<Collider>();
-    Scale& otherScale = other.getComponent<Scale>();
 
-    float playerY = playerPos.y + playerCol.offsetY * playerScale.scale;
-    float otherY = otherPos.y + otherCol.offsetY * otherScale.scale;
+    float playerY = playerTrans.y + playerCol.offsetY * playerTrans.scale;
+    float otherY = otherTrans.y + otherCol.offsetY * otherTrans.scale;
 
-    float scaledHeightPlayer = playerCol.height * playerScale.scale;
-    float scaledHeightOther = otherCol.height * otherScale.scale;
+    float scaledHeightPlayer = playerCol.height * playerTrans.scale;
+    float scaledHeightOther = otherCol.height * otherTrans.scale;
 
     if (playerY + scaledHeightPlayer < otherY ||  // player is above obj
         playerY > otherY + scaledHeightOther) {  // player is below obj
@@ -140,24 +136,23 @@ void CollisionSystem::handlePlayerCollisionX(Entity& player, Entity& other) {
      * @param other: The other entity
      */
     Velocity& vel = player.getComponent<Velocity>();
-    Transform& posPlayer = player.getComponent<Transform>();
+    Transform& playerTrans = player.getComponent<Transform>();
     Collider& colPlayer = player.getComponent<Collider>();
-    Scale& playerScale = player.getComponent<Scale>();
-    Transform& posOther = other.getComponent<Transform>();
+
+    Transform& otherTrans = other.getComponent<Transform>();
     Collider& colOther = other.getComponent<Collider>();
-    Scale& otherScale = other.getComponent<Scale>();
 
     if (vel.dx > 0) {
         // Player is moving right
         vel.dx = 0;
-        float newPos = (posOther.x  + (colOther.offsetX * otherScale.scale)) - (collisionBuffer + (colPlayer.width * playerScale.scale) + (colPlayer.offsetX * playerScale.scale));
-        posPlayer.x = static_cast<int>(newPos + 0.5);
+        float newPos = (otherTrans.x + (colOther.offsetX * otherTrans.scale)) - (collisionBuffer + (colPlayer.width * playerTrans.scale) + (colPlayer.offsetX * playerTrans.scale));
+        playerTrans.x = static_cast<int>(newPos + 0.5);
     }
     else if (vel.dx < 0) {
         // Player is moving left
         vel.dx = 0;
-        float newPos = posOther.x + (colOther.width * otherScale.scale) + (colOther.offsetX * otherScale.scale) + collisionBuffer - (colPlayer.offsetX * playerScale.scale);
-        posPlayer.x = static_cast<int>(newPos + 0.5);
+        float newPos = otherTrans.x + (colOther.width * otherTrans.scale) + (colOther.offsetX * otherTrans.scale) + collisionBuffer - (colPlayer.offsetX * playerTrans.scale);
+        playerTrans.x = static_cast<int>(newPos + 0.5);
     }
 }
 
@@ -169,20 +164,19 @@ void CollisionSystem::handlePlayerCollisionY(Entity& player, Entity& other) {
      * @param other: The other entity
      */
     Velocity& vel = player.getComponent<Velocity>();
-    Transform& posPlayer = player.getComponent<Transform>();
+    Transform& playerTrans = player.getComponent<Transform>();
     Collider& colPlayer = player.getComponent<Collider>();
-    Scale& playerScale = player.getComponent<Scale>();
-    Transform& posOther = other.getComponent<Transform>();
+
+    Transform& otherTrans = other.getComponent<Transform>();
     Collider& colOther = other.getComponent<Collider>();
-    Scale& otherScale = other.getComponent<Scale>();
 
     if (vel.dy > 0) {
         // Player is moving down
         vel.dy = 0;
         player.getComponent<Jumps>().jumps = 0;  // Reset the number of jumps
         
-        float newPos = posOther.y - (collisionBuffer + (colPlayer.height * playerScale.scale) + colPlayer.offsetY * playerScale.scale + colOther.offsetY * otherScale.scale);
-        posPlayer.y = static_cast<int>(newPos + 0.5);
+        float newPos = otherTrans.y - (collisionBuffer + (colPlayer.height * playerTrans.scale) + colPlayer.offsetY * playerTrans.scale + colOther.offsetY * otherTrans.scale);
+        playerTrans.y = static_cast<int>(newPos + 0.5);
         if (vel.dx != 0) {
             player.changeState(playerStates::RUN);
         }
@@ -194,7 +188,7 @@ void CollisionSystem::handlePlayerCollisionY(Entity& player, Entity& other) {
     else if (vel.dy < 0) {
         // Player is moving up
         vel.dy = 0;
-        float newPos = posOther.y + (colOther.height * otherScale.scale) + (colOther.offsetY * otherScale.scale) + collisionBuffer - (colPlayer.offsetY * playerScale.scale);
-        posPlayer.y = static_cast<int>(newPos + 0.5);
+        float newPos = otherTrans.y + (colOther.height * otherTrans.scale) + (colOther.offsetY * otherTrans.scale) + collisionBuffer - (colPlayer.offsetY * playerTrans.scale);
+        playerTrans.y = static_cast<int>(newPos + 0.5);
     }
 }
