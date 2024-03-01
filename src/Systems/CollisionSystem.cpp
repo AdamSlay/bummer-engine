@@ -66,6 +66,7 @@ void CollisionSystem::updateY(EntityManager& entityManager) {
 bool CollisionSystem::checkCollision(Entity &player, Entity &other) {
     /**
      * Check if the player is colliding with another entity
+     * check
      *
      * @param player: The player entity
      * @param other: The other entity
