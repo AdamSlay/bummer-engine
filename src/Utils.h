@@ -41,6 +41,12 @@ namespace Utils {
         const Collider& collider = entity.getComponent<Collider>();
         transform.x = x - (collider.offsetX * transform.scale);
     }
+
+    void setTransformY(Entity& entity, int y) {
+        Transform& transform = entity.getComponent<Transform>();
+        const Collider& collider = entity.getComponent<Collider>();
+        transform.y = y - (collider.offsetY * transform.scale);
+    }
 }
 
 #endif //BUMMERENGINE_UTILS_H

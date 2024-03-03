@@ -164,19 +164,18 @@ void CollisionSystem::handlePlayerCollisionY(Entity& player, Entity& other) {
      * @param other: The other entity
      */
     Velocity& vel = player.getComponent<Velocity>();
-    Transform& playerTrans = player.getComponent<Transform>();
-    Collider& colPlayer = player.getComponent<Collider>();
-
-    Transform& otherTrans = other.getComponent<Transform>();
-    Collider& colOther = other.getComponent<Collider>();
+    SDL_Rect playerCollider = Utils::getColliderRect(player);
+    SDL_Rect otherCollider = Utils::getColliderRect(other);
 
     if (vel.dy > 0) {
         // Player is moving down
         vel.dy = 0;
         player.getComponent<Jumps>().jumps = 0;  // Reset the number of jumps
-        
-        float newPos = otherTrans.y - (collisionBuffer + (colPlayer.height * playerTrans.scale) + colPlayer.offsetY * playerTrans.scale + colOther.offsetY * otherTrans.scale);
-        playerTrans.y = static_cast<int>(newPos + 0.5);
+
+        float newPos = otherCollider.y - (playerCollider.h + collisionBuffer);
+        int y = static_cast<int>(newPos + 1);
+        Utils::setTransformY(player, y);
+
         if (vel.dx != 0) {
             player.changeState(playerStates::RUN);
         }
@@ -188,7 +187,8 @@ void CollisionSystem::handlePlayerCollisionY(Entity& player, Entity& other) {
     else if (vel.dy < 0) {
         // Player is moving up
         vel.dy = 0;
-        float newPos = otherTrans.y + (colOther.height * otherTrans.scale) + (colOther.offsetY * otherTrans.scale) + collisionBuffer - (colPlayer.offsetY * playerTrans.scale);
-        playerTrans.y = static_cast<int>(newPos + 0.5);
+        float newPos = otherCollider.y + otherCollider.h + collisionBuffer;
+        int y = static_cast<int>(newPos + 0.5);
+        Utils::setTransformY(player, y);
     }
 }
