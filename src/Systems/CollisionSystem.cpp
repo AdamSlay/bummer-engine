@@ -104,7 +104,7 @@ bool CollisionSystem::checkCollisionY(Entity &player, Entity &other) {
     SDL_Rect otherCollider = Utils::getColliderRect(other);
 
     if (playerCollider.y + playerCollider.h < otherCollider.y ||  // player is above obj
-        playerCollider.y > otherCollider.y + otherCollider.h) {  // player is below obj
+        playerCollider.y + collisionBuffer > otherCollider.y + otherCollider.h) {  // player is below obj
         return false;
     }
 
@@ -118,6 +118,7 @@ void CollisionSystem::handlePlayerCollisionX(Entity& player, Entity& other) {
      * @param player: The player entity
      * @param other: The other entity
      */
+     std::cout << "Handling X collision\n" << std::endl;
     Velocity& vel = player.getComponent<Velocity>();
     SDL_Rect playerCollider = Utils::getColliderRect(player);
     SDL_Rect otherCollider = Utils::getColliderRect(other);
