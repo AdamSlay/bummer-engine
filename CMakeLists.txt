@@ -36,6 +36,7 @@ set(SOURCE_FILES
         src/Systems/CollisionSystem.h
         src/Systems/AnimationSystem.cpp
         src/Systems/AnimationSystem.h
+        src/Utils.h
 )
 
 add_library(BummerLib ${SOURCE_FILES})

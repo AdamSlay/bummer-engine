@@ -27,6 +27,16 @@ public:
     }
 
     template <typename T>
+    const T &getComponent() const {
+        /**
+         * Get a reference to the component of type T
+         *
+         * this function is used when the entity is const
+        */
+        return *static_cast<const T *>(components.at(std::type_index(typeid(T))));
+    }
+
+    template <typename T>
     bool hasComponent() {
         /**
          * Check if the entity has a component of type T
