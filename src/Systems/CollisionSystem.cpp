@@ -100,20 +100,11 @@ bool CollisionSystem::checkCollisionY(Entity &player, Entity &other) {
      * @param player: The player entity
      * @param other: The other entity
      */
-    Transform& playerTrans = player.getComponent<Transform>();
-    Collider& playerCol = player.getComponent<Collider>();
+    SDL_Rect playerCollider = Utils::getColliderRect(player);
+    SDL_Rect otherCollider = Utils::getColliderRect(other);
 
-    Transform& otherTrans = other.getComponent<Transform>();
-    Collider& otherCol = other.getComponent<Collider>();
-
-    float playerY = playerTrans.y + playerCol.offsetY * playerTrans.scale;
-    float otherY = otherTrans.y + otherCol.offsetY * otherTrans.scale;
-
-    float scaledHeightPlayer = playerCol.height * playerTrans.scale;
-    float scaledHeightOther = otherCol.height * otherTrans.scale;
-
-    if (playerY + scaledHeightPlayer < otherY ||  // player is above obj
-        playerY > otherY + scaledHeightOther) {  // player is below obj
+    if (playerCollider.y + playerCollider.h < otherCollider.y ||  // player is above obj
+        playerCollider.y > otherCollider.y + otherCollider.h) {  // player is below obj
         return false;
     }
 
