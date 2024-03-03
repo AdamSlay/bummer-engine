@@ -82,20 +82,11 @@ bool CollisionSystem::checkCollisionX(Entity &player, Entity &other) {
      * @param player: The player entity
      * @param other: The other entity
      */
-    Transform& playerTrans = player.getComponent<Transform>();
-    Collider& playerCol = player.getComponent<Collider>();
+    SDL_Rect playerCollider = Utils::getColliderRect(player);
+    SDL_Rect otherCollider = Utils::getColliderRect(other);
 
-    Transform& otherTrans = other.getComponent<Transform>();
-    Collider& otherCol = other.getComponent<Collider>();
-
-    float playerX = playerTrans.x + playerCol.offsetX * playerTrans.scale;
-    float otherX = otherTrans.x + otherCol.offsetX * otherTrans.scale;
-
-    float scaledWidthPlayer = playerCol.width * playerTrans.scale;
-    float scaledWidthOther = otherCol.width * otherTrans.scale;
-
-    if (playerX + scaledWidthPlayer < otherX ||  // player is left of obj
-        playerX > otherX + scaledWidthOther) {  // player is right of obj
+    if (playerCollider.x + playerCollider.w < otherCollider.x ||  // player is left of obj
+        playerCollider.x > otherCollider.x + otherCollider.w) {  // player is right of obj
         return false;
     }
 
@@ -144,14 +135,14 @@ void CollisionSystem::handlePlayerCollisionX(Entity& player, Entity& other) {
         // Player is moving right
         vel.dx = 0;
         float newPos = otherCollider.x - (playerCollider.w + collisionBuffer);
-        int x = static_cast<int>(newPos + 0.5);
+        int x = static_cast<int>(newPos + 1);
         Utils::setTransformX(player, x);
     }
     else if (vel.dx < 0) {
         // Player is moving left
         vel.dx = 0;
         float newPos = otherCollider.x + otherCollider.w + collisionBuffer;
-        int x = static_cast<int>(newPos + 0.5);
+        int x = static_cast<int>(newPos + 1);
         Utils::setTransformX(player, x);
     }
 }
