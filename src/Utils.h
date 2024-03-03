@@ -13,7 +13,7 @@ namespace Utils {
      * Utility functions
      */
 
-    std::pair<int, int> getColliderPos(const Entity& entity) {
+    SDL_Rect getColliderRect(const Entity& entity) {
         /**
          * Get the position of the collider
          *
@@ -24,7 +24,9 @@ namespace Utils {
         const Collider& collider = entity.getComponent<Collider>();
         int x = transform.x + (collider.offsetX * transform.scale);
         int y = transform.y + (collider.offsetY * transform.scale);
-        return {x, y};
+        int w = collider.width * transform.scale;
+        int h = collider.height * transform.scale;
+        return SDL_Rect {x, y, w, h};
     }
 }
 
