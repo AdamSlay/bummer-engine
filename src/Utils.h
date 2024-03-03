@@ -28,6 +28,19 @@ namespace Utils {
         int h = collider.height * transform.scale;
         return SDL_Rect {x, y, w, h};
     }
+
+    void setTransformPos(Entity& entity, int x, int y) {
+        Transform& transform = entity.getComponent<Transform>();
+        const Collider& collider = entity.getComponent<Collider>();
+        transform.x = x - (collider.offsetX * transform.scale);
+        transform.y = y - (collider.offsetY * transform.scale);
+    }
+
+    void setTransformX(Entity& entity, int x) {
+        Transform& transform = entity.getComponent<Transform>();
+        const Collider& collider = entity.getComponent<Collider>();
+        transform.x = x - (collider.offsetX * transform.scale);
+    }
 }
 
 #endif //BUMMERENGINE_UTILS_H

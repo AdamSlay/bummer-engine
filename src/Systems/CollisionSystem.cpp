@@ -1,5 +1,6 @@
 #include "CollisionSystem.h"
 #include "../ECS/Components.h"
+#include "../Utils.h"
 
 #include <iostream>
 
@@ -136,23 +137,22 @@ void CollisionSystem::handlePlayerCollisionX(Entity& player, Entity& other) {
      * @param other: The other entity
      */
     Velocity& vel = player.getComponent<Velocity>();
-    Transform& playerTrans = player.getComponent<Transform>();
-    Collider& colPlayer = player.getComponent<Collider>();
-
-    Transform& otherTrans = other.getComponent<Transform>();
-    Collider& colOther = other.getComponent<Collider>();
+    SDL_Rect playerCollider = Utils::getColliderRect(player);
+    SDL_Rect otherCollider = Utils::getColliderRect(other);
 
     if (vel.dx > 0) {
         // Player is moving right
         vel.dx = 0;
-        float newPos = (otherTrans.x + (colOther.offsetX * otherTrans.scale)) - (collisionBuffer + (colPlayer.width * playerTrans.scale) + (colPlayer.offsetX * playerTrans.scale));
-        playerTrans.x = static_cast<int>(newPos + 0.5);
+        float newPos = otherCollider.x - (playerCollider.w + collisionBuffer);
+        int x = static_cast<int>(newPos + 0.5);
+        Utils::setTransformX(player, x);
     }
     else if (vel.dx < 0) {
         // Player is moving left
         vel.dx = 0;
-        float newPos = otherTrans.x + (colOther.width * otherTrans.scale) + (colOther.offsetX * otherTrans.scale) + collisionBuffer - (colPlayer.offsetX * playerTrans.scale);
-        playerTrans.x = static_cast<int>(newPos + 0.5);
+        float newPos = otherCollider.x + otherCollider.w + collisionBuffer;
+        int x = static_cast<int>(newPos + 0.5);
+        Utils::setTransformX(player, x);
     }
 }
 
