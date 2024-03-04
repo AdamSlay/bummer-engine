@@ -63,7 +63,7 @@ Entity& EntityManager::createPlayer(int x, int y, int w, int h) {
     configureAnimator(player, animations);
     player.addComponent<Animator>({animations, playerStates::IDLE, 0, 0, true});
     player.addComponent<Player>({1});
-    player.addComponent<Transform>({x, y, 1.7});
+    player.addComponent<Transform>({x, y, 1.5});
     player.addComponent<Velocity>({0, 0, 1});
     player.addComponent<Collider>({22, 55, w, h});
     player.addComponent<Gravity>({0.8, 0.8, 0.9, 1.1});

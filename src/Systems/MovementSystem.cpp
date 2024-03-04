@@ -59,7 +59,7 @@ void MovementSystem::jump(Entity& entity) {
             jumps.jumps++;
             gravity.gravity = gravity.baseGravity;
             // TODO: Magic number
-            vel.dy = -15;
+            vel.dy = -17;
             entity.changeState(playerStates::JUMP_ASCEND);
         }
     }
