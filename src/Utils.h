@@ -1,52 +1,15 @@
 #ifndef BUMMERENGINE_UTILS_H
 #define BUMMERENGINE_UTILS_H
 
-#include <utility>
-
 #include <SDL2/SDL.h>
-
-#include "ECS/Components.h"
 #include "ECS/EntityManager.h"
 
 namespace Utils {
-    /**
-     * Utility functions
-     */
-
-    SDL_Rect getColliderRect(const Entity& entity) {
-        /**
-         * Get the position of the collider
-         *
-         * @param entity: The entity
-         * @return: A pair of integers representing the x and y position of the collider
-         */
-        const Transform& transform = entity.getComponent<Transform>();
-        const Collider& collider = entity.getComponent<Collider>();
-        int x = transform.x + (collider.offsetX * transform.scale);
-        int y = transform.y + (collider.offsetY * transform.scale);
-        int w = collider.width * transform.scale;
-        int h = collider.height * transform.scale;
-        return SDL_Rect {x, y, w, h};
-    }
-
-    void setTransformPos(Entity& entity, int x, int y) {
-        Transform& transform = entity.getComponent<Transform>();
-        const Collider& collider = entity.getComponent<Collider>();
-        transform.x = x - (collider.offsetX * transform.scale);
-        transform.y = y - (collider.offsetY * transform.scale);
-    }
-
-    void setTransformX(Entity& entity, int x) {
-        Transform& transform = entity.getComponent<Transform>();
-        const Collider& collider = entity.getComponent<Collider>();
-        transform.x = x - (collider.offsetX * transform.scale);
-    }
-
-    void setTransformY(Entity& entity, int y) {
-        Transform& transform = entity.getComponent<Transform>();
-        const Collider& collider = entity.getComponent<Collider>();
-        transform.y = y - (collider.offsetY * transform.scale);
-    }
+    SDL_Rect getColliderRect(const Entity& entity);
+    void setTransformPos(Entity& entity, int x, int y);
+    void setTransformX(Entity& entity, int x);
+    void setTransformY(Entity& entity, int y);
+    void render_collider(Entity &entity, SDL_Renderer *renderer);
+    void render_all_colliders(EntityManager& entityManager, SDL_Renderer* renderer);
 }
-
 #endif //BUMMERENGINE_UTILS_H

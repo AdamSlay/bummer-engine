@@ -4,6 +4,7 @@
 #include "../Systems/AnimationSystem.h"
 #include "../Systems/InputSystem.h"
 
+#include "../Utils.cpp"
 #include "../Config.h"
 
 void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
@@ -61,7 +62,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
         SDL_SetRenderDrawColor(renderer, 104,102,182, 255);  // bb_purple
         SDL_RenderClear(renderer);
-        render_all_colliders(renderer, entityManager);
+        Utils::render_all_colliders(entityManager, renderer);
 
         // Copy game to renderer here
         renderSystem.render(renderer, entityManager);
@@ -70,37 +71,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     }
 }
 
-void render_all_colliders(SDL_Renderer* renderer, EntityManager& entityManager) {
-    /**
-     * Render all colliders for all entities
-     *
-     * @param renderer: The SDL renderer
-     * @param entityManager: The entity manager
-     */
-    for (Entity& entity : entityManager.getEntities()) {
-        if (entity.hasComponent<Collider>()) {
-            render_collider(entity, renderer);
-        }
-    }
-}
 
-void render_collider(Entity &entity, SDL_Renderer *renderer) {
-    /**
-     * Render the collider for an entity
-     *
-     * @param entity: The entity
-     * @param renderer: The SDL renderer
-     */
-    Transform &transform = entity.getComponent<Transform>();
-    Collider &col = entity.getComponent<Collider>();
-    int x = transform.x + (col.offsetX * transform.scale);
-    int y = transform.y + (col.offsetY * transform.scale);
-    int w = col.width * transform.scale;
-    int h = col.height * transform.scale;
-    SDL_Rect collider = {x, y, w, h};
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_RenderDrawRect(renderer, &collider);
-}
 
 void move_and_collide(EntityManager& entityManager, MovementSystem& movementSystem, CollisionSystem& collisionSystem) {
     /**
