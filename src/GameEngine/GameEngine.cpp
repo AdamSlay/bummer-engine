@@ -17,17 +17,19 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
      */
     render_splash_screen(renderer, font);
 
-    EntityManager entityManager;
-    RenderSystem renderSystem;
-    MovementSystem movementSystem;
-    TextureManager textureManager;
-    CollisionSystem collisionSystem;
     AnimationSystem animationSystem;
+    CollisionSystem collisionSystem;
+    EntityManager entityManager;
     InputSystem inputSystem;
+    MovementSystem movementSystem;
     PhysicsSystem physicsSystem;
+    RenderSystem renderSystem;
+    TextureManager textureManager;
 
     entityManager.setTextureManager(&textureManager);
     entityManager.setRenderer(renderer);
+
+    // Setup controller
     SDL_GameController* controller = nullptr;
     if (SDL_NumJoysticks() > 0) {
         controller = SDL_GameControllerOpen(0);
