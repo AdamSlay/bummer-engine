@@ -5,7 +5,8 @@
 
 #include <SDL2/SDL.h>
 
-enum class playerStates {
+enum class playerStates
+{
     IDLE,
     GROUNDED,
     RUN,
@@ -18,33 +19,42 @@ enum class playerStates {
     FALL
 };
 
-struct Input {
+struct Input
+{
     std::map<SDL_Scancode, bool> keyStates;
-    Input(const std::map<SDL_Scancode, bool>& keyStates) : keyStates(keyStates) {}
+    std::map<SDL_Scancode, bool> justPressed;
+    std::map<SDL_Scancode, bool> justReleased;
+    Input(const std::map<SDL_Scancode, bool> &keyStates,
+          const std::map<SDL_Scancode, bool> &justPressed,
+          const std::map<SDL_Scancode, bool> &justReleased)
+          : keyStates(keyStates), justPressed(justPressed), justReleased(justReleased) {}
 };
 
-struct Jumps {
+struct Jumps
+{
     int jumps;
     int maxJumps;
     Jumps(int jumps, int maxJumps) : jumps(jumps), maxJumps(maxJumps) {}
 };
 
-struct AnimationClip {
+struct AnimationClip
+{
     /**
      * A struct representing an animation clip
      * It contains a vector of SDL_Textures
      * representing the frames of the animation
      * This struct might be used to hold the running animation
      */
-    SDL_Texture* spriteSheet;
+    SDL_Texture *spriteSheet;
     std::vector<SDL_Rect> frames;
     int framesPerImage;
     bool loop;
-    AnimationClip(SDL_Texture* spriteSheet, std::vector<SDL_Rect> frames, int framesPerImage, bool loop)
+    AnimationClip(SDL_Texture *spriteSheet, std::vector<SDL_Rect> frames, int framesPerImage, bool loop)
         : spriteSheet(spriteSheet), frames(frames), framesPerImage(framesPerImage), loop(loop) {}
 };
 
-struct Animator {
+struct Animator
+{
     std::map<playerStates, AnimationClip> animations;
     playerStates currentAnimation;
     int currentFrame;
@@ -54,40 +64,47 @@ struct Animator {
         : animations(animations), currentAnimation(currentAnimation), currentFrame(currentFrame), currentImage(currentImage), isPlaying(isPlaying) {}
 };
 
-struct State {
+struct State
+{
     playerStates state;
     State(playerStates state) : state(state) {}
 };
 
-struct Player {
+struct Player
+{
     int playerNumber;
     Player(int playerNumber) : playerNumber(playerNumber) {}
 };
 
-struct Transform {
+struct Transform
+{
     int x, y;
     float scale;
     Transform(int x, int y, float scale) : x(x), y(y), scale(scale) {}
 };
 
-struct Velocity {
-    int dx, dy, direction;  // 1 for right, -1 for left
+struct Velocity
+{
+    int dx, dy, direction; // 1 for right, -1 for left
     Velocity(int dx, int dy, int direction) : dx(dx), dy(dy), direction(direction) {}
 };
 
-struct Collider {
+struct Collider
+{
     int offsetX, offsetY, width, height;
     Collider(int offsetX, int offsetY, int width, int height)
         : offsetX(offsetX), offsetY(offsetY), width(width), height(height) {}
 };
 
-struct Sprite {
-    SDL_Texture* texture;
+struct Sprite
+{
+    SDL_Texture *texture;
     SDL_Rect srcRect;
-    Sprite(SDL_Texture* texture, SDL_Rect srcRect) : texture(texture), srcRect(srcRect) {}
+    Sprite(SDL_Texture *texture, SDL_Rect srcRect) : texture(texture), srcRect(srcRect) {}
 };
 
-struct Gravity {
+struct Gravity
+{
     float baseGravity;
     float gravity;
     float ascendFactor;
@@ -96,4 +113,4 @@ struct Gravity {
         : baseGravity(baseGravity), gravity(gravity), ascendFactor(ascendFactor), descendFactor(descendFactor) {}
 };
 
-#endif //BUMMERENGINE_COMPONENTS_H
+#endif // BUMMERENGINE_COMPONENTS_H

@@ -31,8 +31,12 @@ void MovementSystem::moveY(EntityManager &entityManager) {
         if (entity.hasComponent<Transform>() && entity.hasComponent<Velocity>() && entity.hasComponent<Input>()) {
             Velocity &vel = entity.getComponent<Velocity>();
             Input& input = entity.getComponent<Input>();
-            if (input.keyStates[SDL_SCANCODE_UP]) {
+            if (input.justPressed[SDL_SCANCODE_UP]) {
                 jump(entity);
+                std::cout << "Jumps remaining: " << entity.getComponent<Jumps>().maxJumps - entity.getComponent<Jumps>().jumps << "\n";
+            }
+            if (input.justReleased[SDL_SCANCODE_UP] && vel.dy < 0) {  // If the jump button is released while ascending, stop ascending
+                vel.dy = 0;
             }
             if (input.keyStates[SDL_SCANCODE_DOWN]) {
                 vel.dy = 5;
