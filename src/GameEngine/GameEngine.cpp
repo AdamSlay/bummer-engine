@@ -3,6 +3,7 @@
 #include "../Systems/RenderSystem.h"
 #include "../Systems/AnimationSystem.h"
 #include "../Systems/InputSystem.h"
+#include "../Systems/PhysicsSystem.h"
 
 #include "../Utils.cpp"
 #include "../Config.h"
@@ -23,6 +24,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     CollisionSystem collisionSystem;
     AnimationSystem animationSystem;
     InputSystem inputSystem;
+    PhysicsSystem physicsSystem;
 
     entityManager.setTextureManager(&textureManager);
     entityManager.setRenderer(renderer);
@@ -38,28 +40,20 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     bool quit = false;
     Uint32 lastTime = SDL_GetTicks();
     while (!quit) {
+        // handle frame timing
         Uint32 currentTime = SDL_GetTicks();
         float deltaTime = (currentTime - lastTime) / 1000.0f;
         lastTime = currentTime;
         if (deltaTime < 1000 / 60) {
             SDL_Delay((1000 / 60) - deltaTime);
         }
-        
 
-        Entity& player = entityManager.getPlayer();
-        // reset player position if it falls off the screen
-        if (player.getComponent<Transform>().y > SCREEN_HEIGHT) {
-            player.getComponent<Transform>().y = SCREEN_HEIGHT / 4;
-            player.getComponent<Transform>().x = SCREEN_WIDTH / 2;
-            player.getComponent<Velocity>().dy = 0;
-        }
-
+        // Perform game logic updates
         inputSystem.update(entityManager, quit);
-
-        // Perform game logic updates here
-        move_and_collide(entityManager, movementSystem, collisionSystem);
+        physicsSystem.update(entityManager, movementSystem, collisionSystem);
         animationSystem.update(entityManager, deltaTime);
 
+        // render colliders
         SDL_SetRenderDrawColor(renderer, 104,102,182, 255);  // bb_purple
         SDL_RenderClear(renderer);
         Utils::render_all_colliders(entityManager, renderer);
@@ -71,19 +65,6 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     }
 }
 
-
-
-void move_and_collide(EntityManager& entityManager, MovementSystem& movementSystem, CollisionSystem& collisionSystem) {
-    /**
-     * Move entities and check for collisions
-     *
-     * @param entityManager: The entity manager
-     */
-    movementSystem.moveX(entityManager);
-    collisionSystem.updateX(entityManager);
-    movementSystem.moveY(entityManager);
-    collisionSystem.updateY(entityManager);
-}
 
 void sandbox(EntityManager& entityManager) {
     /**

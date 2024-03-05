@@ -40,6 +40,8 @@ set(SOURCE_FILES
         src/Systems/InputSystem.cpp
         src/Systems/InputSystem.h
         src/Utils.h
+        src/Systems/PhysicsSystem.cpp
+        src/Systems/PhysicsSystem.h
 )
 
 add_library(BummerLib ${SOURCE_FILES})
