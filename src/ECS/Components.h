@@ -18,6 +18,11 @@ enum class playerStates {
     FALL
 };
 
+struct Input {
+    std::map<SDL_Scancode, bool> keyStates;
+    Input(const std::map<SDL_Scancode, bool>& keyStates) : keyStates(keyStates) {}
+};
+
 struct Jumps {
     int jumps;
     int maxJumps;

@@ -69,6 +69,8 @@ Entity& EntityManager::createPlayer(int x, int y, int w, int h) {
     player.addComponent<Gravity>({0.8, 0.8, 0.9, 1.1});
     player.addComponent<State>({playerStates::IDLE});
     player.addComponent<Jumps>({0, 2});
+    std::map<SDL_Scancode, bool> keyMap;
+    player.addComponent<Input>(keyMap);
 
 
     SDL_Texture* texture = textureManager->loadTexture(renderer, "assets/bb_jump_sheet.png");

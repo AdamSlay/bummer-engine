@@ -37,6 +37,8 @@ set(SOURCE_FILES
         src/Systems/AnimationSystem.cpp
         src/Systems/AnimationSystem.h
         src/Utils.h
+        src/Systems/InputSystem.cpp
+        src/Systems/InputSystem.h
 )
 
 add_library(BummerLib ${SOURCE_FILES})

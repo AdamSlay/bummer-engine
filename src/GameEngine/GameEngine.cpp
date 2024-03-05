@@ -2,6 +2,7 @@
 #include "../UI/Menu.h"
 #include "../Systems/RenderSystem.h"
 #include "../Systems/AnimationSystem.h"
+#include "../Systems/InputSystem.h"
 
 #include "../Config.h"
 
@@ -20,6 +21,8 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     TextureManager textureManager;
     CollisionSystem collisionSystem;
     AnimationSystem animationSystem;
+    InputSystem inputSystem;
+
     entityManager.setTextureManager(&textureManager);
     entityManager.setRenderer(renderer);
     SDL_GameController* controller = nullptr;
@@ -49,7 +52,8 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
             player.getComponent<Transform>().x = SCREEN_WIDTH / 2;
             player.getComponent<Velocity>().dy = 0;
         }
-        player_controller(e, quit, player, movementSystem);
+
+        inputSystem.update(entityManager, quit);
 
         // Perform game logic updates here
         move_and_collide(entityManager, movementSystem, collisionSystem);

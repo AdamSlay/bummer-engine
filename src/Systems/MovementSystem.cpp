@@ -4,32 +4,39 @@
 #include "../ECS/Components.h"
 
 void MovementSystem::moveX(EntityManager& entityManager) {
-    /**
-     * Move entities on the X axis
-     *
-     * @param entityManager: The entity manager
-     */
     for (Entity& entity : entityManager.getEntities()) {
-        if (entity.hasComponent<Transform>() && entity.hasComponent<Velocity>()) {
+        if (entity.hasComponent<Transform>() && entity.hasComponent<Velocity>() && entity.hasComponent<Input>()) {
             Transform& pos = entity.getComponent<Transform>();
             Velocity& vel = entity.getComponent<Velocity>();
-            pos.x += vel.dx;
+            Input& input = entity.getComponent<Input>();
+            if (input.keyStates[SDL_SCANCODE_LEFT]) {
+                vel.dx = -5;
+            }
+            else if (input.keyStates[SDL_SCANCODE_RIGHT]) {
+                vel.dx = 5;
+            }
+            else {
+                vel.dx = 0;
+            }
             if (vel.dx != 0) {
                 vel.direction = (vel.dx > 0) ? 1 : -1;
             }
+            pos.x += vel.dx;
         }
     }
 }
 
 void MovementSystem::moveY(EntityManager &entityManager) {
-    /**
-     * Move entities on the Y axis
-     *
-     * @param entityManager: The entity manager
-     */
     for (Entity &entity : entityManager.getEntities()) {
-        if (entity.hasComponent<Transform>() && entity.hasComponent<Velocity>()) {
+        if (entity.hasComponent<Transform>() && entity.hasComponent<Velocity>() && entity.hasComponent<Input>()) {
             Velocity &vel = entity.getComponent<Velocity>();
+            Input& input = entity.getComponent<Input>();
+            if (input.keyStates[SDL_SCANCODE_UP]) {
+                jump(entity);
+            }
+            if (input.keyStates[SDL_SCANCODE_DOWN]) {
+                vel.dy = 5;
+            }
             if (vel.dy != 0) {
                 changeJumpState(entity);
             }
