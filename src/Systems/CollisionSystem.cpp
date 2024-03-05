@@ -126,7 +126,7 @@ void CollisionSystem::handlePlayerCollisionX(Entity& player, Entity& other) {
         // Player is moving right
         vel.dx = 0;
         float newPos = otherCollider.x - (playerCollider.w + collisionBuffer);
-        int x = static_cast<int>(newPos + 1);
+        int x = static_cast<int>(newPos);
         Utils::setTransformX(player, x);
     }
     else if (vel.dx < 0) {
