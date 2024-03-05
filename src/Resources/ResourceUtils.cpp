@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "SDL2/SDL_Image.h"
+#include "SDL2/SDL_mixer.h"
 
 #include "../Config.h"
 #include "ResourceUtils.h"
@@ -47,6 +48,11 @@ int initialize_resource(SDL_Window*& window, SDL_Renderer*& renderer, TTF_Font*&
         std::cout << "Failed to load font! \nError: " << TTF_GetError() << std::endl;
         return 6;
     }
+    // Initialize SDL_mixer
+    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+        std::cout << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << std::endl;
+        return 7;
+    }
     return 0;
 }
 
@@ -66,4 +72,5 @@ void close(SDL_Renderer*& renderer, SDL_Window*& window, TTF_Font*& font) {
     IMG_Quit();
     TTF_Quit();
     SDL_Quit();
+    Mix_Quit();
 }

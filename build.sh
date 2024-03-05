@@ -13,6 +13,7 @@ fi
 ./vcpkg/vcpkg install sdl2
 ./vcpkg/vcpkg install sdl2-image
 ./vcpkg/vcpkg install sdl2-ttf
+./vcpkg/vcpkg install sdl2-mixer
 ./vcpkg/vcpkg install nlohmann-json
 
 # Configure and build project
