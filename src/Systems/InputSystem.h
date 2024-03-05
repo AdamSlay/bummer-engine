@@ -6,6 +6,7 @@
 class InputSystem {
 public:
     void update(EntityManager& entityManager, bool& quit);
+    SDL_Scancode mapControllerButtonToScancode(Uint8 button);
 };
 
 #endif //BUMMERENGINE_INPUTSYSTEM_H

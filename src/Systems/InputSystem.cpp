@@ -31,5 +31,36 @@ void InputSystem::update(EntityManager &entityManager, bool &quit) {
                 }
             }
         }
+        else if (e.type == SDL_CONTROLLERBUTTONDOWN || e.type == SDL_CONTROLLERBUTTONUP) {
+            for (Entity &entity : entityManager.getEntities()) {
+                if (entity.hasComponent<Input>()) {
+                    Input &input = entity.getComponent<Input>();
+                    // Map the controller button to an equivalent keyboard key
+                    SDL_Scancode scancode = mapControllerButtonToScancode(e.cbutton.button);
+                    input.keyStates[scancode] = (e.type == SDL_CONTROLLERBUTTONDOWN);
+                    if (e.type == SDL_CONTROLLERBUTTONDOWN) {
+                        input.justPressed[scancode] = true;
+                    }
+                    else if (e.type == SDL_CONTROLLERBUTTONUP) {
+                        input.justReleased[scancode] = true;
+                    }
+                }
+            }
+        }
+    }
+}
+
+SDL_Scancode InputSystem::mapControllerButtonToScancode(Uint8 button) {
+    switch (button) {
+    case SDL_CONTROLLER_BUTTON_A:
+        return SDL_SCANCODE_UP; // Map 'A' button to up key
+    case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+        return SDL_SCANCODE_LEFT; // Map left D-pad button to left arrow key
+    case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+        return SDL_SCANCODE_RIGHT; // Map right D-pad button to right arrow key
+    case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
+        return SDL_SCANCODE_DOWN;  // Map down D-pad button to down arrow key
+    default:
+        return SDL_SCANCODE_UNKNOWN;
     }
 }
