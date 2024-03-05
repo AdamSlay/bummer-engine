@@ -4,6 +4,7 @@
 #include "../Systems/AnimationSystem.h"
 #include "../Systems/InputSystem.h"
 #include "../Systems/PhysicsSystem.h"
+#include "../Systems/SoundSystem.h"
 
 #include "../Utils.cpp"
 #include "../Config.h"
@@ -24,6 +25,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     MovementSystem movementSystem;
     PhysicsSystem physicsSystem;
     RenderSystem renderSystem;
+    SoundSystem soundSystem;
     TextureManager textureManager;
 
     entityManager.setTextureManager(&textureManager);
@@ -54,6 +56,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
         inputSystem.update(entityManager, quit);
         physicsSystem.update(entityManager, movementSystem, collisionSystem);
         animationSystem.update(entityManager, deltaTime);
+        soundSystem.update(entityManager);
 
         // render colliders
         SDL_SetRenderDrawColor(renderer, 104,102,182, 255);  // bb_purple

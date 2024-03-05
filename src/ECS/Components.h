@@ -19,6 +19,12 @@ enum class playerStates
     FALL
 };
 
+struct Sound
+{
+    std::string soundFile;
+    Sound(std::string soundFile) : soundFile(soundFile) {}
+};
+
 struct Input
 {
     std::map<SDL_Scancode, bool> keyStates;
