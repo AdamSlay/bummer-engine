@@ -6,6 +6,7 @@
 
 class SoundSystem {
 public:
+    SoundSystem();
     void update(EntityManager& entityManager);
     void playSound(const std::string& soundFile);
     void stopSound();

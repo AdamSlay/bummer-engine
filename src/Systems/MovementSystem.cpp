@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "../ECS/Components.h"
+#include "../ECS/EventManager.h"
 
 void MovementSystem::moveX(EntityManager& entityManager) {
     for (Entity& entity : entityManager.getEntities()) {
@@ -71,6 +72,7 @@ void MovementSystem::jump(Entity& entity) {
             // TODO: Magic number
             vel.dy = -17;
             entity.changeState(playerStates::JUMP_ASCEND);
+            EventManager::getInstance().publish("jump");
         }
     }
 }

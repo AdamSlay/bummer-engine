@@ -1,5 +1,12 @@
 #include "SoundSystem.h"
+#include "../ECS/EventManager.h"
 
+
+SoundSystem::SoundSystem() {
+    EventManager::getInstance().subscribe("jump", [this]() {
+        playSound("assets/sounds/zapsplat/zapsplat_cartoon_comic_ruler_twang_wood_short_005_108518.wav");
+    });
+}
 
 void SoundSystem::update(EntityManager& entityManager) {
     for (Entity& entity : entityManager.getEntities()) {
@@ -15,6 +22,7 @@ void SoundSystem::playSound(const std::string& soundFile) {
     if (sound == nullptr) {
         // Handle error
     }
+    Mix_VolumeChunk(sound, MIX_MAX_VOLUME / 6);
     Mix_PlayChannel(-1, sound, 0);
 }
 
