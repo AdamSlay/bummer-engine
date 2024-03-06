@@ -8,7 +8,7 @@
 
 class PhysicsSystem {
 public:
-    void update(EntityManager& entityManager, MovementSystem& movementSystem, CollisionSystem& collisionSystem);
+    void update(EntityManager& entityManager, MovementSystem& movementSystem, CollisionSystem& collisionSystem, float deltaTime);
 
 };
 

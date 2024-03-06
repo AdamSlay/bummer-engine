@@ -2,8 +2,8 @@
 #include "../ECS/EventManager.h"
 #include "../Config.h"
 
-void PhysicsSystem::update(EntityManager& entityManager, MovementSystem& movementSystem, CollisionSystem& collisionSystem) {
-    movementSystem.moveX(entityManager);
+void PhysicsSystem::update(EntityManager& entityManager, MovementSystem& movementSystem, CollisionSystem& collisionSystem, float deltaTime) {
+    movementSystem.moveX(entityManager, deltaTime);
     collisionSystem.updateX(entityManager);
     movementSystem.moveY(entityManager);
     collisionSystem.updateY(entityManager);

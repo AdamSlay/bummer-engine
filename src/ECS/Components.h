@@ -43,6 +43,23 @@ struct Jumps
     Jumps(int jumps, int maxJumps) : jumps(jumps), maxJumps(maxJumps) {}
 };
 
+struct Dash
+{
+    int speed;
+    bool isDashing;
+    float initDuration;
+    float initCooldown;
+    float currentDuration;
+    float currentCooldown;
+    Dash(int speed, bool isDashing, float initDuration, float initCooldown) :
+            speed(speed),
+            isDashing(isDashing),
+            initDuration(initDuration),
+            initCooldown(initCooldown),
+            currentDuration(initDuration),
+            currentCooldown(0) {}
+};
+
 struct AnimationClip
 {
     /**

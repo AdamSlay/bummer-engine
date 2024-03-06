@@ -54,6 +54,8 @@ SDL_Scancode InputSystem::mapControllerButtonToScancode(Uint8 button) {
     switch (button) {
     case SDL_CONTROLLER_BUTTON_A:
         return SDL_SCANCODE_UP; // Map 'A' button to up key
+    case SDL_CONTROLLER_BUTTON_X:  // Map 'X' button to Space key
+        return SDL_SCANCODE_SPACE;
     case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
         return SDL_SCANCODE_LEFT; // Map left D-pad button to left arrow key
     case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:

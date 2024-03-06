@@ -18,6 +18,9 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
      */
     render_splash_screen(renderer, font);
 
+    TextureManager textureManager;
+    EntityManager entityManager(&textureManager, renderer);
+    
     AnimationSystem animationSystem;
     CollisionSystem collisionSystem;
     InputSystem inputSystem;
@@ -25,8 +28,6 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     PhysicsSystem physicsSystem;
     RenderSystem renderSystem;
     SoundSystem soundSystem;
-    TextureManager textureManager;
-    EntityManager entityManager(&textureManager, renderer);
 
     // Setup controller
     SDL_GameController* controller = nullptr;
@@ -51,7 +52,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
         // Perform game logic updates
         inputSystem.update(entityManager, quit);
-        physicsSystem.update(entityManager, movementSystem, collisionSystem);
+        physicsSystem.update(entityManager, movementSystem, collisionSystem, deltaTime);
         animationSystem.update(entityManager, deltaTime);
         soundSystem.update(entityManager);
 

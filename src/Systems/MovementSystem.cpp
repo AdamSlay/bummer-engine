@@ -4,23 +4,28 @@
 #include "../ECS/Components.h"
 #include "../ECS/EventManager.h"
 
-void MovementSystem::moveX(EntityManager& entityManager) {
+void MovementSystem::moveX(EntityManager& entityManager, float deltaTime) {
     for (Entity& entity : entityManager.getEntities()) {
         if (entity.hasComponent<Transform>() && entity.hasComponent<Velocity>() && entity.hasComponent<Input>()) {
             Transform& pos = entity.getComponent<Transform>();
             Velocity& vel = entity.getComponent<Velocity>();
             Input& input = entity.getComponent<Input>();
-            if (input.keyStates[SDL_SCANCODE_LEFT]) {
-                vel.dx = -5;
-            }
-            else if (input.keyStates[SDL_SCANCODE_RIGHT]) {
-                vel.dx = 5;
-            }
-            else {
-                vel.dx = 0;
-            }
-            if (vel.dx != 0) {
-                vel.direction = (vel.dx > 0) ? 1 : -1;
+
+            dash(entity, deltaTime);
+            Dash& dash = entity.getComponent<Dash>();
+            if (!dash.isDashing) {
+                if (input.keyStates[SDL_SCANCODE_LEFT]) {
+                    vel.dx = -5;
+                }
+                else if (input.keyStates[SDL_SCANCODE_RIGHT]) {
+                    vel.dx = 5;
+                }
+                else {
+                    vel.dx = 0;
+                }
+                if (vel.dx != 0) {
+                    vel.direction = (vel.dx > 0) ? 1 : -1;
+                }
             }
             pos.x += vel.dx;
         }
@@ -73,6 +78,36 @@ void MovementSystem::jump(Entity& entity) {
             vel.dy = -17;
             entity.changeState(playerStates::JUMP_ASCEND);
             EventManager::getInstance().publish("jump");
+        }
+    }
+}
+
+void MovementSystem::dash(Entity& entity, float deltaTime) {
+    if (entity.hasComponent<Input>() && entity.hasComponent<Dash>() && entity.hasComponent<Velocity>()) {
+        Input& input = entity.getComponent<Input>();
+        Dash& dash = entity.getComponent<Dash>();
+        Velocity& vel = entity.getComponent<Velocity>();
+        if (input.justPressed[SDL_SCANCODE_SPACE] && !dash.isDashing && dash.currentCooldown <= 0) {
+            std::cout << "Dashing" << std::endl;
+            dash.isDashing = true;
+            vel.dx *= dash.speed;
+            vel.dy *= dash.speed;
+        }
+        if (dash.isDashing) {
+            dash.currentDuration -= deltaTime;
+            if (dash.currentDuration <= 0) {
+                dash.isDashing = false;
+                dash.currentCooldown = dash.initCooldown; // Reset cooldown
+                dash.currentDuration = dash.initDuration; // Reset duration
+                vel.dx /= dash.speed; // Reset velocity
+                vel.dy /= dash.speed;
+            }
+        } else if (dash.currentCooldown > 0) {
+            dash.currentCooldown -= deltaTime;
+            if (dash.currentCooldown < 0) {
+                std::cout << "Cooldown over" << std::endl;
+                dash.currentCooldown = 0;
+            }
         }
     }
 }
