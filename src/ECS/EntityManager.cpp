@@ -1,25 +1,16 @@
 #include "EntityManager.h"
 #include "../Resources/TextureManager.h"
 
-void EntityManager::setTextureManager(TextureManager* texManager) {
+EntityManager::EntityManager(TextureManager* texManager, SDL_Renderer* ecsRenderer) {
     /**
-     * Set the texture manager for the EntityManager
+     * Constructor for the EntityManager
      *
      * @param texManager: The texture manager
-     */
-    this->textureManager = texManager;
-}
-
-
-void EntityManager::setRenderer(SDL_Renderer* ecsRenderer) {
-    /**
-     * Set the renderer for the EntityManager
-     *
      * @param ecsRenderer: The SDL renderer
      */
+    this->textureManager = texManager;
     this->renderer = ecsRenderer;
 }
-
 
 Entity& EntityManager::createEntity() {
     /**

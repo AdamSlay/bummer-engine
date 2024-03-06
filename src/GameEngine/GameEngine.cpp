@@ -20,16 +20,13 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
     AnimationSystem animationSystem;
     CollisionSystem collisionSystem;
-    EntityManager entityManager;
     InputSystem inputSystem;
     MovementSystem movementSystem;
     PhysicsSystem physicsSystem;
     RenderSystem renderSystem;
     SoundSystem soundSystem;
     TextureManager textureManager;
-
-    entityManager.setTextureManager(&textureManager);
-    entityManager.setRenderer(renderer);
+    EntityManager entityManager(&textureManager, renderer);
 
     // Setup controller
     SDL_GameController* controller = nullptr;
