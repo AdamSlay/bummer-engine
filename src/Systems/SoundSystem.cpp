@@ -12,6 +12,9 @@ SoundSystem::SoundSystem() {
     EventManager::getInstance().subscribe("spawn", [this]() {
         playSound("assets/sounds/zapsplat/zapsplat_multimedia_game_sound_robotic_buzz_chirp_103482.wav");
     });
+    EventManager::getInstance().subscribe("dash", [this]() {
+        playSound("assets/sounds/zapsplat/zapsplat_cartoon_whoosh_swipe_fast_grab_dash_006_74747.wav");
+    });
 }
 
 void SoundSystem::update(EntityManager& entityManager) {

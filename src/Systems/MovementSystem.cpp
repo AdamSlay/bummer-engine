@@ -99,6 +99,7 @@ void MovementSystem::dash(Entity& entity, float deltaTime) {
         Velocity& vel = entity.getComponent<Velocity>();
         if (input.justPressed[SDL_SCANCODE_SPACE] && !dash.isDashing && dash.currentCooldown <= 0) {
             dash.isDashing = true;
+            EventManager::getInstance().publish("dash");
             // Set a specific velocity for the dash
             if (std::abs(input.joystickDirection.first) > 0.2 || std::abs(input.joystickDirection.second) > 0.2) {
                 // If the joystick is being used, dash in the direction of the joystick
