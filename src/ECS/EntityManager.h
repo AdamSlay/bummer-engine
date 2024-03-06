@@ -71,7 +71,7 @@ public:
     Entity& createEntity();
     std::vector<Entity>& getEntities();
     Entity& createPlayer(int x, int y, int w, int h);
-    Entity& createPlatform(int x, int y, int w, int h);
+    Entity &createPlatform(int x, int y, int w, int h, float scale);
     void configureAnimator(Entity& entity, std::map<playerStates, AnimationClip>& animations);
     Entity& getPlayer();
 

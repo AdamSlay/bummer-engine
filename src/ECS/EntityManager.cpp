@@ -124,7 +124,7 @@ void EntityManager::configureAnimator(Entity& entity, std::map<playerStates, Ani
     animations.emplace(playerStates::GROUNDED, idleClip);
 }
 
-Entity& EntityManager::createPlatform(int x, int y, int w, int h) {
+Entity & EntityManager::createPlatform(int x, int y, int w, int h, float scale) {
     /**
      * Create a new platform entity, append it to the entities vector and return a reference to it
      *
@@ -134,10 +134,12 @@ Entity& EntityManager::createPlatform(int x, int y, int w, int h) {
      * @param h: The height of the platform
      */
     Entity& platform = createEntity();
+    int scaledW = w * scale;
+    int colliderOffset = 4 * scale;
     platform.addComponent<Transform>({x, y, 1});
-    platform.addComponent<Collider>({10, 0, w - 18, h});
+    platform.addComponent<Collider>({0 + colliderOffset, 0, scaledW - (colliderOffset * 2), h});
     SDL_Texture* texture = textureManager->loadTexture(renderer, "assets/platform.png");
-    SDL_Rect srcRect = {0, 0, w, h};
+    SDL_Rect srcRect = {0, 0, scaledW, h};
     platform.addComponent<Sprite>({texture, srcRect});
     return platform;
 }

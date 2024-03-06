@@ -79,12 +79,12 @@ void sandbox(EntityManager& entityManager) {
      *
      * @param entityManager: The entity manager
      */
-    int groundX = 50;
-    int groundY = SCREEN_HEIGHT - 200;
+    int groundX = 100;
+    int groundY = SCREEN_HEIGHT - 150;
     int groundW = SCREEN_WIDTH - 100;
     int groundH = 50;
-    Entity& platform = entityManager.createPlatform(groundX, groundY, groundW, groundH);
-    Entity& player = entityManager.createPlayer(50, 50, 18, 40);
-    Entity& platform2 = entityManager.createPlatform(500, 400, 128, 32);
-    Entity& platform3 = entityManager.createPlatform(700, 450, 128, 32);
+    Entity& platform = entityManager.createPlatform(groundX, groundY, 256, 64, 4.2);
+    Entity& player = entityManager.createPlayer(500, 50, 18, 40);
+    Entity& platform2 = entityManager.createPlatform(192, 400, 256, 32, 1);
+    Entity& platform3 = entityManager.createPlatform(832, 400, 256, 32, 1);
 }
