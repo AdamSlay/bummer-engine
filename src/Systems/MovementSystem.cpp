@@ -43,14 +43,19 @@ void MovementSystem::moveY(EntityManager &entityManager) {
             if (input.justReleased[SDL_SCANCODE_UP] && vel.dy < 0) {  // If the jump button is released while ascending, stop ascending
                 vel.dy = 0;
             }
-            if (input.keyStates[SDL_SCANCODE_DOWN]) {
-                vel.dy = 5;
-            }
             if (vel.dy != 0) {
                 changeJumpState(entity);
             }
             if (entity.hasComponent<Gravity>()) {
-                applyGravity(entity);
+                if (entity.hasComponent<Dash>()) {
+                    Dash& dash = entity.getComponent<Dash>();
+                    if (!dash.isDashing) {
+                        applyGravity(entity);
+                    }
+                }
+                else {
+                    applyGravity(entity);
+                }
             }
             // Apply velocity
             Transform &pos = entity.getComponent<Transform>();
@@ -88,10 +93,29 @@ void MovementSystem::dash(Entity& entity, float deltaTime) {
         Dash& dash = entity.getComponent<Dash>();
         Velocity& vel = entity.getComponent<Velocity>();
         if (input.justPressed[SDL_SCANCODE_SPACE] && !dash.isDashing && dash.currentCooldown <= 0) {
-            std::cout << "Dashing" << std::endl;
             dash.isDashing = true;
-            vel.dx *= dash.speed;
-            vel.dy *= dash.speed;
+            // Set a specific velocity for the dash
+            if (std::abs(input.joystickDirection.first) > 0.2 || std::abs(input.joystickDirection.second) > 0.2) {
+                // If the joystick is being used, dash in the direction of the joystick
+                std::cout << "Input value: " << input.joystickDirection.first << ", " << input.joystickDirection.second << std::endl;
+                vel.dx = input.joystickDirection.first * dash.speed;
+                vel.dy = input.joystickDirection.second * dash.speed;
+            } else {
+                // If the joystick is not being used, dash in the direction of the keyboard input
+                float dx = 0.0f, dy = 0.0f;
+                if (input.keyStates[SDL_SCANCODE_UP]) dy = -1.0f;
+                if (input.keyStates[SDL_SCANCODE_DOWN]) dy = 1.0f;
+                if (input.keyStates[SDL_SCANCODE_LEFT]) dx = -1.0f;
+                if (input.keyStates[SDL_SCANCODE_RIGHT]) dx = 1.0f;
+                // Normalize the direction vector
+                float length = std::sqrt(dx * dx + dy * dy);
+                if (length > 0) {
+                    dx /= length;
+                    dy /= length;
+                }
+                vel.dx = dx * dash.speed;
+                vel.dy = dy * dash.speed;
+            }
         }
         if (dash.isDashing) {
             dash.currentDuration -= deltaTime;
