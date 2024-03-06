@@ -65,6 +65,19 @@ void InputSystem::update(EntityManager &entityManager, bool &quit) {
                             input.keyStates[SDL_SCANCODE_LEFT] = false;
                         }
                     }
+                    if (e.jaxis.axis == 1) { // Y axis
+                        input.joystickDirection.second = e.jaxis.value / 32767.0f;
+                        if (input.joystickDirection.second < -deadZone) {
+                            input.keyStates[SDL_SCANCODE_UP] = true;
+                            input.keyStates[SDL_SCANCODE_DOWN] = false;
+                        } else if (input.joystickDirection.second > deadZone) {
+                            input.keyStates[SDL_SCANCODE_DOWN] = true;
+                            input.keyStates[SDL_SCANCODE_UP] = false;
+                        } else {
+                            input.keyStates[SDL_SCANCODE_DOWN] = false;
+                            input.keyStates[SDL_SCANCODE_UP] = false;
+                        }
+                    }
                 }
             }
         }
