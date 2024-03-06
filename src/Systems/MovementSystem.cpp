@@ -52,6 +52,11 @@ void MovementSystem::moveY(EntityManager &entityManager) {
                     if (!dash.isDashing) {
                         applyGravity(entity);
                     }
+                    else {
+                        // If the entity is dashing, don't apply gravity
+                        Gravity& gravity = entity.getComponent<Gravity>();
+                        gravity.gravity = 0.5;
+                    }
                 }
                 else {
                     applyGravity(entity);
