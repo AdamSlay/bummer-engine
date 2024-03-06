@@ -8,7 +8,7 @@ class SoundSystem {
 public:
     SoundSystem();
     void update(EntityManager& entityManager);
-    void playSound(const std::string& soundFile);
+    void playSound(const std::string& soundFile, int volumeDivisor);
     void stopSound();
 };
 

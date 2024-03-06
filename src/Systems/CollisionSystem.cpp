@@ -1,5 +1,6 @@
 #include "CollisionSystem.h"
 #include "../ECS/Components.h"
+#include "../ECS/EventManager.h"
 #include "../Utils.h"
 
 #include <iostream>
@@ -151,13 +152,16 @@ void CollisionSystem::handlePlayerCollisionY(Entity& player, Entity& other) {
 
     if (vel.dy > 0) {
         // Player is moving down
+        if (vel.dy > 5) {
+            EventManager::getInstance().publish("landed");
+        }
+
         vel.dy = 0;
         player.getComponent<Jumps>().jumps = 0;  // Reset the number of jumps
 
         float newPos = otherCollider.y - (playerCollider.h + collisionBuffer);
         int y = static_cast<int>(newPos + 1);
         Utils::setTransformY(player, y);
-
         if (vel.dx != 0) {
             player.changeState(playerStates::RUN);
         }
