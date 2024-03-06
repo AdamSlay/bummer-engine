@@ -70,6 +70,7 @@ void close(SDL_Renderer*& renderer, SDL_Window*& window, TTF_Font*& font) {
     font = nullptr;
 
     Mix_CloseAudio();
+    SDL_Delay(100);
 
     IMG_Quit();
     TTF_Quit();
