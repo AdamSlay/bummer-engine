@@ -7,6 +7,8 @@ class InputSystem {
 public:
     void update(EntityManager& entityManager, bool& quit);
     SDL_Scancode mapControllerButtonToScancode(Uint8 button);
+private:
+    float deadZone = 0.1f;
 };
 
 #endif //BUMMERENGINE_INPUTSYSTEM_H

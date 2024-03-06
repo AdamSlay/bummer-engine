@@ -17,6 +17,7 @@ void InputSystem::update(EntityManager &entityManager, bool &quit) {
             quit = true;
             break;
         }
+
         else if (e.type == SDL_KEYDOWN || e.type == SDL_KEYUP) {
             for (Entity &entity : entityManager.getEntities()) {
                 if (entity.hasComponent<Input>()) {
@@ -43,6 +44,26 @@ void InputSystem::update(EntityManager &entityManager, bool &quit) {
                     }
                     else if (e.type == SDL_CONTROLLERBUTTONUP) {
                         input.justReleased[scancode] = true;
+                    }
+                }
+            }
+        }
+        else if (e.type == SDL_JOYAXISMOTION) {
+            for (Entity &entity : entityManager.getEntities()) {
+                if (entity.hasComponent<Input>()) {
+                    Input &input = entity.getComponent<Input>();
+                    if (e.jaxis.axis == 0) { // X axis
+                        input.joystickDirection.first = e.jaxis.value / 32767.0f;
+                        if (input.joystickDirection.first < -deadZone) {
+                            input.keyStates[SDL_SCANCODE_LEFT] = true;
+                            input.keyStates[SDL_SCANCODE_RIGHT] = false;
+                        } else if (input.joystickDirection.first > deadZone) {
+                            input.keyStates[SDL_SCANCODE_RIGHT] = true;
+                            input.keyStates[SDL_SCANCODE_LEFT] = false;
+                        } else {
+                            input.keyStates[SDL_SCANCODE_RIGHT] = false;
+                            input.keyStates[SDL_SCANCODE_LEFT] = false;
+                        }
                     }
                 }
             }
