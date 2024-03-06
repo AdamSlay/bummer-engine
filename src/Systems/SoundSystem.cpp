@@ -4,13 +4,13 @@
 
 SoundSystem::SoundSystem() {
     EventManager::getInstance().subscribe("jump", [this]() {
-        playSound("assets/sounds/zapsplat/zapsplat_multimedia_game_sound_retro_arcade_style_jump_001_108838.wav");
+        playSound("assets/sounds/zapsplat/zapsplat_cartoon_comedy_metal_twang_pluck_short_001_106088.wav");
     });
     EventManager::getInstance().subscribe("died", [this]() {
-        playSound("assets/sounds/zapsplat/Gregor_Quendel_Designed_Mecha_Elements_Impact_01_069.wav");
+        playSound("assets/sounds/zapsplat/zapsplat_impacts_body_hit_thud_stab_squelch_of_blood_90708.wav");
     });
     EventManager::getInstance().subscribe("spawn", [this]() {
-        playSound("assets/sounds/zapsplat/zapsplat_multimedia_game_sound_robotic_buzz_chirp_103482.wav");
+        playSound("assets/sounds/zapsplat/zapsplat_sound_design_rewind_reversed_vibration_001_19653.wav");
     });
     EventManager::getInstance().subscribe("dash", [this]() {
         playSound("assets/sounds/zapsplat/zapsplat_cartoon_whoosh_swipe_fast_grab_dash_006_74747.wav");
