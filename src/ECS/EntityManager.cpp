@@ -54,12 +54,12 @@ Entity& EntityManager::createPlayer(int x, int y, int w, int h) {
     configureAnimator(player, animations);
     player.addComponent<Animator>({animations, playerStates::IDLE, 0, 0, true});
     player.addComponent<Player>({1});
-    player.addComponent<Transform>({x, y, 1.5});
+    player.addComponent<Transform>({x, y, 1.7});
     player.addComponent<Velocity>({0, 0, 1});
     player.addComponent<Collider>({22, 55, w, h});
     player.addComponent<Gravity>({0.8, 0.8, 0.9, 1.1});
     player.addComponent<State>({playerStates::IDLE});
-    player.addComponent<Jumps>({0, 2, 17});
+    player.addComponent<Jumps>({0, 2, 20});
     player.addComponent<Dash>({42, false, 0.12, 1});
     std::map<SDL_Scancode, bool> keyStates;
     std::map<SDL_Scancode, bool> justPressed;
