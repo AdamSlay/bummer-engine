@@ -84,8 +84,7 @@ void MovementSystem::jump(Entity& entity) {
         if (jumps.jumps != jumps.maxJumps) {
             jumps.jumps++;
             gravity.gravity = gravity.baseGravity;
-            // TODO: Magic number
-            vel.dy = -17;
+            vel.dy = -jumps.jumpVelocity;
             entity.changeState(playerStates::JUMP_ASCEND);
             EventManager::getInstance().publish("jump");
         }

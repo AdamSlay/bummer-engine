@@ -41,7 +41,8 @@ struct Jumps
 {
     int jumps;
     int maxJumps;
-    Jumps(int jumps, int maxJumps) : jumps(jumps), maxJumps(maxJumps) {}
+    int jumpVelocity;
+    Jumps(int jumps, int maxJumps, int jumpVelocity) : jumps(jumps), maxJumps(maxJumps), jumpVelocity(jumpVelocity) {}
 };
 
 struct Dash
