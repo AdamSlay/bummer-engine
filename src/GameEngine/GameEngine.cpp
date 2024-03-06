@@ -8,6 +8,7 @@
 
 #include "../Utils.cpp"
 #include "../Config.h"
+#include "../ECS/EventManager.h"
 
 void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     /**
@@ -37,6 +38,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
     // entity manager testing sandbox, just for testing new features
     sandbox(entityManager);
+    EventManager::getInstance().publish("start");
 
     SDL_Event e;
     bool quit = false;

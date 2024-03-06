@@ -15,6 +15,9 @@ SoundSystem::SoundSystem() {
     EventManager::getInstance().subscribe("dash", [this]() {
         playSound("assets/sounds/zapsplat/zapsplat_cartoon_whoosh_swipe_fast_grab_dash_006_74747.wav");
     });
+    EventManager::getInstance().subscribe("start", [this]() {
+        playSound("assets/sounds/volts-theme.wav");
+    });
 }
 
 void SoundSystem::update(EntityManager& entityManager) {
