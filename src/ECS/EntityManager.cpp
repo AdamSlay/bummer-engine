@@ -101,6 +101,18 @@ void EntityManager::configureAnimator(Entity& entity, std::map<playerStates, Ani
     AnimationClip jumpAscendClip = {jumpTexture, {jumpAscend}, 1, false};
     animations.emplace(playerStates::JUMP_ASCEND, jumpAscendClip);
 
+    // Add idle animation clips to the animations map
+    SDL_Texture* idleTexture = textureManager->loadTexture(renderer, "assets/bb_idle_sheet.png");
+    std::vector<SDL_Rect> idleFrames;
+    for (int i = 0; i < 8; i++) {
+        SDL_Rect frame = {i * 64, 0, 64, 100};
+        idleFrames.push_back(frame);
+    }
+    AnimationClip idleClip = {idleTexture, idleFrames, 4, true};
+    animations.emplace(playerStates::GROUNDED, idleClip);
+    animations.emplace(playerStates::IDLE, idleClip);
+
+    // Create jump state clips
     SDL_Rect jumpAscendApex = jumpFrames[1];
     AnimationClip jumpAscendApexClip = {jumpTexture, {jumpAscendApex}, 1, false};
     animations.emplace(playerStates::JUMP_APEX_ASCEND, jumpAscendApexClip);
@@ -118,10 +130,6 @@ void EntityManager::configureAnimator(Entity& entity, std::map<playerStates, Ani
     animations.emplace(playerStates::JUMP_DESCEND, jumpDescendClip);
 
 
-    // Add idle animation clips to the animations map
-    AnimationClip idleClip = {jumpTexture, {{0, 0, 64, 100}}, 4, true};
-    animations.emplace(playerStates::IDLE, idleClip);
-    animations.emplace(playerStates::GROUNDED, idleClip);
 }
 
 Entity & EntityManager::createPlatform(int x, int y, int w, int h, float scale) {
