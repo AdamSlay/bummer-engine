@@ -12,7 +12,7 @@ int initialize_resource(SDL_Window*& window, SDL_Renderer*& renderer, TTF_Font*&
      */
 
     // Initialize SDL
-    if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK) < 0) {
+    if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK | SDL_INIT_AUDIO) < 0) {
         std::cout << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
         return 1;
     }
@@ -69,8 +69,10 @@ void close(SDL_Renderer*& renderer, SDL_Window*& window, TTF_Font*& font) {
     window = nullptr;
     font = nullptr;
 
+    Mix_CloseAudio();
+
     IMG_Quit();
     TTF_Quit();
-    SDL_Quit();
     Mix_Quit();
+    SDL_Quit();
 }
