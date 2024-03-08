@@ -56,7 +56,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
         inputSystem.update(entityManager, quit);
         physicsSystem.update(entityManager, movementSystem, collisionSystem, deltaTime);
         animationSystem.update(entityManager, deltaTime);
-        soundSystem.update(entityManager);
+//        soundSystem.update(entityManager);
 
         // render colliders
         SDL_SetRenderDrawColor(renderer, 104,102,182, 255);  // bb_purple
@@ -88,4 +88,5 @@ void sandbox(EntityManager& entityManager) {
     Entity& platform2 = entityManager.createPlatform(192, 400, 256, 32, 1);
     Entity& platform3 = entityManager.createPlatform(832, 400, 256, 32, 1);
     Entity& platform4 = entityManager.createPlatform(512, 250, 256, 32, 1);
+    Entity& martian = entityManager.createMartian(400, 50, 18, 60);
 }

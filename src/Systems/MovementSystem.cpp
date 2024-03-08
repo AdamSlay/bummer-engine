@@ -34,32 +34,37 @@ void MovementSystem::moveX(EntityManager& entityManager, float deltaTime) {
 
 void MovementSystem::moveY(EntityManager &entityManager) {
     for (Entity &entity : entityManager.getEntities()) {
-        if (entity.hasComponent<Transform>() && entity.hasComponent<Velocity>() && entity.hasComponent<Input>()) {
+        if (entity.hasComponent<Transform>() && entity.hasComponent<Velocity>()) {
             Velocity &vel = entity.getComponent<Velocity>();
-            Input& input = entity.getComponent<Input>();
-            if (input.justPressed[SDL_SCANCODE_UP]) {
-                jump(entity);
+            if (!entity.hasComponent<Input>()) {
+                applyGravity(entity);
             }
-            if (input.justReleased[SDL_SCANCODE_UP] && vel.dy < 0) {  // If the jump button is released while ascending, stop ascending
-                vel.dy = 0;
-            }
-            if (vel.dy != 0) {
-                changeJumpState(entity);
-            }
-            if (entity.hasComponent<Gravity>()) {
-                if (entity.hasComponent<Dash>()) {
-                    Dash& dash = entity.getComponent<Dash>();
-                    if (!dash.isDashing) {
-                        applyGravity(entity);
+            else {
+                Input& input = entity.getComponent<Input>();
+                if (input.justPressed[SDL_SCANCODE_UP]) {
+                    jump(entity);
+                }
+                if (input.justReleased[SDL_SCANCODE_UP] && vel.dy < 0) {  // If the jump button is released while ascending, stop ascending
+                    vel.dy = 0;
+                }
+                if (vel.dy != 0) {
+                    changeJumpState(entity);
+                }
+                if (entity.hasComponent<Gravity>()) {
+                    if (entity.hasComponent<Dash>()) {
+                        Dash& dash = entity.getComponent<Dash>();
+                        if (!dash.isDashing) {
+                            applyGravity(entity);
+                        }
+                        else {
+                            // If the entity is dashing, don't apply gravity
+                            Gravity& gravity = entity.getComponent<Gravity>();
+                            gravity.gravity = 0.5;
+                        }
                     }
                     else {
-                        // If the entity is dashing, don't apply gravity
-                        Gravity& gravity = entity.getComponent<Gravity>();
-                        gravity.gravity = 0.5;
+                        applyGravity(entity);
                     }
-                }
-                else {
-                    applyGravity(entity);
                 }
             }
             // Apply velocity

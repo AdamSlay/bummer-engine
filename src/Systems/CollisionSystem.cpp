@@ -15,13 +15,22 @@ void CollisionSystem::updateX(EntityManager& entityManager) {
     auto& entities = entityManager.getEntities();
     std::vector<Entity> players;
     std::vector<Entity> collisionObjects;
+    std::vector<Entity> enemies;
+    std::vector<Entity> inanimateObjects;
 
     // Separate the entities into two groups: players and collision objects
     for (auto & entity : entities) {
         if (entity.hasComponent<Player>()) {
             players.push_back(entity);
-        } else if (entity.hasComponent<Collider>() && entity.hasComponent<Transform>()) {
+        }
+        else if (entity.hasComponent<Collider>() && entity.hasComponent<Transform>()) {
             collisionObjects.push_back(entity);
+            if (entity.hasComponent<Velocity>()) {
+                enemies.push_back(entity);
+            }
+            else {
+                inanimateObjects.push_back(entity);
+            }
         }
     }
 
@@ -30,6 +39,15 @@ void CollisionSystem::updateX(EntityManager& entityManager) {
             if (checkCollision(player, other)) {
                 if (checkCollisionX(player, other)) {
                     handlePlayerCollisionX(player, other);  // *player and *other are dereferenced Entity objects
+                }
+            }
+        }
+    }
+    for (auto& enemy : enemies) {
+        for (auto& other : inanimateObjects) {
+            if (checkCollision(enemy, other)) {
+                if (checkCollisionX(enemy, other)) {
+                    handlePlayerCollisionX(enemy, other);  // *enemy and *other are dereferenced Entity objects
                 }
             }
         }
@@ -45,6 +63,8 @@ void CollisionSystem::updateY(EntityManager& entityManager) {
     auto& entities = entityManager.getEntities();
     std::vector<Entity> players;
     std::vector<Entity> collisionObjects;
+    std::vector<Entity> enemies;
+    std::vector<Entity> inanimateObjects;
 
     // Separate the entities into two groups: players and collision objects
     for (auto & entity : entities) {
@@ -52,6 +72,13 @@ void CollisionSystem::updateY(EntityManager& entityManager) {
             players.push_back(entity);
         } else if (entity.hasComponent<Collider>() && entity.hasComponent<Transform>()) {
             collisionObjects.push_back(entity);
+
+            if (entity.hasComponent<Velocity>()) {
+                enemies.push_back(entity);
+            }
+            else {
+                inanimateObjects.push_back(entity);
+            }
         }
     }
 
@@ -60,6 +87,15 @@ void CollisionSystem::updateY(EntityManager& entityManager) {
             if (checkCollision(player, other)) {
                 if (checkCollisionY(player, other)) {
                     handlePlayerCollisionY(player, other);  // *player and *other are dereferenced Entity objects
+                }
+            }
+        }
+    }
+    for (auto& enemy : enemies) {
+        for (auto& other : inanimateObjects) {
+            if (checkCollision(enemy, other)) {
+                if (checkCollisionY(enemy, other)) {
+                    handlePlayerCollisionY(enemy, other);  // *enemy and *other are dereferenced Entity objects
                 }
             }
         }
@@ -157,7 +193,9 @@ void CollisionSystem::handlePlayerCollisionY(Entity& player, Entity& other) {
         }
 
         vel.dy = 0;
-        player.getComponent<Jumps>().jumps = 0;  // Reset the number of jumps
+        if (player.hasComponent<Jumps>()) {
+            player.getComponent<Jumps>().jumps = 0;  // Reset the number of jumps
+        }
 
         float newPos = otherCollider.y - (playerCollider.h + collisionBuffer);
         int y = static_cast<int>(newPos + 1);

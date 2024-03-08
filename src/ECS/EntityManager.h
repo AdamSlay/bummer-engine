@@ -72,6 +72,7 @@ public:
     std::vector<Entity>& getEntities();
     Entity& createPlayer(int x, int y, int w, int h);
     Entity &createPlatform(int x, int y, int w, int h, float scale);
+    Entity& createMartian(int x, int y, int w, int h);
     void configureAnimator(Entity& entity, std::map<playerStates, AnimationClip>& animations);
     Entity& getPlayer();
 
