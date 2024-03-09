@@ -16,7 +16,7 @@ public:
     void handlePlayerCollisionY(Entity& player, Entity& other);
 
 private:
-    int collisionBuffer = 1;
+    int collisionBuffer = 2;
 };
 
 

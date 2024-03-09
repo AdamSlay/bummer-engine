@@ -54,7 +54,7 @@ Entity& EntityManager::createPlayer(int x, int y, int w, int h) {
     configureAnimator(player, animations);
     player.addComponent<Animator>({animations, playerStates::IDLE, 0, 0, true});
     player.addComponent<Player>({1});
-    player.addComponent<Transform>({x, y, 1.7});
+    player.addComponent<Transform>({x, y, 2});
     player.addComponent<Velocity>({0, 0, 1});
     player.addComponent<Collider>({22, 55, w, h});
     player.addComponent<Gravity>({0.8, 0.8, 0.9, 1.1});
@@ -165,7 +165,7 @@ Entity& EntityManager::createMartian(int x, int y, int w, int h) {
 
     std::map<playerStates, AnimationClip> animations;
     // Add idle animation clips to the animations map
-    SDL_Texture* idleTexture = textureManager->loadTexture(renderer, "assets/martian_01.png");
+    SDL_Texture* idleTexture = textureManager->loadTexture(renderer, "assets/martian_02.png");
     std::vector<SDL_Rect> idleFrames;
     for (int i = 0; i < 8; i++) {
         SDL_Rect frame = {i * 64, 0, 64, 100};
@@ -175,13 +175,12 @@ Entity& EntityManager::createMartian(int x, int y, int w, int h) {
     animations.emplace(playerStates::IDLE, idleClip);
     martian.addComponent<Animator>({animations, playerStates::IDLE, 0, 0, true});
 
-    martian.addComponent<Transform>({x, y, 1.7});
+    martian.addComponent<Transform>({x, y, 2});
     martian.addComponent<Collider>({30, 40, w, h});
     martian.addComponent<Velocity>({0, 0, 1});
     martian.addComponent<Gravity>({0.8, 0.8, 0.9, 1.1});
     martian.addComponent<State>({playerStates::IDLE});
-    SDL_Texture* texture = textureManager->loadTexture(renderer, "assets/martian_01.png");
     SDL_Rect srcRect = {0, 0, 64, 100};
-    martian.addComponent<Sprite>({texture, srcRect});
+    martian.addComponent<Sprite>({idleTexture, srcRect});
     return martian;
 }

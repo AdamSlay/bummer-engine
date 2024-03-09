@@ -17,7 +17,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
      * @param renderer: The SDL renderer
      * @param font: The TTF font
      */
-    render_splash_screen(renderer, font);
+//    render_splash_screen(renderer, font);
 
     TextureManager textureManager;
     EntityManager entityManager(&textureManager, renderer);
@@ -59,7 +59,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 //        soundSystem.update(entityManager);
 
         // render colliders
-        SDL_SetRenderDrawColor(renderer, 104,102,182, 255);  // bb_purple
+        SDL_SetRenderDrawColor(renderer, 104, 102, 184, 255);  // bb_purple
         SDL_RenderClear(renderer);
 //        Utils::render_all_colliders(entityManager, renderer);
 
