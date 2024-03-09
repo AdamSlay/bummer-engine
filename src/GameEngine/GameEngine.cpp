@@ -85,7 +85,7 @@ void sandbox(EntityManager& entityManager) {
     int groundY = SCREEN_HEIGHT - 150;
     Entity& platform = entityManager.createPlatform(groundX, groundY, 256, 64, 4.2);
     Entity& player = entityManager.createPlayer(620, 50, 18, 40);
-    Entity& platform2 = entityManager.createPlatform(192, 400, 256, 32, 1);
+    Entity& platform2 = entityManager.createEntityFromTemplate("etc/templates/platform.json");
     Entity& platform3 = entityManager.createPlatform(832, 400, 256, 32, 1);
     Entity& platform4 = entityManager.createPlatform(512, 250, 256, 32, 1);
     Entity& martian = entityManager.createMartian(400, 50, 18, 60);

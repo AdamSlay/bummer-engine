@@ -1,5 +1,12 @@
+#include <fstream>
+
+#include <nlohmann/json.hpp>
+
 #include "EntityManager.h"
 #include "../Resources/TextureManager.h"
+
+using json = nlohmann::json;
+
 
 EntityManager::EntityManager(TextureManager* texManager, SDL_Renderer* ecsRenderer) {
     /**
@@ -37,6 +44,46 @@ Entity& EntityManager::getPlayer() {
         }
     }
     throw std::runtime_error("Player not found");
+}
+
+Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath) {
+    // Load the template file
+    std::ifstream file(templatePath);
+    if (!file.is_open()) {
+        throw std::runtime_error("Could not open template file: " + templatePath);
+    }
+
+    // Parse the JSON
+    json templateJson;
+    file >> templateJson;
+
+    // Create a new entity
+    Entity& entity = createEntity();
+
+    // For each component in the template, add the component to the entity with the specified values
+    if (templateJson.contains("components")) {
+        json componentsJson = templateJson["components"];
+
+        if (componentsJson.contains("Transform")) {
+            json transformJson = componentsJson["Transform"];
+            entity.addComponent<Transform>({transformJson["x"], transformJson["y"], transformJson["scale"]});
+        }
+
+        if (componentsJson.contains("Collider")) {
+            json colliderJson = componentsJson["Collider"];
+            entity.addComponent<Collider>({colliderJson["offsetX"], colliderJson["offsetY"], colliderJson["width"], colliderJson["height"]});
+        }
+
+        if (componentsJson.contains("Sprite")) {
+            json spriteJson = componentsJson["Sprite"];
+            SDL_Texture* texture = textureManager->loadTexture(renderer, spriteJson["texturePath"]);
+            SDL_Rect srcRect = {0, 0, 256, 32};  // You might want to include the source rect in the template
+            entity.addComponent<Sprite>({texture, srcRect});
+        }
+    }
+
+    // Return the new entity
+    return entity;
 }
 
 Entity& EntityManager::createPlayer(int x, int y, int w, int h) {

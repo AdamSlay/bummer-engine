@@ -70,6 +70,7 @@ public:
     EntityManager(TextureManager* texManager, SDL_Renderer* ecsRenderer);
     Entity& createEntity();
     std::vector<Entity>& getEntities();
+    Entity& createEntityFromTemplate(const std::string& templatePath);
     Entity& createPlayer(int x, int y, int w, int h);
     Entity &createPlatform(int x, int y, int w, int h, float scale);
     Entity& createMartian(int x, int y, int w, int h);
