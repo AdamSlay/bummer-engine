@@ -72,7 +72,6 @@ public:
     std::vector<Entity>& getEntities();
     Entity& createEntityFromTemplate(const std::string& templatePath);
     Entity& createPlayer(int x, int y, int w, int h);
-    Entity& createMartian(int x, int y, int w, int h);
     void configureAnimator(Entity& entity, std::map<playerStates, AnimationClip>& animations);
     Entity& getPlayer();
 

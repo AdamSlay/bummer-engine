@@ -89,6 +89,25 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
             SDL_Rect srcRect = {x, y, w, h};
             entity.addComponent<Sprite>({texture, srcRect});
         }
+
+        if (componentsJson.contains("State")) {
+            playerStates state = playerStates::IDLE;
+            entity.addComponent<State>(state);
+        }
+
+        if (componentsJson.contains("Velocity")) {
+            json velocityJson = componentsJson["Velocity"];
+            entity.addComponent<Velocity>({velocityJson["dx"], velocityJson["dy"], velocityJson["direction"]});
+        }
+
+        if (componentsJson.contains("Gravity")) {
+            json gravityJson = componentsJson["Gravity"];
+            float baseGravity = gravityJson["baseGravity"];
+            float gravity = gravityJson["gravity"];
+            float ascendFactor = gravityJson["ascendFactor"];
+            float descendFactor = gravityJson["descendFactor"];
+            entity.addComponent<Gravity>({baseGravity, gravity, ascendFactor, descendFactor});
+        }
     }
 
     // Return the new entity
@@ -186,37 +205,4 @@ void EntityManager::configureAnimator(Entity& entity, std::map<playerStates, Ani
     animations.emplace(playerStates::JUMP_DESCEND, jumpDescendClip);
 
 
-}
-
-Entity& EntityManager::createMartian(int x, int y, int w, int h) {
-    /**
-     * Create a new martian entity, append it to the entities vector and return a reference to it
-     *
-     * @param x: The x position of the martian
-     * @param y: The y position of the martian
-     * @param w: The width of the martian
-     * @param h: The height of the martian
-     */
-    Entity& martian = createEntity();
-
-    std::map<playerStates, AnimationClip> animations;
-    // Add idle animation clips to the animations map
-    SDL_Texture* idleTexture = textureManager->loadTexture(renderer, "assets/martian_02.png");
-    std::vector<SDL_Rect> idleFrames;
-    for (int i = 0; i < 8; i++) {
-        SDL_Rect frame = {i * 64, 0, 64, 100};
-        idleFrames.push_back(frame);
-    }
-    AnimationClip idleClip = {idleTexture, idleFrames, 6, true};
-    animations.emplace(playerStates::IDLE, idleClip);
-    martian.addComponent<Animator>({animations, playerStates::IDLE, 0, 0, true});
-
-    martian.addComponent<Transform>({x, y, 2});
-    martian.addComponent<Collider>({30, 40, w, h});
-    martian.addComponent<Velocity>({0, 0, 1});
-    martian.addComponent<Gravity>({0.8, 0.8, 0.9, 1.1});
-    martian.addComponent<State>({playerStates::IDLE});
-    SDL_Rect srcRect = {0, 0, 64, 100};
-    martian.addComponent<Sprite>({idleTexture, srcRect});
-    return martian;
 }

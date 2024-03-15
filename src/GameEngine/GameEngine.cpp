@@ -88,5 +88,5 @@ void sandbox(EntityManager& entityManager) {
     Entity& platform2 = entityManager.createEntityFromTemplate("etc/templates/platform2.json");
     Entity& platform3 = entityManager.createEntityFromTemplate("etc/templates/platform3.json");
     Entity& platform4 = entityManager.createEntityFromTemplate("etc/templates/platform4.json");
-    Entity& martian = entityManager.createMartian(400, 50, 18, 60);
+    Entity& martian = entityManager.createEntityFromTemplate("etc/templates/alien.json");
 }
