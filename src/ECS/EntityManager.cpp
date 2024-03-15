@@ -77,7 +77,11 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
         if (componentsJson.contains("Sprite")) {
             json spriteJson = componentsJson["Sprite"];
             SDL_Texture* texture = textureManager->loadTexture(renderer, spriteJson["texturePath"]);
-            SDL_Rect srcRect = {0, 0, 256, 32};  // You might want to include the source rect in the template
+            int x = static_cast<int>(spriteJson["srcRect"]["x"]);
+            int y = static_cast<int>(spriteJson["srcRect"]["y"]);
+            int w = static_cast<int>(spriteJson["srcRect"]["w"]);
+            int h = static_cast<int>(spriteJson["srcRect"]["h"]);
+            SDL_Rect srcRect = {x, y, w, h};
             entity.addComponent<Sprite>({texture, srcRect});
         }
     }
