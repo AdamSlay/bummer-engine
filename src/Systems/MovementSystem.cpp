@@ -123,6 +123,9 @@ void MovementSystem::dash(Entity& entity, float deltaTime) {
                     dx /= length;
                     dy /= length;
                 }
+                if (dx == 0 && dy == 0) {
+                    dx = vel.direction;
+                }
                 vel.dx = dx * dash.speed;
                 vel.dy = dy * dash.speed;
             }
