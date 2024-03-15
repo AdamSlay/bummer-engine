@@ -63,7 +63,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
         // render colliders
         SDL_SetRenderDrawColor(renderer, 104, 102, 184, 255);  // bb_purple
         SDL_RenderClear(renderer);
-//        Utils::render_all_colliders(entityManager, renderer);
+        Utils::render_all_colliders(entityManager, renderer);
 
         // Copy game to renderer here
         renderSystem.render(renderer, entityManager);
@@ -83,12 +83,10 @@ void sandbox(EntityManager& entityManager) {
      *
      * @param entityManager: The entity manager
      */
-    int groundX = 100;
-    int groundY = SCREEN_HEIGHT - 150;
-    Entity& platform = entityManager.createPlatform(groundX, groundY, 256, 64, 4.2);
     Entity& player = entityManager.createPlayer(620, 50, 18, 40);
-    Entity& platform2 = entityManager.createEntityFromTemplate("etc/templates/platform.json");
-    Entity& platform3 = entityManager.createPlatform(832, 400, 256, 32, 1);
-    Entity& platform4 = entityManager.createPlatform(512, 250, 256, 32, 1);
+    Entity& platform = entityManager.createEntityFromTemplate("etc/templates/ground.json");
+    Entity& platform2 = entityManager.createEntityFromTemplate("etc/templates/platform2.json");
+    Entity& platform3 = entityManager.createEntityFromTemplate("etc/templates/platform3.json");
+    Entity& platform4 = entityManager.createEntityFromTemplate("etc/templates/platform4.json");
     Entity& martian = entityManager.createMartian(400, 50, 18, 60);
 }
