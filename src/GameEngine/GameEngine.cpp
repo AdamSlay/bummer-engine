@@ -32,9 +32,6 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
     // Setup controller
     SDL_GameController* controller = nullptr;
-    if (SDL_NumJoysticks() > 0) {
-        controller = SDL_GameControllerOpen(0);
-    }
 
     // entity manager testing sandbox, just for testing new features
     sandbox(entityManager);
@@ -50,6 +47,10 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
         lastTime = currentTime;
         if (deltaTime < 1000 / 60) {
             SDL_Delay((1000 / 60) - deltaTime);
+        }
+        if (SDL_NumJoysticks() > 0) {
+            // Open controller if added during runtime
+            controller = SDL_GameControllerOpen(0);
         }
 
         // Perform game logic updates
