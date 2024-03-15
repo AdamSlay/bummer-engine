@@ -19,7 +19,7 @@ SoundSystem::SoundSystem() {
         playSound("assets/sounds/volts-theme.wav", 4);
     });
     EventManager::getInstance().subscribe("landed", [this]() {
-        playSound("assets/sounds/zapsplat/foley_clothing_coat_land_floor_001.wav", 12);
+        playSound("assets/sounds/zapsplat/foley_clothing_coat_land_floor_001.wav", 4);
     });
 }
 
