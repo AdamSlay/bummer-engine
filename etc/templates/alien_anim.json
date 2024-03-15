@@ -1,0 +1,13 @@
+{
+  "Animations": {
+    "IDLE": {
+      "spriteSheetPath": "assets/martian_02.png",
+      "framesPerImage": 6,
+      "startImage": 0,
+      "imageCount": 8,
+      "imageWidth": 64,
+      "imageHeight": 100,
+      "imageY": 0
+    }
+  }
+}

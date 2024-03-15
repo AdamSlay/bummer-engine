@@ -34,6 +34,9 @@
     },
     "State": {
       "state": "IDLE"
+    },
+    "Animator": {
+      "animatorPath": "etc/templates/alien_anim.json"
     }
   }
 }
