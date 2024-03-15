@@ -47,6 +47,11 @@ Entity& EntityManager::getPlayer() {
 }
 
 Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath) {
+    /**
+     * Create a new entity from a template, append it to the entities vector and return a reference to it
+     *
+     * @param templatePath: The path to the template file
+     */
     // Load the template file
     std::ifstream file(templatePath);
     if (!file.is_open()) {
