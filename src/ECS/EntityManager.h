@@ -76,6 +76,7 @@ public:
     Entity& getPlayer();
 
 private:
+    static std::map<std::string, playerStates> playerStatesMap;
     std::vector<Entity> entities;
     TextureManager* textureManager;
     SDL_Renderer* renderer;

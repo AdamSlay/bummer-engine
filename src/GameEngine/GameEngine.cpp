@@ -83,7 +83,7 @@ void sandbox(EntityManager& entityManager) {
      *
      * @param entityManager: The entity manager
      */
-    Entity& player = entityManager.createPlayer(620, 50, 18, 40);
+    Entity& player = entityManager.createEntityFromTemplate("etc/templates/player.json");
     Entity& platform = entityManager.createEntityFromTemplate("etc/templates/ground.json");
     Entity& platform2 = entityManager.createEntityFromTemplate("etc/templates/platform2.json");
     Entity& platform3 = entityManager.createEntityFromTemplate("etc/templates/platform3.json");

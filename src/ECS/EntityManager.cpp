@@ -7,6 +7,16 @@
 
 using json = nlohmann::json;
 
+std::map<std::string, playerStates> EntityManager::playerStatesMap = {
+        {"IDLE", playerStates::IDLE},
+        {"GROUNDED", playerStates::GROUNDED},
+        {"RUN", playerStates::RUN},
+        {"JUMP_ASCEND", playerStates::JUMP_ASCEND},
+        {"JUMP_APEX_ASCEND", playerStates::JUMP_APEX_ASCEND},
+        {"JUMP_APEX", playerStates::JUMP_APEX},
+        {"JUMP_APEX_DESCEND", playerStates::JUMP_APEX_DESCEND},
+        {"JUMP_DESCEND", playerStates::JUMP_DESCEND}
+};
 
 EntityManager::EntityManager(TextureManager* texManager, SDL_Renderer* ecsRenderer) {
     /**
@@ -69,6 +79,11 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
     if (templateJson.contains("components")) {
         json componentsJson = templateJson["components"];
 
+        if (componentsJson.contains("Player")) {
+            int playerNum = componentsJson["Player"]["playerNum"];
+            entity.addComponent<Player>({playerNum});
+        }
+
         if (componentsJson.contains("Transform")) {
             json transformJson = componentsJson["Transform"];
             entity.addComponent<Transform>({transformJson["x"], transformJson["y"], transformJson["scale"]});
@@ -91,7 +106,7 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
         }
 
         if (componentsJson.contains("State")) {
-            playerStates state = playerStates::IDLE;
+            playerStates state = playerStatesMap[componentsJson["State"]["state"]];
             entity.addComponent<State>(state);
         }
 
@@ -108,101 +123,68 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
             float descendFactor = gravityJson["descendFactor"];
             entity.addComponent<Gravity>({baseGravity, gravity, ascendFactor, descendFactor});
         }
+
+        if (componentsJson.contains("Input")) {
+            std::map<SDL_Scancode, bool> keyStates;
+            std::map<SDL_Scancode, bool> justPressed;
+            std::map<SDL_Scancode, bool> justReleased;
+            entity.addComponent<Input>({keyStates, justPressed, justReleased});
+        }
+
+        if (componentsJson.contains("Jumps")) {
+            json jumpsJson = componentsJson["Jumps"];
+            int jumps = jumpsJson["jumps"];
+            int maxJumps = jumpsJson["maxJumps"];
+            int jumpForce = jumpsJson["jumpVelocity"];
+            entity.addComponent<Jumps>({jumps, maxJumps, jumpForce});
+        }
+
+        if (componentsJson.contains("Dash")) {
+            json dashJson = componentsJson["Dash"];
+            int speed = dashJson["speed"];
+            bool isDashing = false;
+            float initCooldown = dashJson["initCooldown"];
+            float initDuration = dashJson["initDuration"];
+            entity.addComponent<Dash>({speed, isDashing, initCooldown, initDuration});
+        }
+
+        if (componentsJson.contains("Animator")) {
+
+            // open the animator file
+            std::string animatorPath = componentsJson["Animator"]["animatorPath"];
+            std::ifstream animatorFile(animatorPath);
+            if (!animatorFile.is_open()) {
+                throw std::runtime_error("Could not open animator file: " + componentsJson["Animator"]["animatorPath"].get<std::string>());
+            }
+            json animatorJson;
+            animatorFile >> animatorJson;
+
+            // iterate through the animator file and add the animations to the entity
+            std::map<playerStates, AnimationClip> animations;
+            for (auto& [animation, animationClips] : animatorJson["Animations"].items()) {
+                playerStates state = playerStatesMap[animation];
+                SDL_Texture *texture = textureManager->loadTexture(renderer, animationClips["spriteSheetPath"]);
+                std::vector<SDL_Rect> frames;
+                int framesPerImage = animationClips["framesPerImage"];
+                int startImage = animationClips["startImage"];
+                int imageCount = animationClips["imageCount"];
+                int imageWidth = animationClips["imageWidth"];
+                int imageHeight = animationClips["imageHeight"];
+                int imageY = animationClips["imageY"];
+
+                for (int i = 0; i < imageCount; i++) {
+                    SDL_Rect frame = {startImage * imageWidth, imageY, imageWidth, imageHeight};
+                    frames.push_back(frame);
+                    startImage++;
+                }
+                AnimationClip clip = {texture, frames, framesPerImage, true};
+                animations.emplace(state, clip);
+            }
+
+            entity.addComponent<Animator>({animations, playerStates::IDLE, 0, 0, true});
+        }
     }
 
     // Return the new entity
     return entity;
-}
-
-Entity& EntityManager::createPlayer(int x, int y, int w, int h) {
-    /**
-     * Create a new player entity, append it to the entities vector and return a reference to it
-     *
-     * @param x: The x position of the player
-     * @param y: The y position of the player
-     * @param w: The width of the player
-     * @param h: The height of the player
-     */
-    Entity& player = createEntity();
-
-    std::map<playerStates, AnimationClip> animations;
-    configureAnimator(player, animations);
-    player.addComponent<Animator>({animations, playerStates::IDLE, 0, 0, true});
-    player.addComponent<Player>({1});
-    player.addComponent<Transform>({x, y, 2});
-    player.addComponent<Velocity>({0, 0, 1});
-    player.addComponent<Collider>({22, 55, w, h});
-    player.addComponent<Gravity>({0.8, 0.8, 0.9, 1.1});
-    player.addComponent<State>({playerStates::IDLE});
-    player.addComponent<Jumps>({0, 2, 20});
-    player.addComponent<Dash>({42, false, 0.12, 0.5});
-    std::map<SDL_Scancode, bool> keyStates;
-    std::map<SDL_Scancode, bool> justPressed;
-    std::map<SDL_Scancode, bool> justReleased;
-    player.addComponent<Input>({keyStates, justPressed, justReleased});
-
-
-    SDL_Texture* texture = textureManager->loadTexture(renderer, "assets/bb_jump_sheet.png");
-    SDL_Rect srcRect = {0, 0, 64, 100};
-    player.addComponent<Sprite>({texture, srcRect});
-    return player;
-}
-
-void EntityManager::configureAnimator(Entity& entity, std::map<playerStates, AnimationClip>& animations) {
-    /**
-     * Configure the animator for the entity
-     *
-     * @param entity: The entity
-     */
-    // Add run animation clips to the animations map
-    SDL_Texture* runTexture = textureManager->loadTexture(renderer, "assets/bb_run_sheet.png");
-    std::vector<SDL_Rect> runFrames;
-    for (int i = 0; i < 8; i++) {
-        SDL_Rect frame = {i * 64, 0, 64, 100};
-        runFrames.push_back(frame);
-    }
-    AnimationClip runClip = {runTexture, runFrames, 4, true};
-    animations.emplace(playerStates::RUN, runClip);
-
-
-    // Add jump animation clips to the animations map
-    SDL_Texture* jumpTexture = textureManager->loadTexture(renderer, "assets/bb_jump_sheet.png");
-    std::vector<SDL_Rect> jumpFrames;
-    for (int i = 2; i < 8; i++) {
-        SDL_Rect frame = {i * 64, 0, 64, 100};
-        jumpFrames.push_back(frame);
-    }
-    SDL_Rect jumpAscend = jumpFrames[0];
-    AnimationClip jumpAscendClip = {jumpTexture, {jumpAscend}, 1, false};
-    animations.emplace(playerStates::JUMP_ASCEND, jumpAscendClip);
-
-    // Add idle animation clips to the animations map
-    SDL_Texture* idleTexture = textureManager->loadTexture(renderer, "assets/bb_idle_sheet.png");
-    std::vector<SDL_Rect> idleFrames;
-    for (int i = 0; i < 8; i++) {
-        SDL_Rect frame = {i * 64, 0, 64, 100};
-        idleFrames.push_back(frame);
-    }
-    AnimationClip idleClip = {idleTexture, idleFrames, 4, true};
-    animations.emplace(playerStates::GROUNDED, idleClip);
-    animations.emplace(playerStates::IDLE, idleClip);
-
-    // Create jump state clips
-    SDL_Rect jumpAscendApex = jumpFrames[1];
-    AnimationClip jumpAscendApexClip = {jumpTexture, {jumpAscendApex}, 1, false};
-    animations.emplace(playerStates::JUMP_APEX_ASCEND, jumpAscendApexClip);
-
-    SDL_Rect jumpApex = jumpFrames[2];
-    AnimationClip jumpApexClip = {jumpTexture, {jumpApex}, 1, false};
-    animations.emplace(playerStates::JUMP_APEX, jumpApexClip);
-
-    SDL_Rect jumpDescendApex = jumpFrames[3];
-    AnimationClip jumpDescendApexClip = {jumpTexture, {jumpDescendApex}, 1, false};
-    animations.emplace(playerStates::JUMP_APEX_DESCEND, jumpDescendApexClip);
-
-    SDL_Rect jumpDescend = jumpFrames[4];
-    AnimationClip jumpDescendClip = {jumpTexture, {jumpDescend}, 1, false};
-    animations.emplace(playerStates::JUMP_DESCEND, jumpDescendClip);
-
-
 }

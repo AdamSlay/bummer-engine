@@ -1,0 +1,76 @@
+{
+  "Animations": {
+    "RUN": {
+      "spriteSheetPath": "assets/bb_run_sheet.png",
+      "framesPerImage": 4,
+      "startImage": 0,
+      "imageCount": 8,
+      "imageWidth": 64,
+      "imageHeight": 100,
+      "imageY": 0
+    },
+    "JUMP_ASCEND": {
+      "spriteSheetPath": "assets/bb_jump_sheet.png",
+      "framesPerImage": 1,
+      "startImage": 2,
+      "imageCount": 1,
+      "imageWidth": 64,
+      "imageHeight": 100,
+      "imageY": 0
+    },
+    "JUMP_APEX_ASCEND": {
+      "spriteSheetPath": "assets/bb_jump_sheet.png",
+      "framesPerImage": 1,
+      "startImage": 3,
+      "imageCount": 1,
+      "imageWidth": 64,
+      "imageHeight": 100,
+      "imageY": 0
+    },
+    "JUMP_APEX": {
+      "spriteSheetPath": "assets/bb_jump_sheet.png",
+      "framesPerImage": 1,
+      "startImage": 4,
+      "imageCount": 1,
+      "imageWidth": 64,
+      "imageHeight": 100,
+      "imageY": 0
+    },
+    "JUMP_APEX_DESCEND": {
+      "spriteSheetPath": "assets/bb_jump_sheet.png",
+      "framesPerImage": 1,
+      "startImage": 5,
+      "imageCount": 1,
+      "imageWidth": 64,
+      "imageHeight": 100,
+      "imageY": 0
+    },
+    "JUMP_DESCEND": {
+      "spriteSheetPath": "assets/bb_jump_sheet.png",
+      "framesPerImage": 1,
+      "startImage": 6,
+      "imageCount": 1,
+      "imageWidth": 64,
+      "imageHeight": 100,
+      "imageY": 0
+    },
+    "IDLE": {
+      "spriteSheetPath": "assets/bb_idle_sheet.png",
+      "framesPerImage": 4,
+      "startImage": 0,
+      "imageCount": 8,
+      "imageWidth": 64,
+      "imageHeight": 100,
+      "imageY": 0
+    },
+    "GROUNDED": {
+      "spriteSheetPath": "assets/bb_idle_sheet.png",
+      "framesPerImage": 4,
+      "startImage": 0,
+      "imageCount": 8,
+      "imageWidth": 64,
+      "imageHeight": 100,
+      "imageY": 0
+    }
+  }
+}
