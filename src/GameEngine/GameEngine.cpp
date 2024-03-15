@@ -48,8 +48,9 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
         if (deltaTime < 1000 / 60) {
             SDL_Delay((1000 / 60) - deltaTime);
         }
+
+        // Open controller if added during runtime
         if (SDL_NumJoysticks() > 0) {
-            // Open controller if added during runtime
             controller = SDL_GameControllerOpen(0);
         }
 
