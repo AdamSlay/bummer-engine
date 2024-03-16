@@ -83,10 +83,11 @@ void sandbox(EntityManager& entityManager) {
      *
      * @param entityManager: The entity manager
      */
-    Entity& player = entityManager.createEntityFromTemplate("etc/templates/player.json");
-    Entity& platform = entityManager.createEntityFromTemplate("etc/templates/ground.json");
-    Entity& platform2 = entityManager.createEntityFromTemplate("etc/templates/platform2.json");
-    Entity& platform3 = entityManager.createEntityFromTemplate("etc/templates/platform3.json");
-    Entity& platform4 = entityManager.createEntityFromTemplate("etc/templates/platform4.json");
-    Entity& martian = entityManager.createEntityFromTemplate("etc/templates/alien.json");
+//    Entity& player = entityManager.createEntityFromTemplate("etc/templates/player.json");
+//    Entity& platform = entityManager.createEntityFromTemplate("etc/templates/ground.json");
+//    Entity& platform2 = entityManager.createEntityFromTemplate("etc/templates/platform2.json");
+//    Entity& platform3 = entityManager.createEntityFromTemplate("etc/templates/platform3.json");
+//    Entity& platform4 = entityManager.createEntityFromTemplate("etc/templates/platform4.json");
+//    Entity& martian = entityManager.createEntityFromTemplate("etc/templates/alien.json");
+      entityManager.loadSceneFromTemplate("etc/templates/home/home_scene.json");
 }

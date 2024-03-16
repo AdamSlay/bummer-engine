@@ -39,7 +39,7 @@
       "state": "IDLE"
     },
     "Animator": {
-      "animatorPath": "etc/templates/player_anim.json"
+      "animatorPath": "assets/animations/player_anim.json"
     },
     "Input": {
       "has": "yes"

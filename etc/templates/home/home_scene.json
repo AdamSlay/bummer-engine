@@ -1,0 +1,22 @@
+{
+  "entities": [
+    {
+      "templatePath": "etc/templates/player.json"
+    },
+    {
+      "templatePath": "etc/templates/home/entities/ground.json"
+    },
+    {
+      "templatePath": "etc/templates/home/entities/platform2.json"
+    },
+    {
+      "templatePath": "etc/templates/home/entities/platform3.json"
+    },
+    {
+      "templatePath": "etc/templates/home/entities/platform4.json"
+    },
+    {
+      "templatePath": "etc/templates/alien.json"
+    }
+  ]
+}
