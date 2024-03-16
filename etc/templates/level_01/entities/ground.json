@@ -1,0 +1,25 @@
+{
+  "name": "Platform",
+  "components": {
+    "Transform": {
+      "x": 100,
+      "y": 570,
+      "scale": 4.2
+    },
+    "Collider": {
+      "offsetX": 2,
+      "offsetY": 2,
+      "width": 252,
+      "height": 64
+    },
+    "Sprite": {
+      "texturePath": "assets/platform.png",
+      "srcRect": {
+        "x": 0,
+        "y": 64,
+        "w": 256,
+        "h": 64
+      }
+    }
+  }
+}

@@ -83,5 +83,6 @@ void sandbox(EntityManager& entityManager) {
      *
      * @param entityManager: The entity manager
      */
-      entityManager.loadSceneFromTemplate("etc/templates/home/home_scene.json");
+    entityManager.loadSceneFromTemplate("etc/templates/home/home_scene.json");
+//    entityManager.loadSceneFromTemplate("etc/templates/level_01/level_01.json");
 }
