@@ -9,6 +9,7 @@
 #include "../Utils.cpp"
 #include "../Config.h"
 #include "../ECS/EventManager.h"
+#include "../ECS/SceneManager.h"
 
 void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     /**
@@ -21,6 +22,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
     TextureManager textureManager;
     EntityManager entityManager(&textureManager, renderer);
+    SceneManager sceneManager(entityManager);
     
     AnimationSystem animationSystem;
     CollisionSystem collisionSystem;
@@ -34,7 +36,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     SDL_GameController* controller = nullptr;
 
     // entity manager testing sandbox, just for testing new features
-    sandbox(entityManager);
+    sandbox(sceneManager);
     EventManager::getInstance().publish("start");
 
     SDL_Event e;
@@ -73,7 +75,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 }
 
 
-void sandbox(EntityManager& entityManager) {
+void sandbox(SceneManager& sceneManager) {
     /**
      * Sandbox function for testing new features
      *
@@ -83,6 +85,6 @@ void sandbox(EntityManager& entityManager) {
      *
      * @param entityManager: The entity manager
      */
-    entityManager.loadSceneFromTemplate("etc/templates/home/home_scene.json");
+    sceneManager.loadSceneFromTemplate("etc/templates/home/home_scene.json");
 //    entityManager.loadSceneFromTemplate("etc/templates/level_01/level_01.json");
 }

@@ -29,23 +29,6 @@ EntityManager::EntityManager(TextureManager* texManager, SDL_Renderer* ecsRender
     this->renderer = ecsRenderer;
 }
 
-void EntityManager::loadSceneFromTemplate(const std::string& templatePath) {
-    // Load the template file
-    std::ifstream file(templatePath);
-    if (!file.is_open()) {
-        throw std::runtime_error("Could not open scene template file: " + templatePath);
-    }
-
-    // Parse the JSON
-    json templateJson;
-    file >> templateJson;
-
-    // For each entity in the template, create the entity
-    for (const auto& entityTemplate : templateJson["entities"]) {
-        createEntityFromTemplate(entityTemplate["templatePath"]);
-    }
-}
-
 Entity& EntityManager::createEntity() {
     /**
      * Create a new entity, append it to the entities vector and return a reference to it
