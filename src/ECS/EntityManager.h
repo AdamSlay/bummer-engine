@@ -71,7 +71,7 @@ public:
     Entity& createEntity();
     std::vector<Entity>& getEntities();
     Entity& createEntityFromTemplate(const std::string& templatePath);
-//    void loadSceneFromTemplate(const std::string& templatePath);
+    void clearEntities();
     Entity& createPlayer(int x, int y, int w, int h);
     void configureAnimator(Entity& entity, std::map<playerStates, AnimationClip>& animations);
     Entity& getPlayer();

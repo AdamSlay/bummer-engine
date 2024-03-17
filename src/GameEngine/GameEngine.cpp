@@ -58,7 +58,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
         // Perform game logic updates
         inputSystem.update(entityManager, quit);
-        physicsSystem.update(entityManager, movementSystem, collisionSystem, deltaTime);
+        physicsSystem.update(sceneManager, entityManager, movementSystem, collisionSystem, deltaTime);
         animationSystem.update(entityManager, deltaTime);
 //        soundSystem.update(entityManager);
 
@@ -85,6 +85,7 @@ void sandbox(SceneManager& sceneManager) {
      *
      * @param entityManager: The entity manager
      */
-    sceneManager.loadSceneFromTemplate("etc/templates/home/home_scene.json");
+     sceneManager.nextScene();
+//    sceneManager.loadSceneFromTemplate("etc/templates/home/home_scene.json");
 //    entityManager.loadSceneFromTemplate("etc/templates/level_01/level_01.json");
 }

@@ -2,7 +2,7 @@
 #include "../ECS/EventManager.h"
 #include "../Config.h"
 
-void PhysicsSystem::update(EntityManager& entityManager, MovementSystem& movementSystem, CollisionSystem& collisionSystem, float deltaTime) {
+void PhysicsSystem::update(SceneManager& sceneManager, EntityManager& entityManager, MovementSystem& movementSystem, CollisionSystem& collisionSystem, float deltaTime) {
     movementSystem.moveX(entityManager, deltaTime);
     collisionSystem.updateX(entityManager);
     movementSystem.moveY(entityManager);
@@ -15,6 +15,7 @@ void PhysicsSystem::update(EntityManager& entityManager, MovementSystem& movemen
         player.getComponent<Transform>().x = SCREEN_WIDTH / 2 - 20;
         player.getComponent<Velocity>().dy = 0;
         EventManager::getInstance().publish("died");
+        sceneManager.nextScene();
         SDL_Delay(800);
         EventManager::getInstance().publish("spawn");
         SDL_Delay(200);

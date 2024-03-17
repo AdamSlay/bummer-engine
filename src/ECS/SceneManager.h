@@ -8,6 +8,7 @@
 class SceneManager {
 public:
     SceneManager(EntityManager& entityManager);
+    void nextScene();
     void loadSceneFromTemplate(const std::string& sceneTemplate);
 
 private:

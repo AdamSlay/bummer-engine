@@ -29,6 +29,13 @@ EntityManager::EntityManager(TextureManager* texManager, SDL_Renderer* ecsRender
     this->renderer = ecsRenderer;
 }
 
+void EntityManager::clearEntities() {
+    /**
+     * Clear the entities vector
+     */
+    entities.clear();
+}
+
 Entity& EntityManager::createEntity() {
     /**
      * Create a new entity, append it to the entities vector and return a reference to it

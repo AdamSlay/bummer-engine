@@ -5,8 +5,24 @@
 
 using json = nlohmann::json;
 
-SceneManager::SceneManager(EntityManager& entityManager) : entityManager(entityManager) {};
 
+
+SceneManager::SceneManager(EntityManager& entityManager) : entityManager(entityManager) {
+    sceneTemplates = {
+            "etc/templates/level_01/level_01.json",
+            "etc/templates/home/home_scene.json",
+    };
+};
+
+void SceneManager::nextScene() {
+    currentSceneIndex++;
+
+    if (currentSceneIndex >= sceneTemplates.size()) {
+        currentSceneIndex = 0;
+    }
+    entityManager.clearEntities();
+    loadSceneFromTemplate(sceneTemplates[currentSceneIndex]);
+}
 
 void SceneManager::loadSceneFromTemplate(const std::string& templatePath) {
     // Load the template file
