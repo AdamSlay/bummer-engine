@@ -45,6 +45,13 @@ struct Jumps
     Jumps(int jumps, int maxJumps, int jumpVelocity) : jumps(jumps), maxJumps(maxJumps), jumpVelocity(jumpVelocity) {}
 };
 
+struct Health
+{
+    int maxHealth;
+    int currentHealth;
+    Health(int maxHealth, int currentHealth) : maxHealth(maxHealth), currentHealth(currentHealth) {}
+};
+
 struct Dash
 {
     int speed;

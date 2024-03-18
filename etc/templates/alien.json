@@ -4,7 +4,7 @@
     "Transform": {
       "x": 400,
       "y": 50,
-      "scale": 2
+      "scale": 1
     },
     "Collider": {
       "offsetX": 30,
@@ -37,6 +37,10 @@
     },
     "Animator": {
       "animatorPath": "assets/animations/alien_anim.json"
+    },
+    "Health": {
+      "maxHealth": 100,
+      "currentHealth": 100
     }
   }
 }

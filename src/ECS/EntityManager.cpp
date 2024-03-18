@@ -155,6 +155,13 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
             entity.addComponent<Dash>({speed, isDashing, initCooldown, initDuration});
         }
 
+        if (componentsJson.contains("Health")) {
+            json healthJson = componentsJson["Health"];
+            int maxHealth = healthJson["maxHealth"];
+            int currentHealth = healthJson["currentHealth"];
+            entity.addComponent<Health>({maxHealth, currentHealth});
+        }
+
         if (componentsJson.contains("Animator")) {
 
             // open the animator file

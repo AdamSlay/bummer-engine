@@ -7,7 +7,7 @@
     "Transform": {
       "x": 620,
       "y": 50,
-      "scale": 2
+      "scale": 1
     },
     "Collider": {
       "offsetX": 24,
