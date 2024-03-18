@@ -145,4 +145,25 @@ struct Gravity
         : baseGravity(baseGravity), gravity(gravity), ascendFactor(ascendFactor), descendFactor(descendFactor) {}
 };
 
+struct Hitbox
+{
+    int offsetX, offsetY, width, height;
+    Hitbox(int offsetX, int offsetY, int width, int height)
+            : offsetX(offsetX), offsetY(offsetY), width(width), height(height) {}
+};
+
+struct AttackInfo
+{
+    int damage;
+    bool isActive;
+    Hitbox hitbox;
+    AttackInfo(int damage, bool isActive, Hitbox hitbox) : damage(damage), isActive(isActive), hitbox(hitbox) {}
+};
+
+struct AttackMap
+{
+    std::map<std::string, AttackInfo> attacks;
+};
+
+
 #endif // BUMMERENGINE_COMPONENTS_H

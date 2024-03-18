@@ -162,6 +162,29 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
             entity.addComponent<Health>({maxHealth, currentHealth});
         }
 
+        if (componentsJson.contains("AttackMap")) {
+            json attackJson = componentsJson["AttackMap"];
+            std::map<std::string, AttackInfo> attacks;
+
+            for (auto& [attackName, attackPath] : attackJson.items()) {
+                std::ifstream attackFile(attackPath.get<std::string>());
+                if (!attackFile.is_open()) {
+                    throw std::runtime_error("Could not open attack file: " + attackPath.get<std::string>());
+                }
+                json attackInfoJson;
+                attackFile >> attackInfoJson;
+
+                int damage = attackInfoJson["damage"];
+                bool isActive = false;
+                json hitboxJson = attackInfoJson["hitbox"];
+                Hitbox hitbox = {hitboxJson["offsetX"], hitboxJson["offsetY"], hitboxJson["width"], hitboxJson["height"]};
+
+                attacks.emplace(attackName, AttackInfo{damage, isActive, hitbox});
+            }
+
+            entity.addComponent<AttackMap>({attacks});
+        }
+
         if (componentsJson.contains("Animator")) {
 
             // open the animator file

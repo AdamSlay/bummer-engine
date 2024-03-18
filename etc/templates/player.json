@@ -53,6 +53,9 @@
       "jumps": 0,
       "maxJumps": 2,
       "jumpVelocity": 20
+    },
+    "AttackMap": {
+      "basic": "etc/templates/attacks/basic.json"
     }
   }
 }

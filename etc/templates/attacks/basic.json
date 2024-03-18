@@ -1,0 +1,9 @@
+{
+  "damage": 10,
+  "hitbox": {
+    "offsetX": 10,
+    "offsetY": 0,
+    "width": 20,
+    "height": 20
+  }
+}
