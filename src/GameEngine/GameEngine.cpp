@@ -42,6 +42,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     SDL_Event e;
     bool quit = false;
     Uint32 lastTime = SDL_GetTicks();
+    SDL_RenderSetLogicalSize(renderer, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
     while (!quit) {
         // handle frame timing
         Uint32 currentTime = SDL_GetTicks();
@@ -65,7 +66,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
         // render colliders
         SDL_SetRenderDrawColor(renderer, 104, 102, 184, 255);  // bb_purple
         SDL_RenderClear(renderer);
-//        Utils::render_all_colliders(entityManager, renderer);
+        Utils::render_all_colliders(entityManager, renderer);
 
         // Copy game to renderer here
         renderSystem.render(renderer, entityManager);

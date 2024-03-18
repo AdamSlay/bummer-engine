@@ -8,6 +8,8 @@
 
 extern int SCREEN_WIDTH;
 extern int SCREEN_HEIGHT;
+extern int VIRTUAL_WIDTH;
+extern int VIRTUAL_HEIGHT;
 extern std::string FONT_PATH;
 extern int FONT_SIZE;
 

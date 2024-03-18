@@ -1,5 +1,6 @@
 #include "RenderSystem.h"
 #include "../ECS/Components.h"
+#include "../Config.h"
 
 void RenderSystem::render(SDL_Renderer* renderer, EntityManager& entityManager) {
     /**

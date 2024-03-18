@@ -18,7 +18,7 @@ int initialize_resource(SDL_Window*& window, SDL_Renderer*& renderer, TTF_Font*&
     }
 
     // Initialize window
-    window = SDL_CreateWindow("BummerEngine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("BummerEngine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, VIRTUAL_WIDTH, VIRTUAL_HEIGHT, SDL_WINDOW_SHOWN);
     if(window == nullptr) {
         std::cout << "Window could not be created! \nError: " << SDL_GetError() << std::endl;
         return 2;

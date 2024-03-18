@@ -10,9 +10,9 @@ void PhysicsSystem::update(SceneManager& sceneManager, EntityManager& entityMana
 
     // reset player position if it falls off the screen
     Entity& player = entityManager.getPlayer();
-    if (player.getComponent<Transform>().y > SCREEN_HEIGHT) {
+    if (player.getComponent<Transform>().y > VIRTUAL_HEIGHT) {
         player.getComponent<Transform>().y = 50;
-        player.getComponent<Transform>().x = SCREEN_WIDTH / 2 - 20;
+        player.getComponent<Transform>().x = VIRTUAL_WIDTH / 2 - 20;
         player.getComponent<Velocity>().dy = 0;
         EventManager::getInstance().publish("died");
         sceneManager.nextScene();

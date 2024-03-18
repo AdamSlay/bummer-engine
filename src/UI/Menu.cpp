@@ -28,14 +28,14 @@ void splash_screen(SDL_Renderer* renderer, TTF_Font* font) {
     std::string mainText = "Bummer Engine";
     int textWidth, textHeight;
     TTF_SizeText(font, mainText.c_str(), &textWidth, &textHeight);
-    int mainX = (SCREEN_WIDTH / 2) - (textWidth / 2);
-    int mainY = (SCREEN_HEIGHT / 2) - (textHeight / 2);
+    int mainX = (VIRTUAL_WIDTH / 2) - (textWidth / 2);
+    int mainY = (VIRTUAL_HEIGHT / 2) - (textHeight / 2);
     SDL_Color bb_green = {36, 188, 148};
     render_text(renderer, font, mainText, bb_green, mainX, mainY);
 
     std::string poweredByText = "powered by";
     TTF_SizeText(font, mainText.c_str(), &textWidth, &textHeight);
-    int poweredByX = (SCREEN_WIDTH / 2) - (textWidth / 2) + 50;
+    int poweredByX = (VIRTUAL_WIDTH / 2) - (textWidth / 2) + 50;
     int poweredByY = mainY - FONT_SIZE - 10;
     SDL_Color bb_purple{104, 102, 182, 0xFF};
     render_text(renderer, font, poweredByText, bb_purple, poweredByX, poweredByY);
