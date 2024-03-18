@@ -19,6 +19,10 @@ void InputSystem::update(EntityManager &entityManager, bool &quit) {
         }
 
         else if (e.type == SDL_KEYDOWN || e.type == SDL_KEYUP) {
+            if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) {
+                quit = true;
+                break;
+            }
             for (Entity &entity : entityManager.getEntities()) {
                 if (entity.hasComponent<Input>()) {
                     Input &input = entity.getComponent<Input>();
