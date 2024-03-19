@@ -1,8 +1,5 @@
 #include "Utils.h"
 
-
-#include <iostream>
-
 #include "ECS/Components.h"
 
 SDL_Rect Utils::getColliderRect(const Entity& entity) {
@@ -12,6 +9,7 @@ SDL_Rect Utils::getColliderRect(const Entity& entity) {
      * @param entity: The entity
      * @return: A pair of integers representing the x and y position of the collider
      */
+
     const Transform& transform = entity.getComponent<Transform>();
     const Collider& collider = entity.getComponent<Collider>();
     int x = transform.x + (collider.offsetX * transform.scale);
@@ -22,6 +20,14 @@ SDL_Rect Utils::getColliderRect(const Entity& entity) {
 }
 
 void Utils::setTransformPos(Entity& entity, int x, int y) {
+    /**
+     * Set the position of the transform
+     *
+     * @param entity: The entity
+     * @param x: The x position
+     * @param y: The y position
+     */
+
     Transform& transform = entity.getComponent<Transform>();
     const Collider& collider = entity.getComponent<Collider>();
     transform.x = x - (collider.offsetX * transform.scale);
@@ -29,12 +35,26 @@ void Utils::setTransformPos(Entity& entity, int x, int y) {
 }
 
 void Utils::setTransformX(Entity& entity, int x) {
+    /**
+     * Set the x position of the transform
+     *
+     * @param entity: The entity
+     * @param x: The x position
+     */
+
     Transform& transform = entity.getComponent<Transform>();
     const Collider& collider = entity.getComponent<Collider>();
     transform.x = x - (collider.offsetX * transform.scale);
 }
 
 void Utils::setTransformY(Entity& entity, int y) {
+    /**
+     * Set the y position of the transform
+     *
+     * @param entity: The entity
+     * @param y: The y position
+     */
+
     Transform& transform = entity.getComponent<Transform>();
     const Collider& collider = entity.getComponent<Collider>();
     transform.y = y - (collider.offsetY * transform.scale);
@@ -47,6 +67,7 @@ void Utils::render_collider(Entity &entity, SDL_Renderer *renderer) {
      * @param entity: The entity
      * @param renderer: The SDL renderer
      */
+
     Transform &transform = entity.getComponent<Transform>();
     Collider &col = entity.getComponent<Collider>();
     int x = transform.x + (col.offsetX * transform.scale);
@@ -65,6 +86,7 @@ void Utils::render_all_colliders(EntityManager& entityManager, SDL_Renderer* ren
      * @param renderer: The SDL renderer
      * @param entityManager: The entity manager
      */
+
     for (Entity& entity : entityManager.getEntities()) {
         if (entity.hasComponent<Collider>()) {
             Utils::render_collider(entity, renderer);
@@ -73,6 +95,14 @@ void Utils::render_all_colliders(EntityManager& entityManager, SDL_Renderer* ren
 }
 
 SDL_Rect Utils::getHitboxRect(Hitbox& hitbox, Entity& entity) {
+    /**
+     * Get the position of the hitbox relative to entity collider
+     *
+     * @param hitbox: The hitbox
+     * @param entity: The entity
+     * @return: A pair of integers representing the x and y position of the hitbox
+     */
+
     SDL_Rect hitboxRect;
     SDL_Rect playerCollider = getColliderRect(entity);
 
@@ -86,13 +116,17 @@ SDL_Rect Utils::getHitboxRect(Hitbox& hitbox, Entity& entity) {
     hitboxRect.w = hitbox.width;
     hitboxRect.h = hitbox.height;
 
-    std::cout << "Hitbox: " << hitboxRect.x << " " << hitboxRect.y << " " << hitboxRect.w << " " << hitboxRect.h << std::endl;
-
     return hitboxRect;
 }
 
 void Utils::render_hitboxes(EntityManager &entityManager, SDL_Renderer *renderer) {
-    // iterate through entity manager, find entities with attackmap component and render active hitboxes
+    /**
+     * Render all active hitboxes for all entities
+     *
+     * @param renderer: The SDL renderer
+     * @param entityManager: The entity manager
+     */
+
     for (Entity& entity : entityManager.getEntities()) {
         if (entity.hasComponent<AttackMap>()) {
             for (auto& [name, attackInfo] : entity.getComponent<AttackMap>().attacks) {
@@ -105,5 +139,4 @@ void Utils::render_hitboxes(EntityManager &entityManager, SDL_Renderer *renderer
             }
         }
     }
-
 }

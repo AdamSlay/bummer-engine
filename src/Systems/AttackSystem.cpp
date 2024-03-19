@@ -5,52 +5,102 @@
 
 
 void AttackSystem::update(EntityManager& entityManager) {
+    /**
+     * Update the attack system
+     * For each entity, decrement invincibility frames and handle active attacks
+     *
+     * @param entityManager: The entity manager
+     */
 
-    // Decrement invincibility frames
     for (Entity& entity : entityManager.getEntities()) {
-        if (entity.hasComponent<Health>()) {
-            Health& health = entity.getComponent<Health>();
-            if (health.invincibilityRemaining > 0) {
-                health.invincibilityRemaining -= 1;
-            }
+        decrementInvincibiltyFrames(entity);
+
+        if (entity.hasComponent<AttackMap>()) {
+            handleActiveAttacks(entity, entityManager);
         }
     }
+}
 
-    // Check for active attacks
-    for (Entity& entity : entityManager.getEntities()) {
-        if (entity.hasComponent<AttackMap>()) {
-            for (auto& [name, attackInfo] : entity.getComponent<AttackMap>().attacks) {
-                if (attackInfo.isActive) {
-                    // if attack is active, increment frame counter and check for collision
-                    std::cout << "Attack is active" << std::endl;
-                    attackInfo.frameCounter += 1;
-                    if (attackInfo.frameCounter == attackInfo.duration) {
-                        attackInfo.isActive = false;
-                        attackInfo.frameCounter = 0;
-                    }
-                    // Check for collision and reduce health
-                    SDL_Rect hitbox = Utils::getHitboxRect(attackInfo.hitbox, entity);
-                    for (Entity& other : entityManager.getEntities()) {
-                        if (other.hasComponent<Health>() && checkCollision(hitbox, other)) {
-                            Health& otherHealth = other.getComponent<Health>();
-                            if (otherHealth.invincibilityRemaining > 0) {
-                                continue;
-                            }
-                            else {
-                                other.getComponent<Health>().currentHealth -= attackInfo.damage;
-                                otherHealth.invincibilityRemaining = otherHealth.invincibilityFrames;
-                                std::cout << "Health: " << other.getComponent<Health>().currentHealth << std::endl;
-                            }
-                        }
-                    }
+void AttackSystem::handleActiveAttacks(Entity &entity, EntityManager &entityManager) {
+    /**
+     * Handle active attacks
+     * If an attack is active, increment the frame counter and check for collision
+     * If a collision is detected, reduce the health of the other entity by the attack's damage
+     * and set the other entity's invincibility frames
+     *
+     * @param entity: The entity
+     * @param entityManager: The entity manager
+     */
+
+    for (auto& [name, attackInfo] : entity.getComponent<AttackMap>().attacks) {
+        if (attackInfo.isActive) {
+            incrementAttackFrames(attackInfo);
+
+            SDL_Rect hitbox = Utils::getHitboxRect(attackInfo.hitbox, entity);
+            for (Entity& other : entityManager.getEntities()) {
+                if (checkCollision(hitbox, other) && other.hasComponent<Health>()) {
+                    hitOther(attackInfo, other);
                 }
             }
         }
     }
 }
 
-bool AttackSystem::checkCollision(SDL_Rect& hitbox, Entity& entity2) {
-    SDL_Rect otherCollider = Utils::getColliderRect(entity2);
+void AttackSystem::incrementAttackFrames(AttackInfo& attackInfo) {
+    /**
+     * Increment the attack frames
+     *
+     * @param attackInfo: The attack info
+     */
+
+    attackInfo.frameCounter += 1;
+    if (attackInfo.frameCounter == attackInfo.duration) {
+        attackInfo.isActive = false;
+        attackInfo.frameCounter = 0;
+    }
+}
+
+void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& other) {
+    /**
+     * Reduce the health of the other entity by the attack's damage
+     * and set the other entity's invincibility frames
+     *
+     * @param attackInfo: The attack info
+     * @param other: The other entity
+     */
+
+    Health& otherHealth = other.getComponent<Health>();
+    if (otherHealth.invincibilityRemaining == 0) {
+        otherHealth.currentHealth -= attackInfo.damage;
+        otherHealth.invincibilityRemaining = otherHealth.invincibilityFrames;
+        std::cout << "Health: " << otherHealth.currentHealth << std::endl;
+    }
+}
+
+void AttackSystem::decrementInvincibiltyFrames(Entity& entity) {
+    /**
+     * Decrement the invincibility frames of an entity
+     *
+     * @param entity: The entity
+     */
+
+    if (entity.hasComponent<Health>()) {
+        Health& health = entity.getComponent<Health>();
+        if (health.invincibilityRemaining > 0) {
+            health.invincibilityRemaining -= 1;
+        }
+    }
+}
+
+bool AttackSystem::checkCollision(SDL_Rect& hitbox, Entity& other) {
+    /**
+     * Check if the hitbox is colliding with another entity
+     *
+     * @param hitbox: The hitbox
+     * @param entity2: The other entity
+     */
+
+    SDL_Rect otherCollider = Utils::getColliderRect(other);
 
     if (hitbox.x + hitbox.w < otherCollider.x ||  // hitbox is left of obj
         hitbox.x > otherCollider.x + otherCollider.w ||  // hitbox is right of obj
@@ -58,6 +108,5 @@ bool AttackSystem::checkCollision(SDL_Rect& hitbox, Entity& entity2) {
         hitbox.y > otherCollider.y + otherCollider.h) {  // hitbox is below obj
         return false;
     }
-
     return true;
 }

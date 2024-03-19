@@ -7,7 +7,11 @@ class AttackSystem {
 public:
     void update(EntityManager& entityManager);
 private:
-    bool checkCollision(SDL_Rect& hitbox, Entity& entity2);
+    void incrementAttackFrames(AttackInfo& attackInfo);
+    void decrementInvincibiltyFrames(Entity& entity);
+    void handleActiveAttacks(Entity& entity, EntityManager& entityManager);
+    void hitOther(AttackInfo& attackInfo, Entity& other);
+    bool checkCollision(SDL_Rect& hitbox, Entity& other);
 
 };
 
