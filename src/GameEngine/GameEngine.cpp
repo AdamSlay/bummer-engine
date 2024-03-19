@@ -5,6 +5,7 @@
 #include "../Systems/InputSystem.h"
 #include "../Systems/PhysicsSystem.h"
 #include "../Systems/SoundSystem.h"
+#include "../Systems/AttackSystem.h"
 
 #include "../Utils.cpp"
 #include "../Config.h"
@@ -31,6 +32,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     PhysicsSystem physicsSystem;
     RenderSystem renderSystem;
     SoundSystem soundSystem;
+    AttackSystem attackSystem;
 
     // Setup controller
     SDL_GameController* controller = nullptr;
@@ -59,6 +61,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
         // Perform game logic updates
         inputSystem.update(entityManager, quit);
+        attackSystem.update(entityManager);
         physicsSystem.update(sceneManager, entityManager, movementSystem, collisionSystem, deltaTime);
         animationSystem.update(entityManager, deltaTime);
 //        soundSystem.update(entityManager);

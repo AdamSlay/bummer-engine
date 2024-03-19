@@ -1,5 +1,8 @@
 #include "Utils.h"
 
+
+#include <iostream>
+
 #include "ECS/Components.h"
 
 SDL_Rect Utils::getColliderRect(const Entity& entity) {
@@ -67,4 +70,16 @@ void Utils::render_all_colliders(EntityManager& entityManager, SDL_Renderer* ren
             Utils::render_collider(entity, renderer);
         }
     }
+}
+
+SDL_Rect Utils::getHitboxRect(Hitbox& hitbox, Transform& transform) {
+    SDL_Rect hitboxRect;
+    hitboxRect.x = transform.x + (hitbox.offsetX * transform.scale);
+    hitboxRect.y = transform.y + (hitbox.offsetY * transform.scale);
+    hitboxRect.w = hitbox.width;
+    hitboxRect.h = hitbox.height;
+
+    std::cout << "Hitbox: " << hitboxRect.x << " " << hitboxRect.y << " " << hitboxRect.w << " " << hitboxRect.h << std::endl;
+
+    return hitboxRect;
 }

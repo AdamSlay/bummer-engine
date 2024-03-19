@@ -49,6 +49,8 @@ set(SOURCE_FILES
         src/ECS/EventManager.h
         src/ECS/SceneManager.cpp
         src/ECS/SceneManager.h
+        src/Systems/AttackSystem.cpp
+        src/Systems/AttackSystem.h
 )
 
 add_library(BummerLib ${SOURCE_FILES})

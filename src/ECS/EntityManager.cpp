@@ -1,4 +1,5 @@
 #include <fstream>
+#include <iostream>
 
 #include <nlohmann/json.hpp>
 
@@ -178,8 +179,9 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
                 bool isActive = false;
                 json hitboxJson = attackInfoJson["hitbox"];
                 Hitbox hitbox = {hitboxJson["offsetX"], hitboxJson["offsetY"], hitboxJson["width"], hitboxJson["height"]};
-
-                attacks.emplace(attackName, AttackInfo{damage, isActive, hitbox});
+                int duration = attackInfoJson["duration"];
+                std::cout << "added hitbox: " << hitbox.offsetX << " " << hitbox.offsetY << " " << hitbox.width << " " << hitbox.height << std::endl;
+                attacks.emplace(attackName, AttackInfo{damage, isActive, hitbox, duration});
             }
 
             entity.addComponent<AttackMap>({attacks});

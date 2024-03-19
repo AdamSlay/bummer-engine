@@ -150,6 +150,7 @@ struct Hitbox
     int offsetX, offsetY, width, height;
     Hitbox(int offsetX, int offsetY, int width, int height)
             : offsetX(offsetX), offsetY(offsetY), width(width), height(height) {}
+    Hitbox() : offsetX(0), offsetY(0), width(0), height(0) {} // Default constructor
 };
 
 struct AttackInfo
@@ -157,9 +158,12 @@ struct AttackInfo
     int damage;
     bool isActive;
     Hitbox hitbox;
-    AttackInfo(int damage, bool isActive, Hitbox hitbox) : damage(damage), isActive(isActive), hitbox(hitbox) {}
+    int duration; // in frames
+    int frameCounter; // counts the number of frames since the attack was activated
+    AttackInfo(int damage, bool isActive, Hitbox hitbox, int duration)
+            : damage(damage), isActive(isActive), hitbox(hitbox), duration(duration), frameCounter(0) {}
+    AttackInfo() : damage(0), isActive(false), hitbox(Hitbox()), duration(0), frameCounter(0) {} // Default constructor
 };
-
 struct AttackMap
 {
     std::map<std::string, AttackInfo> attacks;

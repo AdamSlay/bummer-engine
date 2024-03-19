@@ -1,6 +1,6 @@
 {
-  "SCREEN_WIDTH": 3456,
-  "SCREEN_HEIGHT": 2234,
+  "SCREEN_WIDTH": 800,
+  "SCREEN_HEIGHT": 600,
   "VIRTUAL_WIDTH": 1280,
   "VIRTUAL_HEIGHT": 720,
   "FONT_PATH": "../assets/fonts/SuperFunky.ttf",

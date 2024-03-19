@@ -1,5 +1,6 @@
 #include "InputSystem.h"
 #include <SDL2/SDL.h>
+#include <iostream>
 
 void InputSystem::update(EntityManager &entityManager, bool &quit) {
     // Clear justPressed for all entities
@@ -17,6 +18,17 @@ void InputSystem::update(EntityManager &entityManager, bool &quit) {
             quit = true;
             break;
         }
+        else if (e.type == SDL_MOUSEBUTTONDOWN) {
+            if (e.button.button == SDL_BUTTON_LEFT) {
+                for (Entity &entity : entityManager.getEntities()) {
+                    if (entity.hasComponent<Input>() && entity.hasComponent<AttackMap>()) {
+                        entity.getComponent<AttackMap>().attacks["basic"].isActive = true;
+                        std::cout << "Attack!" << std::endl;
+                    }
+                }
+            }
+        }
+
 
         else if (e.type == SDL_KEYDOWN || e.type == SDL_KEYUP) {
             if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) {
