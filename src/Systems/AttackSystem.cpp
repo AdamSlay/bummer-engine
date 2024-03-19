@@ -31,23 +31,22 @@ void AttackSystem::handleInput(Entity& entity) {
      * @param entity: The entity
      */
 
-    if (entity.hasComponent<Input>()) {
+    if (entity.hasComponent<Input>() && entity.hasComponent<AttackMap>()) {
         Input& input = entity.getComponent<Input>();
+        AttackMap& attackMap = entity.getComponent<AttackMap>();
+
         if (input.justPressed[SDL_SCANCODE_R]) {
-            if (entity.hasComponent<AttackMap>()) {
-                AttackMap& attackMap = entity.getComponent<AttackMap>();
-                if (!attackMap.attacks["basic"].isActive) {
-                    attackMap.attacks["basic"].isActive = true;
-                    if (entity.hasComponent<Player>()) {
-                        // suspend player on attack
-                        Velocity& vel = entity.getComponent<Velocity>();
-                        vel.dy = 0;
-                        vel.dx = 0;
-                        Gravity& gravity = entity.getComponent<Gravity>();
-                        gravity.gravity = 0.5;
-                    }
-                    EventManager::getInstance().publish("basicAttack");
+            if (!attackMap.attacks["basic"].isActive) {
+                attackMap.attacks["basic"].isActive = true;
+                if (entity.hasComponent<Player>()) {
+                    // suspend player on attack
+                    Velocity& vel = entity.getComponent<Velocity>();
+                    vel.dy = 0;
+                    vel.dx = 0;
+                    Gravity& gravity = entity.getComponent<Gravity>();
+                    gravity.gravity = 0.5;
                 }
+                EventManager::getInstance().publish("basicAttack");
             }
         }
     }
