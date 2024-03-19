@@ -72,10 +72,17 @@ void Utils::render_all_colliders(EntityManager& entityManager, SDL_Renderer* ren
     }
 }
 
-SDL_Rect Utils::getHitboxRect(Hitbox& hitbox, Transform& transform) {
+SDL_Rect Utils::getHitboxRect(Hitbox& hitbox, Entity& entity) {
     SDL_Rect hitboxRect;
-    hitboxRect.x = transform.x + (hitbox.offsetX * transform.scale);
-    hitboxRect.y = transform.y + (hitbox.offsetY * transform.scale);
+    SDL_Rect playerCollider = getColliderRect(entity);
+
+    int direction = entity.getComponent<Velocity>().direction;
+    if (direction == 1) { // player is facing right
+        hitboxRect.x = playerCollider.x + hitbox.offsetX + playerCollider.w;
+    } else { // player is facing left
+        hitboxRect.x = playerCollider.x - hitbox.offsetX - hitbox.width;
+    }
+    hitboxRect.y = playerCollider.y + hitbox.offsetY;
     hitboxRect.w = hitbox.width;
     hitboxRect.h = hitbox.height;
 
@@ -90,9 +97,8 @@ void Utils::render_hitboxes(EntityManager &entityManager, SDL_Renderer *renderer
         if (entity.hasComponent<AttackMap>()) {
             for (auto& [name, attackInfo] : entity.getComponent<AttackMap>().attacks) {
                 if (attackInfo.isActive) {
-                    Transform& transform = entity.getComponent<Transform>();
                     Hitbox& hitbox = attackInfo.hitbox;
-                    SDL_Rect hitboxRect = getHitboxRect(hitbox, transform);
+                    SDL_Rect hitboxRect = getHitboxRect(hitbox, entity);
                     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
                     SDL_RenderDrawRect(renderer, &hitboxRect);
                 }

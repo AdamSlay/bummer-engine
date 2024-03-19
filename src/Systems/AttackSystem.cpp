@@ -16,8 +16,7 @@ void AttackSystem::update(EntityManager& entityManager) {
                         attackInfo.frameCounter = 0;
                     }
                     // Check for collision and reduce health
-                    Transform& transform = entity.getComponent<Transform>();
-                    SDL_Rect hitbox = Utils::getHitboxRect(attackInfo.hitbox, transform);
+                    SDL_Rect hitbox = Utils::getHitboxRect(attackInfo.hitbox, entity);
                     for (Entity& other : entityManager.getEntities()) {
                         if (other.hasComponent<Health>() && checkCollision(hitbox, other)) {
                             other.getComponent<Health>().currentHealth -= attackInfo.damage;
