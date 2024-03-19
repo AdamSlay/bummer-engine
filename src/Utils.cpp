@@ -2,6 +2,24 @@
 
 #include "ECS/Components.h"
 
+
+std::string Utils::playerStateToString(playerStates state) {
+    switch(state) {
+        case playerStates::IDLE: return "IDLE";
+        case playerStates::GROUNDED: return "GROUNDED";
+        case playerStates::RUN: return "RUN";
+        case playerStates::JUMP_ASCEND: return "JUMP_ASCEND";
+        case playerStates::JUMP_DESCEND: return "JUMP_DESCEND";
+        case playerStates::JUMP_APEX: return "JUMP_APEX";
+        case playerStates::JUMP_APEX_DESCEND: return "JUMP_APEX_DESCEND";
+        case playerStates::JUMP_APEX_ASCEND: return "JUMP_APEX_ASCEND";
+        case playerStates::BASIC_ATTACK: return "BASIC_ATTACK";
+        case playerStates::FALL: return "FALL";
+        default: return "UNKNOWN";
+    }
+}
+
+
 SDL_Rect Utils::getColliderRect(const Entity& entity) {
     /**
      * Get the position of the collider

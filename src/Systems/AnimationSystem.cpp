@@ -1,5 +1,7 @@
 #include "AnimationSystem.h"
+#include "../Utils.h"
 
+#include <iostream>
 
 void AnimationSystem::update(EntityManager& entityManager, float deltaTime) {
     /**
@@ -17,7 +19,6 @@ void AnimationSystem::update(EntityManager& entityManager, float deltaTime) {
             auto clip = animator.animations.find(currentState);
             if (clip != animator.animations.end()) {
                 AnimationClip& currentClip = clip->second;
-
                 if (animator.isPlaying) {
                     if (animator.currentFrame != 0 && animator.currentFrame % currentClip.framesPerImage == 0) {
                         // Switch to the next image in the animation
@@ -35,6 +36,9 @@ void AnimationSystem::update(EntityManager& entityManager, float deltaTime) {
                     sprite.srcRect = currentClip.frames[animator.currentImage];
                     animator.currentFrame++;
                 }
+            }
+            else {
+                std::cout << "Animation not found for state: " << Utils::playerStateToString(currentState) << std::endl;
             }
         }
     }

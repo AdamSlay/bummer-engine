@@ -15,7 +15,7 @@ enum class playerStates
     JUMP_APEX,
     JUMP_APEX_DESCEND,
     JUMP_APEX_ASCEND,
-    DOUBLE_JUMP,
+    BASIC_ATTACK,
     FALL
 };
 
@@ -84,8 +84,9 @@ struct AnimationClip
     std::vector<SDL_Rect> frames;
     int framesPerImage;
     bool loop;
-    AnimationClip(SDL_Texture *spriteSheet, std::vector<SDL_Rect> frames, int framesPerImage, bool loop)
-        : spriteSheet(spriteSheet), frames(frames), framesPerImage(framesPerImage), loop(loop) {}
+    std::string spritePath;
+    AnimationClip(SDL_Texture *spriteSheet, std::vector<SDL_Rect> frames, int framesPerImage, bool loop, std::string spritePath)
+        : spriteSheet(spriteSheet), frames(frames), framesPerImage(framesPerImage), loop(loop), spritePath(spritePath) {}
 };
 
 struct Animator

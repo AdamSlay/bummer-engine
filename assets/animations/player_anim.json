@@ -54,6 +54,15 @@
       "imageHeight": 100,
       "imageY": 0
     },
+    "BASIC_ATTACK": {
+      "spriteSheetPath": "assets/bb_attack_sheet.png",
+      "framesPerImage": 4,
+      "startImage": 0,
+      "imageCount": 3,
+      "imageWidth": 64,
+      "imageHeight": 100,
+      "imageY": 0
+    },
     "IDLE": {
       "spriteSheetPath": "assets/bb_idle_sheet.png",
       "framesPerImage": 4,

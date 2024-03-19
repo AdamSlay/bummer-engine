@@ -46,6 +46,7 @@ void AttackSystem::handleInput(Entity& entity) {
                     Gravity& gravity = entity.getComponent<Gravity>();
                     gravity.gravity = 0.5;
                 }
+                entity.changeState(playerStates::BASIC_ATTACK);
                 EventManager::getInstance().publish("basicAttack");
             }
         }

@@ -4,6 +4,7 @@
 #include <nlohmann/json.hpp>
 
 #include "EntityManager.h"
+#include "../Utils.h"
 #include "../Resources/TextureManager.h"
 
 using json = nlohmann::json;
@@ -16,7 +17,9 @@ std::map<std::string, playerStates> EntityManager::playerStatesMap = {
         {"JUMP_APEX_ASCEND", playerStates::JUMP_APEX_ASCEND},
         {"JUMP_APEX", playerStates::JUMP_APEX},
         {"JUMP_APEX_DESCEND", playerStates::JUMP_APEX_DESCEND},
-        {"JUMP_DESCEND", playerStates::JUMP_DESCEND}
+        {"JUMP_DESCEND", playerStates::JUMP_DESCEND},
+        {"BASIC_ATTACK", playerStates::BASIC_ATTACK},
+        {"FALL", playerStates::FALL}
 };
 
 EntityManager::EntityManager(TextureManager* texManager, SDL_Renderer* ecsRenderer) {
@@ -211,13 +214,15 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
                 int imageWidth = animationClips["imageWidth"];
                 int imageHeight = animationClips["imageHeight"];
                 int imageY = animationClips["imageY"];
+                std::string spritePath = animationClips["spriteSheetPath"];
+
 
                 for (int i = 0; i < imageCount; i++) {
                     SDL_Rect frame = {startImage * imageWidth, imageY, imageWidth, imageHeight};
                     frames.push_back(frame);
                     startImage++;
                 }
-                AnimationClip clip = {texture, frames, framesPerImage, true};
+                AnimationClip clip = {texture, frames, framesPerImage, true, spritePath};
                 animations.emplace(state, clip);
             }
 

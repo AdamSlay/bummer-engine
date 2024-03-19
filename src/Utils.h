@@ -5,6 +5,7 @@
 #include "ECS/EntityManager.h"
 
 namespace Utils {
+    std::string playerStateToString(playerStates state);
     SDL_Rect getColliderRect(const Entity& entity);
     void setTransformPos(Entity& entity, int x, int y);
     void setTransformX(Entity& entity, int x);
