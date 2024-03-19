@@ -21,6 +21,9 @@ SoundSystem::SoundSystem() {
     EventManager::getInstance().subscribe("landed", [this]() {
         playSound("assets/sounds/zapsplat/foley_clothing_coat_land_floor_001.wav", 4);
     });
+    EventManager::getInstance().subscribe("basicAttack", [this]() {
+        playSound("assets/sounds/zapsplat/tennis_fast_whoosh_swing_006_106738.wav", 4);
+    });
 }
 
 void SoundSystem::update(EntityManager& entityManager) {

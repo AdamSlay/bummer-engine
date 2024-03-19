@@ -1,5 +1,6 @@
 #include "AttackSystem.h"
 #include "../Utils.h"
+#include "../ECS/EventManager.h"
 
 #include <iostream>
 
@@ -37,6 +38,7 @@ void AttackSystem::handleInput(Entity& entity) {
                 AttackMap& attackMap = entity.getComponent<AttackMap>();
                 if (!attackMap.attacks["basic"].isActive) {
                     attackMap.attacks["basic"].isActive = true;
+                    EventManager::getInstance().publish("basicAttack");
                 }
             }
         }
