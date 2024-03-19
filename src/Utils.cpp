@@ -83,3 +83,21 @@ SDL_Rect Utils::getHitboxRect(Hitbox& hitbox, Transform& transform) {
 
     return hitboxRect;
 }
+
+void Utils::render_hitboxes(EntityManager &entityManager, SDL_Renderer *renderer) {
+    // iterate through entity manager, find entities with attackmap component and render active hitboxes
+    for (Entity& entity : entityManager.getEntities()) {
+        if (entity.hasComponent<AttackMap>()) {
+            for (auto& [name, attackInfo] : entity.getComponent<AttackMap>().attacks) {
+                if (attackInfo.isActive) {
+                    Transform& transform = entity.getComponent<Transform>();
+                    Hitbox& hitbox = attackInfo.hitbox;
+                    SDL_Rect hitboxRect = getHitboxRect(hitbox, transform);
+                    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+                    SDL_RenderDrawRect(renderer, &hitboxRect);
+                }
+            }
+        }
+    }
+
+}

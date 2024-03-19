@@ -12,5 +12,6 @@ namespace Utils {
     void render_collider(Entity &entity, SDL_Renderer *renderer);
     void render_all_colliders(EntityManager& entityManager, SDL_Renderer* renderer);
     SDL_Rect getHitboxRect(Hitbox& hitbox, Transform& transform);
+    void render_hitboxes(EntityManager& entityManager, SDL_Renderer* renderer);
 }
 #endif //BUMMERENGINE_UTILS_H
