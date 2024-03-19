@@ -1,7 +1,10 @@
 {
   "entities": [
     {
-      "templatePath": "etc/templates/player.json"
+      "templatePath": "etc/templates/alien.json"
+    },
+    {
+      "templatePath": "etc/templates/alien2.json"
     },
     {
       "templatePath": "etc/templates/home/entities/ground.json"
@@ -16,7 +19,7 @@
       "templatePath": "etc/templates/home/entities/platform4.json"
     },
     {
-      "templatePath": "etc/templates/alien.json"
+      "templatePath": "etc/templates/player.json"
     }
   ]
 }

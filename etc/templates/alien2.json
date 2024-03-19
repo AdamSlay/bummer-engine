@@ -2,7 +2,7 @@
   "name": "Alien",
   "components": {
     "Transform": {
-      "x": 250,
+      "x": 880,
       "y": 50,
       "scale": 2
     },
