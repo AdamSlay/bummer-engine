@@ -40,7 +40,8 @@
     },
     "Health": {
       "maxHealth": 100,
-      "currentHealth": 100
+      "currentHealth": 100,
+      "invincibilityFrames": 20
     }
   }
 }

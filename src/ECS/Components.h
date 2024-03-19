@@ -49,7 +49,10 @@ struct Health
 {
     int maxHealth;
     int currentHealth;
-    Health(int maxHealth, int currentHealth) : maxHealth(maxHealth), currentHealth(currentHealth) {}
+    int invincibilityFrames; // Duration of damage cooldown (frames)
+    int invincibilityRemaining; // Time until entity can take damage again (frames)
+    Health(int maxHealth, int currentHealth, int invincibilityFrames)
+        : maxHealth(maxHealth), currentHealth(currentHealth), invincibilityFrames(invincibilityFrames), invincibilityRemaining(0) {}
 };
 
 struct Dash

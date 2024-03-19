@@ -160,7 +160,8 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
             json healthJson = componentsJson["Health"];
             int maxHealth = healthJson["maxHealth"];
             int currentHealth = healthJson["currentHealth"];
-            entity.addComponent<Health>({maxHealth, currentHealth});
+            int invincibilityFrames = healthJson["invincibilityFrames"];
+            entity.addComponent<Health>({maxHealth, currentHealth, invincibilityFrames});
         }
 
         if (componentsJson.contains("AttackMap")) {

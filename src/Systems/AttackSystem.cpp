@@ -5,10 +5,23 @@
 
 
 void AttackSystem::update(EntityManager& entityManager) {
+
+    // Decrement invincibility frames
+    for (Entity& entity : entityManager.getEntities()) {
+        if (entity.hasComponent<Health>()) {
+            Health& health = entity.getComponent<Health>();
+            if (health.invincibilityRemaining > 0) {
+                health.invincibilityRemaining -= 1;
+            }
+        }
+    }
+
+    // Check for active attacks
     for (Entity& entity : entityManager.getEntities()) {
         if (entity.hasComponent<AttackMap>()) {
             for (auto& [name, attackInfo] : entity.getComponent<AttackMap>().attacks) {
                 if (attackInfo.isActive) {
+                    // if attack is active, increment frame counter and check for collision
                     std::cout << "Attack is active" << std::endl;
                     attackInfo.frameCounter += 1;
                     if (attackInfo.frameCounter == attackInfo.duration) {
@@ -19,8 +32,15 @@ void AttackSystem::update(EntityManager& entityManager) {
                     SDL_Rect hitbox = Utils::getHitboxRect(attackInfo.hitbox, entity);
                     for (Entity& other : entityManager.getEntities()) {
                         if (other.hasComponent<Health>() && checkCollision(hitbox, other)) {
-                            other.getComponent<Health>().currentHealth -= attackInfo.damage;
-                            std::cout << "Health: " << other.getComponent<Health>().currentHealth << std::endl;
+                            Health& otherHealth = other.getComponent<Health>();
+                            if (otherHealth.invincibilityRemaining > 0) {
+                                continue;
+                            }
+                            else {
+                                other.getComponent<Health>().currentHealth -= attackInfo.damage;
+                                otherHealth.invincibilityRemaining = otherHealth.invincibilityFrames;
+                                std::cout << "Health: " << other.getComponent<Health>().currentHealth << std::endl;
+                            }
                         }
                     }
                 }
