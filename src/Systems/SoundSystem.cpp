@@ -24,6 +24,9 @@ SoundSystem::SoundSystem() {
     EventManager::getInstance().subscribe("basicAttack", [this]() {
         playSound("assets/sounds/zapsplat/tennis_fast_whoosh_swing_006_106738.wav", 4);
     });
+    EventManager::getInstance().subscribe("enemyHit", [this]() {
+        playSound("assets/sounds/zapsplat/voice_high_pitched_pain_grunt_003_15785.wav", 4);
+    });
 }
 
 void SoundSystem::update(EntityManager& entityManager) {

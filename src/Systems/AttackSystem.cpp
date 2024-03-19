@@ -106,6 +106,7 @@ void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& other) {
         otherHealth.currentHealth -= attackInfo.damage;
         otherHealth.invincibilityRemaining = otherHealth.invincibilityFrames;
         std::cout << "Health: " << otherHealth.currentHealth << std::endl;
+        EventManager::getInstance().publish("enemyHit");
     }
 }
 
