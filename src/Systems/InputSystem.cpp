@@ -18,17 +18,6 @@ void InputSystem::update(EntityManager &entityManager, bool &quit) {
             quit = true;
             break;
         }
-        else if (e.type == SDL_MOUSEBUTTONDOWN) {
-            if (e.button.button == SDL_BUTTON_LEFT) {
-                for (Entity &entity : entityManager.getEntities()) {
-                    if (entity.hasComponent<Input>() && entity.hasComponent<AttackMap>()) {
-                        entity.getComponent<AttackMap>().attacks["basic"].isActive = true;
-                        std::cout << "Attack!" << std::endl;
-                    }
-                }
-            }
-        }
-
 
         else if (e.type == SDL_KEYDOWN || e.type == SDL_KEYUP) {
             if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) {
@@ -104,8 +93,10 @@ SDL_Scancode InputSystem::mapControllerButtonToScancode(Uint8 button) {
     switch (button) {
     case SDL_CONTROLLER_BUTTON_A:
         return SDL_SCANCODE_UP; // Map 'A' button to up key
-    case SDL_CONTROLLER_BUTTON_X:  // Map 'X' button to Space key
+    case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:  // Map 'X' button to Space key
         return SDL_SCANCODE_SPACE;
+    case SDL_CONTROLLER_BUTTON_X:
+        return SDL_SCANCODE_R;
     case SDL_CONTROLLER_BUTTON_DPAD_LEFT:
         return SDL_SCANCODE_LEFT; // Map left D-pad button to left arrow key
     case SDL_CONTROLLER_BUTTON_DPAD_RIGHT:

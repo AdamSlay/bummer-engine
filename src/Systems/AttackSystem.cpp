@@ -15,8 +15,31 @@ void AttackSystem::update(EntityManager& entityManager) {
     for (Entity& entity : entityManager.getEntities()) {
         decrementInvincibiltyFrames(entity);
 
+        handleInput(entity);
+
         if (entity.hasComponent<AttackMap>()) {
             handleActiveAttacks(entity, entityManager);
+        }
+    }
+}
+
+void AttackSystem::handleInput(Entity& entity) {
+    /**
+     * Handle input for the attack system
+     * If the attack button is pressed, set the basic attack to active
+     *
+     * @param entity: The entity
+     */
+
+    if (entity.hasComponent<Input>()) {
+        Input& input = entity.getComponent<Input>();
+        if (input.justPressed[SDL_SCANCODE_R]) {
+            if (entity.hasComponent<AttackMap>()) {
+                AttackMap& attackMap = entity.getComponent<AttackMap>();
+                if (!attackMap.attacks["basic"].isActive) {
+                    attackMap.attacks["basic"].isActive = true;
+                }
+            }
         }
     }
 }

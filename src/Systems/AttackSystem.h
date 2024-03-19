@@ -7,6 +7,7 @@ class AttackSystem {
 public:
     void update(EntityManager& entityManager);
 private:
+    void handleInput(Entity& entity);
     void incrementAttackFrames(AttackInfo& attackInfo);
     void decrementInvincibiltyFrames(Entity& entity);
     void handleActiveAttacks(Entity& entity, EntityManager& entityManager);
