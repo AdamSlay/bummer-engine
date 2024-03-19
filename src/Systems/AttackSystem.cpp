@@ -15,9 +15,8 @@ void AttackSystem::update(EntityManager& entityManager) {
     for (Entity& entity : entityManager.getEntities()) {
         decrementInvincibiltyFrames(entity);
 
-        handleInput(entity);
-
         if (entity.hasComponent<AttackMap>()) {
+            handleInput(entity);
             handleActiveAttacks(entity, entityManager);
         }
     }
