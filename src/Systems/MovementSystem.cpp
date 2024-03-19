@@ -105,6 +105,7 @@ void MovementSystem::dash(Entity& entity, float deltaTime) {
             dash.isDashing = true;
             EventManager::getInstance().publish("dash");
             // Set a specific velocity for the dash
+            // TODO: magic numbers
             if (std::abs(input.joystickDirection.first) > 0.2 || std::abs(input.joystickDirection.second) > 0.2) {
                 // If the joystick is being used, dash in the direction of the joystick
                 std::cout << "Input value: " << input.joystickDirection.first << ", " << input.joystickDirection.second << std::endl;

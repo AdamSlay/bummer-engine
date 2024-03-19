@@ -38,6 +38,14 @@ void AttackSystem::handleInput(Entity& entity) {
                 AttackMap& attackMap = entity.getComponent<AttackMap>();
                 if (!attackMap.attacks["basic"].isActive) {
                     attackMap.attacks["basic"].isActive = true;
+                    if (entity.hasComponent<Player>()) {
+                        // suspend player on attack
+                        Velocity& vel = entity.getComponent<Velocity>();
+                        vel.dy = 0;
+                        vel.dx = 0;
+                        Gravity& gravity = entity.getComponent<Gravity>();
+                        gravity.gravity = 0.5;
+                    }
                     EventManager::getInstance().publish("basicAttack");
                 }
             }
