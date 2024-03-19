@@ -69,8 +69,8 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
         // render colliders
         SDL_SetRenderDrawColor(renderer, 104, 102, 184, 255);  // bb_purple
         SDL_RenderClear(renderer);
-        Utils::render_all_colliders(entityManager, renderer);
-        Utils::render_hitboxes(entityManager, renderer);
+//        Utils::render_all_colliders(entityManager, renderer);
+//        Utils::render_hitboxes(entityManager, renderer);
 
         // Copy game to renderer here
         renderSystem.render(renderer, entityManager);
