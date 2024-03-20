@@ -7,11 +7,13 @@ class AttackSystem {
 public:
     void update(EntityManager& entityManager);
 private:
+    // entities to remove vector
+    std::vector<int> entitiesToRemove;
     void handleInput(Entity& entity);
     void incrementAttackFrames(AttackInfo& attackInfo);
     void decrementInvincibiltyFrames(Entity& entity);
     void handleActiveAttacks(Entity& entity, EntityManager& entityManager);
-    void hitOther(AttackInfo& attackInfo, Entity& other);
+    void hitOther(AttackInfo& attackInfo, Entity& other, EntityManager& entityManager);
     bool checkCollision(SDL_Rect& hitbox, Entity& other);
 
 };

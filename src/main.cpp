@@ -22,10 +22,10 @@ int main(int argc, char* argv[]) {
         std::cerr << "Failed to initialize resources" << std::endl;
         return 1;
     }
-//    if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN) != 0) {
-//        std::cerr << "Failed to set fullscreen mode: " << SDL_GetError() << std::endl;
-//        return 1;
-//    }
+    if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN) != 0) {
+        std::cerr << "Failed to set fullscreen mode: " << SDL_GetError() << std::endl;
+        return 1;
+    }
     SDL_RaiseWindow(window);  // Raise the window to the top of the stack
     SDL_PumpEvents();  // Pump event queue so the window is visible asap
 

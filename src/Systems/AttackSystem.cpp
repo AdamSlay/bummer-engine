@@ -21,6 +21,10 @@ void AttackSystem::update(EntityManager& entityManager) {
             handleActiveAttacks(entity, entityManager);
         }
     }
+    for (int entityId : entitiesToRemove) {
+        entityManager.removeEntity(entityId);
+    }
+    entitiesToRemove.clear();
 }
 
 void AttackSystem::handleInput(Entity& entity) {
@@ -71,7 +75,7 @@ void AttackSystem::handleActiveAttacks(Entity &entity, EntityManager &entityMana
             SDL_Rect hitbox = Utils::getHitboxRect(attackInfo.hitbox, entity);
             for (Entity& other : entityManager.getEntities()) {
                 if (checkCollision(hitbox, other) && other.hasComponent<Health>()) {
-                    hitOther(attackInfo, other);
+                    hitOther(attackInfo, other, entityManager);
                 }
             }
         }
@@ -92,7 +96,7 @@ void AttackSystem::incrementAttackFrames(AttackInfo& attackInfo) {
     }
 }
 
-void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& other) {
+void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& other, EntityManager& entityManager) {
     /**
      * Reduce the health of the other entity by the attack's damage
      * and set the other entity's invincibility frames
@@ -107,6 +111,11 @@ void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& other) {
         otherHealth.invincibilityRemaining = otherHealth.invincibilityFrames;
         std::cout << "Health: " << otherHealth.currentHealth << std::endl;
         EventManager::getInstance().publish("enemyHit");
+        if (otherHealth.currentHealth <= 0 && !other.hasComponent<Player>()) {
+            entitiesToRemove.push_back(other.getID());
+        } else {
+            otherHealth.invincibilityRemaining = otherHealth.invincibilityFrames;
+        }
     }
 }
 

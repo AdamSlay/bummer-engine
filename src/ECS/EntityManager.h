@@ -10,6 +10,8 @@
 class Entity
 {
 public:
+    Entity();
+    bool operator==(const Entity& other) const;
     template <typename T>
     void addComponent(T component) {
         /**
@@ -61,7 +63,16 @@ public:
         }
     }
 
+    int getID() const {
+        /**
+         * Get the ID of the entity
+         */
+        return id;
+    }
+
 private:
+    int id;  // Unique identifier for each entity
+    static int nextId;  // Static member to generate unique IDs
     std::unordered_map<std::type_index, void *> components;
 };
 
@@ -69,6 +80,7 @@ class EntityManager {
 public:
     EntityManager(TextureManager* texManager, SDL_Renderer* ecsRenderer);
     Entity& createEntity();
+    void removeEntity(int entityId);
     std::vector<Entity>& getEntities();
     Entity& createEntityFromTemplate(const std::string& templatePath);
     void clearEntities();
