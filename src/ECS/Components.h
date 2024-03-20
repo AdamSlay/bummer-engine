@@ -173,5 +173,15 @@ struct AttackMap
     std::map<std::string, AttackInfo> attacks;
 };
 
+struct AI
+{
+    std::string state;
+    std::pair<int, int> patrolStart;
+    float patrolRange;
+    float attackRange;
+    AI(std::string state, std::pair<int, int> patrolStart, float patrolRange, float attackRange)
+        : state(state), patrolStart(patrolStart), patrolRange(patrolRange), attackRange(attackRange) {}
+};
+
 
 #endif // BUMMERENGINE_COMPONENTS_H

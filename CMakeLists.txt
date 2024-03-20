@@ -51,6 +51,8 @@ set(SOURCE_FILES
         src/ECS/SceneManager.h
         src/Systems/AttackSystem.cpp
         src/Systems/AttackSystem.h
+        src/Systems/AISystem.cpp
+        src/Systems/AISystem.h
 )
 
 add_library(BummerLib ${SOURCE_FILES})

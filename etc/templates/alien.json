@@ -7,7 +7,7 @@
       "scale": 2
     },
     "Collider": {
-      "offsetX": 30,
+      "offsetX": 22,
       "offsetY": 40,
       "width": 18,
       "height": 60
@@ -24,7 +24,7 @@
     "Velocity": {
       "dx": 0,
       "dy": 0,
-      "direction": 0
+      "direction": -1
     },
     "Gravity": {
       "baseGravity": 0.8,
@@ -39,9 +39,14 @@
       "animatorPath": "assets/animations/alien_anim.json"
     },
     "Health": {
-      "maxHealth": 100,
-      "currentHealth": 100,
+      "maxHealth": 50,
+      "currentHealth": 50,
       "invincibilityFrames": 20
+    },
+    "AI": {
+      "state": "IDLE",
+      "patrolRange": 100,
+      "attackRange": 100
     }
   }
 }

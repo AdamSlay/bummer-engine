@@ -247,6 +247,15 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
 
             entity.addComponent<Animator>({animations, playerStates::IDLE, 0, 0, true});
         }
+        
+        if (componentsJson.contains("AI")) {
+            Transform& transform = entity.getComponent<Transform>();
+            std::pair<int, int> patrolStart = {transform.x, transform.y};
+            std::string state = componentsJson["AI"]["state"];
+            float patrolRange = componentsJson["AI"]["patrolRange"];
+            float attackRange = componentsJson["AI"]["attackRange"];
+            entity.addComponent<AI>({state, patrolStart, patrolRange, attackRange});
+        }
     }
 
     // Return the new entity
