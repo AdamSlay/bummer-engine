@@ -49,7 +49,7 @@
       "attackRange": 100
     },
     "AttackMap": {
-      "basic": "etc/templates/attacks/basic.json"
+      "basic": "etc/templates/attacks/alien_basic.json"
     }
   }
 }

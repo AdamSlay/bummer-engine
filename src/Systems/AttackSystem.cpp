@@ -88,6 +88,7 @@ void AttackSystem::incrementAttackFrames(AttackInfo& attackInfo) {
      */
 
     attackInfo.frameCounter += 1;
+    std::cout << "attack frame: " << attackInfo.frameCounter << std::endl;
     if (attackInfo.frameCounter == attackInfo.duration) {
         attackInfo.isActive = false;
         attackInfo.frameCounter = 0;

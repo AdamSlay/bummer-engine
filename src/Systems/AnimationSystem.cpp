@@ -20,7 +20,15 @@ void AnimationSystem::update(EntityManager& entityManager, float deltaTime) {
             if (clip != animator.animations.end()) {
                 AnimationClip& currentClip = clip->second;
                 if (animator.isPlaying) {
+                    if (state.state == playerStates::BASIC_ATTACK) {
+                        std::cout << "Animator playing currentImage: " << animator.currentImage << std::endl;
+                        std::cout << "Animator playing currentFrame: " << animator.currentFrame << std::endl;
+                        std::cout << "currentClip.framesPerImage: " << currentClip.framesPerImage << std::endl;
+                    }
                     if (animator.currentFrame != 0 && animator.currentFrame % currentClip.framesPerImage == 0) {
+                        if (state.state == playerStates::BASIC_ATTACK) {
+                            std::cout << "Advancing currentImage to: " << animator.currentImage << std::endl;
+                        }
                         // Switch to the next image in the animation
                         animator.currentImage++;
                         if (animator.currentImage >= currentClip.frames.size()) {
@@ -34,7 +42,13 @@ void AnimationSystem::update(EntityManager& entityManager, float deltaTime) {
                     }
                     sprite.texture = currentClip.spriteSheet;
                     sprite.srcRect = currentClip.frames[animator.currentImage];
+                    if (state.state == playerStates::BASIC_ATTACK) {
+                        std::cout << "iterating currentFrame: " << animator.currentFrame << std::endl;
+                    }
                     animator.currentFrame++;
+                    if (state.state == playerStates::BASIC_ATTACK) {
+                        std::cout << "currentFrame iterated: " << animator.currentFrame << std::endl;
+                    }
                 }
             }
             else {

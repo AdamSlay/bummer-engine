@@ -171,16 +171,13 @@ void MovementSystem::changeJumpState(Entity &entity) {
      *
      * @param entity: The entity
      */
-    if (entity.hasComponent<Velocity>()) {
+    if (entity.hasComponent<Velocity>() && entity.getComponent<State>().state != playerStates::BASIC_ATTACK) {
         Velocity &vel = entity.getComponent<Velocity>();
         if (vel.dy < -3) {
             entity.changeState(playerStates::JUMP_ASCEND);
         }
         else if (vel.dy < -1) {
             entity.changeState(playerStates::JUMP_APEX_ASCEND);
-        }
-        else if (vel.dy < 0) {
-            entity.changeState(playerStates::JUMP_APEX);
         }
         else if (0 < vel.dy && vel.dy < 2) {
             entity.changeState(playerStates::JUMP_APEX);

@@ -1,0 +1,11 @@
+{
+  "damage": 10,
+  "hitbox": {
+    "offsetX": 5,
+    "offsetY": 35,
+    "width": 40,
+    "height": 20
+  },
+  "duration": 42,
+  "knockback": 50
+}
