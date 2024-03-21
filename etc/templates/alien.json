@@ -47,6 +47,9 @@
       "state": "IDLE",
       "patrolRange": 100,
       "attackRange": 100
+    },
+    "AttackMap": {
+      "basic": "etc/templates/attacks/basic.json"
     }
   }
 }

@@ -35,6 +35,15 @@
       "imageWidth": 64,
       "imageHeight": 100,
       "imageY": 0
+    },
+    "BASIC_ATTACK": {
+      "spriteSheetPath": "assets/martian_attack.png",
+      "framesPerImage": 6,
+      "startImage": 0,
+      "imageCount": 7,
+      "imageWidth": 64,
+      "imageHeight": 100,
+      "imageY": 0
     }
   }
 }
