@@ -121,6 +121,13 @@ void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& attacker, Entity& ot
         Velocity& otherVel = other.getComponent<Velocity>();
         int knockbackDirection = (attackerTransform.x < otherTransform.x) ? 1 : -1;
         otherVel.dx = attackInfo.knockback * knockbackDirection;
+        otherVel.direction = knockbackDirection * -1;
+
+        // Set state to hit
+        State& otherState = other.getComponent<State>();
+        if (otherState.state != playerStates::HIT) {
+            other.changeState(playerStates::HIT);
+        }
 
         if (otherHealth.currentHealth <= 0 && !other.hasComponent<Player>()) {
             entitiesToRemove.push_back(other.getID());
@@ -143,8 +150,15 @@ void AttackSystem::decrementInvincibiltyFrames(Entity& entity) {
         if (health.invincibilityRemaining > 0) {
             Velocity& vel = entity.getComponent<Velocity>();
             // stun target while invincible
+            State& state = entity.getComponent<State>();
+            if (state.state != playerStates::STUNNED){
+                entity.changeState(playerStates::STUNNED);
+            }
             vel.dx = 0;
             health.invincibilityRemaining -= 1;
+        }
+        else {
+            entity.changeState(playerStates::IDLE);
         }
     }
 }

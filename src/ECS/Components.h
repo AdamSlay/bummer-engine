@@ -15,6 +15,8 @@ enum class playerStates
     JUMP_APEX,
     JUMP_APEX_DESCEND,
     JUMP_APEX_ASCEND,
+    HIT,
+    STUNNED,
     BASIC_ATTACK,
     FALL
 };

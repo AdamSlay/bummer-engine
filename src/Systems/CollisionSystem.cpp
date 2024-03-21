@@ -200,10 +200,11 @@ void CollisionSystem::handlePlayerCollisionY(Entity& player, Entity& other) {
         float newPos = otherCollider.y - (playerCollider.h + collisionBuffer);
         int y = static_cast<int>(newPos + 1);
         Utils::setTransformY(player, y);
-        if (vel.dx != 0) {
+        State& state = player.getComponent<State>();
+        if (vel.dx != 0 && state.state != playerStates::STUNNED) {
             player.changeState(playerStates::RUN);
         }
-        else {
+        else if (state.state != playerStates::STUNNED) {
             player.changeState(playerStates::IDLE);
         }
         player.getComponent<Gravity>().gravity = player.getComponent<Gravity>().baseGravity;

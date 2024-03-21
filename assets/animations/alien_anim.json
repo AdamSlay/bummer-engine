@@ -8,6 +8,24 @@
       "imageWidth": 64,
       "imageHeight": 100,
       "imageY": 0
+    },
+    "HIT": {
+      "spriteSheetPath": "assets/martian_hit.png",
+      "framesPerImage": 4,
+      "startImage": 0,
+      "imageCount": 1,
+      "imageWidth": 64,
+      "imageHeight": 100,
+      "imageY": 0
+    },
+    "STUNNED": {
+      "spriteSheetPath": "assets/martian_hit.png",
+      "framesPerImage": 6,
+      "startImage": 1,
+      "imageCount": 2,
+      "imageWidth": 64,
+      "imageHeight": 100,
+      "imageY": 0
     }
   }
 }
