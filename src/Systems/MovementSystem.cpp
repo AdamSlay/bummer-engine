@@ -4,29 +4,49 @@
 #include "../ECS/Components.h"
 #include "../ECS/EventManager.h"
 
-void MovementSystem::moveX(EntityManager& entityManager, float deltaTime) {
-    for (Entity& entity : entityManager.getEntities()) {
+void MovementSystem::handleInput(EntityManager& entityManager, float deltaTime){
+    for (Entity& entity: entityManager.getEntities()) {
         if (entity.hasComponent<Transform>() && entity.hasComponent<Velocity>() && entity.hasComponent<Input>()) {
-            Transform& pos = entity.getComponent<Transform>();
-            Velocity& vel = entity.getComponent<Velocity>();
-            Input& input = entity.getComponent<Input>();
+            Velocity &vel = entity.getComponent<Velocity>();
+            Input &input = entity.getComponent<Input>();
 
+            // handle dash
             dash(entity, deltaTime);
-            Dash& dash = entity.getComponent<Dash>();
+            Dash &dash = entity.getComponent<Dash>();
+
+            // handle movement in x direction
             if (!dash.isDashing) {
                 if (input.keyStates[SDL_SCANCODE_LEFT]) {
                     vel.dx = -5;
-                }
-                else if (input.keyStates[SDL_SCANCODE_RIGHT]) {
+                } else if (input.keyStates[SDL_SCANCODE_RIGHT]) {
                     vel.dx = 5;
-                }
-                else {
+                } else {
                     vel.dx = 0;
                 }
                 if (vel.dx != 0) {
                     vel.direction = (vel.dx > 0) ? 1 : -1;
                 }
             }
+
+            // handle movement in y direction
+            if (input.justPressed[SDL_SCANCODE_UP]) {
+                jump(entity);
+            }
+            if (input.justReleased[SDL_SCANCODE_UP] && vel.dy < 0) {  // If the jump button is released while ascending, stop ascending
+                vel.dy = 0;
+            }
+            if (vel.dy != 0) {
+                changeJumpState(entity);
+            }
+        }
+    }
+}
+
+void MovementSystem::moveX(EntityManager& entityManager) {
+    for (Entity& entity : entityManager.getEntities()) {
+        if (entity.hasComponent<Transform>() && entity.hasComponent<Velocity>()) {
+            Transform &pos = entity.getComponent<Transform>();
+            Velocity &vel = entity.getComponent<Velocity>();
             pos.x += vel.dx;
         }
     }
@@ -35,41 +55,11 @@ void MovementSystem::moveX(EntityManager& entityManager, float deltaTime) {
 void MovementSystem::moveY(EntityManager &entityManager) {
     for (Entity &entity : entityManager.getEntities()) {
         if (entity.hasComponent<Transform>() && entity.hasComponent<Velocity>()) {
+            applyGravity(entity);
+
             Velocity &vel = entity.getComponent<Velocity>();
-            if (!entity.hasComponent<Input>()) {
-                applyGravity(entity);
-            }
-            else {
-                Input& input = entity.getComponent<Input>();
-                if (input.justPressed[SDL_SCANCODE_UP]) {
-                    jump(entity);
-                }
-                if (input.justReleased[SDL_SCANCODE_UP] && vel.dy < 0) {  // If the jump button is released while ascending, stop ascending
-                    vel.dy = 0;
-                }
-                if (vel.dy != 0) {
-                    changeJumpState(entity);
-                }
-                if (entity.hasComponent<Gravity>()) {
-                    if (entity.hasComponent<Dash>()) {
-                        Dash& dash = entity.getComponent<Dash>();
-                        if (!dash.isDashing) {
-                            applyGravity(entity);
-                        }
-                        else {
-                            // If the entity is dashing, don't apply gravity
-                            Gravity& gravity = entity.getComponent<Gravity>();
-                            gravity.gravity = 0.5;
-                        }
-                    }
-                    else {
-                        applyGravity(entity);
-                    }
-                }
-            }
-            // Apply velocity
-            Transform &pos = entity.getComponent<Transform>();
-            pos.y += vel.dy;
+            Transform &transform = entity.getComponent<Transform>();
+            transform.y += vel.dy;
         }
     }
 }
@@ -139,6 +129,8 @@ void MovementSystem::dash(Entity& entity, float deltaTime) {
                 dash.currentDuration = dash.initDuration; // Reset duration
                 vel.dx /= dash.speed; // Reset velocity
                 vel.dy /= dash.speed;
+                Gravity& gravity = entity.getComponent<Gravity>();
+                gravity.gravity = 0.5;
             }
         } else if (dash.currentCooldown > 0) {
             dash.currentCooldown -= deltaTime;

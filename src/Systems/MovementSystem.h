@@ -6,7 +6,8 @@
 
 class MovementSystem {
 public:
-    void moveX(EntityManager& entityManager, float deltaTime);
+    void handleInput(EntityManager& entityManager, float deltaTime);
+    void moveX(EntityManager& entityManager);
     void moveY(EntityManager& entityManager);
     void jump(Entity& entity);
     void dash(Entity& entity, float deltaTime);
