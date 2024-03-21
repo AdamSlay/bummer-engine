@@ -13,7 +13,7 @@ public:
     bool checkCollisionX(Entity& player, Entity& other);
     bool checkCollisionY(Entity& player, Entity& other);
     void handlePlayerCollisionX(Entity& player, Entity& other);
-    void handlePlayerCollisionY(Entity& player, Entity& other);
+    void handlePlayerCollisionY(Entity& entity, Entity& other);
 
 private:
     int collisionBuffer = 2;

@@ -175,15 +175,15 @@ void CollisionSystem::handlePlayerCollisionX(Entity& player, Entity& other) {
     }
 }
 
-void CollisionSystem::handlePlayerCollisionY(Entity& player, Entity& other) {
+void CollisionSystem::handlePlayerCollisionY(Entity& entity, Entity& other) {
     /**
-     * Handle player collision with other entities on the Y axis
+     * Handle entity collision with other entities on the Y axis
      *
-     * @param player: The player entity
+     * @param entity: The primary entity
      * @param other: The other entity
      */
-    Velocity& vel = player.getComponent<Velocity>();
-    SDL_Rect playerCollider = Utils::getColliderRect(player);
+    Velocity& vel = entity.getComponent<Velocity>();
+    SDL_Rect playerCollider = Utils::getColliderRect(entity);
     SDL_Rect otherCollider = Utils::getColliderRect(other);
 
     if (vel.dy > 0) {
@@ -193,27 +193,27 @@ void CollisionSystem::handlePlayerCollisionY(Entity& player, Entity& other) {
         }
 
         vel.dy = 0;
-        if (player.hasComponent<Jumps>()) {
-            player.getComponent<Jumps>().jumps = 0;  // Reset the number of jumps
+        if (entity.hasComponent<Jumps>()) {
+            entity.getComponent<Jumps>().jumps = 0;  // Reset the number of jumps
         }
 
         float newPos = otherCollider.y - (playerCollider.h + collisionBuffer);
         int y = static_cast<int>(newPos + 1);
-        Utils::setTransformY(player, y);
-        State& state = player.getComponent<State>();
+        Utils::setTransformY(entity, y);
+        State& state = entity.getComponent<State>();
         if (vel.dx != 0 && state.state != playerStates::STUNNED && state.state != playerStates::HIT && state.state != playerStates::WALK) {
-            player.changeState(playerStates::RUN);
+            entity.changeState(playerStates::RUN);
         }
         else if (state.state != playerStates::STUNNED && state.state != playerStates::HIT && state.state != playerStates::WALK) {
-            player.changeState(playerStates::IDLE);
+            entity.changeState(playerStates::IDLE);
         }
-        player.getComponent<Gravity>().gravity = player.getComponent<Gravity>().baseGravity;
+        entity.getComponent<Gravity>().gravity = entity.getComponent<Gravity>().baseGravity;
     }
     else if (vel.dy < 0) {
         // Player is moving up
         vel.dy = 0;
         float newPos = otherCollider.y + otherCollider.h + collisionBuffer;
         int y = static_cast<int>(newPos + 0.5);
-        Utils::setTransformY(player, y);
+        Utils::setTransformY(entity, y);
     }
 }
