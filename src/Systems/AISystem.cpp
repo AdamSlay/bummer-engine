@@ -14,7 +14,6 @@ void AISystem::update(EntityManager& entityManager, float deltaTime) {
                 (velocity.direction == -1 && transform.x <= ai.patrolStart.first - ai.patrolRange)) {
                 velocity.direction *= -1;
             }
-            std::cout << "Moving enemy in direction: " << velocity.direction << "\n";
 
             // Move the enemy in the current direction
             transform.x += 2 * velocity.direction;

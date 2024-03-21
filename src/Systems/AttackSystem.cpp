@@ -75,7 +75,7 @@ void AttackSystem::handleActiveAttacks(Entity &entity, EntityManager &entityMana
             SDL_Rect hitbox = Utils::getHitboxRect(attackInfo.hitbox, entity);
             for (Entity& other : entityManager.getEntities()) {
                 if (checkCollision(hitbox, other) && other.hasComponent<Health>()) {
-                    hitOther(attackInfo, other, entityManager);
+                    hitOther(attackInfo, other);
                 }
             }
         }
@@ -96,7 +96,7 @@ void AttackSystem::incrementAttackFrames(AttackInfo& attackInfo) {
     }
 }
 
-void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& other, EntityManager& entityManager) {
+void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& other) {
     /**
      * Reduce the health of the other entity by the attack's damage
      * and set the other entity's invincibility frames
