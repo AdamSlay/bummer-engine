@@ -34,7 +34,8 @@ std::map<std::string, playerStates> EntityManager::playerStatesMap = {
         {"BASIC_ATTACK", playerStates::BASIC_ATTACK},
         {"FALL", playerStates::FALL},
         {"HIT", playerStates::HIT},
-        {"STUNNED", playerStates::STUNNED}
+        {"STUNNED", playerStates::STUNNED},
+        {"WALK", playerStates::WALK}
 };
 
 EntityManager::EntityManager(TextureManager* texManager, SDL_Renderer* ecsRenderer) {

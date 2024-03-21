@@ -201,10 +201,10 @@ void CollisionSystem::handlePlayerCollisionY(Entity& player, Entity& other) {
         int y = static_cast<int>(newPos + 1);
         Utils::setTransformY(player, y);
         State& state = player.getComponent<State>();
-        if (vel.dx != 0 && state.state != playerStates::STUNNED) {
+        if (vel.dx != 0 && state.state != playerStates::STUNNED && state.state != playerStates::HIT && state.state != playerStates::WALK) {
             player.changeState(playerStates::RUN);
         }
-        else if (state.state != playerStates::STUNNED) {
+        else if (state.state != playerStates::STUNNED && state.state != playerStates::HIT && state.state != playerStates::WALK) {
             player.changeState(playerStates::IDLE);
         }
         player.getComponent<Gravity>().gravity = player.getComponent<Gravity>().baseGravity;

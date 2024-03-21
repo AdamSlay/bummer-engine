@@ -16,7 +16,11 @@ void AISystem::update(EntityManager& entityManager) {
             }
 
             // Move the enemy in the current direction
-            velocity.dx = 2 * velocity.direction;
+            State& state = entity.getComponent<State>();
+            if (state.state != playerStates::WALK) {
+                entity.changeState(playerStates::WALK);
+            }
+            velocity.dx = 1 * velocity.direction;
         }
     }
 }

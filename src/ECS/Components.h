@@ -18,7 +18,8 @@ enum class playerStates
     HIT,
     STUNNED,
     BASIC_ATTACK,
-    FALL
+    FALL,
+    WALK
 };
 
 struct Sound

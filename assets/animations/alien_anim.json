@@ -26,6 +26,15 @@
       "imageWidth": 64,
       "imageHeight": 100,
       "imageY": 0
+    },
+    "WALK": {
+      "spriteSheetPath": "assets/martian_walk.png",
+      "framesPerImage": 8,
+      "startImage": 0,
+      "imageCount": 4,
+      "imageWidth": 64,
+      "imageHeight": 100,
+      "imageY": 0
     }
   }
 }

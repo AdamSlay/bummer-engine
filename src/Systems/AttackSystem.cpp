@@ -157,9 +157,9 @@ void AttackSystem::decrementInvincibiltyFrames(Entity& entity) {
             vel.dx = 0;
             health.invincibilityRemaining -= 1;
         }
-        else {
-            entity.changeState(playerStates::IDLE);
-        }
+//        else {
+//            entity.changeState(playerStates::IDLE);
+//        }
     }
 }
 
