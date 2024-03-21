@@ -141,6 +141,9 @@ void AttackSystem::decrementInvincibiltyFrames(Entity& entity) {
     if (entity.hasComponent<Health>()) {
         Health& health = entity.getComponent<Health>();
         if (health.invincibilityRemaining > 0) {
+            Velocity& vel = entity.getComponent<Velocity>();
+            // stun target while invincible
+            vel.dx = 0;
             health.invincibilityRemaining -= 1;
         }
     }
