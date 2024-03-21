@@ -57,7 +57,7 @@ void AttackSystem::handleInput(Entity& entity) {
     }
 }
 
-void AttackSystem::handleActiveAttacks(Entity &entity, EntityManager &entityManager) {
+void AttackSystem::handleActiveAttacks(Entity &attacker, EntityManager &entityManager) {
     /**
      * Handle active attacks
      * If an attack is active, increment the frame counter and check for collision
@@ -68,14 +68,14 @@ void AttackSystem::handleActiveAttacks(Entity &entity, EntityManager &entityMana
      * @param entityManager: The entity manager
      */
 
-    for (auto& [name, attackInfo] : entity.getComponent<AttackMap>().attacks) {
+    for (auto& [name, attackInfo] : attacker.getComponent<AttackMap>().attacks) {
         if (attackInfo.isActive) {
             incrementAttackFrames(attackInfo);
 
-            SDL_Rect hitbox = Utils::getHitboxRect(attackInfo.hitbox, entity);
+            SDL_Rect hitbox = Utils::getHitboxRect(attackInfo.hitbox, attacker);
             for (Entity& other : entityManager.getEntities()) {
                 if (checkCollision(hitbox, other) && other.hasComponent<Health>()) {
-                    hitOther(attackInfo, other);
+                    hitOther(attackInfo, attacker, other);
                 }
             }
         }
@@ -96,7 +96,7 @@ void AttackSystem::incrementAttackFrames(AttackInfo& attackInfo) {
     }
 }
 
-void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& other) {
+void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& attacker, Entity& other) {
     /**
      * Reduce the health of the other entity by the attack's damage
      * and set the other entity's invincibility frames
@@ -107,13 +107,25 @@ void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& other) {
 
     Health& otherHealth = other.getComponent<Health>();
     if (otherHealth.invincibilityRemaining == 0) {
+        // Publish enemyHit event
+        EventManager::getInstance().publish("enemyHit");
+        std::cout << "Health: " << otherHealth.currentHealth << std::endl;
+
+        // Reduce health
         otherHealth.currentHealth -= attackInfo.damage;
         otherHealth.invincibilityRemaining = otherHealth.invincibilityFrames;
-        std::cout << "Health: " << otherHealth.currentHealth << std::endl;
-        EventManager::getInstance().publish("enemyHit");
+
+        // Apply knockback
+        Transform& attackerTransform = attacker.getComponent<Transform>();
+        Transform& otherTransform = other.getComponent<Transform>();
+        Velocity& otherVel = other.getComponent<Velocity>();
+        int knockbackDirection = (attackerTransform.x < otherTransform.x) ? 1 : -1;
+        otherVel.dx = attackInfo.knockback * knockbackDirection;
+
         if (otherHealth.currentHealth <= 0 && !other.hasComponent<Player>()) {
             entitiesToRemove.push_back(other.getID());
-        } else {
+        }
+        else {
             otherHealth.invincibilityRemaining = otherHealth.invincibilityFrames;
         }
     }

@@ -202,9 +202,10 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
                 bool isActive = false;
                 json hitboxJson = attackInfoJson["hitbox"];
                 Hitbox hitbox = {hitboxJson["offsetX"], hitboxJson["offsetY"], hitboxJson["width"], hitboxJson["height"]};
+                int knockback = attackInfoJson["knockback"];
                 int duration = attackInfoJson["duration"];
                 std::cout << "added hitbox: " << hitbox.offsetX << " " << hitbox.offsetY << " " << hitbox.width << " " << hitbox.height << std::endl;
-                attacks.emplace(attackName, AttackInfo{damage, isActive, hitbox, duration});
+                attacks.emplace(attackName, AttackInfo{damage, isActive, hitbox, knockback, duration});
             }
 
             entity.addComponent<AttackMap>({attacks});

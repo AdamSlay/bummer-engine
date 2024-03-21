@@ -162,11 +162,12 @@ struct AttackInfo
     int damage;
     bool isActive;
     Hitbox hitbox;
+    int knockback;
     int duration; // in frames
     int frameCounter; // counts the number of frames since the attack was activated
-    AttackInfo(int damage, bool isActive, Hitbox hitbox, int duration)
-            : damage(damage), isActive(isActive), hitbox(hitbox), duration(duration), frameCounter(0) {}
-    AttackInfo() : damage(0), isActive(false), hitbox(Hitbox()), duration(0), frameCounter(0) {} // Default constructor
+    AttackInfo(int damage, bool isActive, Hitbox hitbox, int knockback, int duration)
+            : damage(damage), isActive(isActive), hitbox(hitbox), knockback(knockback), duration(duration), frameCounter(0) {}
+    AttackInfo() : damage(0), isActive(false), hitbox(Hitbox()), knockback(0), duration(0), frameCounter(0) {} // Default constructor
 };
 struct AttackMap
 {

@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-void AISystem::update(EntityManager& entityManager, float deltaTime) {
+void AISystem::update(EntityManager& entityManager) {
     for (Entity& entity : entityManager.getEntities()) {
         if (entity.hasComponent<AI>() && entity.hasComponent<Transform>() && entity.hasComponent<Velocity>()) {
             AI& ai = entity.getComponent<AI>();
@@ -16,7 +16,7 @@ void AISystem::update(EntityManager& entityManager, float deltaTime) {
             }
 
             // Move the enemy in the current direction
-            transform.x += 2 * velocity.direction;
+            velocity.dx = 2 * velocity.direction;
         }
     }
 }

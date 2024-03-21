@@ -63,7 +63,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
         // Perform game logic updates
         inputSystem.update(entityManager, quit);
-        aiSystem.update(entityManager, deltaTime);
+        aiSystem.update(entityManager);
         attackSystem.update(entityManager);
         physicsSystem.update(sceneManager, entityManager, movementSystem, collisionSystem, deltaTime);
         animationSystem.update(entityManager, deltaTime);
