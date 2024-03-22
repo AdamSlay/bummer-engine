@@ -46,7 +46,7 @@
     "AI": {
       "state": "IDLE",
       "patrolRange": 100,
-      "attackRange": 100
+      "attackRange": 50
     }
   }
 }
