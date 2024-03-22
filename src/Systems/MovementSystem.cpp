@@ -52,9 +52,6 @@ void MovementSystem::moveX(EntityManager& entityManager) {
             Transform &pos = entity.getComponent<Transform>();
             Velocity &vel = entity.getComponent<Velocity>();
             pos.x += vel.dx;
-            if (entity.hasComponent<Player>()) {
-                std::cout << "moving player by: " << vel.dx << std::endl;
-            }
         }
     }
 }
