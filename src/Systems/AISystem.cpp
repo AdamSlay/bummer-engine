@@ -21,7 +21,7 @@ void AISystem::update(EntityManager& entityManager) {
 
             // Move the enemy in the current direction
             State& state = entity.getComponent<State>();
-            if (state.state != playerStates::BASIC_ATTACK) {
+            if (state.state != playerStates::BASIC_ATTACK && state.state != playerStates::HIT && state.state != playerStates::STUNNED) {
                 entity.changeState(playerStates::RUN);
                 velocity.dx = 1 * velocity.direction;
             }
@@ -62,10 +62,7 @@ void AISystem::attack(EntityManager& entityManager, Entity& attacker) {
                 vel.dx = 0;
                 State& state = attacker.getComponent<State>();
                 if (state.state != playerStates::BASIC_ATTACK) {
-                    std::cout << "AI changing state to basic attack" << std::endl;
-                    std::cout << "State was: " << Utils::playerStateToString(state.state) << std::endl;
                     attacker.changeState(playerStates::BASIC_ATTACK);
-                    std::cout << "new state: " << Utils::playerStateToString(state.state) << std::endl;
                 }
                 break;
             }

@@ -7,6 +7,6 @@
     "height": 20
   },
   "duration": 5,
-  "knockback": 50,
+  "knockback": 10,
   "windupFrames": 0
 }

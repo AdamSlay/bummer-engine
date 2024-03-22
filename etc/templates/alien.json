@@ -41,7 +41,7 @@
     "Health": {
       "maxHealth": 50,
       "currentHealth": 50,
-      "invincibilityFrames": 30
+      "invincibilityFrames": 10
     },
     "AI": {
       "state": "IDLE",
