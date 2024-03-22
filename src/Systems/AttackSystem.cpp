@@ -72,7 +72,9 @@ void AttackSystem::handleActiveAttacks(Entity &attacker, EntityManager &entityMa
 
             SDL_Rect hitbox = Utils::getHitboxRect(attackInfo.hitbox, attacker);
             for (Entity& other : entityManager.getEntities()) {
-                if (checkCollision(hitbox, other) && other.hasComponent<Health>()) {
+                int attackFrame = attackInfo.frameCounter;
+                int windupFrames = attackInfo.windupFrames;
+                if (checkCollision(hitbox, other) && other.hasComponent<Health>() && attackFrame >= windupFrames) {
                     hitOther(attackInfo, attacker, other);
                 }
             }
