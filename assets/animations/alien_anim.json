@@ -27,7 +27,7 @@
       "imageHeight": 100,
       "imageY": 0
     },
-    "WALK": {
+    "RUN": {
       "spriteSheetPath": "assets/martian_walk.png",
       "framesPerImage": 8,
       "startImage": 0,

@@ -77,6 +77,15 @@ void AttackSystem::handleActiveAttacks(Entity &attacker, EntityManager &entityMa
                 }
             }
         }
+        else if (attacker.getComponent<State>().state == playerStates::BASIC_ATTACK) {
+            Velocity& vel = attacker.getComponent<Velocity>();
+            if (vel.dx == 0) {
+                attacker.changeState(playerStates::IDLE);
+            }
+            else {
+                attacker.changeState(playerStates::RUN);
+            }
+        }
     }
 }
 
@@ -150,15 +159,12 @@ void AttackSystem::decrementInvincibiltyFrames(Entity& entity) {
             Velocity& vel = entity.getComponent<Velocity>();
             // stun target while invincible
             State& state = entity.getComponent<State>();
-            if (state.state != playerStates::STUNNED){
+            if (state.state != playerStates::STUNNED && !entity.hasComponent<Player>()){
                 entity.changeState(playerStates::STUNNED);
             }
             vel.dx = 0;
             health.invincibilityRemaining -= 1;
         }
-//        else {
-//            entity.changeState(playerStates::IDLE);
-//        }
     }
 }
 

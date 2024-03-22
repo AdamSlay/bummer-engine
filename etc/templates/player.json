@@ -56,6 +56,11 @@
     },
     "AttackMap": {
       "basic": "etc/templates/attacks/basic.json"
+    },
+    "Health": {
+      "maxHealth": 50,
+      "currentHealth": 50,
+      "invincibilityFrames": 20
     }
   }
 }
