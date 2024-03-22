@@ -131,6 +131,7 @@ void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& attacker, Entity& ot
         Velocity& otherVel = other.getComponent<Velocity>();
         int knockbackDirection = (attackerTransform.x < otherTransform.x) ? 1 : -1;
         otherVel.dx = attackInfo.knockback * knockbackDirection;
+        std::cout << "knocking back with: " << otherVel.dx << std::endl;
         otherVel.direction = knockbackDirection * -1;
 
         // Set state to hit
@@ -139,11 +140,10 @@ void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& attacker, Entity& ot
             other.changeState(playerStates::HIT);
         }
 
-        if (otherHealth.currentHealth <= 0 && !other.hasComponent<Player>()) {
-            entitiesToRemove.push_back(other.getID());
-        }
-        else {
-            otherHealth.invincibilityRemaining = otherHealth.invincibilityFrames;
+        if (otherHealth.currentHealth <= 0) {
+            if (!other.hasComponent<Player>()) {
+                entitiesToRemove.push_back(other.getID());
+            }
         }
     }
 }
@@ -161,11 +161,13 @@ void AttackSystem::decrementInvincibiltyFrames(Entity& entity) {
             Velocity& vel = entity.getComponent<Velocity>();
             // stun target while invincible
             State& state = entity.getComponent<State>();
-            if (state.state != playerStates::STUNNED && !entity.hasComponent<Player>()){
+            if (state.state != playerStates::STUNNED){
                 entity.changeState(playerStates::STUNNED);
             }
-            vel.dx = 0;
             health.invincibilityRemaining -= 1;
+            if (health.invincibilityRemaining == 0) {
+                entity.changeState(playerStates::IDLE);
+            }
         }
     }
 }

@@ -10,33 +10,37 @@ void MovementSystem::handleInput(EntityManager& entityManager, float deltaTime){
             Velocity &vel = entity.getComponent<Velocity>();
             Input &input = entity.getComponent<Input>();
 
-            // handle dash
-            dash(entity, deltaTime);
-            Dash &dash = entity.getComponent<Dash>();
 
-            // handle movement in x direction
-            if (!dash.isDashing) {
-                if (input.keyStates[SDL_SCANCODE_LEFT]) {
-                    vel.dx = -5;
-                } else if (input.keyStates[SDL_SCANCODE_RIGHT]) {
-                    vel.dx = 5;
-                } else {
-                    vel.dx = 0;
-                }
-                if (vel.dx != 0) {
-                    vel.direction = (vel.dx > 0) ? 1 : -1;
-                }
-            }
+            if (entity.getComponent<State>().state != playerStates::HIT && entity.getComponent<State>().state != playerStates::STUNNED) {
 
-            // handle movement in y direction
-            if (input.justPressed[SDL_SCANCODE_UP]) {
-                jump(entity);
-            }
-            if (input.justReleased[SDL_SCANCODE_UP] && vel.dy < 0) {  // If the jump button is released while ascending, stop ascending
-                vel.dy = 0;
-            }
-            if (vel.dy != 0) {
-                changeJumpState(entity);
+                // handle movement in x direction
+                // handle dash
+                dash(entity, deltaTime);
+                Dash &dash = entity.getComponent<Dash>();
+                if (!dash.isDashing) {
+                    if (input.keyStates[SDL_SCANCODE_LEFT]) {
+                        vel.dx = -5;
+                    } else if (input.keyStates[SDL_SCANCODE_RIGHT]) {
+                        vel.dx = 5;
+                    } else {
+                        vel.dx = 0;
+                    }
+                    if (vel.dx != 0) {
+                        vel.direction = (vel.dx > 0) ? 1 : -1;
+                    }
+                }
+
+                // handle movement in y direction
+                if (input.justPressed[SDL_SCANCODE_UP]) {
+                    jump(entity);
+                }
+                if (input.justReleased[SDL_SCANCODE_UP] && vel.dy < 0) {  // If the jump button is released while ascending, stop ascending
+                    vel.dy = 0;
+                }
+                if (vel.dy != 0) {
+                    changeJumpState(entity);
+                }
+
             }
         }
     }
@@ -48,6 +52,9 @@ void MovementSystem::moveX(EntityManager& entityManager) {
             Transform &pos = entity.getComponent<Transform>();
             Velocity &vel = entity.getComponent<Velocity>();
             pos.x += vel.dx;
+            if (entity.hasComponent<Player>()) {
+                std::cout << "moving player by: " << vel.dx << std::endl;
+            }
         }
     }
 }
