@@ -15,10 +15,10 @@ void PhysicsSystem::update(SceneManager& sceneManager, EntityManager& entityMana
         player.getComponent<Transform>().y = 50;
         player.getComponent<Transform>().x = VIRTUAL_WIDTH / 2 - 20;
         player.getComponent<Velocity>().dy = 0;
-        EventManager::getInstance().publish("died");
+        EventManager::getInstance().publish("died", {player.getID()});
         sceneManager.nextScene();
         SDL_Delay(800);
-        EventManager::getInstance().publish("spawn");
+        EventManager::getInstance().publish("spawn", {player.getID()});
         SDL_Delay(200);
     }
 }

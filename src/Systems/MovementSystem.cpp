@@ -85,7 +85,7 @@ void MovementSystem::jump(Entity& entity) {
             gravity.gravity = gravity.baseGravity;
             vel.dy = -jumps.jumpVelocity;
             entity.changeState(playerStates::JUMP_ASCEND);
-            EventManager::getInstance().publish("jump");
+            EventManager::getInstance().publish("jump", {entity.getID()});
         }
     }
 }
@@ -97,7 +97,7 @@ void MovementSystem::dash(Entity& entity, float deltaTime) {
         Velocity& vel = entity.getComponent<Velocity>();
         if (input.justPressed[SDL_SCANCODE_SPACE] && !dash.isDashing && dash.currentCooldown <= 0) {
             dash.isDashing = true;
-            EventManager::getInstance().publish("dash");
+            EventManager::getInstance().publish("dash", {entity.getID()});
             // Set a specific velocity for the dash
             // TODO: magic numbers
             if (std::abs(input.joystickDirection.first) > 0.2 || std::abs(input.joystickDirection.second) > 0.2) {

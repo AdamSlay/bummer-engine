@@ -54,9 +54,9 @@ public:
          *
          * @param newState: The new state
          */
-        Animator& animator = getComponent<Animator>();
         if (getComponent<State>().state != newState) {
             getComponent<State>().state = newState;
+            Animator& animator = getComponent<Animator>();
             animator.currentFrame = 0;
             animator.currentImage = 0;
             animator.isPlaying = true;

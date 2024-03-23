@@ -4,29 +4,29 @@
 
 
 SoundSystem::SoundSystem() {
-    EventManager::getInstance().subscribe("jump", [this]() {
+    EventManager::getInstance().subscribe("jump", [this](EventData data) {
         playSound("assets/sounds/foly/bb_char/jump_6.wav", 1);
     });
-    EventManager::getInstance().subscribe("died", [this]() {
+    EventManager::getInstance().subscribe("died", [this](EventData data) {
         playSound("assets/sounds/zapsplat/zapsplat_impacts_body_hit_thud_stab_squelch_of_blood_90708.wav", 2);
     });
-    EventManager::getInstance().subscribe("spawn", [this]() {
+    EventManager::getInstance().subscribe("spawn", [this](EventData data) {
         playSound("assets/sounds/zapsplat/zapsplat_sound_design_rewind_reversed_vibration_001_19653.wav", 2);
     });
-    EventManager::getInstance().subscribe("dash", [this]() {
+    EventManager::getInstance().subscribe("dash", [this](EventData data) {
         playSound("assets/sounds/zapsplat/zapsplat_cartoon_whoosh_swipe_fast_grab_dash_006_74747.wav", 4);
     });
-    EventManager::getInstance().subscribe("start", [this]() {
+    EventManager::getInstance().subscribe("start", [this](EventData data) {
         playSound("assets/sounds/music/volts-theme.wav", 4);
     });
-    EventManager::getInstance().subscribe("landed", [this]() {
+    EventManager::getInstance().subscribe("landed", [this](EventData data) {
         playSound("assets/sounds/zapsplat/foley_clothing_coat_land_floor_001.wav", 4);
     });
-    EventManager::getInstance().subscribe("basicAttack", [this]() {
+    EventManager::getInstance().subscribe("basicAttack", [this](EventData data) {
         playSound("assets/sounds/foly/bb_char/attack_6.wav", 1);
 //        playSound("assets/sounds/zapsplat/tennis_fast_whoosh_swing_006_106738.wav", 4);
     });
-    EventManager::getInstance().subscribe("enemyHit", [this]() {
+    EventManager::getInstance().subscribe("enemyHit", [this](EventData data) {
         playSound("assets/sounds/foly/alien_sounds/take_hit_1.wav", 1);
         playSound("assets/sounds/foly/alien_sounds/vocal_1.wav", 1);
 //        playSound("assets/sounds/zapsplat/voice_high_pitched_pain_grunt_003_15785.wav", 4);

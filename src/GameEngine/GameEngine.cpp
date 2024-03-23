@@ -41,7 +41,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
     // entity manager testing sandbox, just for testing new features
     sandbox(sceneManager);
-    EventManager::getInstance().publish("start");
+    EventManager::getInstance().publish("start", {});
 
     SDL_Event e;
     bool quit = false;
