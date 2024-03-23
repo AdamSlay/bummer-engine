@@ -17,9 +17,7 @@ enum class playerStates
     JUMP_APEX_ASCEND,
     HIT,
     STUNNED,
-    BASIC_ATTACK,
-    FALL,
-    WALK
+    BASIC_ATTACK
 };
 
 struct Sound

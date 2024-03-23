@@ -14,7 +14,8 @@ std::string Utils::playerStateToString(playerStates state) {
         case playerStates::JUMP_APEX_DESCEND: return "JUMP_APEX_DESCEND";
         case playerStates::JUMP_APEX_ASCEND: return "JUMP_APEX_ASCEND";
         case playerStates::BASIC_ATTACK: return "BASIC_ATTACK";
-        case playerStates::FALL: return "FALL";
+        case playerStates::HIT: return "HIT";
+        case playerStates::STUNNED: return "STUNNED";
         default: return "UNKNOWN";
     }
 }
