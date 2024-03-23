@@ -39,6 +39,9 @@ void InputSystem::update(EntityManager &entityManager, bool &quit) {
 }
 
 void InputSystem::handleKeyboardInput(SDL_Event& e, Input& input) {
+    /**
+     * Handle Keyboard input
+     */
     input.keyStates[e.key.keysym.scancode] = (e.type == SDL_KEYDOWN);
     if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
         input.justPressed[e.key.keysym.scancode] = true;
@@ -49,6 +52,9 @@ void InputSystem::handleKeyboardInput(SDL_Event& e, Input& input) {
 }
 
 void InputSystem::handleControllerInput(SDL_Event& e, Input& input) {
+    /**
+     * Handle Controller input
+     */
     SDL_Scancode scancode = mapControllerButtonToScancode(e.cbutton.button);
     input.keyStates[scancode] = (e.type == SDL_CONTROLLERBUTTONDOWN);
     if (e.type == SDL_CONTROLLERBUTTONDOWN) {
@@ -61,6 +67,9 @@ void InputSystem::handleControllerInput(SDL_Event& e, Input& input) {
 }
 
 void InputSystem::handleJoystickInput(SDL_Event& e, Input& input) {
+    /**
+     * Handle Joystick input
+     */
     if (e.jaxis.axis == 0) { // X axis
         input.joystickDirection.first = e.jaxis.value / 32767.0f;
         if (input.joystickDirection.first < -deadZone) {
@@ -90,6 +99,9 @@ void InputSystem::handleJoystickInput(SDL_Event& e, Input& input) {
 }
 
 SDL_Scancode InputSystem::mapControllerButtonToScancode(Uint8 button) {
+    /**
+     * Map controller buttons to keyboard inputs
+     */
     switch (button) {
     case SDL_CONTROLLER_BUTTON_A:
         return SDL_SCANCODE_UP; // Map 'A' button to up key
