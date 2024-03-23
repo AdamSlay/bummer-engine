@@ -68,6 +68,11 @@ void AttackSystem::handleActiveAttacks(Entity &attacker, EntityManager &entityMa
 
     for (auto& [name, attackInfo] : attacker.getComponent<AttackMap>().attacks) {
         if (attackInfo.isActive) {
+            // Could the issue with the knockback involve the enemy having an active attack at the time that it gets hit/stunned?
+            State& state = attacker.getComponent<State>();
+            if (state.state == playerStates::STUNNED || state.state == playerStates::HIT) {
+                break;
+            }
             incrementAttackFrames(attackInfo);
 
             SDL_Rect hitbox = Utils::getHitboxRect(attackInfo.hitbox, attacker);
@@ -117,6 +122,12 @@ void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& attacker, Entity& ot
 
     Health& otherHealth = other.getComponent<Health>();
     if (otherHealth.invincibilityRemaining == 0) {
+        // Set state to hit
+        State& otherState = other.getComponent<State>();
+        if (otherState.state != playerStates::HIT) {
+            other.changeState(playerStates::HIT);
+        }
+
         // Publish enemyHit event
         EventManager::getInstance().publish("enemyHit");
         std::cout << "Health: " << otherHealth.currentHealth << std::endl;
@@ -134,17 +145,11 @@ void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& attacker, Entity& ot
         std::cout << "knocking back with: " << otherVel.dx << std::endl;
         otherVel.direction = knockbackDirection * -1;
 
-        // Set state to hit
-        State& otherState = other.getComponent<State>();
-        if (otherState.state != playerStates::HIT) {
-            other.changeState(playerStates::HIT);
-        }
-
-        if (otherHealth.currentHealth <= 0) {
-            if (!other.hasComponent<Player>()) {
-                entitiesToRemove.push_back(other.getID());
-            }
-        }
+//        if (otherHealth.currentHealth <= 0) {
+//            if (!other.hasComponent<Player>()) {
+//                entitiesToRemove.push_back(other.getID());
+//            }
+//        }
     }
 }
 
@@ -157,13 +162,9 @@ void AttackSystem::decrementInvincibiltyFrames(Entity& entity) {
 
     if (entity.hasComponent<Health>()) {
         Health& health = entity.getComponent<Health>();
+
         if (health.invincibilityRemaining > 0) {
-            Velocity& vel = entity.getComponent<Velocity>();
-            // stun target while invincible
-            State& state = entity.getComponent<State>();
-            if (state.state != playerStates::STUNNED){
-                entity.changeState(playerStates::STUNNED);
-            }
+            entity.changeState(playerStates::STUNNED);
             health.invincibilityRemaining -= 1;
             if (health.invincibilityRemaining == 0) {
                 entity.changeState(playerStates::IDLE);
