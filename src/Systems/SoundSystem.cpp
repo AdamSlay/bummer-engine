@@ -24,12 +24,10 @@ SoundSystem::SoundSystem() {
     });
     EventManager::getInstance().subscribe("basicAttack", [this](EventData data) {
         playSound("assets/sounds/foly/bb_char/attack_6.wav", 1);
-//        playSound("assets/sounds/zapsplat/tennis_fast_whoosh_swing_006_106738.wav", 4);
     });
     EventManager::getInstance().subscribe("enemyHit", [this](EventData data) {
         playSound("assets/sounds/foly/alien_sounds/take_hit_1.wav", 1);
         playSound("assets/sounds/foly/alien_sounds/vocal_1.wav", 1);
-//        playSound("assets/sounds/zapsplat/voice_high_pitched_pain_grunt_003_15785.wav", 4);
     });
 }
 
