@@ -19,26 +19,18 @@ void InputSystem::update(EntityManager &entityManager, bool &quit) {
             break;
         }
 
-        else if (e.type == SDL_KEYDOWN || e.type == SDL_KEYUP) {
-            for (Entity &entity : entityManager.getEntities()) {
-                if (entity.hasComponent<Input>()) {
-                    Input &input = entity.getComponent<Input>();
+        for (Entity& entity : entityManager.getEntities()) {
+            if (entity.hasComponent<Input>()) {
+                Input &input = entity.getComponent<Input>();
+                input.justPressed.clear();
+                input.justReleased.clear();
+                if (e.type == SDL_KEYDOWN || e.type == SDL_KEYUP) {
                     handleKeyboardInput(e, input);
                 }
-            }
-        }
-        else if (e.type == SDL_CONTROLLERBUTTONDOWN || e.type == SDL_CONTROLLERBUTTONUP) {
-            for (Entity &entity : entityManager.getEntities()) {
-                if (entity.hasComponent<Input>()) {
-                    Input &input = entity.getComponent<Input>();
+                else if (e.type == SDL_CONTROLLERBUTTONDOWN || e.type == SDL_CONTROLLERBUTTONUP) {
                     handleControllerInput(e, input);
                 }
-            }
-        }
-        else if (e.type == SDL_JOYAXISMOTION) {
-            for (Entity &entity : entityManager.getEntities()) {
-                if (entity.hasComponent<Input>()) {
-                    Input &input = entity.getComponent<Input>();
+                else if (e.type == SDL_JOYAXISMOTION) {
                     handleJoystickInput(e, input);
                 }
             }
