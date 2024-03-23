@@ -22,6 +22,7 @@ void RenderSystem::render(SDL_Renderer* renderer, EntityManager& entityManager, 
             Collider &col = entity.getComponent<Collider>();
             Sprite &spr = entity.getComponent<Sprite>();
 
+            // Visual Debugging
             if (entity.hasComponent<State>()) {
                 auto& state = entity.getComponent<State>();
                 std::string stateStr = Utils::playerStateToString(state.state); // Assuming you have such a function
