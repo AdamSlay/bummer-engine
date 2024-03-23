@@ -13,7 +13,7 @@
       "height": 60
     },
     "Sprite": {
-      "texturePath": "assets/martian_02.png",
+      "texturePath": "assets/sprites/martian_02.png",
       "srcRect": {
         "x": 0,
         "y": 0,

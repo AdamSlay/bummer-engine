@@ -13,7 +13,7 @@
       "height": 64
     },
     "Sprite": {
-      "texturePath": "assets/platform.png",
+      "texturePath": "assets/sprites/platform.png",
       "srcRect": {
         "x": 0,
         "y": 128,

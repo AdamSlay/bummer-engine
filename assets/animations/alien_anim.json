@@ -1,7 +1,7 @@
 {
   "Animations": {
     "IDLE": {
-      "spriteSheetPath": "assets/martian_02.png",
+      "spriteSheetPath": "assets/sprites/martian_02.png",
       "framesPerImage": 6,
       "startImage": 0,
       "imageCount": 8,
@@ -10,7 +10,7 @@
       "imageY": 0
     },
     "HIT": {
-      "spriteSheetPath": "assets/martian_hit.png",
+      "spriteSheetPath": "assets/sprites/martian_hit.png",
       "framesPerImage": 4,
       "startImage": 0,
       "imageCount": 1,
@@ -19,7 +19,7 @@
       "imageY": 0
     },
     "STUNNED": {
-      "spriteSheetPath": "assets/martian_hit.png",
+      "spriteSheetPath": "assets/sprites/martian_hit.png",
       "framesPerImage": 6,
       "startImage": 1,
       "imageCount": 2,
@@ -28,7 +28,7 @@
       "imageY": 0
     },
     "RUN": {
-      "spriteSheetPath": "assets/martian_walk.png",
+      "spriteSheetPath": "assets/sprites/martian_walk.png",
       "framesPerImage": 8,
       "startImage": 0,
       "imageCount": 4,
@@ -37,7 +37,7 @@
       "imageY": 0
     },
     "BASIC_ATTACK": {
-      "spriteSheetPath": "assets/martian_attack.png",
+      "spriteSheetPath": "assets/sprites/martian_attack.png",
       "framesPerImage": 6,
       "startImage": 0,
       "imageCount": 7,
