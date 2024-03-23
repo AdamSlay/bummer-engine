@@ -15,8 +15,7 @@ void AnimationSystem::update(EntityManager& entityManager, float deltaTime) {
             Animator& animator = entity.getComponent<Animator>();
             Sprite& sprite = entity.getComponent<Sprite>();
             State& state = entity.getComponent<State>();
-            playerStates currentState = state.state;
-            auto clip = animator.animations.find(currentState);
+            auto clip = animator.animations.find(state.state);
             if (clip != animator.animations.end()) {
                 AnimationClip& currentClip = clip->second;
                 if (animator.isPlaying) {
@@ -38,7 +37,7 @@ void AnimationSystem::update(EntityManager& entityManager, float deltaTime) {
                 }
             }
             else {
-                std::cout << "Animation not found for state: " << Utils::playerStateToString(currentState) << std::endl;
+                std::cout << "Animation not found for state: " << Utils::playerStateToString(state.state) << std::endl;
             }
         }
     }
