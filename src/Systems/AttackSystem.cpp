@@ -145,11 +145,11 @@ void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& attacker, Entity& ot
         std::cout << "knocking back with: " << otherVel.dx << std::endl;
         otherVel.direction = knockbackDirection * -1;
 
-//        if (otherHealth.currentHealth <= 0) {
-//            if (!other.hasComponent<Player>()) {
-//                entitiesToRemove.push_back(other.getID());
-//            }
-//        }
+        if (otherHealth.currentHealth <= 0) {
+            if (!other.hasComponent<Player>()) {
+                entitiesToRemove.push_back(other.getID());
+            }
+        }
     }
 }
 
