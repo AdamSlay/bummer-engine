@@ -66,7 +66,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
         physicsSystem.update(sceneManager, entityManager, movementSystem, collisionSystem, deltaTime);
         aiSystem.update(entityManager);
         attackSystem.update(entityManager);
-        animationSystem.update(entityManager, deltaTime);
+//        animationSystem.update(entityManager, deltaTime);
 //        soundSystem.update(entityManager);
 
         // render colliders
@@ -76,7 +76,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 //        Utils::render_hitboxes(entityManager, renderer);
 
         // Copy game to renderer here
-        renderSystem.render(renderer, entityManager);
+        renderSystem.render(renderer, entityManager, font);
         SDL_RenderPresent(renderer);
 
     }
