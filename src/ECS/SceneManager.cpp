@@ -8,10 +8,15 @@ using json = nlohmann::json;
 
 
 SceneManager::SceneManager(EntityManager& entityManager) : entityManager(entityManager) {
-    sceneTemplates = {
-            "etc/templates/level_01/level_01.json",
-            "etc/templates/home/home_scene.json",
-    };
+    // Create sceneTemplates from run_config.json
+    std::ifstream file("etc/run_config.json");
+    json configJson;
+    file >> configJson;
+
+    json templates = configJson["SCENE_TEMPLATES"];
+    for (auto& [key, value] : templates.items()) {
+        sceneTemplates.push_back(value);
+    }
 };
 
 void SceneManager::nextScene() {

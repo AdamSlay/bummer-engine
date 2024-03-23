@@ -22,8 +22,6 @@ void InputSystem::update(EntityManager &entityManager, bool &quit) {
         for (Entity& entity : entityManager.getEntities()) {
             if (entity.hasComponent<Input>()) {
                 Input &input = entity.getComponent<Input>();
-                input.justPressed.clear();
-                input.justReleased.clear();
                 if (e.type == SDL_KEYDOWN || e.type == SDL_KEYUP) {
                     handleKeyboardInput(e, input);
                 }
