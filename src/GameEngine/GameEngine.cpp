@@ -20,7 +20,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
      * @param renderer: The SDL renderer
      * @param font: The TTF font
      */
-    render_splash_screen(renderer, font);
+//    render_splash_screen(renderer, font);
 
     TextureManager textureManager;
     EntityManager entityManager(&textureManager, renderer);
@@ -66,7 +66,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
         physicsSystem.update(sceneManager, entityManager, movementSystem, collisionSystem, deltaTime);
         aiSystem.update(entityManager);
         attackSystem.update(entityManager);
-//        animationSystem.update(entityManager, deltaTime);
+        animationSystem.update(entityManager, deltaTime);
 //        soundSystem.update(entityManager);
 
         // render colliders
