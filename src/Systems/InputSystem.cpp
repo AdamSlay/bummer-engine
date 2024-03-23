@@ -14,26 +14,16 @@ void InputSystem::update(EntityManager &entityManager, bool &quit) {
 
     SDL_Event e;
     while (SDL_PollEvent(&e) != 0) {
-        if (e.type == SDL_QUIT) {
+        if (e.type == SDL_QUIT || (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)) {
             quit = true;
             break;
         }
 
         else if (e.type == SDL_KEYDOWN || e.type == SDL_KEYUP) {
-            if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) {
-                quit = true;
-                break;
-            }
             for (Entity &entity : entityManager.getEntities()) {
                 if (entity.hasComponent<Input>()) {
                     Input &input = entity.getComponent<Input>();
-                    input.keyStates[e.key.keysym.scancode] = (e.type == SDL_KEYDOWN);
-                    if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
-                        input.justPressed[e.key.keysym.scancode] = true;
-                    }
-                    else if (e.type == SDL_KEYUP && e.key.repeat == 0) {
-                        input.justReleased[e.key.keysym.scancode] = true;
-                    }
+                    handleKeyboardInput(e, input);
                 }
             }
         }
@@ -41,15 +31,7 @@ void InputSystem::update(EntityManager &entityManager, bool &quit) {
             for (Entity &entity : entityManager.getEntities()) {
                 if (entity.hasComponent<Input>()) {
                     Input &input = entity.getComponent<Input>();
-                    // Map the controller button to an equivalent keyboard key
-                    SDL_Scancode scancode = mapControllerButtonToScancode(e.cbutton.button);
-                    input.keyStates[scancode] = (e.type == SDL_CONTROLLERBUTTONDOWN);
-                    if (e.type == SDL_CONTROLLERBUTTONDOWN) {
-                        input.justPressed[scancode] = true;
-                    }
-                    else if (e.type == SDL_CONTROLLERBUTTONUP) {
-                        input.justReleased[scancode] = true;
-                    }
+                    handleControllerInput(e, input);
                 }
             }
         }
@@ -57,34 +39,60 @@ void InputSystem::update(EntityManager &entityManager, bool &quit) {
             for (Entity &entity : entityManager.getEntities()) {
                 if (entity.hasComponent<Input>()) {
                     Input &input = entity.getComponent<Input>();
-                    if (e.jaxis.axis == 0) { // X axis
-                        input.joystickDirection.first = e.jaxis.value / 32767.0f;
-                        if (input.joystickDirection.first < -deadZone) {
-                            input.keyStates[SDL_SCANCODE_LEFT] = true;
-                            input.keyStates[SDL_SCANCODE_RIGHT] = false;
-                        } else if (input.joystickDirection.first > deadZone) {
-                            input.keyStates[SDL_SCANCODE_RIGHT] = true;
-                            input.keyStates[SDL_SCANCODE_LEFT] = false;
-                        } else {
-                            input.keyStates[SDL_SCANCODE_RIGHT] = false;
-                            input.keyStates[SDL_SCANCODE_LEFT] = false;
-                        }
-                    }
-                    if (e.jaxis.axis == 1) { // Y axis
-                        input.joystickDirection.second = e.jaxis.value / 32767.0f;
-                        if (input.joystickDirection.second < -deadZone) {
-                            input.keyStates[SDL_SCANCODE_UP] = true;
-                            input.keyStates[SDL_SCANCODE_DOWN] = false;
-                        } else if (input.joystickDirection.second > deadZone) {
-                            input.keyStates[SDL_SCANCODE_DOWN] = true;
-                            input.keyStates[SDL_SCANCODE_UP] = false;
-                        } else {
-                            input.keyStates[SDL_SCANCODE_DOWN] = false;
-                            input.keyStates[SDL_SCANCODE_UP] = false;
-                        }
-                    }
+                    handleJoystickInput(e, input);
                 }
             }
+        }
+    }
+}
+
+void InputSystem::handleKeyboardInput(SDL_Event& e, Input& input) {
+    input.keyStates[e.key.keysym.scancode] = (e.type == SDL_KEYDOWN);
+    if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
+        input.justPressed[e.key.keysym.scancode] = true;
+    }
+    else if (e.type == SDL_KEYUP && e.key.repeat == 0) {
+        input.justReleased[e.key.keysym.scancode] = true;
+    }
+}
+
+void InputSystem::handleControllerInput(SDL_Event& e, Input& input) {
+    SDL_Scancode scancode = mapControllerButtonToScancode(e.cbutton.button);
+    input.keyStates[scancode] = (e.type == SDL_CONTROLLERBUTTONDOWN);
+    if (e.type == SDL_CONTROLLERBUTTONDOWN) {
+        input.justPressed[scancode] = true;
+    }
+    else if (e.type == SDL_CONTROLLERBUTTONUP) {
+        input.justReleased[scancode] = true;
+    }
+
+}
+
+void InputSystem::handleJoystickInput(SDL_Event& e, Input& input) {
+    if (e.jaxis.axis == 0) { // X axis
+        input.joystickDirection.first = e.jaxis.value / 32767.0f;
+        if (input.joystickDirection.first < -deadZone) {
+            input.keyStates[SDL_SCANCODE_LEFT] = true;
+            input.keyStates[SDL_SCANCODE_RIGHT] = false;
+        } else if (input.joystickDirection.first > deadZone) {
+            input.keyStates[SDL_SCANCODE_RIGHT] = true;
+            input.keyStates[SDL_SCANCODE_LEFT] = false;
+        } else {
+            input.keyStates[SDL_SCANCODE_RIGHT] = false;
+            input.keyStates[SDL_SCANCODE_LEFT] = false;
+        }
+    }
+    if (e.jaxis.axis == 1) { // Y axis
+        input.joystickDirection.second = e.jaxis.value / 32767.0f;
+        if (input.joystickDirection.second < -deadZone) {
+            input.keyStates[SDL_SCANCODE_UP] = true;
+            input.keyStates[SDL_SCANCODE_DOWN] = false;
+        } else if (input.joystickDirection.second > deadZone) {
+            input.keyStates[SDL_SCANCODE_DOWN] = true;
+            input.keyStates[SDL_SCANCODE_UP] = false;
+        } else {
+            input.keyStates[SDL_SCANCODE_DOWN] = false;
+            input.keyStates[SDL_SCANCODE_UP] = false;
         }
     }
 }
