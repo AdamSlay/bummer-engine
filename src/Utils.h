@@ -5,6 +5,7 @@
 #include "ECS/EntityManager.h"
 
 namespace Utils {
+    Action stringToAction(std::string action);
     void publishEvent(std::string eventString, Entity* primaryEntity = nullptr, Entity* secondaryEntity = nullptr);
     std::string playerStateToString(playerStates state);
     SDL_Rect getColliderRect(const Entity& entity);

@@ -36,15 +36,6 @@ std::map<std::string, playerStates> EntityManager::playerStatesMap = {
         {"STUNNED", playerStates::STUNNED}
 };
 
-std::map<std::string, Actions> EntityManager::actionMap = {
-        {"WAIT", Actions::WAIT},
-        {"JUMP", Actions::JUMP},
-        {"MOVE_LEFT", Actions::MOVE_LEFT},
-        {"MOVE_RIGHT", Actions::MOVE_RIGHT},
-        {"ATTACK", Actions::ATTACK},
-        {"DASH", Actions::DASH}
-};
-
 EntityManager::EntityManager(TextureManager* texManager, SDL_Renderer* ecsRenderer) {
     /**
      * Constructor for the EntityManager
@@ -138,7 +129,7 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
         }
 
         if (componentsJson.contains("ActionIntent")) {
-            Actions action = actionMap[componentsJson["ActionIntent"]["action"]];
+            Action action = Utils::stringToAction(componentsJson["ActionIntent"]["action"]);
             entity.addComponent<ActionIntent>({action});
         }
 

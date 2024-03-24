@@ -3,6 +3,17 @@
 #include "ECS/Components.h"
 #include "ECS/EventManager.h"
 
+Action stringToAction(std::string action) {
+    std::map<std::string, Action> actionMap = {
+            {"WAIT",       Action::WAIT},
+            {"JUMP",       Action::JUMP},
+            {"MOVE_LEFT",  Action::MOVE_LEFT},
+            {"MOVE_RIGHT", Action::MOVE_RIGHT},
+            {"ATTACK",     Action::ATTACK},
+            {"DASH",       Action::DASH}
+    };
+    return actionMap[action];
+}
 
 std::string Utils::playerStateToString(playerStates state) {
     switch(state) {

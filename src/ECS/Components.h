@@ -20,7 +20,7 @@ enum class playerStates
     BASIC_ATTACK
 };
 
-enum class Actions
+enum class Action
 {
     JUMP,
     MOVE_LEFT,
@@ -50,8 +50,8 @@ struct Input
 
 struct ActionIntent
 {
-    Actions action;
-    ActionIntent(Actions action) : action(action) {};
+    Action action;
+    ActionIntent(Action action) : action(action) {};
 };
 
 struct Jumps
