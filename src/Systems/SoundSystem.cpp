@@ -5,7 +5,7 @@
 
 SoundSystem::SoundSystem() {
     EventManager::getInstance().subscribe("jump", [this](EventData data) {
-        playSound("assets/sounds/foly/bb_char/jump_6.wav", 1);
+        playSound("assets/sounds/foly/bb_char/jump_6.wav", 2);
     });
     EventManager::getInstance().subscribe("died", [this](EventData data) {
         playSound("assets/sounds/zapsplat/zapsplat_impacts_body_hit_thud_stab_squelch_of_blood_90708.wav", 2);
@@ -23,11 +23,11 @@ SoundSystem::SoundSystem() {
         playSound("assets/sounds/zapsplat/foley_clothing_coat_land_floor_001.wav", 4);
     });
     EventManager::getInstance().subscribe("basicAttack", [this](EventData data) {
-        playSound("assets/sounds/foly/bb_char/attack_6.wav", 1);
+        playSound("assets/sounds/foly/bb_char/attack_6.wav", 2);
     });
     EventManager::getInstance().subscribe("enemyHit", [this](EventData data) {
         playSound("assets/sounds/foly/alien_sounds/take_hit_1.wav", 1);
-        playSound("assets/sounds/foly/alien_sounds/vocal_1.wav", 1);
+        playSound("assets/sounds/foly/bb_char/take_hit_4.wav", 1);
     });
 }
 
