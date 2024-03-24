@@ -17,10 +17,11 @@ SoundSystem::SoundSystem() {
         playSound("assets/sounds/zapsplat/zapsplat_cartoon_whoosh_swipe_fast_grab_dash_006_74747.wav", 4);
     });
     EventManager::getInstance().subscribe("start", [this](EventData data) {
-        playSound("assets/sounds/music/volts-theme.wav", 4);
+        playSound("assets/sounds/foly/background_environ/waves_birds_long_loop.wav", 4);
+        playSound("assets/sounds/music/Sitar_Meditations.wav", 6);
     });
     EventManager::getInstance().subscribe("landed", [this](EventData data) {
-        playSound("assets/sounds/zapsplat/foley_clothing_coat_land_floor_001.wav", 4);
+        playSound("assets/sounds/foly/bb_char/sand_walk_1.wav", 6);
     });
     EventManager::getInstance().subscribe("basicAttack", [this](EventData data) {
         playSound("assets/sounds/foly/bb_char/attack_6.wav", 2);
