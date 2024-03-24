@@ -3,7 +3,7 @@
 #include "ECS/Components.h"
 #include "ECS/EventManager.h"
 
-Action stringToAction(std::string action) {
+Action Utils::stringToAction(std::string action) {
     std::map<std::string, Action> actionMap = {
             {"WAIT",       Action::WAIT},
             {"JUMP",       Action::JUMP},
