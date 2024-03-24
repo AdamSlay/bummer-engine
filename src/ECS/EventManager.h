@@ -6,8 +6,12 @@
 #include <vector>
 #include <string>
 
+#include "EntityManager.h"
+
 struct EventData {
     int entityId = -1; // Default to -1 to indicate no specific entity
+    Entity* primaryEntity = nullptr;
+    Entity* secondaryEntity = nullptr;
     // Add other fields as needed
 };
 

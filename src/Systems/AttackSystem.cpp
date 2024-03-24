@@ -71,6 +71,7 @@ void AttackSystem::handleActiveAttacks(Entity &attacker, EntityManager &entityMa
             // Could the issue with the knockback involve the enemy having an active attack at the time that it gets hit/stunned?
             State& state = attacker.getComponent<State>();
             if (state.state == playerStates::STUNNED || state.state == playerStates::HIT) {
+                attackInfo.isActive = false;
                 break;
             }
             incrementAttackFrames(attackInfo);

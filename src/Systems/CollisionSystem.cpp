@@ -188,7 +188,8 @@ void CollisionSystem::handlePlayerCollisionY(Entity& entity, Entity& other) {
 
     if (vel.dy > 0) {
         // Player is moving down
-        EventManager::getInstance().publish("groundCollision", {entity.getID()});
+//        EventManager::getInstance().publish("groundCollision", {entity.getID()});
+        Utils::publishEvent("groundCollision", &entity);
 
         vel.dy = 0;
         if (entity.hasComponent<Jumps>()) {

@@ -1,6 +1,7 @@
 #include "Utils.h"
 
 #include "ECS/Components.h"
+#include "ECS/EventManager.h"
 
 
 std::string Utils::playerStateToString(playerStates state) {
@@ -18,6 +19,11 @@ std::string Utils::playerStateToString(playerStates state) {
         case playerStates::STUNNED: return "STUNNED";
         default: return "UNKNOWN";
     }
+}
+
+void Utils::publishEvent(std::string eventString, Entity* primaryEntity, Entity* secondaryEntity) {
+    int entityId = primaryEntity->getID();
+    EventManager::getInstance().publish("groundCollision", {entityId, primaryEntity, secondaryEntity});
 }
 
 
