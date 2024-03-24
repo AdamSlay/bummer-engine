@@ -23,12 +23,12 @@ void RenderSystem::render(SDL_Renderer* renderer, EntityManager& entityManager, 
             Sprite &spr = entity.getComponent<Sprite>();
 
             // Visual Debugging
-            if (entity.hasComponent<State>()) {
-                auto& state = entity.getComponent<State>();
-                std::string stateStr = Utils::playerStateToString(state.state); // Assuming you have such a function
-                SDL_Color color = {255, 255, 255}; // White color for text
-                render_text(renderer, font, stateStr, color, transform.x, transform.y + 20); // Assuming you have such a function
-            }
+//            if (entity.hasComponent<State>()) {
+//                auto& state = entity.getComponent<State>();
+//                std::string stateStr = Utils::playerStateToString(state.state); // Assuming you have such a function
+//                SDL_Color color = {255, 255, 255}; // White color for text
+//                render_text(renderer, font, stateStr, color, transform.x, transform.y + 20); // Assuming you have such a function
+//            }
 
             int scaledW = static_cast<int>(spr.srcRect.w * transform.scale);
             int scaledH = static_cast<int>(spr.srcRect.h * transform.scale);
