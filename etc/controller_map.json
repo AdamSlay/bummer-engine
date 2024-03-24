@@ -2,6 +2,7 @@
   "a": "JUMP",
   "x": "ATTACK",
   "rightshoulder": "DASH",
-  "dpadleft": "MOVE_LEFT",
-  "dpadright": "MOVE_RIGHT"
+  "dpleft": "MOVE_LEFT",
+  "dpright": "MOVE_RIGHT",
+  "dpup": "JUMP"
 }
