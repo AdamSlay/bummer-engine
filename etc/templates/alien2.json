@@ -47,6 +47,9 @@
       "state": "IDLE",
       "patrolRange": 100,
       "attackRange": 50
+    },
+    "AttackMap": {
+      "basic": "etc/templates/attacks/alien_basic.json"
     }
   }
 }
