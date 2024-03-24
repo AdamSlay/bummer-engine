@@ -23,7 +23,7 @@ std::string Utils::playerStateToString(playerStates state) {
 
 void Utils::publishEvent(std::string eventString, Entity* primaryEntity, Entity* secondaryEntity) {
     int entityId = primaryEntity->getID();
-    EventManager::getInstance().publish("groundCollision", {entityId, primaryEntity, secondaryEntity});
+    EventManager::getInstance().publish(eventString, {entityId, primaryEntity, secondaryEntity});
 }
 
 
