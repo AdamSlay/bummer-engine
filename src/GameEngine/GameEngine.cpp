@@ -12,6 +12,7 @@
 #include "../Config.h"
 #include "../ECS/EventManager.h"
 #include "../ECS/SceneManager.h"
+#include "../ECS/StateMachine.h"
 
 void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     /**
@@ -25,6 +26,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     TextureManager textureManager;
     EntityManager entityManager(&textureManager, renderer);
     SceneManager sceneManager(entityManager);
+    StateMachine stateMachine(entityManager);
     
     AnimationSystem animationSystem;
     CollisionSystem collisionSystem;
@@ -67,9 +69,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
         attackSystem.update(entityManager);
         physicsSystem.update(sceneManager, entityManager, movementSystem, collisionSystem, deltaTime);
         animationSystem.update(entityManager, deltaTime);
-//        soundSystem.update(entityManager);
 
-        // render colliders
         SDL_SetRenderDrawColor(renderer, 104, 102, 184, 255);  // bb_purple
         SDL_RenderClear(renderer);
 //        Utils::render_all_colliders(entityManager, renderer);

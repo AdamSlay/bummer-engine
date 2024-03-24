@@ -75,6 +75,19 @@ std::vector<Entity>& EntityManager::getEntities() {
     return entities;
 }
 
+Entity& EntityManager::getEntityById(int id) {
+    /**
+     * Get an entity by its id
+     */
+    for (Entity& entity : entities) {
+        std::cout << "looking for entityId: " << id << ". Found entityId: " << entity.getID() << std::endl;
+        if (entity.getID() == id) {
+            return entity;
+        }
+    }
+    throw std::runtime_error("Entity with ID " + std::to_string(id) + " not found.");
+}
+
 Entity& EntityManager::getPlayer() {
     /**
      * Return a reference to the player entity

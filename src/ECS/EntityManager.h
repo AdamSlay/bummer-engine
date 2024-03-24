@@ -87,6 +87,7 @@ public:
     Entity& createPlayer(int x, int y, int w, int h);
     void configureAnimator(Entity& entity, std::map<playerStates, AnimationClip>& animations);
     Entity& getPlayer();
+    Entity& getEntityById(int id);
 
 private:
     static std::map<std::string, playerStates> playerStatesMap;

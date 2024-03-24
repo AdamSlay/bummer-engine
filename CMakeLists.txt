@@ -53,6 +53,8 @@ set(SOURCE_FILES
         src/Systems/AttackSystem.h
         src/Systems/AISystem.cpp
         src/Systems/AISystem.h
+        src/ECS/StateMachine.cpp
+        src/ECS/StateMachine.h
 )
 
 add_library(BummerLib ${SOURCE_FILES})
