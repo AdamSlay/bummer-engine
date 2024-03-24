@@ -15,6 +15,42 @@ Action Utils::stringToAction(std::string action) {
     return actionMap[action];
 }
 
+Direction Utils::stringToDirection(std::string direction) {
+    std::map<std::string, Direction> directionMap = {
+            {"STILL",       Direction::STILL},
+            {"LEFT",       Direction::LEFT},
+            {"RIGHT",  Direction::RIGHT},
+            {"JOY_LEFT",  Direction::JOY_LEFT},
+            {"JOY_RIGHT", Direction::JOY_RIGHT},
+    };
+    return directionMap[direction];
+}
+
+// Action to string
+std::string Utils::actionToString(Action action) {
+    if (action == Action::STOP_JUMP) {
+        return "STOP_JUMP";
+    }
+    if (action == Action::JUMP) {
+        return "JUMP";
+    }
+    if (action == Action::ATTACK) {
+        return "ATTACK";
+    }
+    if (action == Action::DASH) {
+        return "DASH";
+    }
+    if (action == Action::MOVE_LEFT) {
+        return "MOVE_LEFT";
+    }
+    if (action == Action::MOVE_RIGHT) {
+        return "MOVE_RIGHT";
+    }
+    else {
+        return "WAIT";
+    }
+}
+
 std::string Utils::playerStateToString(playerStates state) {
     switch(state) {
         case playerStates::IDLE: return "IDLE";

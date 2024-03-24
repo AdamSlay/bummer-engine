@@ -1,6 +1,18 @@
-#include "InputSystem.h"
-#include <SDL2/SDL.h>
 #include <iostream>
+#include <fstream>
+#include <unordered_map>
+
+#include <nlohmann/json.hpp>
+#include <SDL2/SDL.h>
+
+#include "InputSystem.h"
+#include "../Utils.h"
+
+using json = nlohmann::json;
+
+InputSystem::InputSystem() {
+    loadInputMaps();
+}
 
 void InputSystem::update(EntityManager &entityManager, bool &quit) {
     // Clear justPressed for all entities
@@ -36,6 +48,45 @@ void InputSystem::update(EntityManager &entityManager, bool &quit) {
     }
 }
 
+void InputSystem::loadInputMaps() {
+    loadScancodeMap("etc/scancode_map.json");
+    loadControllerMap("etc/controller_map.json");
+}
+
+void InputSystem::loadScancodeMap(const std::string& filePath) {
+    std::ifstream file(filePath);
+    if (!file.is_open()) {
+        throw std::runtime_error("Could not open scancode map file");
+    }
+    json j;
+    file >> j;
+    for (auto& element : j.items()) {
+        SDL_Scancode scancode = SDL_GetScancodeFromName(element.key().c_str());
+        Action action = Utils::stringToAction(element.value());
+        scancodeMap[scancode] = action;
+    }
+}
+
+void InputSystem::loadControllerMap(const std::string& filePath) {
+    std::ifstream file(filePath);
+    if (!file.is_open()) {
+        throw std::runtime_error("Could not open controller map file");
+    }
+    json j;
+    file >> j;
+    for (auto& element : j.items()) {
+        SDL_GameControllerButton button = SDL_GameControllerGetButtonFromString(element.key().c_str());
+        Action action = Utils::stringToAction(element.value());
+        std::string actString = Utils::actionToString(action);
+        std::cout << "Mapping " << element.key() << " to " << actString << std::endl;
+        controllerMap[button] = action;
+    }
+    std::cout << "Complete Controller map: " << std::endl;
+    for (auto& element : controllerMap) {
+        std::cout << "Button: " << element.first << " Action: " << Utils::actionToString(element.second) << std::endl;
+    }
+}
+
 void InputSystem::handleKeyboardInput(SDL_Event& e, Input& input) {
     /**
      * Handle Keyboard input
@@ -43,6 +94,9 @@ void InputSystem::handleKeyboardInput(SDL_Event& e, Input& input) {
     input.keyStates[e.key.keysym.scancode] = (e.type == SDL_KEYDOWN);
     if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
         input.justPressed[e.key.keysym.scancode] = true;
+        // print the scancodeMap value
+        std::string action = Utils::actionToString(scancodeMap[e.key.keysym.scancode]);
+        std::cout << "Scancode: " << e.key.keysym.scancode << " Action: " << action << std::endl;
     }
     else if (e.type == SDL_KEYUP && e.key.repeat == 0) {
         input.justReleased[e.key.keysym.scancode] = true;
@@ -57,6 +111,9 @@ void InputSystem::handleControllerInput(SDL_Event& e, Input& input) {
     input.keyStates[scancode] = (e.type == SDL_CONTROLLERBUTTONDOWN);
     if (e.type == SDL_CONTROLLERBUTTONDOWN) {
         input.justPressed[scancode] = true;
+        SDL_GameControllerButton button = static_cast<SDL_GameControllerButton>(e.cbutton.button);
+        std::string action = Utils::actionToString(controllerMap[button]);
+        std::cout << "Button: " << button << " Action: " << action << std::endl;
     }
     else if (e.type == SDL_CONTROLLERBUTTONUP) {
         input.justReleased[scancode] = true;

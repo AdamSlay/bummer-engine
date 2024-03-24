@@ -6,8 +6,10 @@
 
 namespace Utils {
     Action stringToAction(std::string action);
+    Direction stringToDirection(std::string direction);
     void publishEvent(std::string eventString, Entity* primaryEntity = nullptr, Entity* secondaryEntity = nullptr);
     std::string playerStateToString(playerStates state);
+    std::string actionToString(Action action);
     SDL_Rect getColliderRect(const Entity& entity);
     void setTransformPos(Entity& entity, int x, int y);
     void setTransformX(Entity& entity, int x);

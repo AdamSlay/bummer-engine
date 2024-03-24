@@ -1,7 +1,7 @@
 {
-  "SDL_SCANCODE_UP": "JUMP",
-  "SDL_SCANCODE_LEFT": "MOVE_LEFT",
-  "SDL_SCANCODE_RIGHT": "MOVE_RIGHT",
-  "SDL_SCANCODE_R": "ATTACK",
-  "SDL_SCANCODE_SPACE": "DASH"
+  "Up": "JUMP",
+  "Left": "MOVE_LEFT",
+  "Right": "MOVE_RIGHT",
+  "R": "ATTACK",
+  "Space": "DASH"
 }
