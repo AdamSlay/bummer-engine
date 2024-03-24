@@ -27,7 +27,17 @@ enum class Action
     MOVE_RIGHT,
     ATTACK,
     WAIT,
-    DASH
+    DASH,
+    STOP_JUMP
+};
+
+enum class Direction
+{
+    STILL,
+    LEFT,
+    RIGHT,
+    JOY_LEFT,
+    JOY_RIGHT
 };
 
 struct Sound
@@ -48,10 +58,11 @@ struct Input
           : keyStates(keyStates), justPressed(justPressed), justReleased(justReleased), joystickDirection(std::make_pair(0.0f, 0.0f)) {}
 };
 
-struct ActionIntent
+struct Intent
 {
     Action action;
-    ActionIntent(Action action) : action(action) {};
+    Direction direction;
+    Intent(Action action, Direction direction) : action(action), direction(direction) {};
 };
 
 struct Jumps

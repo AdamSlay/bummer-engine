@@ -44,8 +44,9 @@
     "Input": {
       "has": "yes"
     },
-    "ActionIntent": {
-      "action": "WAIT"
+    "Intent": {
+      "action": "WAIT",
+      "direction": "STILL"
     },
     "Dash": {
       "speed": 42,
