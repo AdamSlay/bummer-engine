@@ -20,7 +20,7 @@ void EventManager::publish(const std::string& event, EventData data) {
     if (it != eventMap.end()) {
         for (auto &callback : it->second) {
             callback(data);
-            std::cout << "Event: " << event << " published" << std::endl;
+//            std::cout << "Event: " << event << " published" << std::endl;
         }
     }
 }
