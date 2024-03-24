@@ -128,9 +128,10 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
             entity.addComponent<Player>({playerNum});
         }
 
-        if (componentsJson.contains("ActionIntent")) {
-            Action action = Utils::stringToAction(componentsJson["ActionIntent"]["action"]);
-            entity.addComponent<ActionIntent>({action});
+        if (componentsJson.contains("Intent")) {
+            Action action = Utils::stringToAction(componentsJson["Intent"]["action"]);
+            Direction direction = Utils::stringToDirection(componentsJson["Intent"]["direction"]);
+            entity.addComponent<Intent>({action, direction});
         }
 
         if (componentsJson.contains("Transform")) {
