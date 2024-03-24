@@ -50,11 +50,10 @@ void AISystem::attack(EntityManager& entityManager, Entity& attacker) {
                 else if (aiTransform.x > playerTransform.x && attacker.getComponent<Velocity>().direction == 1) {
                     attacker.getComponent<Velocity>().direction = -1;
                 }
+
                 AttackMap& attackMap = attacker.getComponent<AttackMap>();
-                if (!attackMap.attacks["basic"].isActive) {
-                    std::cout << "AI attacking" << std::endl;
-                }
                 attackMap.attacks["basic"].isActive = true;
+                Utils::publishEvent("basicAttack", &attacker);
 
                 Velocity& vel = attacker.getComponent<Velocity>();
                 vel.dy = 0;

@@ -24,11 +24,28 @@ SoundSystem::SoundSystem() {
         playSound("assets/sounds/foly/bb_char/sand_walk_1.wav", 6);
     });
     EventManager::getInstance().subscribe("basicAttack", [this](EventData data) {
-        playSound("assets/sounds/foly/bb_char/attack_6.wav", 2);
+        Entity* entity = data.primaryEntity;
+        if (entity->hasComponent<Player>()) {
+            playSound("assets/sounds/foly/bb_char/attack_6.wav", 2);
+        }
+        else if (!entity->hasComponent<Player>()) {
+            playSound("assets/sounds/foly/alien_sounds/vocal_2.wav", 1);
+        }
     });
+
     EventManager::getInstance().subscribe("enemyHit", [this](EventData data) {
-        playSound("assets/sounds/foly/alien_sounds/take_hit_1.wav", 1);
-        playSound("assets/sounds/foly/bb_char/take_hit_4.wav", 1);
+        /**
+         * Play sounds when entity gets hit by an attack
+         */
+        Entity* entity = data.secondaryEntity;
+        if (entity->hasComponent<Player>()) {
+            playSound("assets/sounds/foly/alien_sounds/takehit_1.wav", 2);
+            playSound("assets/sounds/foly/bb_char/take_hit_4.wav", 1);
+        }
+        else {
+            playSound("assets/sounds/foly/alien_sounds/takehit_1.wav", 2);
+            playSound("assets/sounds/foly/alien_sounds/vocal_5.wav", 1);
+        }
     });
 }
 

@@ -50,7 +50,7 @@ void AttackSystem::handleInput(Entity& entity) {
                 gravity.gravity = 0.5;
             }
             entity.changeState(playerStates::BASIC_ATTACK);
-            EventManager::getInstance().publish("basicAttack", {entity.getID()});
+            Utils::publishEvent("basicAttack", &entity);
         }
     }
 }
@@ -130,10 +130,10 @@ void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& attacker, Entity& ot
         }
 
         // Publish enemyHit event
-        EventManager::getInstance().publish("enemyHit", {other.getID()});
-        std::cout << "Health: " << otherHealth.currentHealth << std::endl;
+        Utils::publishEvent("enemyHit", &attacker, &other);
 
         // Reduce health
+        std::cout << "Health: " << otherHealth.currentHealth << std::endl;
         otherHealth.currentHealth -= attackInfo.damage;
         otherHealth.invincibilityRemaining = otherHealth.invincibilityFrames;
 
