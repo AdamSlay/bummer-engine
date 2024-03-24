@@ -188,10 +188,7 @@ void CollisionSystem::handlePlayerCollisionY(Entity& entity, Entity& other) {
 
     if (vel.dy > 0) {
         // Player is moving down
-        if (vel.dy > 5) {
-//            EventManager::getInstance().publish("landed");
-            EventManager::getInstance().publish("groundCollision", {entity.getID()});
-        }
+        EventManager::getInstance().publish("groundCollision", {entity.getID()});
 
         vel.dy = 0;
         if (entity.hasComponent<Jumps>()) {
@@ -201,13 +198,6 @@ void CollisionSystem::handlePlayerCollisionY(Entity& entity, Entity& other) {
         float newPos = otherCollider.y - (playerCollider.h + collisionBuffer);
         int y = static_cast<int>(newPos + 1);
         Utils::setTransformY(entity, y);
-        State& state = entity.getComponent<State>();
-        if (vel.dx != 0 && state.state != playerStates::STUNNED && state.state != playerStates::BASIC_ATTACK) {
-            entity.changeState(playerStates::RUN);
-        }
-        else if (state.state != playerStates::STUNNED && state.state != playerStates::BASIC_ATTACK) {
-            entity.changeState(playerStates::IDLE);
-        }
         entity.getComponent<Gravity>().gravity = entity.getComponent<Gravity>().baseGravity;
     }
     else if (vel.dy < 0) {

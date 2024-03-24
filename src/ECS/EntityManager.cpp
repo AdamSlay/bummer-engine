@@ -80,7 +80,7 @@ Entity& EntityManager::getEntityById(int id) {
      * Get an entity by its id
      */
     for (Entity& entity : entities) {
-        std::cout << "looking for entityId: " << id << ". Found entityId: " << entity.getID() << std::endl;
+//        std::cout << "looking for entityId: " << id << ". Found entityId: " << entity.getID() << std::endl;
         if (entity.getID() == id) {
             return entity;
         }
