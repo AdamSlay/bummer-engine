@@ -91,6 +91,7 @@ public:
 
 private:
     static std::map<std::string, playerStates> playerStatesMap;
+    static std::map<std::string, Actions> actionMap;
     std::vector<Entity> entities;
     TextureManager* textureManager;
     SDL_Renderer* renderer;

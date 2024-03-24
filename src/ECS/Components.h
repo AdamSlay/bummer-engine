@@ -20,6 +20,16 @@ enum class playerStates
     BASIC_ATTACK
 };
 
+enum class Actions
+{
+    JUMP,
+    MOVE_LEFT,
+    MOVE_RIGHT,
+    ATTACK,
+    WAIT,
+    DASH
+};
+
 struct Sound
 {
     std::string soundFile;
@@ -36,6 +46,12 @@ struct Input
           const std::map<SDL_Scancode, bool> &justPressed,
           const std::map<SDL_Scancode, bool> &justReleased)
           : keyStates(keyStates), justPressed(justPressed), justReleased(justReleased), joystickDirection(std::make_pair(0.0f, 0.0f)) {}
+};
+
+struct ActionIntent
+{
+    Actions action;
+    ActionIntent(Actions action) : action(action) {};
 };
 
 struct Jumps

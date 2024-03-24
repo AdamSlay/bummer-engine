@@ -44,6 +44,9 @@
     "Input": {
       "has": "yes"
     },
+    "ActionIntent": {
+      "action": "WAIT"
+    },
     "Dash": {
       "speed": 42,
       "initCooldown": 0.12,
