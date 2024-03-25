@@ -87,6 +87,45 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
             std::cout << "Could not find entity with id: " << data.entityId << std::endl;
         }
     });
+
+    EventManager::getInstance().subscribe("jump", [&](EventData data) {
+        try {
+            Entity* entity = data.primaryEntity;
+            entity->changeState(playerStates::JUMP_ASCEND);
+            Utils::publishEvent("jumpSound", entity);
+        }
+        catch (const std::runtime_error& e) {
+            std::cout << "Could not find entity with id: " << data.entityId << std::endl;
+        }
+    });
+
+    EventManager::getInstance().subscribe("airborne", [&](EventData data) {
+        try {
+            Entity* entity = data.primaryEntity;
+
+            if (entity->hasComponent<Velocity>() && entity->getComponent<State>().state != playerStates::BASIC_ATTACK) {
+                Velocity &vel = entity->getComponent<Velocity>();
+                if (vel.dy < -3) {
+                    entity->changeState(playerStates::JUMP_ASCEND);
+                }
+                else if (vel.dy < -1) {
+                    entity->changeState(playerStates::JUMP_APEX_ASCEND);
+                }
+                else if (0 < vel.dy && vel.dy < 2) {
+                    entity->changeState(playerStates::JUMP_APEX);
+                }
+                else if (0 < vel.dy && vel.dy < 5) {
+                    entity->changeState(playerStates::JUMP_APEX_DESCEND);
+                }
+                else if (vel.dy >= 5) {
+                    entity->changeState(playerStates::JUMP_DESCEND);
+                }
+            }
+        }
+        catch (const std::runtime_error& e) {
+            std::cout << "Could not find entity with id: " << data.entityId << std::endl;
+        }
+    });
 }
 
 bool StateMachine::canMove(Entity &entity) {

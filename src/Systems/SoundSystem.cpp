@@ -4,7 +4,7 @@
 
 
 SoundSystem::SoundSystem() {
-    EventManager::getInstance().subscribe("jump", [this](EventData data) {
+    EventManager::getInstance().subscribe("jumpSound", [this](EventData data) {
         playSound("assets/sounds/foly/bb_char/jump_6.wav", 2);
     });
     EventManager::getInstance().subscribe("died", [this](EventData data) {

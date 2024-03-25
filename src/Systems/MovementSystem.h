@@ -12,7 +12,6 @@ public:
     void jump(Entity& entity);
     void dash(Entity& entity, float deltaTime);
     void applyGravity(Entity& entity);
-    void changeJumpState(Entity& entity);
 };
 
 

@@ -35,7 +35,7 @@ void MovementSystem::handleIntent(EntityManager& entityManager, float deltaTime)
                     vel.dy = 0;
                 }
                 if (vel.dy != 0) {
-                    changeJumpState(entity);
+                    Utils::publishEvent("airborne", &entity);
                 }
 
                 // handle dash
@@ -88,8 +88,7 @@ void MovementSystem::jump(Entity& entity) {
             jumps.jumps++;
             gravity.gravity = gravity.baseGravity;
             vel.dy = -jumps.jumpVelocity;
-            entity.changeState(playerStates::JUMP_ASCEND);
-            EventManager::getInstance().publish("jump", {entity.getID()});
+            Utils::publishEvent("jump", &entity);
         }
     }
 }
@@ -165,31 +164,5 @@ void MovementSystem::applyGravity(Entity &entity) {
         }
         // Apply gravity
         vel.dy += gravity.gravity;
-    }
-}
-
-void MovementSystem::changeJumpState(Entity &entity) {
-    /**
-     * Change the jump state of the entity
-     *
-     * @param entity: The entity
-     */
-    if (entity.hasComponent<Velocity>() && entity.getComponent<State>().state != playerStates::BASIC_ATTACK) {
-        Velocity &vel = entity.getComponent<Velocity>();
-        if (vel.dy < -3) {
-            entity.changeState(playerStates::JUMP_ASCEND);
-        }
-        else if (vel.dy < -1) {
-            entity.changeState(playerStates::JUMP_APEX_ASCEND);
-        }
-        else if (0 < vel.dy && vel.dy < 2) {
-            entity.changeState(playerStates::JUMP_APEX);
-        }
-        else if (0 < vel.dy && vel.dy < 5) {
-            entity.changeState(playerStates::JUMP_APEX_DESCEND);
-        }
-        else if (vel.dy >= 5) {
-            entity.changeState(playerStates::JUMP_DESCEND);
-        }
     }
 }
