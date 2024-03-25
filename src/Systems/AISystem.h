@@ -7,6 +7,7 @@
 class AISystem {
 public:
     void update(EntityManager& entityManager);
+    void patrol(Entity& entity);
     void attack(EntityManager& entityManager, Entity& attacker);
 };
 

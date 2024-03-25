@@ -56,8 +56,8 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
         try {
             Entity* entity = data.primaryEntity;
             State& state = entity->getComponent<State>();
-            if (state.state != playerStates::STUNNED && state.state != playerStates::HIT) {
-                // not stunned or hit, can attack
+            if (state.state != playerStates::STUNNED && state.state != playerStates::HIT && state.state != playerStates::BASIC_ATTACK) {
+                // not stunned or hit or currently attacking, can attack
                 entity->changeState(playerStates::BASIC_ATTACK);
                 Utils::publishEvent("basicAttackSound", entity);
             }
