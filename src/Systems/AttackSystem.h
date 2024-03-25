@@ -9,7 +9,7 @@ public:
 private:
     // entities to remove vector
     std::vector<int> entitiesToRemove;
-    void handleInput(Entity& entity);
+    void handleIntent(Entity& entity);
     void incrementAttackFrames(AttackInfo& attackInfo);
     void decrementInvincibiltyFrames(Entity& entity);
     void handleActiveAttacks(Entity& entity, EntityManager& entityManager);

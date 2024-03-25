@@ -22,11 +22,14 @@ void InputSystem::update(EntityManager &entityManager, bool &quit) {
      * @param quit: The quit flag
      */
     // Clear justPressed for all entities
+    Entity player;
     for (Entity &entity : entityManager.getEntities()) {
-        if (entity.hasComponent<Input>()) {
-            Input &input = entity.getComponent<Input>();
+        if (entity.hasComponent<Player>()) {
+            auto& input = entity.getComponent<Input>();
             input.justPressed.clear();
             input.justReleased.clear();
+            input.actionInput.clear();
+            player = entity;
         }
     }
 
@@ -37,21 +40,18 @@ void InputSystem::update(EntityManager &entityManager, bool &quit) {
             break;
         }
 
-        for (Entity& entity : entityManager.getEntities()) {
-            if (entity.hasComponent<Input>()) {
-                Input &input = entity.getComponent<Input>();
-                if (e.type == SDL_KEYDOWN || e.type == SDL_KEYUP) {
-                    handleKeyboardInput(e, input);
-                }
-                else if (e.type == SDL_CONTROLLERBUTTONDOWN || e.type == SDL_CONTROLLERBUTTONUP) {
-                    handleControllerInput(e, input);
-                }
-                else if (e.type == SDL_JOYAXISMOTION) {
-                    handleJoystickInput(e, input);
-                }
-            }
+        auto& input = player.getComponent<Input>();
+        if (e.type == SDL_KEYDOWN || e.type == SDL_KEYUP) {
+            handleKeyboardInput(e, input);
+        }
+        else if (e.type == SDL_CONTROLLERBUTTONDOWN || e.type == SDL_CONTROLLERBUTTONUP) {
+            handleControllerInput(e, input);
+        }
+        else if (e.type == SDL_JOYAXISMOTION) {
+            handleJoystickInput(e, input);
         }
     }
+    updateIntent(player);
 }
 
 void InputSystem::loadInputMaps() {
@@ -114,7 +114,7 @@ void InputSystem::handleKeyboardInput(SDL_Event& e, Input& input) {
     input.keyStates[e.key.keysym.scancode] = (e.type == SDL_KEYDOWN);
     if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
         input.justPressed[e.key.keysym.scancode] = true;
-
+        input.actionInput[scancodeMap[e.key.keysym.scancode]] = true;
 //        std::string action = Utils::actionToString(scancodeMap[e.key.keysym.scancode]);
 //        std::cout << "Scancode: " << e.key.keysym.scancode << " Action: " << action << std::endl;
     }
@@ -134,8 +134,8 @@ void InputSystem::handleControllerInput(SDL_Event& e, Input& input) {
     input.keyStates[scancode] = (e.type == SDL_CONTROLLERBUTTONDOWN);
     if (e.type == SDL_CONTROLLERBUTTONDOWN) {
         input.justPressed[scancode] = true;
-
-//        SDL_GameControllerButton button = static_cast<SDL_GameControllerButton>(e.cbutton.button);
+        auto button = static_cast<SDL_GameControllerButton>(e.cbutton.button);
+        input.actionInput[controllerMap[button]] = true;
 //        std::string action = Utils::actionToString(controllerMap[button]);
 //        std::cout << "Button: " << button << " Action: " << action << std::endl;
     }
@@ -145,7 +145,7 @@ void InputSystem::handleControllerInput(SDL_Event& e, Input& input) {
 
 }
 
-void InputSystem::handleJoystickInput(SDL_Event& e, Input& input) {
+void InputSystem::handleJoystickInput(SDL_Event& e, Input& input) const {
     /**
      * Handle Joystick input
      *
@@ -201,5 +201,29 @@ SDL_Scancode InputSystem::mapControllerButtonToScancode(Uint8 button) {
         return SDL_SCANCODE_DOWN;  // Map down D-pad button to down arrow key
     default:
         return SDL_SCANCODE_UNKNOWN;
+    }
+}
+
+void InputSystem::updateIntent(Entity& player) {
+    auto& input = player.getComponent<Input>();
+    auto& intent = player.getComponent<Intent>();
+    // clear previous intent
+    intent.action = Action::WAIT;
+    intent.direction = Direction::STILL;
+
+    if (input.actionInput[Action::JUMP]) {
+        intent.action = Action::JUMP;
+    }
+    if (input.actionInput[Action::DASH]) {
+        intent.action = Action::DASH;
+    }
+    if (input.actionInput[Action::ATTACK]) {
+        intent.action = Action::ATTACK;
+    }
+    if (input.actionInput[Action::MOVE_LEFT]) {
+        intent.direction = Direction::LEFT;
+    }
+    if (input.actionInput[Action::MOVE_RIGHT]) {
+        intent.direction = Direction::RIGHT;
     }
 }

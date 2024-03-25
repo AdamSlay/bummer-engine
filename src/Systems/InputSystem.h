@@ -7,17 +7,20 @@ class InputSystem {
 public:
     InputSystem();
     void update(EntityManager& entityManager, bool& quit);
-    SDL_Scancode mapControllerButtonToScancode(Uint8 button);
+
 private:
     std::unordered_map<SDL_Scancode, Action> scancodeMap;
     std::unordered_map<SDL_GameControllerButton, Action> controllerMap;
     float deadZone = 0.3f;
+
     void loadInputMaps();
     void loadControllerMap(const std::string& filepath);
     void loadScancodeMap(const std::string& filepath);
     void handleKeyboardInput(SDL_Event& e, Input& input);
     void handleControllerInput(SDL_Event& e, Input& input);
-    void handleJoystickInput(SDL_Event& e, Input& input);
+    void handleJoystickInput(SDL_Event& e, Input& input) const;
+    static void updateIntent(Entity& player);
+    static SDL_Scancode mapControllerButtonToScancode(Uint8 button);
 };
 
 #endif //BUMMERENGINE_INPUTSYSTEM_H

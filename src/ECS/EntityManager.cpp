@@ -183,7 +183,8 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
             std::map<SDL_Scancode, bool> keyStates;
             std::map<SDL_Scancode, bool> justPressed;
             std::map<SDL_Scancode, bool> justReleased;
-            entity.addComponent<Input>({keyStates, justPressed, justReleased});
+            std::map<Action, bool> actionInput;
+            entity.addComponent<Input>({keyStates, justPressed, justReleased, actionInput});
         }
 
         if (componentsJson.contains("Jumps")) {

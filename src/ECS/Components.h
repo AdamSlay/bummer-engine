@@ -51,11 +51,13 @@ struct Input
     std::map<SDL_Scancode, bool> keyStates;
     std::map<SDL_Scancode, bool> justPressed;
     std::map<SDL_Scancode, bool> justReleased;
+    std::map<Action, bool> actionInput;
     std::pair<float, float> joystickDirection;
     Input(const std::map<SDL_Scancode, bool> &keyStates,
           const std::map<SDL_Scancode, bool> &justPressed,
-          const std::map<SDL_Scancode, bool> &justReleased)
-          : keyStates(keyStates), justPressed(justPressed), justReleased(justReleased), joystickDirection(std::make_pair(0.0f, 0.0f)) {}
+          const std::map<SDL_Scancode, bool> &justReleased,
+          const std::map<Action, bool> &actionInput)
+          : keyStates(keyStates), justPressed(justPressed), justReleased(justReleased), actionInput(actionInput), joystickDirection(std::make_pair(0.0f, 0.0f)) {}
 };
 
 struct Intent

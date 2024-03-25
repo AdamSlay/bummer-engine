@@ -17,7 +17,7 @@ void AttackSystem::update(EntityManager& entityManager) {
         decrementInvincibiltyFrames(entity);
 
         if (entity.hasComponent<AttackMap>()) {
-            handleInput(entity);
+            handleIntent(entity);
             handleActiveAttacks(entity, entityManager);
         }
     }
@@ -27,7 +27,7 @@ void AttackSystem::update(EntityManager& entityManager) {
     entitiesToRemove.clear();
 }
 
-void AttackSystem::handleInput(Entity& entity) {
+void AttackSystem::handleIntent(Entity& entity) {
     /**
      * Handle input for the attack system
      * If the attack button is pressed, set the basic attack to active
@@ -35,11 +35,11 @@ void AttackSystem::handleInput(Entity& entity) {
      * @param entity: The entity
      */
 
-    if (entity.hasComponent<Input>() && entity.hasComponent<AttackMap>()) {
-        Input& input = entity.getComponent<Input>();
+    if (entity.hasComponent<Intent>() && entity.hasComponent<AttackMap>()) {
+        Intent& intent = entity.getComponent<Intent>();
         AttackMap& attackMap = entity.getComponent<AttackMap>();
 
-        if (input.justPressed[SDL_SCANCODE_R]) {
+        if (intent.action == Action::ATTACK) {
             attackMap.attacks["basic"].isActive = true;
             if (entity.hasComponent<Player>()) {
                 // suspend player on attack
