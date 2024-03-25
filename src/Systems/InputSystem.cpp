@@ -113,14 +113,18 @@ void InputSystem::handleKeyboardInput(SDL_Event& e, Input& input) {
 
     input.keyStates[e.key.keysym.scancode] = (e.type == SDL_KEYDOWN);
     if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
-        input.justPressed[e.key.keysym.scancode] = true;
-        input.actionInput[scancodeMap[e.key.keysym.scancode]] = true;
-//        std::string action = Utils::actionToString(scancodeMap[e.key.keysym.scancode]);
-//        std::cout << "Scancode: " << e.key.keysym.scancode << " Action: " << action << std::endl;
+        auto it = scancodeMap.find(e.key.keysym.scancode);
+        if (it != scancodeMap.end()) {
+            input.justPressed[e.key.keysym.scancode] = true;
+            input.actionInput[it->second] = true;
+        }
     }
     else if (e.type == SDL_KEYUP && e.key.repeat == 0) {
-        input.justReleased[e.key.keysym.scancode] = true;
-        input.actionInput[scancodeMap[e.key.keysym.scancode]] = false;
+        auto it = scancodeMap.find(e.key.keysym.scancode);
+        if (it != scancodeMap.end()) {
+            input.justReleased[e.key.keysym.scancode] = true;
+            input.actionInput[it->second] = false;
+        }
     }
 }
 
@@ -135,14 +139,18 @@ void InputSystem::handleControllerInput(SDL_Event& e, Input& input) {
     auto button = static_cast<SDL_GameControllerButton>(e.cbutton.button);
     input.keyStates[scancode] = (e.type == SDL_CONTROLLERBUTTONDOWN);
     if (e.type == SDL_CONTROLLERBUTTONDOWN) {
-        input.justPressed[scancode] = true;
-        input.actionInput[controllerMap[button]] = true;
-//        std::string action = Utils::actionToString(controllerMap[button]);
-//        std::cout << "Button: " << button << " Action: " << action << std::endl;
+        auto it = controllerMap.find(button);
+        if (it != controllerMap.end()) {
+            input.justPressed[scancode] = true;
+            input.actionInput[it->second] = true;
+        }
     }
     else if (e.type == SDL_CONTROLLERBUTTONUP) {
-        input.justReleased[scancode] = true;
-        input.actionInput[controllerMap[button]] = false;
+        auto it = controllerMap.find(button);
+        if (it != controllerMap.end()) {
+            input.justReleased[scancode] = true;
+            input.actionInput[it->second] = false;
+        }
     }
 
 }
@@ -230,7 +238,6 @@ void InputSystem::updateIntent(Entity& player) {
     if (input.actionInput[Action::MOVE_RIGHT]) {
         intent.direction = Direction::RIGHT;
     }
-    // read scan codes for movement
     if (input.keyStates[SDL_SCANCODE_LEFT]) {
         intent.direction = Direction::LEFT;
     }
@@ -238,7 +245,6 @@ void InputSystem::updateIntent(Entity& player) {
         intent.direction = Direction::RIGHT;
     }
     else {
-        // Reset direction if no directional input is being held
         intent.direction = Direction::STILL;
     }
 }
