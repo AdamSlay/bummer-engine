@@ -20,9 +20,9 @@ void MovementSystem::handleInput(EntityManager& entityManager, float deltaTime){
 //                Dash &dash = entity.getComponent<Dash>();
 //                if (!dash.isDashing) {
                 if (intent.direction == Direction::LEFT) {
-                    vel.dx = -5;
+                    vel.dx = -vel.speed;
                 } else if (intent.direction == Direction::RIGHT) {
-                    vel.dx = 5;
+                    vel.dx = vel.speed;
                 } else {
                     vel.dx = 0;
                 }

@@ -167,7 +167,7 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
 
         if (componentsJson.contains("Velocity")) {
             json velocityJson = componentsJson["Velocity"];
-            entity.addComponent<Velocity>({velocityJson["dx"], velocityJson["dy"], velocityJson["direction"]});
+            entity.addComponent<Velocity>({velocityJson["dx"], velocityJson["dy"], velocityJson["direction"], velocityJson["speed"]});
         }
 
         if (componentsJson.contains("Gravity")) {

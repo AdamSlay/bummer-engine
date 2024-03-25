@@ -31,6 +31,7 @@
     "Velocity": {
       "dx": 0,
       "dy": 0,
+      "speed": 1,
       "direction": 1
     },
     "Gravity": {

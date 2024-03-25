@@ -157,8 +157,8 @@ struct Transform
 
 struct Velocity
 {
-    int dx, dy, direction; // 1 for right, -1 for left
-    Velocity(int dx, int dy, int direction) : dx(dx), dy(dy), direction(direction) {}
+    int dx, dy, direction, speed; // 1 for right, -1 for left
+    Velocity(int dx, int dy, int direction, int speed) : dx(dx), dy(dy), direction(direction), speed(speed) {}
 };
 
 struct Collider
