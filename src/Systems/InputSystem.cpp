@@ -59,8 +59,8 @@ void InputSystem::loadInputMaps() {
      * Load input maps
      */
 
-    loadScancodeMap("etc/scancode_map.json");
-    loadControllerMap("etc/controller_map.json");
+    loadScancodeMap("etc/input_maps/scancode_map.json");
+    loadControllerMap("etc/input_maps/controller_map.json");
 }
 
 void InputSystem::loadScancodeMap(const std::string& filePath) {

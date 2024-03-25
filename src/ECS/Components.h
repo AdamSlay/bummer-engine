@@ -140,6 +140,12 @@ struct Player
     Player(int playerNumber) : playerNumber(playerNumber) {}
 };
 
+struct Npc
+{
+    std::string type;
+    Npc(std::string type) : type(type) {}
+};
+
 struct Transform
 {
     int x, y;
