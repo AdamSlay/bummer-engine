@@ -128,6 +128,11 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
             entity.addComponent<Player>({playerNum});
         }
 
+        if (componentsJson.contains("Npc")) {
+            std::string npcType = componentsJson["Npc"]["type"];
+            entity.addComponent<Npc>({npcType});
+        }
+
         if (componentsJson.contains("Intent")) {
             Action action = Utils::stringToAction(componentsJson["Intent"]["action"]);
             Direction direction = Utils::stringToDirection(componentsJson["Intent"]["direction"]);

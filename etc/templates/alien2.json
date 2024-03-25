@@ -1,6 +1,9 @@
 {
   "name": "Alien",
   "components": {
+    "Npc": {
+      "type": "Alien"
+    },
     "Transform": {
       "x": 880,
       "y": 50,
