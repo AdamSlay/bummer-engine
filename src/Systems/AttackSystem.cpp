@@ -40,17 +40,19 @@ void AttackSystem::handleIntent(Entity& entity) {
         AttackMap& attackMap = entity.getComponent<AttackMap>();
 
         if (intent.action == Action::ATTACK) {
-            attackMap.attacks["basic"].isActive = true;
-            if (entity.hasComponent<Player>()) {
-                // suspend player on attack
-                Velocity& vel = entity.getComponent<Velocity>();
+            // publish event to StateMachine
+            Utils::publishEvent("basicAttack", &entity);
+
+            // if state is basic attack, set attack to active
+            State& state = entity.getComponent<State>();
+            if (state.state == playerStates::BASIC_ATTACK) {
+                attackMap.attacks["basic"].isActive = true;
+                auto& vel = entity.getComponent<Velocity>();
+                auto& gravity = entity.getComponent<Gravity>();
                 vel.dy = 0;
                 vel.dx = 0;
-                Gravity& gravity = entity.getComponent<Gravity>();
                 gravity.gravity = 0.5;
             }
-            entity.changeState(playerStates::BASIC_ATTACK);
-            Utils::publishEvent("basicAttack", &entity);
         }
     }
 }

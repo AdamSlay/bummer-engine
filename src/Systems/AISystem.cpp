@@ -8,7 +8,9 @@
 
 void AISystem::update(EntityManager& entityManager) {
     for (Entity& entity : entityManager.getEntities()) {
-        if (entity.hasComponent<AI>() && entity.hasComponent<Transform>() && entity.hasComponent<Velocity>()) {
+        if (entity.hasComponent<Npc>()) {
+            // clear action intent
+            entity.resetIntent();
             State& state = entity.getComponent<State>();
             if (state.state != playerStates::BASIC_ATTACK && state.state != playerStates::HIT && state.state != playerStates::STUNNED) {
                 AI& ai = entity.getComponent<AI>();
@@ -51,18 +53,8 @@ void AISystem::attack(EntityManager& entityManager, Entity& attacker) {
                     attacker.getComponent<Velocity>().direction = -1;
                 }
 
-                AttackMap& attackMap = attacker.getComponent<AttackMap>();
-                attackMap.attacks["basic"].isActive = true;
-                Utils::publishEvent("basicAttack", &attacker);
-
-                Velocity& vel = attacker.getComponent<Velocity>();
-                vel.dy = 0;
-                vel.dx = 0;
-                State& state = attacker.getComponent<State>();
-                if (state.state != playerStates::BASIC_ATTACK) {
-                    attacker.changeState(playerStates::BASIC_ATTACK);
-                }
-                break;
+                Intent& intent = attacker.getComponent<Intent>();
+                intent.action = Action::ATTACK;
             }
         }
     }

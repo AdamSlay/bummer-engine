@@ -4,6 +4,10 @@
     "Npc": {
       "type": "Alien"
     },
+    "Intent": {
+      "action": "WAIT",
+      "direction": "STILL"
+    },
     "Transform": {
       "x": 250,
       "y": 50,

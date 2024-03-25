@@ -205,12 +205,11 @@ SDL_Scancode InputSystem::mapControllerButtonToScancode(Uint8 button) {
 }
 
 void InputSystem::updateIntent(Entity& player) {
+    // clear previous intent
+    player.resetIntent();
+
     auto& input = player.getComponent<Input>();
     auto& intent = player.getComponent<Intent>();
-    // clear previous intent
-    intent.action = Action::WAIT;
-    intent.direction = Direction::STILL;
-
     if (input.actionInput[Action::JUMP]) {
         intent.action = Action::JUMP;
     }

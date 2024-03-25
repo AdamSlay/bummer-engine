@@ -23,7 +23,7 @@ SoundSystem::SoundSystem() {
     EventManager::getInstance().subscribe("landed", [this](EventData data) {
         playSound("assets/sounds/foly/bb_char/sand_walk_1.wav", 6);
     });
-    EventManager::getInstance().subscribe("basicAttack", [this](EventData data) {
+    EventManager::getInstance().subscribe("basicAttackSound", [this](EventData data) {
         Entity* entity = data.primaryEntity;
         if (entity->hasComponent<Player>()) {
             playSound("assets/sounds/foly/bb_char/attack_6.wav", 2);
