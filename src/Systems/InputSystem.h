@@ -19,7 +19,7 @@ private:
     void handleKeyboardInput(SDL_Event& e, Input& input);
     void handleControllerInput(SDL_Event& e, Input& input);
     void handleJoystickInput(SDL_Event& e, Input& input) const;
-    static void updateIntent(Entity& player);
+    void updateIntent(Entity& player);
     static SDL_Scancode mapControllerButtonToScancode(Uint8 button);
 };
 

@@ -230,4 +230,15 @@ void InputSystem::updateIntent(Entity& player) {
     if (input.actionInput[Action::MOVE_RIGHT]) {
         intent.direction = Direction::RIGHT;
     }
+    // read scan codes for movement
+    if (input.keyStates[SDL_SCANCODE_LEFT]) {
+        intent.direction = Direction::LEFT;
+    }
+    else if (input.keyStates[SDL_SCANCODE_RIGHT]) {
+        intent.direction = Direction::RIGHT;
+    }
+    else {
+        // Reset direction if no directional input is being held
+        intent.direction = Direction::STILL;
+    }
 }

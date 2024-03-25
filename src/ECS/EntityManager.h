@@ -63,13 +63,15 @@ public:
         }
     }
 
-    void resetIntent() {
+    void resetIntent(bool direction = true) {
         /**
          * Reset the intent of the entity
          */
         Intent& intent = getComponent<Intent>();
         intent.action = Action::WAIT;
-        intent.direction = Direction::STILL;
+        if (direction) {
+            intent.direction = Direction::STILL;
+        }
     }
 
     int getID() const {
