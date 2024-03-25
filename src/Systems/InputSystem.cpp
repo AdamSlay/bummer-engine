@@ -55,6 +55,10 @@ void InputSystem::update(EntityManager &entityManager, bool &quit) {
 }
 
 void InputSystem::loadInputMaps() {
+    /**
+     * Load input maps
+     */
+
     loadScancodeMap("etc/scancode_map.json");
     loadControllerMap("etc/controller_map.json");
 }
