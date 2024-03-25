@@ -57,11 +57,9 @@ void AISystem::attack(EntityManager& entityManager, Entity& attacker) {
                     intent.action = Action::ATTACK;
                     if (aiTransform.x < playerTransform.x && attacker.getComponent<Velocity>().direction == -1) {
                         attacker.getComponent<Velocity>().direction = 1;
-                        intent.direction = Direction::RIGHT;
                     }
                     else if (aiTransform.x > playerTransform.x && attacker.getComponent<Velocity>().direction == 1) {
                         attacker.getComponent<Velocity>().direction = -1;
-                        intent.direction = Direction::LEFT;
                     }
                 }
             }

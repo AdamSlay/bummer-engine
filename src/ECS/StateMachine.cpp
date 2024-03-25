@@ -67,3 +67,14 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
         }
     });
 }
+
+bool StateMachine::canMove(Entity &entity) {
+    /**
+     * Check if the entity can move
+     *
+     * @param entity: The entity
+     * @return: True if the entity can move, false otherwise
+     */
+    State& state = entity.getComponent<State>();
+    return state.state != playerStates::STUNNED && state.state != playerStates::HIT && state.state != playerStates::BASIC_ATTACK;
+}

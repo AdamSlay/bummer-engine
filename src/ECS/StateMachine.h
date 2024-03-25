@@ -6,6 +6,7 @@
 class StateMachine {
 public:
 StateMachine(EntityManager& entityManager);
+static bool canMove(Entity& entity);
 private:
     EntityManager entityManager;
 };

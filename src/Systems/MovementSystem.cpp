@@ -3,44 +3,44 @@
 
 #include "../ECS/Components.h"
 #include "../ECS/EventManager.h"
+#include "../ECS/StateMachine.h"
 
 void MovementSystem::handleInput(EntityManager& entityManager, float deltaTime){
     for (Entity& entity: entityManager.getEntities()) {
-        if (entity.hasComponent<Transform>() && entity.hasComponent<Velocity>() && entity.hasComponent<Input>()) {
+        if (entity.hasComponent<Intent>()) {
+            Intent &intent = entity.getComponent<Intent>();
             Velocity &vel = entity.getComponent<Velocity>();
-            Input &input = entity.getComponent<Input>();
 
 
-            if (entity.getComponent<State>().state != playerStates::HIT && entity.getComponent<State>().state != playerStates::STUNNED) {
+            if (StateMachine::canMove(entity)) {
 
                 // handle movement in x direction
                 // handle dash
-                dash(entity, deltaTime);
-                Dash &dash = entity.getComponent<Dash>();
-                if (!dash.isDashing) {
-                    if (input.keyStates[SDL_SCANCODE_LEFT]) {
-                        vel.dx = -5;
-                    } else if (input.keyStates[SDL_SCANCODE_RIGHT]) {
-                        vel.dx = 5;
-                    } else {
-                        vel.dx = 0;
-                    }
-                    if (vel.dx != 0) {
-                        vel.direction = (vel.dx > 0) ? 1 : -1;
-                    }
+//                dash(entity, deltaTime);
+//                Dash &dash = entity.getComponent<Dash>();
+//                if (!dash.isDashing) {
+                if (intent.direction == Direction::LEFT) {
+                    vel.dx = -5;
+                } else if (intent.direction == Direction::RIGHT) {
+                    vel.dx = 5;
+                } else {
+                    vel.dx = 0;
                 }
+                if (vel.dx != 0) {
+                    vel.direction = (vel.dx > 0) ? 1 : -1;
+                }
+//                }
 
                 // handle movement in y direction
-                if (input.justPressed[SDL_SCANCODE_UP]) {
+                if (intent.action == Action::JUMP) {
                     jump(entity);
                 }
-                if (input.justReleased[SDL_SCANCODE_UP] && vel.dy < 0) {  // If the jump button is released while ascending, stop ascending
+                if (intent.action == Action::STOP_JUMP && vel.dy < 0) {  // If the jump button is released while ascending, stop ascending
                     vel.dy = 0;
                 }
                 if (vel.dy != 0) {
                     changeJumpState(entity);
                 }
-
             }
         }
     }

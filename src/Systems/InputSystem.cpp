@@ -120,6 +120,7 @@ void InputSystem::handleKeyboardInput(SDL_Event& e, Input& input) {
     }
     else if (e.type == SDL_KEYUP && e.key.repeat == 0) {
         input.justReleased[e.key.keysym.scancode] = true;
+        input.actionInput[scancodeMap[e.key.keysym.scancode]] = false;
     }
 }
 
@@ -131,16 +132,17 @@ void InputSystem::handleControllerInput(SDL_Event& e, Input& input) {
      * @param input: The input component
      */
     SDL_Scancode scancode = mapControllerButtonToScancode(e.cbutton.button);
+    auto button = static_cast<SDL_GameControllerButton>(e.cbutton.button);
     input.keyStates[scancode] = (e.type == SDL_CONTROLLERBUTTONDOWN);
     if (e.type == SDL_CONTROLLERBUTTONDOWN) {
         input.justPressed[scancode] = true;
-        auto button = static_cast<SDL_GameControllerButton>(e.cbutton.button);
         input.actionInput[controllerMap[button]] = true;
 //        std::string action = Utils::actionToString(controllerMap[button]);
 //        std::cout << "Button: " << button << " Action: " << action << std::endl;
     }
     else if (e.type == SDL_CONTROLLERBUTTONUP) {
         input.justReleased[scancode] = true;
+        input.actionInput[controllerMap[button]] = false;
     }
 
 }
@@ -212,6 +214,9 @@ void InputSystem::updateIntent(Entity& player) {
     auto& intent = player.getComponent<Intent>();
     if (input.actionInput[Action::JUMP]) {
         intent.action = Action::JUMP;
+    }
+    if (input.justReleased[SDL_SCANCODE_UP]) {
+        intent.action = Action::STOP_JUMP;
     }
     if (input.actionInput[Action::DASH]) {
         intent.action = Action::DASH;
