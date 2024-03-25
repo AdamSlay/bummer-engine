@@ -100,7 +100,6 @@ void MovementSystem::dash(Entity& entity, float deltaTime) {
         Dash& dash = entity.getComponent<Dash>();
         Velocity& vel = entity.getComponent<Velocity>();
         if (!dash.isDashing && dash.currentCooldown <= 0) {
-            std::cout << "Dashing" << std::endl;
             dash.isDashing = true;
             Utils::publishEvent("dash", &entity);
             // Set a specific velocity for the dash
@@ -133,7 +132,6 @@ void MovementSystem::dash(Entity& entity, float deltaTime) {
         if (dash.isDashing) {
             dash.currentDuration -= deltaTime;
             if (dash.currentDuration <= 0) {
-                std::cout << "Dash over" << std::endl;
                 Utils::publishEvent("dashEnd", &entity);
                 dash.isDashing = false;
                 dash.currentCooldown = dash.initCooldown; // Reset cooldown
