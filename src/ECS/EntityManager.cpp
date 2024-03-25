@@ -33,7 +33,8 @@ std::map<std::string, playerStates> EntityManager::playerStatesMap = {
         {"JUMP_APEX_ASCEND", playerStates::JUMP_APEX_ASCEND},
         {"BASIC_ATTACK", playerStates::BASIC_ATTACK},
         {"HIT", playerStates::HIT},
-        {"STUNNED", playerStates::STUNNED}
+        {"STUNNED", playerStates::STUNNED},
+        {"DASHING", playerStates::DASHING}
 };
 
 EntityManager::EntityManager(TextureManager* texManager, SDL_Renderer* ecsRenderer) {

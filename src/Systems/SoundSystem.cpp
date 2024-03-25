@@ -13,7 +13,7 @@ SoundSystem::SoundSystem() {
     EventManager::getInstance().subscribe("spawn", [this](EventData data) {
         playSound("assets/sounds/zapsplat/zapsplat_sound_design_rewind_reversed_vibration_001_19653.wav", 2);
     });
-    EventManager::getInstance().subscribe("dash", [this](EventData data) {
+    EventManager::getInstance().subscribe("dashSound", [this](EventData data) {
         playSound("assets/sounds/zapsplat/zapsplat_cartoon_whoosh_swipe_fast_grab_dash_006_74747.wav", 4);
     });
     EventManager::getInstance().subscribe("start", [this](EventData data) {

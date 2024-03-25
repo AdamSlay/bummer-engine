@@ -64,6 +64,7 @@ std::string Utils::playerStateToString(playerStates state) {
         case playerStates::BASIC_ATTACK: return "BASIC_ATTACK";
         case playerStates::HIT: return "HIT";
         case playerStates::STUNNED: return "STUNNED";
+        case playerStates::DASHING: return "DASHING";
         default: return "UNKNOWN";
     }
 }

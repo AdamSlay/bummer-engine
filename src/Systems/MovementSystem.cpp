@@ -4,8 +4,9 @@
 #include "../ECS/Components.h"
 #include "../ECS/EventManager.h"
 #include "../ECS/StateMachine.h"
+#include "../Utils.h"
 
-void MovementSystem::handleInput(EntityManager& entityManager, float deltaTime){
+void MovementSystem::handleIntent(EntityManager& entityManager, float deltaTime){
     for (Entity& entity: entityManager.getEntities()) {
         if (entity.hasComponent<Intent>()) {
             Intent &intent = entity.getComponent<Intent>();
@@ -15,10 +16,6 @@ void MovementSystem::handleInput(EntityManager& entityManager, float deltaTime){
             if (StateMachine::canMove(entity)) {
 
                 // handle movement in x direction
-                // handle dash
-//                dash(entity, deltaTime);
-//                Dash &dash = entity.getComponent<Dash>();
-//                if (!dash.isDashing) {
                 if (intent.direction == Direction::LEFT) {
                     vel.dx = -vel.speed;
                 } else if (intent.direction == Direction::RIGHT) {
@@ -29,7 +26,6 @@ void MovementSystem::handleInput(EntityManager& entityManager, float deltaTime){
                 if (vel.dx != 0) {
                     vel.direction = (vel.dx > 0) ? 1 : -1;
                 }
-//                }
 
                 // handle movement in y direction
                 if (intent.action == Action::JUMP) {
@@ -41,6 +37,15 @@ void MovementSystem::handleInput(EntityManager& entityManager, float deltaTime){
                 if (vel.dy != 0) {
                     changeJumpState(entity);
                 }
+
+                // handle dash
+                if (intent.action == Action::DASH) {
+                    dash(entity, deltaTime);
+                }
+            }
+
+            else if (entity.getComponent<State>().state == playerStates::DASHING){
+                dash(entity, deltaTime);
             }
         }
     }
@@ -76,7 +81,6 @@ void MovementSystem::jump(Entity& entity) {
      */
     if (entity.hasComponent<Velocity>() && entity.hasComponent<State>()) {
         Velocity& vel = entity.getComponent<Velocity>();
-        State& state = entity.getComponent<State>();
         Gravity& gravity = entity.getComponent<Gravity>();
         Jumps& jumps = entity.getComponent<Jumps>();
 
@@ -91,13 +95,14 @@ void MovementSystem::jump(Entity& entity) {
 }
 
 void MovementSystem::dash(Entity& entity, float deltaTime) {
-    if (entity.hasComponent<Input>() && entity.hasComponent<Dash>() && entity.hasComponent<Velocity>()) {
+    if (entity.hasComponent<Dash>() && entity.hasComponent<Velocity>()) {
         Input& input = entity.getComponent<Input>();
         Dash& dash = entity.getComponent<Dash>();
         Velocity& vel = entity.getComponent<Velocity>();
-        if (input.justPressed[SDL_SCANCODE_SPACE] && !dash.isDashing && dash.currentCooldown <= 0) {
+        if (!dash.isDashing && dash.currentCooldown <= 0) {
+            std::cout << "Dashing" << std::endl;
             dash.isDashing = true;
-            EventManager::getInstance().publish("dash", {entity.getID()});
+            Utils::publishEvent("dash", &entity);
             // Set a specific velocity for the dash
             // TODO: magic numbers
             if (std::abs(input.joystickDirection.first) > 0.2 || std::abs(input.joystickDirection.second) > 0.2) {
@@ -128,6 +133,8 @@ void MovementSystem::dash(Entity& entity, float deltaTime) {
         if (dash.isDashing) {
             dash.currentDuration -= deltaTime;
             if (dash.currentDuration <= 0) {
+                std::cout << "Dash over" << std::endl;
+                Utils::publishEvent("dashEnd", &entity);
                 dash.isDashing = false;
                 dash.currentCooldown = dash.initCooldown; // Reset cooldown
                 dash.currentDuration = dash.initDuration; // Reset duration
@@ -135,12 +142,6 @@ void MovementSystem::dash(Entity& entity, float deltaTime) {
                 vel.dy /= dash.speed;
                 Gravity& gravity = entity.getComponent<Gravity>();
                 gravity.gravity = 0.5;
-            }
-        } else if (dash.currentCooldown > 0) {
-            dash.currentCooldown -= deltaTime;
-            if (dash.currentCooldown < 0) {
-                std::cout << "Cooldown over" << std::endl;
-                dash.currentCooldown = 0;
             }
         }
     }

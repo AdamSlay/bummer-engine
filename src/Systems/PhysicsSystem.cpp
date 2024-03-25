@@ -3,7 +3,7 @@
 #include "../Config.h"
 
 void PhysicsSystem::update(SceneManager& sceneManager, EntityManager& entityManager, MovementSystem& movementSystem, CollisionSystem& collisionSystem, float deltaTime) {
-    movementSystem.handleInput(entityManager, deltaTime);
+    movementSystem.handleIntent(entityManager, deltaTime);
     movementSystem.moveX(entityManager);
     collisionSystem.updateX(entityManager);
     movementSystem.moveY(entityManager);

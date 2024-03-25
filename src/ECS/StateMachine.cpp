@@ -28,11 +28,11 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
             }
 
             // change the entity's state based on its velocity
-            if (vel.dx != 0 && state.state != playerStates::STUNNED && state.state != playerStates::BASIC_ATTACK) {
+            if (vel.dx != 0 && state.state != playerStates::STUNNED && state.state != playerStates::BASIC_ATTACK && state.state != playerStates::DASHING) {
                 // moving side to side, not stunned or attacking
                 entity.changeState(playerStates::RUN);
             }
-            else if (state.state != playerStates::STUNNED && state.state != playerStates::BASIC_ATTACK) {
+            else if (state.state != playerStates::STUNNED && state.state != playerStates::BASIC_ATTACK && state.state != playerStates::DASHING) {
                 // not moving, not stunned or attacking
                 entity.changeState(playerStates::IDLE);
             }
@@ -56,11 +56,32 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
         try {
             Entity* entity = data.primaryEntity;
             State& state = entity->getComponent<State>();
-            if (state.state != playerStates::STUNNED && state.state != playerStates::HIT && state.state != playerStates::BASIC_ATTACK) {
+            if (state.state != playerStates::STUNNED && state.state != playerStates::HIT && state.state != playerStates::BASIC_ATTACK && state.state != playerStates::DASHING) {
                 // not stunned or hit or currently attacking, can attack
                 entity->changeState(playerStates::BASIC_ATTACK);
                 Utils::publishEvent("basicAttackSound", entity);
             }
+        }
+        catch (const std::runtime_error& e) {
+            std::cout << "Could not find entity with id: " << data.entityId << std::endl;
+        }
+    });
+
+    EventManager::getInstance().subscribe("dash", [&](EventData data) {
+        try {
+            Entity* entity = data.primaryEntity;
+            entity->changeState(playerStates::DASHING);
+            Utils::publishEvent("dashSound", entity);
+        }
+        catch (const std::runtime_error& e) {
+            std::cout << "Could not find entity with id: " << data.entityId << std::endl;
+        }
+    });
+
+    EventManager::getInstance().subscribe("dashEnd", [&](EventData data) {
+        try {
+            Entity* entity = data.primaryEntity;
+            entity->changeState(playerStates::IDLE);
         }
         catch (const std::runtime_error& e) {
             std::cout << "Could not find entity with id: " << data.entityId << std::endl;
@@ -76,5 +97,10 @@ bool StateMachine::canMove(Entity &entity) {
      * @return: True if the entity can move, false otherwise
      */
     State& state = entity.getComponent<State>();
-    return state.state != playerStates::STUNNED && state.state != playerStates::HIT && state.state != playerStates::BASIC_ATTACK;
+    bool notStunned = state.state != playerStates::STUNNED;
+    bool notHit = state.state != playerStates::HIT;
+    bool notAttacking = state.state != playerStates::BASIC_ATTACK;
+    bool notDashing = state.state != playerStates::DASHING;
+
+    return notStunned && notHit && notAttacking && notDashing;
 }

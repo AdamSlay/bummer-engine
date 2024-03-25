@@ -7,6 +7,7 @@
 #include "../Systems/SoundSystem.h"
 #include "../Systems/AttackSystem.h"
 #include "../Systems/AISystem.h"
+#include "../Systems/CooldownSystem.h"
 
 #include "../Utils.cpp"
 #include "../Config.h"
@@ -30,6 +31,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     
     AnimationSystem animationSystem;
     CollisionSystem collisionSystem;
+    CooldownSystem cooldownSystem;
     InputSystem inputSystem;
     MovementSystem movementSystem;
     PhysicsSystem physicsSystem;
@@ -66,6 +68,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
         // Perform game logic updates
         inputSystem.update(entityManager, quit);
         aiSystem.update(entityManager);
+        cooldownSystem.update(entityManager, deltaTime);
         attackSystem.update(entityManager);
         physicsSystem.update(sceneManager, entityManager, movementSystem, collisionSystem, deltaTime);
         animationSystem.update(entityManager, deltaTime);
