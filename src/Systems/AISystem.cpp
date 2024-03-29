@@ -67,8 +67,8 @@ void AISystem::attack(EntityManager& entityManager, Entity& attacker) {
                     // Player is within patrol range, move towards player
                     std::cout << "Player is within patrol range:" << distance << std::endl;
                     Intent& intent = attacker.getComponent<Intent>();
-                    // if player is on a higher platform, wait
-                    if (playerTransform.y < aiTransform.y - 50 || playerTransform.y > aiTransform.y + 50) {
+                    // if player is on a higher platform, ignore them
+                    if (playerTransform.y < aiTransform.y - 50) {
                         continue;
                     }
 
