@@ -11,8 +11,6 @@
 
 #include "../Utils.cpp"
 #include "../Config.h"
-#include "../ECS/EventManager.h"
-#include "../ECS/SceneManager.h"
 #include "../ECS/StateMachine.h"
 
 void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
@@ -71,7 +69,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
         cooldownSystem.update(entityManager, deltaTime);
         attackSystem.update(entityManager);
         physicsSystem.update(sceneManager, entityManager, movementSystem, collisionSystem, deltaTime);
-        animationSystem.update(entityManager, deltaTime);
+        animationSystem.update(entityManager);
 
         SDL_SetRenderDrawColor(renderer, 104, 102, 184, 255);  // bb_purple
         SDL_RenderClear(renderer);
@@ -97,6 +95,4 @@ void sandbox(SceneManager& sceneManager) {
      * @param entityManager: The entity manager
      */
      sceneManager.nextScene();
-//    sceneManager.loadSceneFromTemplate("etc/templates/home/home_scene.json");
-//    entityManager.loadSceneFromTemplate("etc/templates/level_01/level_01.json");
 }

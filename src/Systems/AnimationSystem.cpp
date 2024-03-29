@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-void AnimationSystem::update(EntityManager& entityManager, float deltaTime) {
+void AnimationSystem::update(EntityManager& entityManager) {
     /**
      * Update the animation system
      *

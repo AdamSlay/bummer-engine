@@ -6,7 +6,7 @@
 
 class AnimationSystem {
 public:
-    void update(EntityManager& entityManager, float deltaTime);
+    void update(EntityManager& entityManager);
 };
 
 

@@ -5,7 +5,6 @@
 
 #include "EntityManager.h"
 #include "../Utils.h"
-#include "../Resources/TextureManager.h"
 
 using json = nlohmann::json;
 
