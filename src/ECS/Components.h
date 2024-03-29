@@ -218,8 +218,9 @@ struct AI
     std::pair<int, int> patrolStart;
     float patrolRange;
     float attackRange;
-    AI(std::string state, std::pair<int, int> patrolStart, float patrolRange, float attackRange)
-        : state(state), patrolStart(patrolStart), patrolRange(patrolRange), attackRange(attackRange) {}
+    float pursuitRange;
+    AI(std::string state, std::pair<int, int> patrolStart, float patrolRange, float attackRange, float pursuitRange)
+        : state(state), patrolStart(patrolStart), patrolRange(patrolRange), attackRange(attackRange), pursuitRange(pursuitRange) {}
 };
 
 

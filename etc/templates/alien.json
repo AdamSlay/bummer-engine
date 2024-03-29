@@ -54,7 +54,8 @@
     "AI": {
       "state": "IDLE",
       "patrolRange": 100,
-      "attackRange": 50
+      "attackRange": 50,
+      "pursuitRange": 6000
     },
     "AttackMap": {
       "basic": "etc/templates/attacks/alien_basic.json"

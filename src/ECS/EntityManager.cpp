@@ -282,7 +282,8 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
             std::string state = componentsJson["AI"]["state"];
             float patrolRange = componentsJson["AI"]["patrolRange"];
             float attackRange = componentsJson["AI"]["attackRange"];
-            entity.addComponent<AI>({state, patrolStart, patrolRange, attackRange});
+            float pursuitRange = componentsJson["AI"]["pursuitRange"];
+            entity.addComponent<AI>({state, patrolStart, patrolRange, attackRange, pursuitRange});
         }
     }
 
