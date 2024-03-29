@@ -23,7 +23,7 @@ void AISystem::patrol(Entity& entity) {
 
     // If the enemy is at the edge of the patrol range, reverse direction
     int patrolDirection = velocity.direction;
-    bool atLeftEdge = transform.x <= ai.patrolStart.first;
+    bool atLeftEdge = transform.x <= ai.patrolStart.first - ai.patrolRange;
     bool atRightEdge = transform.x >= ai.patrolStart.first + ai.patrolRange;
     if ((patrolDirection == 1 && atRightEdge) || (patrolDirection == -1 && atLeftEdge)) {
         patrolDirection *= -1;
