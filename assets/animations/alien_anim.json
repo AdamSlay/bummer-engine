@@ -44,6 +44,33 @@
       "imageWidth": 64,
       "imageHeight": 100,
       "imageY": 0
+    },
+    "JUMP_APEX": {
+      "spriteSheetPath": "assets/sprites/alien/martian_fall.png",
+      "framesPerImage": 1,
+      "startImage": 0,
+      "imageCount": 1,
+      "imageWidth": 64,
+      "imageHeight": 100,
+      "imageY": 0
+    },
+    "JUMP_APEX_DESCEND": {
+      "spriteSheetPath": "assets/sprites/alien/martian_fall.png",
+      "framesPerImage": 1,
+      "startImage": 0,
+      "imageCount": 1,
+      "imageWidth": 64,
+      "imageHeight": 100,
+      "imageY": 0
+    },
+    "JUMP_DESCEND": {
+      "spriteSheetPath": "assets/sprites/alien/martian_fall.png",
+      "framesPerImage": 1,
+      "startImage": 1,
+      "imageCount": 1,
+      "imageWidth": 64,
+      "imageHeight": 100,
+      "imageY": 0
     }
   }
 }
