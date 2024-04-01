@@ -1,0 +1,64 @@
+{
+  "name": "Alien",
+  "components": {
+    "Npc": {
+      "type": "Alien"
+    },
+    "Intent": {
+      "action": "WAIT",
+      "direction": "STILL"
+    },
+    "Transform": {
+      "x": 650,
+      "y": 50,
+      "scale": 2
+    },
+    "Collider": {
+      "offsetX": 22,
+      "offsetY": 40,
+      "width": 18,
+      "height": 60
+    },
+    "Sprite": {
+      "texturePath": "assets/sprites/alien/alien_02.png",
+      "srcRect": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 100
+      }
+    },
+    "Velocity": {
+      "dx": 0,
+      "dy": 0,
+      "speed": 1,
+      "direction": -1
+    },
+    "Gravity": {
+      "baseGravity": 0.8,
+      "gravity": 0.8,
+      "ascendFactor": 0.9,
+      "descendFactor": 1.1
+    },
+    "State": {
+      "state": "IDLE"
+    },
+    "Animator": {
+      "animatorPath": "assets/animations/alien_anim.json"
+    },
+    "Health": {
+      "maxHealth": 50,
+      "currentHealth": 50,
+      "invincibilityFrames": 10
+    },
+    "AI": {
+      "state": "IDLE",
+      "patrolRange": 100,
+      "attackRange": 50,
+      "pursuitRange": 6000
+    },
+    "AttackMap": {
+      "basic": "etc/templates/attacks/alien_basic.json"
+    }
+  }
+}

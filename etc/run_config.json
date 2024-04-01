@@ -7,6 +7,8 @@
   "FONT_SIZE": 10,
   "SCENE_TEMPLATES": {
     "home": "etc/templates/home/home_scene.json",
-    "level_01": "etc/templates/level_01/level_01.json"
+    "level_01": "etc/templates/level_01/level.json",
+    "level_02": "etc/templates/level_02/level.json",
+    "level_03": "etc/templates/level_03/level.json"
   }
 }

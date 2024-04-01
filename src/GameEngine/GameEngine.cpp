@@ -71,7 +71,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
         physicsSystem.update(sceneManager, entityManager, movementSystem, collisionSystem, deltaTime);
         animationSystem.update(entityManager);
 
-        SDL_SetRenderDrawColor(renderer, 104, 102, 184, 255);  // bb_purple
+        SDL_SetRenderDrawColor(renderer, 124, 200, 255, 255);  // sky blue
         SDL_RenderClear(renderer);
 //        Utils::render_all_colliders(entityManager, renderer);
 //        Utils::render_hitboxes(entityManager, renderer);
