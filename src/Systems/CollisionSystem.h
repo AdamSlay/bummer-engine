@@ -12,8 +12,8 @@ public:
     bool checkCollision(Entity& player, Entity& other);
     bool checkCollisionX(Entity& player, Entity& other);
     bool checkCollisionY(Entity& player, Entity& other);
-    void handlePlayerCollisionX(Entity& player, Entity& other);
-    void handlePlayerCollisionY(Entity& entity, Entity& other);
+    void handleCollisionX(Entity& entity, Entity& other);
+    void handleCollisionY(Entity& entity, Entity& other);
 
 private:
     int collisionBuffer = 2;

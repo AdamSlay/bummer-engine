@@ -13,41 +13,11 @@ void CollisionSystem::updateX(EntityManager& entityManager) {
      * @param entityManager: The entity manager
      */
     auto& entities = entityManager.getEntities();
-    std::vector<Entity> players;
-    std::vector<Entity> collisionObjects;
-    std::vector<Entity> enemies;
-    std::vector<Entity> inanimateObjects;
-
-    // Separate the entities into two groups: players and collision objects
-    for (auto & entity : entities) {
-        if (entity.hasComponent<Player>()) {
-            players.push_back(entity);
-        }
-        else if (entity.hasComponent<Collider>() && entity.hasComponent<Transform>()) {
-            collisionObjects.push_back(entity);
-            if (entity.hasComponent<Velocity>()) {
-                enemies.push_back(entity);
-            }
-            else {
-                inanimateObjects.push_back(entity);
-            }
-        }
-    }
-
-    for (auto& player : players) {
-        for (auto& other : collisionObjects) {
-            if (checkCollision(player, other)) {
-                if (checkCollisionX(player, other)) {
-                    handlePlayerCollisionX(player, other);  // *player and *other are dereferenced Entity objects
-                }
-            }
-        }
-    }
-    for (auto& enemy : enemies) {
-        for (auto& other : inanimateObjects) {
-            if (checkCollision(enemy, other)) {
-                if (checkCollisionX(enemy, other)) {
-                    handlePlayerCollisionX(enemy, other);  // *enemy and *other are dereferenced Entity objects
+    for (auto& entity : entities) {
+        if (entity.hasComponent<Player>() || entity.hasComponent<Npc>()) {
+            for (auto& other : entities) {
+                if (entity.id != other.id && checkCollision(entity, other)) {
+                    handleCollisionX(entity, other);  // *player and *other are dereferenced Entity objects
                 }
             }
         }
@@ -61,41 +31,11 @@ void CollisionSystem::updateY(EntityManager& entityManager) {
      * @param entityManager: The entity manager
      */
     auto& entities = entityManager.getEntities();
-    std::vector<Entity> players;
-    std::vector<Entity> collisionObjects;
-    std::vector<Entity> enemies;
-    std::vector<Entity> inanimateObjects;
-
-    // Separate the entities into two groups: players and collision objects
-    for (auto & entity : entities) {
-        if (entity.hasComponent<Player>()) {
-            players.push_back(entity);
-        } else if (entity.hasComponent<Collider>() && entity.hasComponent<Transform>()) {
-            collisionObjects.push_back(entity);
-
-            if (entity.hasComponent<Velocity>()) {
-                enemies.push_back(entity);
-            }
-            else {
-                inanimateObjects.push_back(entity);
-            }
-        }
-    }
-
-    for (auto& player : players) {
-        for (auto& other : collisionObjects) {
-            if (checkCollision(player, other)) {
-                if (checkCollisionY(player, other)) {
-                    handlePlayerCollisionY(player, other);  // *player and *other are dereferenced Entity objects
-                }
-            }
-        }
-    }
-    for (auto& enemy : enemies) {
-        for (auto& other : inanimateObjects) {
-            if (checkCollision(enemy, other)) {
-                if (checkCollisionY(enemy, other)) {
-                    handlePlayerCollisionY(enemy, other);  // *enemy and *other are dereferenced Entity objects
+    for (auto& entity : entities) {
+        if (entity.hasComponent<Player>() || entity.hasComponent<Npc>()) {
+            for (auto& other : entities) {
+                if (entity.id != other.id && checkCollision(entity, other)) {
+                    handleCollisionY(entity, other);  // *player and *other are dereferenced Entity objects
                 }
             }
         }
@@ -148,15 +88,15 @@ bool CollisionSystem::checkCollisionY(Entity &player, Entity &other) {
     return true;
 }
 
-void CollisionSystem::handlePlayerCollisionX(Entity& player, Entity& other) {
+void CollisionSystem::handleCollisionX(Entity& entity, Entity& other) {
     /**
-     * Handle player collision with other entities on the X axis
+     * Handle entity collision with other entities on the X axis
      *
-     * @param player: The player entity
+     * @param entity: The entity entity
      * @param other: The other entity
      */
-    Velocity& vel = player.getComponent<Velocity>();
-    SDL_Rect playerCollider = Utils::getColliderRect(player);
+    Velocity& vel = entity.getComponent<Velocity>();
+    SDL_Rect playerCollider = Utils::getColliderRect(entity);
     SDL_Rect otherCollider = Utils::getColliderRect(other);
 
     if (vel.dx > 0) {
@@ -164,18 +104,18 @@ void CollisionSystem::handlePlayerCollisionX(Entity& player, Entity& other) {
         vel.dx = 0;
         float newPos = otherCollider.x - (playerCollider.w + collisionBuffer);
         int x = static_cast<int>(newPos);
-        Utils::setTransformX(player, x);
+        Utils::setTransformX(entity, x);
     }
     else if (vel.dx < 0) {
         // Player is moving left
         vel.dx = 0;
         float newPos = otherCollider.x + otherCollider.w + collisionBuffer;
         int x = static_cast<int>(newPos + 1);
-        Utils::setTransformX(player, x);
+        Utils::setTransformX(entity, x);
     }
 }
 
-void CollisionSystem::handlePlayerCollisionY(Entity& entity, Entity& other) {
+void CollisionSystem::handleCollisionY(Entity& entity, Entity& other) {
     /**
      * Handle entity collision with other entities on the Y axis
      *

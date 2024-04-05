@@ -11,6 +11,7 @@ class Entity
 {
 public:
     Entity();
+    int id;  // Unique identifier for each entity
     bool operator==(const Entity& other) const;
     template <typename T>
     void addComponent(T component) {
@@ -82,7 +83,6 @@ public:
     }
 
 private:
-    int id;  // Unique identifier for each entity
     static int nextId;  // Static member to generate unique IDs
     std::unordered_map<std::type_index, void *> components;
 };
