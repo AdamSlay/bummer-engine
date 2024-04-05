@@ -25,6 +25,7 @@ SDL_Texture* TextureManager::loadTexture(SDL_Renderer* renderer, const std::stri
         std::cout << "Failed to load texture from " << filePath << "! SDL_image Error: " << IMG_GetError() << std::endl;
     } else {
         // If the texture is successfully loaded, store it in the map
+        SDL_SetTextureScaleMode(newTexture, SDL_ScaleModeNearest);
         textures[filePath] = newTexture;
     }
 
