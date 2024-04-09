@@ -9,9 +9,10 @@
 #include "../Systems/AISystem.h"
 #include "../Systems/CooldownSystem.h"
 
-#include "../Utils.cpp"
+// #include "../Utils.cpp"
 #include "../Config.h"
 #include "../ECS/StateMachine.h"
+#include "../ECS/EventManager.h"
 
 void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     /**

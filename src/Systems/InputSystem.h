@@ -1,3 +1,4 @@
+#pragma once
 #ifndef BUMMERENGINE_INPUTSYSTEM_H
 #define BUMMERENGINE_INPUTSYSTEM_H
 

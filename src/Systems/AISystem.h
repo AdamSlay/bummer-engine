@@ -1,3 +1,4 @@
+#pragma once
 #ifndef BUMMERENGINE_AISYSTEM_H
 #define BUMMERENGINE_AISYSTEM_H
 

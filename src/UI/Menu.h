@@ -1,3 +1,4 @@
+#pragma once
 #ifndef BUMMERENGINE_MENU_H
 #define BUMMERENGINE_MENU_H
 

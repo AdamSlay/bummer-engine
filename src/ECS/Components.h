@@ -1,3 +1,4 @@
+#pragma once
 #ifndef BUMMERENGINE_COMPONENTS_H
 #define BUMMERENGINE_COMPONENTS_H
 

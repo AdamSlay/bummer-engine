@@ -1,3 +1,4 @@
+#pragma once
 #ifndef BUMMERENGINE_GAMEENGINE_H
 #define BUMMERENGINE_GAMEENGINE_H
 

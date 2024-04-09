@@ -1,3 +1,4 @@
+#pragma once
 #ifndef BUMMERENGINE_SOUNDSYSTEM_H
 #define BUMMERENGINE_SOUNDSYSTEM_H
 
