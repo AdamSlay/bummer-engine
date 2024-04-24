@@ -9,10 +9,10 @@
 #include "../Systems/AISystem.h"
 #include "../Systems/CooldownSystem.h"
 
-// #include "../Utils.cpp"
 #include "../Config.h"
 #include "../ECS/StateMachine.h"
 #include "../ECS/EventManager.h"
+#include "../Utils.cpp"
 
 void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     /**
@@ -21,7 +21,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
      * @param renderer: The SDL renderer
      * @param font: The TTF font
      */
-//    render_splash_screen(renderer, font);
+    render_splash_screen(renderer, font);
 
     TextureManager textureManager;
     EntityManager entityManager(&textureManager, renderer);
@@ -35,7 +35,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     MovementSystem movementSystem;
     PhysicsSystem physicsSystem;
     RenderSystem renderSystem;
-//    SoundSystem soundSystem;
+    SoundSystem soundSystem;
     AttackSystem attackSystem;
     AISystem aiSystem;
 
@@ -74,8 +74,6 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
         SDL_SetRenderDrawColor(renderer, 124, 200, 255, 255);  // sky blue
         SDL_RenderClear(renderer);
-//        Utils::render_all_colliders(entityManager, renderer);
-//        Utils::render_hitboxes(entityManager, renderer);
 
         // Copy game to renderer here
         renderSystem.render(renderer, entityManager, font);
