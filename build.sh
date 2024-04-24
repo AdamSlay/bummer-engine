@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Check if vcpkg is installed
-if [ ! -d "./vcpkg" ]
-then
-    # Clone vcpkg repository
-    git clone https://github.com/microsoft/vcpkg.git
+if [ ! -d "./vcpkg" ]; then
+    # Perform a shallow clone of the vcpkg repository
+    git clone --depth 1 https://github.com/microsoft/vcpkg.git
     # Bootstrap vcpkg
     ./vcpkg/bootstrap-vcpkg.sh
+    rm -rf ./vcpkg/.git
 fi
 
 # Install dependencies
