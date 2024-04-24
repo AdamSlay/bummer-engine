@@ -107,7 +107,6 @@ void AttackSystem::incrementAttackFrames(AttackInfo& attackInfo) {
      */
 
     attackInfo.frameCounter += 1;
-    std::cout << "attack frame: " << attackInfo.frameCounter << std::endl;
     if (attackInfo.frameCounter == attackInfo.duration) {
         attackInfo.isActive = false;
         attackInfo.frameCounter = 0;
@@ -145,7 +144,6 @@ void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& attacker, Entity& ot
         Velocity& otherVel = other.getComponent<Velocity>();
         int knockbackDirection = (attackerTransform.x < otherTransform.x) ? 1 : -1;
         otherVel.dx = attackInfo.knockback * knockbackDirection;
-        std::cout << "knocking back with: " << otherVel.dx << std::endl;
         otherVel.direction = knockbackDirection * -1;
 
         if (otherHealth.currentHealth <= 0) {

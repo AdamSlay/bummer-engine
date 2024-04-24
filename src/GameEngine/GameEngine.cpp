@@ -35,7 +35,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     MovementSystem movementSystem;
     PhysicsSystem physicsSystem;
     RenderSystem renderSystem;
-    SoundSystem soundSystem;
+//    SoundSystem soundSystem;
     AttackSystem attackSystem;
     AISystem aiSystem;
 
