@@ -52,7 +52,6 @@ void AISystem::attack(EntityManager& entityManager, Entity& attacker) {
 
                 float distance = std::sqrt(std::pow(playerTransform.x - aiTransform.x, 2) + std::pow(playerTransform.y - aiTransform.y, 2));
                 if (distance <= ai.attackRange) {
-                    std::cout << "Player is within attack range:" << distance << std::endl;
                     // Player is within attack range, trigger attack
                     Intent& intent = attacker.getComponent<Intent>();
                     intent.action = Action::ATTACK;
@@ -65,7 +64,6 @@ void AISystem::attack(EntityManager& entityManager, Entity& attacker) {
                 }
                 else if (distance <= ai.pursuitRange) {
                     // Player is within patrol range, move towards player
-                    std::cout << "Player is within patrol range:" << distance << std::endl;
                     Intent& intent = attacker.getComponent<Intent>();
                     // if player is on a higher platform, ignore them
                     if (playerTransform.y < aiTransform.y - 50) {
