@@ -4,7 +4,7 @@
   "VIRTUAL_WIDTH": 1280,
   "VIRTUAL_HEIGHT": 720,
   "FONT_PATH": "../assets/fonts/SuperFunky.ttf",
-  "FONT_SIZE": 10,
+  "FONT_SIZE": 50,
   "SCENE_TEMPLATES": {
     "home": "etc/templates/home/home_scene.json"
   }
