@@ -9,6 +9,20 @@ TEST(UtilsTest, Test_stringToAction) {
 
     Action attackAction = Utils::stringToAction("ATTACK");
     EXPECT_EQ(attackAction, Action::ATTACK);
+
+    Action invalidAction = Utils::stringToAction("invalid");
+    EXPECT_EQ(invalidAction, Action::WAIT);
+}
+
+TEST(UtilsTest, Test_stringToDirection) {
+    Direction leftDirection = Utils::stringToDirection("LEFT");
+    EXPECT_EQ(leftDirection, Direction::LEFT);
+
+    Direction joyRightDirection = Utils::stringToDirection("JOY_RIGHT");
+    EXPECT_EQ(joyRightDirection, Direction::JOY_RIGHT);
+
+    Direction invalidDirection = Utils::stringToDirection("invalid");
+    EXPECT_EQ(invalidDirection, Direction::STILL);
 }
 
 TEST(UtilsTest, Test_actionToString) {
@@ -17,12 +31,4 @@ TEST(UtilsTest, Test_actionToString) {
 
     std::string waitAction = Utils::actionToString(Action::WAIT);
     EXPECT_EQ(waitAction, "WAIT");
-}
-
-TEST(UtilsTest, Test_stringToDirection) {
-    Direction leftDirection = Utils::stringToDirection("LEFT");
-    EXPECT_EQ(leftDirection, Direction::LEFT);
-
-    Direction invalidDirection = Utils::stringToDirection("INVALID");
-    EXPECT_EQ(invalidDirection, Direction::STILL);
 }
