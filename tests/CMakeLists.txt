@@ -4,9 +4,24 @@ project(BummerTests)
 
 
 set(TEST_FILES
-    test_engine.cpp
-    test_resources.cpp
-    test_ui.cpp
+        Test_AISystem.cpp
+        Test_AnimationSystem.cpp
+        Test_AttackSystem.cpp
+        Test_CollisionSystem.cpp
+        Test_CooldownSystem.cpp
+        Test_EntityManager.cpp
+        Test_EventManager.cpp
+        Test_GameEngine.cpp
+        Test_InputSystem.cpp
+        Test_Menu.cpp
+        Test_MovementSystem.cpp
+        Test_PhysicsSystem.cpp
+        Test_RenderSystem.cpp
+        Test_ResourceUtils.cpp
+        Test_SceneManager.cpp
+        Test_SoundSystem.cpp
+        Test_StateMachine.cpp
+        Test_Utils.cpp
 )
 
 set(GTEST_COLOR 1)
