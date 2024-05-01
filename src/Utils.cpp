@@ -46,12 +46,7 @@ std::string Utils::actionToString(Action action) {
             {Action::ATTACK,     "ATTACK"},
             {Action::DASH,       "DASH"}
     };
-    auto it = actionMap.find(action);
-    if (it != actionMap.end()) {
-        return it->second;
-    } else {
-        return "WAIT";
-    }
+    return actionMap[action];
 }
 
 std::string Utils::playerStateToString(playerStates state) {
