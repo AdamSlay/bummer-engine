@@ -36,27 +36,20 @@ Direction Utils::stringToDirection(const std::string& direction) {
     }
 }
 
-// Action to string
 std::string Utils::actionToString(Action action) {
-    if (action == Action::STOP_JUMP) {
-        return "STOP_JUMP";
-    }
-    if (action == Action::JUMP) {
-        return "JUMP";
-    }
-    if (action == Action::ATTACK) {
-        return "ATTACK";
-    }
-    if (action == Action::DASH) {
-        return "DASH";
-    }
-    if (action == Action::MOVE_LEFT) {
-        return "MOVE_LEFT";
-    }
-    if (action == Action::MOVE_RIGHT) {
-        return "MOVE_RIGHT";
-    }
-    else {
+    std::map<Action, std::string> actionMap = {
+            {Action::WAIT,       "WAIT"},
+            {Action::JUMP,       "JUMP"},
+            {Action::STOP_JUMP,  "STOP_JUMP"},
+            {Action::MOVE_LEFT,  "MOVE_LEFT"},
+            {Action::MOVE_RIGHT, "MOVE_RIGHT"},
+            {Action::ATTACK,     "ATTACK"},
+            {Action::DASH,       "DASH"}
+    };
+    auto it = actionMap.find(action);
+    if (it != actionMap.end()) {
+        return it->second;
+    } else {
         return "WAIT";
     }
 }
