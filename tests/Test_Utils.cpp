@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 #include "../src/Utils.h"
-#include "../src/ECS/Components.h"
 
 
 TEST(UtilsTest, Test_stringToAction) {
@@ -31,4 +30,12 @@ TEST(UtilsTest, Test_actionToString) {
 
     std::string waitAction = Utils::actionToString(Action::WAIT);
     EXPECT_EQ(waitAction, "WAIT");
+}
+
+TEST(UtilsTest, Test_playerStateToString) {
+    std::string idleState = Utils::playerStateToString(playerStates::IDLE);
+    EXPECT_EQ(idleState, "IDLE");
+
+    std::string runState = Utils::playerStateToString(playerStates::RUN);
+    EXPECT_EQ(runState, "RUN");
 }

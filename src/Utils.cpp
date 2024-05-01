@@ -50,21 +50,21 @@ std::string Utils::actionToString(Action action) {
 }
 
 std::string Utils::playerStateToString(playerStates state) {
-    switch(state) {
-        case playerStates::IDLE: return "IDLE";
-        case playerStates::GROUNDED: return "GROUNDED";
-        case playerStates::RUN: return "RUN";
-        case playerStates::JUMP_ASCEND: return "JUMP_ASCEND";
-        case playerStates::JUMP_DESCEND: return "JUMP_DESCEND";
-        case playerStates::JUMP_APEX: return "JUMP_APEX";
-        case playerStates::JUMP_APEX_DESCEND: return "JUMP_APEX_DESCEND";
-        case playerStates::JUMP_APEX_ASCEND: return "JUMP_APEX_ASCEND";
-        case playerStates::BASIC_ATTACK: return "BASIC_ATTACK";
-        case playerStates::HIT: return "HIT";
-        case playerStates::STUNNED: return "STUNNED";
-        case playerStates::DASHING: return "DASHING";
-        default: return "UNKNOWN";
-    }
+    std::map<playerStates, std::string> stateMap = {
+            {playerStates::IDLE,                             "IDLE"},
+            {playerStates::GROUNDED,                 "GROUNDED"},
+            {playerStates::RUN,                              "RUN"},
+            {playerStates::JUMP_ASCEND,            "JUMP_ASCEND"},
+            {playerStates::JUMP_DESCEND,          "JUMP_DESCEND"},
+            {playerStates::JUMP_APEX,                  "JUMP_APEX"},
+            {playerStates::JUMP_APEX_DESCEND,"JUMP_APEX_DESCEND"},
+            {playerStates::JUMP_APEX_ASCEND,  "JUMP_APEX_ASCEND"},
+            {playerStates::BASIC_ATTACK,             "BASIC_ATTACK"},
+            {playerStates::HIT,                                  "HIT"},
+            {playerStates::STUNNED,                       "STUNNED"},
+            {playerStates::DASHING,                        "DASHING"}
+    };
+    return stateMap[state];
 }
 
 void Utils::publishEvent(std::string eventString, Entity* primaryEntity, Entity* secondaryEntity) {
