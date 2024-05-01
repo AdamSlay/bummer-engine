@@ -3,7 +3,7 @@
 #include "ECS/Components.h"
 #include "ECS/EventManager.h"
 
-Action Utils::stringToAction(std::string action) {
+Action Utils::stringToAction(const std::string& action) {
     std::map<std::string, Action> actionMap = {
             {"WAIT",       Action::WAIT},
             {"JUMP",       Action::JUMP},
@@ -12,10 +12,15 @@ Action Utils::stringToAction(std::string action) {
             {"ATTACK",     Action::ATTACK},
             {"DASH",       Action::DASH}
     };
-    return actionMap[action];
+    auto it = actionMap.find(action);
+    if (it != actionMap.end()) {
+        return it->second;
+    } else {
+        return Action::WAIT;
+    }
 }
 
-Direction Utils::stringToDirection(std::string direction) {
+Direction Utils::stringToDirection(const std::string& direction) {
     std::map<std::string, Direction> directionMap = {
             {"STILL",       Direction::STILL},
             {"LEFT",       Direction::LEFT},
@@ -23,7 +28,12 @@ Direction Utils::stringToDirection(std::string direction) {
             {"JOY_LEFT",  Direction::JOY_LEFT},
             {"JOY_RIGHT", Direction::JOY_RIGHT},
     };
-    return directionMap[direction];
+    auto it = directionMap.find(direction);
+    if (it != directionMap.end()) {
+        return it->second;
+    } else {
+        return Direction::STILL;
+    }
 }
 
 // Action to string

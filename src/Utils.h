@@ -6,8 +6,8 @@
 #include "ECS/EntityManager.h"
 
 namespace Utils {
-    Action stringToAction(std::string action);
-    Direction stringToDirection(std::string direction);
+    Action stringToAction(const std::string& action);
+    Direction stringToDirection(const std::string& direction);
     void publishEvent(std::string eventString, Entity* primaryEntity = nullptr, Entity* secondaryEntity = nullptr);
     std::string playerStateToString(playerStates state);
     std::string actionToString(Action action);
