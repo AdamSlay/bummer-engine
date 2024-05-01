@@ -15,6 +15,7 @@ fi
 ./vcpkg/vcpkg install sdl2-ttf
 ./vcpkg/vcpkg install sdl2-mixer[mpg123]
 ./vcpkg/vcpkg install nlohmann-json
+./vcpkg/vcpkg install gtest
 
 # Configure and build project
 mkdir -p build

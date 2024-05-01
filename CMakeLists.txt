@@ -13,6 +13,7 @@ find_package(SDL2_image CONFIG REQUIRED)
 find_package(SDL2_ttf CONFIG REQUIRED)
 find_package(SDL2_mixer CONFIG REQUIRED)
 find_package(nlohmann_json 3.2.0 REQUIRED)
+find_package(GTest CONFIG REQUIRED)
 
 # Set the source files for your project
 set(SOURCE_FILES
@@ -71,6 +72,8 @@ target_link_libraries(BummerLib PUBLIC
         $<IF:$<TARGET_EXISTS:SDL2_ttf::SDL2_ttf>,SDL2_ttf::SDL2_ttf,SDL2_ttf::SDL2_ttf-static>
         $<IF:$<TARGET_EXISTS:SDL2_mixer::SDL2_mixer>,SDL2_mixer::SDL2_mixer,SDL2_mixer::SDL2_mixer-static>
         nlohmann_json::nlohmann_json
+        GTest::gtest
+        GTest::gtest_main
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE BummerLib)
@@ -78,5 +81,5 @@ target_link_libraries(${PROJECT_NAME} PRIVATE BummerLib)
 # Enable testing
 enable_testing()
 
-# Add your test subdirectory
+# Add the test subdirectory
 add_subdirectory(tests)
