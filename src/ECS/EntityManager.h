@@ -41,7 +41,7 @@ public:
     }
 
     template <typename T>
-    bool hasComponent() {
+    bool hasComponent() const {
         /**
          * Check if the entity has a component of type T
         */
