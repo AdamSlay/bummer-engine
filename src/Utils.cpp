@@ -95,19 +95,35 @@ void Utils::publishEvent(std::string eventString, Entity* primaryEntity, Entity*
 
 SDL_Rect Utils::getColliderRect(const Entity& entity) {
     /**
-     * Get the position of the collider
+     * Get the position of the Entity's collider
      *
      * @param entity: The entity
-     * @return: A pair of integers representing the x and y position of the collider
+     * @return: SDL_Rect representing the collider position
+     */
+    if (!entity.hasComponent<Transform>() || !entity.hasComponent<Collider>()) {
+        throw std::runtime_error("Entity does not have required components: Transform or Collider");
+    }
+    const auto transform = entity.getComponent<Transform>();
+    const auto collider = entity.getComponent<Collider>();
+
+    SDL_Rect colliderRect = Utils::calculateColliderRect(transform, collider);
+    return colliderRect;
+}
+
+SDL_Rect Utils::calculateColliderRect(const Transform& transform, const Collider& collider) {
+    /**
+     * Calculate the position of the collider based on the transform
+     *
+     * @param transform: The transform
+     * @param collider: The collider
+     * @return: SDL_Rect representing the collider position
      */
 
-    const Transform& transform = entity.getComponent<Transform>();
-    const Collider& collider = entity.getComponent<Collider>();
-    int x = transform.x + (collider.offsetX * transform.scale);
-    int y = transform.y + (collider.offsetY * transform.scale);
-    int w = collider.width * transform.scale;
-    int h = collider.height * transform.scale;
-    return SDL_Rect {x, y, w, h};
+    int xPosition = transform.x + (collider.offsetX * transform.scale);
+    int yPosition = transform.y + (collider.offsetY * transform.scale);
+    int width = collider.width * transform.scale;
+    int height = collider.height * transform.scale;
+    return SDL_Rect {xPosition, yPosition, width, height};
 }
 
 void Utils::setTransformPos(Entity& entity, int x, int y) {
