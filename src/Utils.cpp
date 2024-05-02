@@ -4,6 +4,11 @@
 #include "ECS/EventManager.h"
 
 Action Utils::stringToAction(const std::string& action) {
+    /**
+     * Convert string to Action
+     *
+     * @param action: The action
+     */
     std::map<std::string, Action> actionMap = {
             {"WAIT",       Action::WAIT},
             {"JUMP",       Action::JUMP},
@@ -21,6 +26,11 @@ Action Utils::stringToAction(const std::string& action) {
 }
 
 Direction Utils::stringToDirection(const std::string& direction) {
+    /**
+     * Convert string to Direction
+     *
+     * @param direction: The direction
+     */
     std::map<std::string, Direction> directionMap = {
             {"STILL",       Direction::STILL},
             {"LEFT",       Direction::LEFT},
@@ -37,6 +47,11 @@ Direction Utils::stringToDirection(const std::string& direction) {
 }
 
 std::string Utils::actionToString(Action action) {
+    /**
+     * Convert Action to string
+     *
+     * @param action: The action
+     */
     std::map<Action, std::string> actionMap = {
             {Action::WAIT,       "WAIT"},
             {Action::JUMP,       "JUMP"},
@@ -50,6 +65,11 @@ std::string Utils::actionToString(Action action) {
 }
 
 std::string Utils::playerStateToString(playerStates state) {
+    /**
+     * Convert playerStates to string
+     *
+     * @param state: The player state
+     */
     std::map<playerStates, std::string> stateMap = {
             {playerStates::IDLE,                             "IDLE"},
             {playerStates::GROUNDED,                 "GROUNDED"},
