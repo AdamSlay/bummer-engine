@@ -65,3 +65,47 @@ TEST(UtilsTest, Test_calculateColliderRect) {
     EXPECT_EQ(rectC.w, 0);
     EXPECT_EQ(rectC.h, 0);
 }
+
+TEST(UtilsTest, Test_SetTransformX) {
+    // Case A
+    Entity entityA;
+    entityA.addComponent<Transform>({10, 10, 1});
+    entityA.addComponent<Collider>({10, 10, 10, 10});
+
+    Utils::setTransformX(entityA, 100);
+
+    auto& transformA = entityA.getComponent<Transform>();
+    EXPECT_EQ(transformA.x, 90);
+
+    // Case B
+    Entity entityB;
+    entityB.addComponent<Transform>({10, 10, 2});
+    entityB.addComponent<Collider>({10, 10, 10, 10});
+
+    Utils::setTransformX(entityB, 200);
+
+    auto& transformB = entityB.getComponent<Transform>();
+    EXPECT_EQ(transformB.x, 180);
+}
+
+TEST(UtilsTest, Test_SetTransformY) {
+    // Case A
+    Entity entityA;
+    entityA.addComponent<Transform>({10, 10, 1});
+    entityA.addComponent<Collider>({10, 10, 10, 10});
+
+    Utils::setTransformY(entityA, 200);
+
+    auto& transformA = entityA.getComponent<Transform>();
+    EXPECT_EQ(transformA.y, 190);
+
+    // Case B
+    Entity entityB;
+    entityB.addComponent<Transform>({10, 10, 2});
+    entityB.addComponent<Collider>({10, 10, 10, 10});
+
+    Utils::setTransformY(entityB, 200);
+
+    auto& transformB = entityB.getComponent<Transform>();
+    EXPECT_EQ(transformB.y, 180);
+}
