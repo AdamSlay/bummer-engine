@@ -102,15 +102,15 @@ void CollisionSystem::handleCollisionX(Entity& entity, Entity& other) {
     if (vel.dx > 0) {
         // Player is moving right
         vel.dx = 0;
-        float newPos = otherCollider.x - (playerCollider.w + collisionBuffer);
-        int x = static_cast<int>(newPos);
+        int newPos = otherCollider.x - (playerCollider.w + collisionBuffer);
+        int x = newPos;
         Utils::setTransformX(entity, x);
     }
     else if (vel.dx < 0) {
         // Player is moving left
         vel.dx = 0;
-        float newPos = otherCollider.x + otherCollider.w + collisionBuffer;
-        int x = static_cast<int>(newPos + 1);
+        int newPos = otherCollider.x + otherCollider.w + collisionBuffer;
+        int x = newPos + 1;
         Utils::setTransformX(entity, x);
     }
 }
@@ -136,16 +136,16 @@ void CollisionSystem::handleCollisionY(Entity& entity, Entity& other) {
             entity.getComponent<Jumps>().jumps = 0;  // Reset the number of jumps
         }
 
-        float newPos = otherCollider.y - (playerCollider.h + collisionBuffer);
-        int y = static_cast<int>(newPos + 1);
+        int newPos = otherCollider.y - (playerCollider.h + collisionBuffer);
+        int y = newPos + 1;
         Utils::setTransformY(entity, y);
         entity.getComponent<Gravity>().gravity = entity.getComponent<Gravity>().baseGravity;
     }
     else if (vel.dy < 0) {
         // Player is moving up
         vel.dy = 0;
-        float newPos = otherCollider.y + otherCollider.h + collisionBuffer;
-        int y = static_cast<int>(newPos + 0.5);
+        int newPos = otherCollider.y + otherCollider.h + collisionBuffer;
+        int y = static_cast<int>(newPos + 0.55f);
         Utils::setTransformY(entity, y);
     }
 }
