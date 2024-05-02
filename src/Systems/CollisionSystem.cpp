@@ -128,6 +128,7 @@ void CollisionSystem::handleCollisionY(Entity& entity, Entity& other) {
 
     if (vel.dy > 0) {
         // Player is moving down
+        vel.dy = 0;
         Utils::publishEvent("groundCollision", &entity);
 
         // TODO: StateMachine should reset the number of jumps based on the current state
