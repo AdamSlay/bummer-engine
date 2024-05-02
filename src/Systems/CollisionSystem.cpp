@@ -130,7 +130,7 @@ void CollisionSystem::handleCollisionY(Entity& entity, Entity& other) {
         // Player is moving down
         Utils::publishEvent("groundCollision", &entity);
 
-        vel.dy = 0;
+        // TODO: StateMachine should reset the number of jumps based on the current state
         if (entity.hasComponent<Jumps>()) {
             entity.getComponent<Jumps>().jumps = 0;  // Reset the number of jumps
         }
