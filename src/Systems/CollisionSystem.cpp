@@ -105,10 +105,7 @@ void CollisionSystem::handleCollisionX(Entity& entity, Entity& other) {
     }
     else if (vel.dx < 0) {
         // Player is moving left
-        vel.dx = 0;
-        int newPos = otherCollider.x + otherCollider.w + collisionBuffer;
-        int x = newPos + 1;
-        Utils::setTransformX(entity, x);
+        stopAndRepositionToRight(entity, playerCollider, otherCollider);
     }
 }
 
@@ -117,6 +114,14 @@ void CollisionSystem::stopAndRepositionToLeft(Entity& entity, const SDL_Rect& pl
     velocity.dx = 0;  // Stop horizontal movement
     float newPosition = otherCollider.x - (playerCollider.w + collisionBuffer);
     int newX = static_cast<int>(newPosition);
+    Utils::setTransformX(entity, newX);  // Set the new X position
+}
+
+void CollisionSystem::stopAndRepositionToRight(Entity& entity, const SDL_Rect& playerCollider, const SDL_Rect& otherCollider) {
+    Velocity& velocity = entity.getComponent<Velocity>();
+    velocity.dx = 0;  // Stop horizontal movement
+    float newPosition = otherCollider.x + otherCollider.w + collisionBuffer;
+    int newX = static_cast<int>(newPosition + 1);
     Utils::setTransformX(entity, newX);  // Set the new X position
 }
 

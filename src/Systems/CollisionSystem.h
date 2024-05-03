@@ -16,6 +16,7 @@ public:
     void handleCollisionX(Entity& entity, Entity& other);
     void handleCollisionY(Entity& entity, Entity& other);
     void stopAndRepositionToLeft(Entity& entity, const SDL_Rect& playerCollider, const SDL_Rect& otherCollider);
+    void stopAndRepositionToRight(Entity& entity, const SDL_Rect& playerCollider, const SDL_Rect& otherCollider);
 
 private:
     int collisionBuffer = 2;
