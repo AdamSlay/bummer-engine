@@ -99,30 +99,42 @@ void CollisionSystem::handleCollisionX(Entity& entity, Entity& other) {
     SDL_Rect playerCollider = Utils::getColliderRect(entity);
     SDL_Rect otherCollider = Utils::getColliderRect(other);
 
-    if (vel.dx > 0) {
-        // Player is moving right
+    if (vel.dx > 0) {  // Player is moving right
         stopAndRepositionToLeft(entity, playerCollider, otherCollider);
     }
-    else if (vel.dx < 0) {
-        // Player is moving left
+    else if (vel.dx < 0) {  // Player is moving left
         stopAndRepositionToRight(entity, playerCollider, otherCollider);
     }
 }
 
 void CollisionSystem::stopAndRepositionToLeft(Entity& entity, const SDL_Rect& playerCollider, const SDL_Rect& otherCollider) {
+    /**
+     * Stop the entity and reposition it to the left of the other entity
+     *
+     * @param entity: The entity
+     * @param playerCollider: The player collider
+     * @param otherCollider: The other collider
+     */
     Velocity& velocity = entity.getComponent<Velocity>();
-    velocity.dx = 0;  // Stop horizontal movement
+    velocity.dx = 0;
     float newPosition = otherCollider.x - (playerCollider.w + collisionBuffer);
     int newX = static_cast<int>(newPosition);
-    Utils::setTransformX(entity, newX);  // Set the new X position
+    Utils::setTransformX(entity, newX);
 }
 
 void CollisionSystem::stopAndRepositionToRight(Entity& entity, const SDL_Rect& playerCollider, const SDL_Rect& otherCollider) {
+    /**
+     * Stop the entity and reposition it to the right of the other entity
+     *
+     * @param entity: The entity
+     * @param playerCollider: The player collider
+     * @param otherCollider: The other collider
+     */
     Velocity& velocity = entity.getComponent<Velocity>();
-    velocity.dx = 0;  // Stop horizontal movement
+    velocity.dx = 0;
     float newPosition = otherCollider.x + otherCollider.w + collisionBuffer;
     int newX = static_cast<int>(newPosition + 1);
-    Utils::setTransformX(entity, newX);  // Set the new X position
+    Utils::setTransformX(entity, newX);
 }
 
 void CollisionSystem::handleCollisionY(Entity& entity, Entity& other) {
