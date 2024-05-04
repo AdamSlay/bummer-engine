@@ -83,6 +83,35 @@ public:
         return id;
     }
 
+
+    void setTransformX(int x) {
+        /**
+         * Set the x position of the transform, adjusting for the collider offset and scale
+         *
+         * @param entity: The entity
+         * @param x: The x position
+         * @throws runtime_error if entity does not have required components: Transform or Collider
+         */
+
+        Transform& transform = this->getComponent<Transform>();
+        const Collider& collider = this->getComponent<Collider>();
+        transform.x = x - (collider.offsetX * transform.scale);
+    }
+
+    void setTransformY(int y) {
+        /**
+         * Set the y position of the transform, adjusting for the collider offset and scale
+         *
+         * @param entity: The entity
+         * @param y: The y position
+         * @throws runtime_error if entity does not have required components: Transform or Collider
+         */
+
+        Transform& transform = this->getComponent<Transform>();
+        const Collider& collider = this->getComponent<Collider>();
+        transform.y = y - (collider.offsetY * transform.scale);
+    }
+
 private:
     static int nextId;  // Static member to generate unique IDs
     std::unordered_map<std::type_index, void *> components;

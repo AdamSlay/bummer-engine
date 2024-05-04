@@ -14,8 +14,6 @@ namespace Utils {
     SDL_Rect getColliderRect(const Entity& entity);
     SDL_Rect calculateColliderRect(const Transform& transform, const Collider& collider);
     void setTransformPos(Entity& entity, int x, int y);
-    void setTransformX(Entity& entity, int x);
-    void setTransformY(Entity& entity, int y);
     void render_collider(Entity &entity, SDL_Renderer *renderer);
     void render_all_colliders(EntityManager& entityManager, SDL_Renderer* renderer);
     SDL_Rect getHitboxRect(Hitbox& hitbox, Entity& entity);

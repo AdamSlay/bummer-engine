@@ -139,36 +139,8 @@ void Utils::setTransformPos(Entity& entity, int x, int y) {
         throw std::runtime_error("Entity does not have required components: Transform or Collider");
     }
 
-    Utils::setTransformX(entity, x);
-    Utils::setTransformY(entity, y);
-}
-
-void Utils::setTransformX(Entity& entity, int x) {
-    /**
-     * Set the x position of the transform, adjusting for the collider offset and scale
-     *
-     * @param entity: The entity
-     * @param x: The x position
-     * @throws runtime_error if entity does not have required components: Transform or Collider
-     */
-
-    Transform& transform = entity.getComponent<Transform>();
-    const Collider& collider = entity.getComponent<Collider>();
-    transform.x = x - (collider.offsetX * transform.scale);
-}
-
-void Utils::setTransformY(Entity& entity, int y) {
-    /**
-     * Set the y position of the transform, adjusting for the collider offset and scale
-     *
-     * @param entity: The entity
-     * @param y: The y position
-     * @throws runtime_error if entity does not have required components: Transform or Collider
-     */
-
-    Transform& transform = entity.getComponent<Transform>();
-    const Collider& collider = entity.getComponent<Collider>();
-    transform.y = y - (collider.offsetY * transform.scale);
+    entity.setTransformX(x);
+    entity.setTransformY(y);
 }
 
 void Utils::render_collider(Entity &entity, SDL_Renderer *renderer) {

@@ -117,9 +117,8 @@ void CollisionSystem::stopAndRepositionToLeft(Entity& entity, const SDL_Rect& pl
      */
     Velocity& velocity = entity.getComponent<Velocity>();
     velocity.dx = 0;
-    float newPosition = otherCollider.x - (playerCollider.w + collisionBuffer);
-    int newX = static_cast<int>(newPosition);
-    Utils::setTransformX(entity, newX);
+    int newX = otherCollider.x - (playerCollider.w + collisionBuffer);
+    entity.setTransformX(newX);
 }
 
 void CollisionSystem::stopAndRepositionToRight(Entity& entity, const SDL_Rect& playerCollider, const SDL_Rect& otherCollider) {
@@ -132,9 +131,9 @@ void CollisionSystem::stopAndRepositionToRight(Entity& entity, const SDL_Rect& p
      */
     Velocity& velocity = entity.getComponent<Velocity>();
     velocity.dx = 0;
-    float newPosition = otherCollider.x + otherCollider.w + collisionBuffer;
-    int newX = static_cast<int>(newPosition + 1);
-    Utils::setTransformX(entity, newX);
+    int newX = otherCollider.x + otherCollider.w + collisionBuffer;
+//    newX += 1;  // Don't think this is needed?? it's just an extra pixel buffer on the right side. remove if unnoticed
+    entity.setTransformX(newX);
 }
 
 void CollisionSystem::handleCollisionY(Entity& entity, Entity& other) {
@@ -160,7 +159,7 @@ void CollisionSystem::handleCollisionY(Entity& entity, Entity& other) {
 
         int newPos = otherCollider.y - (playerCollider.h + collisionBuffer);
         int y = newPos + 1;
-        Utils::setTransformY(entity, y);
+        entity.setTransformY(y);
         entity.getComponent<Gravity>().gravity = entity.getComponent<Gravity>().baseGravity;
     }
     else if (vel.dy < 0) {
@@ -168,6 +167,6 @@ void CollisionSystem::handleCollisionY(Entity& entity, Entity& other) {
         vel.dy = 0;
         int newPos = otherCollider.y + otherCollider.h + collisionBuffer;
         int y = static_cast<int>(newPos + 0.55f);
-        Utils::setTransformY(entity, y);
+        entity.setTransformY(y);
     }
 }
