@@ -92,24 +92,6 @@ void Utils::publishEvent(std::string eventString, Entity* primaryEntity, Entity*
     EventManager::getInstance().publish(eventString, {entityId, primaryEntity, secondaryEntity});
 }
 
-// TODO: This should be part of the Entity class
-void Utils::setTransformPos(Entity& entity, int x, int y) {
-    /**
-     * Set the x and y position of the transform, adjusting for the collider offset and scale
-     *
-     * @param entity: The entity
-     * @param x: The x position
-     * @param y: The y position
-     * @throws runtime_error if entity does not have required components: Transform or Collider
-     */
-    if (!entity.hasComponent<Transform>() || !entity.hasComponent<Collider>()) {
-        throw std::runtime_error("Entity does not have required components: Transform or Collider");
-    }
-
-    entity.setTransformX(x);
-    entity.setTransformY(y);
-}
-
 // TODO: This should be part of the RendererSystem class
 void Utils::render_collider(Entity &entity, SDL_Renderer *renderer) {
     /**

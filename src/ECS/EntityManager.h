@@ -83,12 +83,26 @@ public:
         return id;
     }
 
+    void setTransformPos(int x, int y) {
+        /**
+         * Set the x and y position of the transform, adjusting for the collider offset and scale
+         *
+         * @param x: The x position
+         * @param y: The y position
+         * @throws runtime_error if entity does not have required components: Transform or Collider
+         */
+        if (!this->hasComponent<Transform>() || !this->hasComponent<Collider>()) {
+            throw std::runtime_error("Entity does not have required components: Transform or Collider");
+        }
+
+        this->setTransformX(x);
+        this->setTransformY(y);
+    }
 
     void setTransformX(int x) {
         /**
          * Set the x position of the transform, adjusting for the collider offset and scale
          *
-         * @param entity: The entity
          * @param x: The x position
          * @throws runtime_error if entity does not have required components: Transform or Collider
          */
@@ -102,7 +116,6 @@ public:
         /**
          * Set the y position of the transform, adjusting for the collider offset and scale
          *
-         * @param entity: The entity
          * @param y: The y position
          * @throws runtime_error if entity does not have required components: Transform or Collider
          */
@@ -116,7 +129,6 @@ public:
         /**
          * Get the position of the Entity's collider
          *
-         * @param entity: The entity
          * @return: SDL_Rect representing the collider position
          */
         if (!this->hasComponent<Transform>() || !this->hasComponent<Collider>()) {
