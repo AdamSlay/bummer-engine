@@ -143,30 +143,52 @@ void CollisionSystem::handleCollisionY(Entity& entity, Entity& other) {
      * @param entity: The primary entity
      * @param other: The other entity
      */
-    Velocity& vel = entity.getComponent<Velocity>();
+    Velocity &vel = entity.getComponent<Velocity>();
     SDL_Rect playerCollider = entity.getColliderRect();
     SDL_Rect otherCollider = other.getColliderRect();
 
     if (vel.dy > 0) {
         // Player is moving down
-        vel.dy = 0;
-        Utils::publishEvent("groundCollision", &entity);
-
-        // TODO: StateMachine should reset the number of jumps based on the current state
-        if (entity.hasComponent<Jumps>()) {
-            entity.getComponent<Jumps>().jumps = 0;  // Reset the number of jumps
-        }
-
-        int newPos = otherCollider.y - (playerCollider.h + collisionBuffer);
-        int y = newPos + 1;
-        entity.setTransformY(y);
-        entity.getComponent<Gravity>().gravity = entity.getComponent<Gravity>().baseGravity;
-    }
-    else if (vel.dy < 0) {
+        stopAndRepositionAbove(entity, playerCollider, otherCollider);
+    } else if (vel.dy < 0) {
         // Player is moving up
-        vel.dy = 0;
-        int newPos = otherCollider.y + otherCollider.h + collisionBuffer;
-        int y = static_cast<int>(newPos + 0.55f);
-        entity.setTransformY(y);
+        stopAndRepositionBelow(entity, playerCollider, otherCollider);
     }
+}
+
+void CollisionSystem::stopAndRepositionAbove(Entity& entity, const SDL_Rect& playerCollider, const SDL_Rect& otherCollider) {
+    /**
+     * Stop the entity and reposition it above the other entity
+     *
+     * @param entity: The entity
+     * @param playerCollider: The player collider
+     * @param otherCollider: The other collider
+     */
+    auto& velocity = entity.getComponent<Velocity>();
+    velocity.dy = 0;
+    Utils::publishEvent("groundCollision", &entity);
+
+    // TODO: StateMachine should reset the number of jumps based on the current state
+    if (entity.hasComponent<Jumps>()) {
+        entity.getComponent<Jumps>().jumps = 0;  // Reset the number of jumps
+    }
+
+    int newPos = otherCollider.y - (playerCollider.h + collisionBuffer);
+    int y = newPos + 1;
+    entity.setTransformY(y);
+    entity.getComponent<Gravity>().gravity = entity.getComponent<Gravity>().baseGravity;
+}
+
+void CollisionSystem::stopAndRepositionBelow(Entity& entity, const SDL_Rect& playerCollider, const SDL_Rect& otherCollider) {
+    /**
+     * Stop the entity and reposition it below the other entity
+     *
+     * @param entity: The entity
+     * @param playerCollider: The player collider
+     * @param otherCollider: The other collider
+     */
+    auto& velocity = entity.getComponent<Velocity>();
+    velocity.dy = 0;
+    int newY = otherCollider.y + otherCollider.h + collisionBuffer;
+    entity.setTransformY(newY);
 }
