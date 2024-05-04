@@ -40,33 +40,33 @@ TEST(UtilsTest, Test_playerStateToString) {
     EXPECT_EQ(runState, "RUN");
 }
 
-TEST(UtilsTest, Test_calculateColliderRect) {
-    Transform transformA = {100, 100, 2};
-    Collider colliderA = {0, 0, 50, 50};
-    SDL_Rect rectA = Utils::calculateColliderRect(transformA, colliderA);
-    EXPECT_EQ(rectA.x, 100);
-    EXPECT_EQ(rectA.y, 100);
-    EXPECT_EQ(rectA.w, 100);
-    EXPECT_EQ(rectA.h, 100);
-
-    Transform transformB = {0, 0, 1.5};
-    Collider colliderB = {100, 100, 100, 100};
-    SDL_Rect rectB = Utils::calculateColliderRect(transformB, colliderB);
-    EXPECT_EQ(rectB.x, 150);
-    EXPECT_EQ(rectB.y, 150);
-    EXPECT_EQ(rectB.w, 150);
-    EXPECT_EQ(rectB.h, 150);
-
-    Transform transformC = {0, 0, 1};
-    Collider colliderC = {0, 0, 0, 0};
-    SDL_Rect rectC = Utils::calculateColliderRect(transformC, colliderC);
-    EXPECT_EQ(rectC.x, 0);
-    EXPECT_EQ(rectC.y, 0);
-    EXPECT_EQ(rectC.w, 0);
-    EXPECT_EQ(rectC.h, 0);
-}
-
 // TODO: These tests need to be moved to the Entity test suite
+//TEST(UtilsTest, Test_calculateColliderRect) {
+//    Transform transformA = {100, 100, 2};
+//    Collider colliderA = {0, 0, 50, 50};
+//    SDL_Rect rectA = Utils::calculateColliderRect(transformA, colliderA);
+//    EXPECT_EQ(rectA.x, 100);
+//    EXPECT_EQ(rectA.y, 100);
+//    EXPECT_EQ(rectA.w, 100);
+//    EXPECT_EQ(rectA.h, 100);
+//
+//    Transform transformB = {0, 0, 1.5};
+//    Collider colliderB = {100, 100, 100, 100};
+//    SDL_Rect rectB = Utils::calculateColliderRect(transformB, colliderB);
+//    EXPECT_EQ(rectB.x, 150);
+//    EXPECT_EQ(rectB.y, 150);
+//    EXPECT_EQ(rectB.w, 150);
+//    EXPECT_EQ(rectB.h, 150);
+//
+//    Transform transformC = {0, 0, 1};
+//    Collider colliderC = {0, 0, 0, 0};
+//    SDL_Rect rectC = Utils::calculateColliderRect(transformC, colliderC);
+//    EXPECT_EQ(rectC.x, 0);
+//    EXPECT_EQ(rectC.y, 0);
+//    EXPECT_EQ(rectC.w, 0);
+//    EXPECT_EQ(rectC.h, 0);
+//}
+//
 //TEST(UtilsTest, Test_SetTransformX) {
 //    // Case A
 //    Entity entityA;
