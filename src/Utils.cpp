@@ -92,40 +92,7 @@ void Utils::publishEvent(std::string eventString, Entity* primaryEntity, Entity*
     EventManager::getInstance().publish(eventString, {entityId, primaryEntity, secondaryEntity});
 }
 
-
-SDL_Rect Utils::getColliderRect(const Entity& entity) {
-    /**
-     * Get the position of the Entity's collider
-     *
-     * @param entity: The entity
-     * @return: SDL_Rect representing the collider position
-     */
-    if (!entity.hasComponent<Transform>() || !entity.hasComponent<Collider>()) {
-        throw std::runtime_error("Entity does not have required components: Transform or Collider");
-    }
-    const auto transform = entity.getComponent<Transform>();
-    const auto collider = entity.getComponent<Collider>();
-
-    SDL_Rect colliderRect = Utils::calculateColliderRect(transform, collider);
-    return colliderRect;
-}
-
-SDL_Rect Utils::calculateColliderRect(const Transform& transform, const Collider& collider) {
-    /**
-     * Calculate the position of the collider based on the transform
-     *
-     * @param transform: The transform
-     * @param collider: The collider
-     * @return: SDL_Rect representing the collider position
-     */
-
-    int xPosition = transform.x + (collider.offsetX * transform.scale);
-    int yPosition = transform.y + (collider.offsetY * transform.scale);
-    int width = collider.width * transform.scale;
-    int height = collider.height * transform.scale;
-    return SDL_Rect {xPosition, yPosition, width, height};
-}
-
+// TODO: This should be part of the Entity class
 void Utils::setTransformPos(Entity& entity, int x, int y) {
     /**
      * Set the x and y position of the transform, adjusting for the collider offset and scale
@@ -143,6 +110,7 @@ void Utils::setTransformPos(Entity& entity, int x, int y) {
     entity.setTransformY(y);
 }
 
+// TODO: This should be part of the RendererSystem class
 void Utils::render_collider(Entity &entity, SDL_Renderer *renderer) {
     /**
      * Render the collider for an entity
@@ -162,6 +130,7 @@ void Utils::render_collider(Entity &entity, SDL_Renderer *renderer) {
     SDL_RenderDrawRect(renderer, &collider);
 }
 
+// TODO: This should be part of the RendererSystem class
 void Utils::render_all_colliders(EntityManager& entityManager, SDL_Renderer* renderer) {
     /**
      * Render all colliders for all entities
@@ -187,7 +156,7 @@ SDL_Rect Utils::getHitboxRect(Hitbox& hitbox, Entity& entity) {
      */
 
     SDL_Rect hitboxRect;
-    SDL_Rect playerCollider = getColliderRect(entity);
+    SDL_Rect playerCollider = entity.getColliderRect();
 
     int direction = entity.getComponent<Velocity>().direction;
     if (direction == 1) { // player is facing right
@@ -202,6 +171,7 @@ SDL_Rect Utils::getHitboxRect(Hitbox& hitbox, Entity& entity) {
     return hitboxRect;
 }
 
+// TODO: This should be part of the RendererSystem class
 void Utils::render_hitboxes(EntityManager &entityManager, SDL_Renderer *renderer) {
     /**
      * Render all active hitboxes for all entities

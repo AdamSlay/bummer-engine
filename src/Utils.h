@@ -11,8 +11,6 @@ namespace Utils {
     void publishEvent(std::string eventString, Entity* primaryEntity = nullptr, Entity* secondaryEntity = nullptr);
     std::string playerStateToString(playerStates state);
     std::string actionToString(Action action);
-    SDL_Rect getColliderRect(const Entity& entity);
-    SDL_Rect calculateColliderRect(const Transform& transform, const Collider& collider);
     void setTransformPos(Entity& entity, int x, int y);
     void render_collider(Entity &entity, SDL_Renderer *renderer);
     void render_all_colliders(EntityManager& entityManager, SDL_Renderer* renderer);

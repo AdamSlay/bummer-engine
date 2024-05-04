@@ -182,7 +182,7 @@ bool AttackSystem::checkCollision(SDL_Rect& hitbox, Entity& other) {
      * @param entity2: The other entity
      */
 
-    SDL_Rect otherCollider = Utils::getColliderRect(other);
+    SDL_Rect otherCollider = other.getColliderRect();
 
     if (hitbox.x + hitbox.w < otherCollider.x ||  // hitbox is left of obj
         hitbox.x > otherCollider.x + otherCollider.w ||  // hitbox is right of obj

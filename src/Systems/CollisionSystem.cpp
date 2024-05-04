@@ -59,8 +59,8 @@ bool CollisionSystem::checkCollisionX(Entity &player, Entity &other) {
      * @param player: The player entity
      * @param other: The other entity
      */
-    SDL_Rect playerCollider = Utils::getColliderRect(player);
-    SDL_Rect otherCollider = Utils::getColliderRect(other);
+    SDL_Rect playerCollider = player.getColliderRect();
+    SDL_Rect otherCollider = other.getColliderRect();
 
     if (playerCollider.x + playerCollider.w < otherCollider.x ||  // player is left of obj
         playerCollider.x > otherCollider.x + otherCollider.w) {  // player is right of obj
@@ -77,8 +77,8 @@ bool CollisionSystem::checkCollisionY(Entity &player, Entity &other) {
      * @param player: The player entity
      * @param other: The other entity
      */
-    SDL_Rect playerCollider = Utils::getColliderRect(player);
-    SDL_Rect otherCollider = Utils::getColliderRect(other);
+    SDL_Rect playerCollider = player.getColliderRect();
+    SDL_Rect otherCollider = other.getColliderRect();
 
     if (playerCollider.y + playerCollider.h < otherCollider.y ||  // player is above obj
         playerCollider.y + collisionBuffer > otherCollider.y + otherCollider.h) {  // player is below obj
@@ -96,8 +96,8 @@ void CollisionSystem::handleCollisionX(Entity& entity, Entity& other) {
      * @param other: The other entity
      */
     Velocity& vel = entity.getComponent<Velocity>();
-    SDL_Rect playerCollider = Utils::getColliderRect(entity);
-    SDL_Rect otherCollider = Utils::getColliderRect(other);
+    SDL_Rect playerCollider = entity.getColliderRect();
+    SDL_Rect otherCollider = other.getColliderRect();
 
     if (vel.dx > 0) {  // Player is moving right
         stopAndRepositionToLeft(entity, playerCollider, otherCollider);
@@ -144,8 +144,8 @@ void CollisionSystem::handleCollisionY(Entity& entity, Entity& other) {
      * @param other: The other entity
      */
     Velocity& vel = entity.getComponent<Velocity>();
-    SDL_Rect playerCollider = Utils::getColliderRect(entity);
-    SDL_Rect otherCollider = Utils::getColliderRect(other);
+    SDL_Rect playerCollider = entity.getColliderRect();
+    SDL_Rect otherCollider = other.getColliderRect();
 
     if (vel.dy > 0) {
         // Player is moving down

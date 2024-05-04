@@ -112,6 +112,42 @@ public:
         transform.y = y - (collider.offsetY * transform.scale);
     }
 
+    SDL_Rect getColliderRect() {
+        /**
+         * Get the position of the Entity's collider
+         *
+         * @param entity: The entity
+         * @return: SDL_Rect representing the collider position
+         */
+        if (!this->hasComponent<Transform>() || !this->hasComponent<Collider>()) {
+            throw std::runtime_error("Entity does not have required components: Transform or Collider");
+        }
+        const auto transform = this->getComponent<Transform>();
+        const auto collider = this->getComponent<Collider>();
+
+        SDL_Rect colliderRect = calculateColliderRect();
+        return colliderRect;
+    }
+
+    SDL_Rect calculateColliderRect() {
+        /**
+         * Calculate the position of the collider based on the transform
+         *
+         * @param transform: The transform
+         * @param collider: The collider
+         * @return: SDL_Rect representing the collider position
+         */
+        auto& transform = this->getComponent<Transform>();
+        auto& collider = this->getComponent<Collider>();
+        int xPosition = transform.x + (collider.offsetX * transform.scale);
+        int yPosition = transform.y + (collider.offsetY * transform.scale);
+        int width = collider.width * transform.scale;
+        int height = collider.height * transform.scale;
+        return SDL_Rect {xPosition, yPosition, width, height};
+    }
+
+
+
 private:
     static int nextId;  // Static member to generate unique IDs
     std::unordered_map<std::type_index, void *> components;
