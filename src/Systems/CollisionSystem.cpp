@@ -168,7 +168,7 @@ void CollisionSystem::stopAndRepositionAbove(Entity& entity, const SDL_Rect& pla
     velocity.dy = 0;
     Utils::publishEvent("groundCollision", &entity);
 
-    // TODO: StateMachine should reset the number of jumps based on the current state
+    // TODO: StateMachine should reset the number of jumps based on the current state when event published
     if (entity.hasComponent<Jumps>()) {
         entity.getComponent<Jumps>().jumps = 0;  // Reset the number of jumps
     }
