@@ -11,11 +11,8 @@ namespace Utils {
     std::string playerStateToString(playerStates state);
     std::string actionToString(Action action);
 
-    // TODO: These tests need to be moved to their respective test suites
+    // TODO: These functions need to be moved to their respective systems
     void publishEvent(std::string eventString, Entity* primaryEntity = nullptr, Entity* secondaryEntity = nullptr);
     SDL_Rect getHitboxRect(Hitbox& hitbox, Entity& entity);
-    void render_collider(Entity &entity, SDL_Renderer *renderer);
-    void render_all_colliders(EntityManager& entityManager, SDL_Renderer* renderer);
-    void render_hitboxes(EntityManager& entityManager, SDL_Renderer* renderer);
 }
 #endif //BUMMERENGINE_UTILS_H
