@@ -45,7 +45,6 @@ void RenderSystem::render(SDL_Renderer* renderer, EntityManager& entityManager, 
 }
 
 
-// TODO: This should be part of the RendererSystem class
 void RenderSystem::render_hitboxes(EntityManager &entityManager, SDL_Renderer *renderer) {
     /**
      * Render all active hitboxes for all entities
@@ -68,7 +67,6 @@ void RenderSystem::render_hitboxes(EntityManager &entityManager, SDL_Renderer *r
     }
 }
 
-// TODO: This should be part of the RendererSystem class
 void RenderSystem::render_all_colliders(EntityManager& entityManager, SDL_Renderer* renderer) {
     /**
      * Render all colliders for all entities
@@ -84,7 +82,6 @@ void RenderSystem::render_all_colliders(EntityManager& entityManager, SDL_Render
     }
 }
 
-// TODO: This should be part of the RendererSystem class
 void RenderSystem::render_collider(Entity &entity, SDL_Renderer *renderer) {
     /**
      * Render the collider for an entity
