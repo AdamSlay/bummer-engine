@@ -14,7 +14,8 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
          * @param data: The event data
          */
         try {
-            Entity& entity = entityManager.getEntityById(data.entityId);
+            int entityId = data.primaryEntity->id;
+            Entity& entity = entityManager.getEntityById(entityId);
             State& state = entity.getComponent<State>();
             Velocity& vel = entity.getComponent<Velocity>();
 
@@ -24,7 +25,7 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
                 state.state == playerStates::JUMP_APEX ||
                 state.state == playerStates::JUMP_APEX_DESCEND ||
                 state.state == playerStates::JUMP_APEX_ASCEND) {
-                EventManager::getInstance().publish("landed", {data.entityId});
+                EventManager::getInstance().publish("landed", {data.primaryEntity});
             }
 
             // change the entity's state based on its velocity
@@ -39,7 +40,7 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
 
         }
         catch (const std::runtime_error& e) {
-            std::cout << "Could not find entity with id: " << data.entityId << std::endl;
+            std::cout << "Could not find entity with id: " << data.primaryEntity->id << std::endl;
 
         }
 
@@ -63,7 +64,7 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
             }
         }
         catch (const std::runtime_error& e) {
-            std::cout << "Could not find entity with id: " << data.entityId << std::endl;
+            std::cout << "Could not find entity with id: " << data.primaryEntity->id << std::endl;
         }
     });
 
@@ -74,7 +75,7 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
             Utils::publishEvent("dashSound", entity);
         }
         catch (const std::runtime_error& e) {
-            std::cout << "Could not find entity with id: " << data.entityId << std::endl;
+            std::cout << "Could not find entity with id: " << data.primaryEntity->id << std::endl;
         }
     });
 
@@ -84,7 +85,7 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
             entity->changeState(playerStates::IDLE);
         }
         catch (const std::runtime_error& e) {
-            std::cout << "Could not find entity with id: " << data.entityId << std::endl;
+            std::cout << "Could not find entity with id: " << data.primaryEntity->id << std::endl;
         }
     });
 
@@ -95,7 +96,7 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
             Utils::publishEvent("jumpSound", entity);
         }
         catch (const std::runtime_error& e) {
-            std::cout << "Could not find entity with id: " << data.entityId << std::endl;
+            std::cout << "Could not find entity with id: " << data.primaryEntity->id << std::endl;
         }
     });
 
@@ -123,7 +124,7 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
             }
         }
         catch (const std::runtime_error& e) {
-            std::cout << "Could not find entity with id: " << data.entityId << std::endl;
+            std::cout << "Could not find entity with id: " << data.primaryEntity->id << std::endl;
         }
     });
 }
