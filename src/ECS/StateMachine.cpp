@@ -19,6 +19,10 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
             State& state = entity.getComponent<State>();
             Velocity& vel = entity.getComponent<Velocity>();
 
+            if (entity.hasComponent<Jumps>()) {
+                entity.getComponent<Jumps>().jumps = 0;  // Reset the number of jumps
+            }
+
             // if the player was falling, play the landed sound
             if (state.state == playerStates::JUMP_ASCEND ||
                 state.state == playerStates::JUMP_DESCEND ||

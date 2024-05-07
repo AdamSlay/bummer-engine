@@ -167,11 +167,6 @@ void CollisionSystem::stopAndRepositionAbove(Entity& entity, const SDL_Rect& pla
     velocity.dy = 0;
     EventManager::getInstance().publish("groundCollision", {&entity});
 
-    // TODO: StateMachine should reset the number of jumps based on the current state when event published
-    if (entity.hasComponent<Jumps>()) {
-        entity.getComponent<Jumps>().jumps = 0;  // Reset the number of jumps
-    }
-
     int newY = otherCollider.y - (playerCollider.h + collisionBuffer);
     newY += 1;  // there must be a better way to handle this, increasing collisionBuffer by 1 doesn't work
     entity.setTransformY(newY);
