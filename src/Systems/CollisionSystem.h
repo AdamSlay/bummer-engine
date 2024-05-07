@@ -21,7 +21,7 @@ public:
     void stopAndRepositionBelow(Entity& entity, const SDL_Rect& playerCollider, const SDL_Rect& otherCollider);
 
 private:
-    int collisionBuffer = 2;
+    int collisionBuffer = 1;
 };
 
 

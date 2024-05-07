@@ -168,7 +168,7 @@ void CollisionSystem::stopAndRepositionAbove(Entity& entity, const SDL_Rect& pla
     EventManager::getInstance().publish("groundCollision", {&entity});
 
     int newY = otherCollider.y - (playerCollider.h + collisionBuffer);
-    newY += 1;  // there must be a better way to handle this, increasing collisionBuffer by 1 doesn't work
+//    newY += 1;  // is this necessary? Used when collisionBuffer was 2, but now it's 1. Seems to work without it. Remove if unnoticed
     entity.setTransformY(newY);
     entity.getComponent<Gravity>().gravity = entity.getComponent<Gravity>().baseGravity;
 }
