@@ -1,7 +1,6 @@
 #include "Utils.h"
 
 #include "ECS/Components.h"
-#include "ECS/EventManager.h"
 
 Action Utils::stringToAction(const std::string& action) {
     /**
