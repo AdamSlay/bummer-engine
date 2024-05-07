@@ -78,7 +78,7 @@ void AttackSystem::handleActiveAttacks(Entity &attacker, EntityManager &entityMa
             }
             incrementAttackFrames(attackInfo);
 
-            SDL_Rect hitbox = Utils::getHitboxRect(attackInfo.hitbox, attacker);
+            SDL_Rect hitbox = attacker.getHitboxRect(attackInfo.hitbox);
             for (Entity& other : entityManager.getEntities()) {
                 int attackFrame = attackInfo.frameCounter;
                 int windupFrames = attackInfo.windupFrames;

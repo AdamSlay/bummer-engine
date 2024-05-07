@@ -13,6 +13,5 @@ namespace Utils {
 
     // TODO: These functions need to be moved to their respective systems
     void publishEvent(std::string eventString, Entity* primaryEntity = nullptr, Entity* secondaryEntity = nullptr);
-    SDL_Rect getHitboxRect(Hitbox& hitbox, Entity& entity);
 }
 #endif //BUMMERENGINE_UTILS_H

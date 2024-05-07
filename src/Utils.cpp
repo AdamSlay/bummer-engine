@@ -91,28 +91,3 @@ void Utils::publishEvent(std::string eventString, Entity* primaryEntity, Entity*
     int entityId = primaryEntity->getID();
     EventManager::getInstance().publish(eventString, {entityId, primaryEntity, secondaryEntity});
 }
-
-SDL_Rect Utils::getHitboxRect(Hitbox& hitbox, Entity& entity) {
-    /**
-     * Get the position of the hitbox relative to entity collider
-     *
-     * @param hitbox: The hitbox
-     * @param entity: The entity
-     * @return: A pair of integers representing the x and y position of the hitbox
-     */
-
-    SDL_Rect hitboxRect;
-    SDL_Rect playerCollider = entity.getColliderRect();
-
-    int direction = entity.getComponent<Velocity>().direction;
-    if (direction == 1) { // player is facing right
-        hitboxRect.x = playerCollider.x + hitbox.offsetX + playerCollider.w;
-    } else { // player is facing left
-        hitboxRect.x = playerCollider.x - hitbox.offsetX - hitbox.width;
-    }
-    hitboxRect.y = playerCollider.y + hitbox.offsetY;
-    hitboxRect.w = hitbox.width;
-    hitboxRect.h = hitbox.height;
-
-    return hitboxRect;
-}

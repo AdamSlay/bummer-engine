@@ -58,7 +58,7 @@ void RenderSystem::render_hitboxes(EntityManager &entityManager, SDL_Renderer *r
             for (auto& [name, attackInfo] : entity.getComponent<AttackMap>().attacks) {
                 if (attackInfo.isActive) {
                     Hitbox& hitbox = attackInfo.hitbox;
-                    SDL_Rect hitboxRect = Utils::getHitboxRect(hitbox, entity);
+                    SDL_Rect hitboxRect = entity.getHitboxRect(hitbox);
                     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
                     SDL_RenderDrawRect(renderer, &hitboxRect);
                 }

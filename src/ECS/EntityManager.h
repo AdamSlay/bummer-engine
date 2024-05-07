@@ -158,6 +158,31 @@ public:
         return SDL_Rect {xPosition, yPosition, width, height};
     }
 
+    SDL_Rect getHitboxRect(Hitbox& hitbox) {
+        /**
+         * Get the position of the hitbox relative to entity collider
+         *
+         * @param hitbox: The hitbox
+         * @param entity: The entity
+         * @return: A pair of integers representing the x and y position of the hitbox
+         */
+
+        SDL_Rect hitboxRect;
+        SDL_Rect playerCollider = this->getColliderRect();
+
+        int direction = this->getComponent<Velocity>().direction;
+        if (direction == 1) { // player is facing right
+            hitboxRect.x = playerCollider.x + hitbox.offsetX + playerCollider.w;
+        } else { // player is facing left
+            hitboxRect.x = playerCollider.x - hitbox.offsetX - hitbox.width;
+        }
+        hitboxRect.y = playerCollider.y + hitbox.offsetY;
+        hitboxRect.w = hitbox.width;
+        hitboxRect.h = hitbox.height;
+
+        return hitboxRect;
+    }
+
 
 
 private:
