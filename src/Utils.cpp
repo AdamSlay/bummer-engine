@@ -7,7 +7,7 @@ Action Utils::stringToAction(const std::string& action) {
     /**
      * Convert string to Action
      *
-     * @param action: The action
+     * @param action: The action string
      */
     std::map<std::string, Action> actionMap = {
             {"WAIT",       Action::WAIT},
@@ -29,7 +29,7 @@ Direction Utils::stringToDirection(const std::string& direction) {
     /**
      * Convert string to Direction
      *
-     * @param direction: The direction
+     * @param direction: The direction string
      */
     std::map<std::string, Direction> directionMap = {
             {"STILL",       Direction::STILL},
@@ -50,7 +50,7 @@ std::string Utils::actionToString(Action action) {
     /**
      * Convert Action to string
      *
-     * @param action: The action
+     * @param action: The action type
      */
     std::map<Action, std::string> actionMap = {
             {Action::WAIT,       "WAIT"},
