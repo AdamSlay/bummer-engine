@@ -86,8 +86,3 @@ std::string Utils::playerStateToString(playerStates state) {
     };
     return stateMap[state];
 }
-
-void Utils::publishEvent(std::string eventString, Entity* primaryEntity, Entity* secondaryEntity) {
-//    int entityId = primaryEntity->getID();
-    EventManager::getInstance().publish(eventString, {primaryEntity, secondaryEntity});
-}

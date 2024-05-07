@@ -12,6 +12,5 @@ namespace Utils {
     std::string actionToString(Action action);
 
     // TODO: These functions need to be moved to their respective systems
-    void publishEvent(std::string eventString, Entity* primaryEntity = nullptr, Entity* secondaryEntity = nullptr);
 }
 #endif //BUMMERENGINE_UTILS_H

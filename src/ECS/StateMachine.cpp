@@ -60,7 +60,7 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
             if (state.state != playerStates::STUNNED && state.state != playerStates::HIT && state.state != playerStates::BASIC_ATTACK && state.state != playerStates::DASHING) {
                 // not stunned or hit or currently attacking, can attack
                 entity->changeState(playerStates::BASIC_ATTACK);
-                Utils::publishEvent("basicAttackSound", entity);
+                EventManager::getInstance().publish("basicAttackSound", {entity});
             }
         }
         catch (const std::runtime_error& e) {
@@ -72,7 +72,7 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
         try {
             Entity* entity = data.primaryEntity;
             entity->changeState(playerStates::DASHING);
-            Utils::publishEvent("dashSound", entity);
+            EventManager::getInstance().publish("dashSound", {entity});
         }
         catch (const std::runtime_error& e) {
             std::cout << "Could not find entity with id: " << data.primaryEntity->id << std::endl;
@@ -93,7 +93,8 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
         try {
             Entity* entity = data.primaryEntity;
             entity->changeState(playerStates::JUMP_ASCEND);
-            Utils::publishEvent("jumpSound", entity);
+            EventManager::getInstance().publish("jumpSound", {entity});
+
         }
         catch (const std::runtime_error& e) {
             std::cout << "Could not find entity with id: " << data.primaryEntity->id << std::endl;

@@ -35,7 +35,7 @@ void MovementSystem::handleIntent(EntityManager& entityManager, float deltaTime)
                     vel.dy = 0;
                 }
                 if (vel.dy != 0) {
-                    Utils::publishEvent("airborne", &entity);
+                    EventManager::getInstance().publish("airborne", {&entity});
                 }
 
                 // handle dash
@@ -88,7 +88,7 @@ void MovementSystem::jump(Entity& entity) {
             jumps.jumps++;
             gravity.gravity = gravity.baseGravity;
             vel.dy = -jumps.jumpVelocity;
-            Utils::publishEvent("jump", &entity);
+            EventManager::getInstance().publish("jump", {&entity});
         }
     }
 }
@@ -100,7 +100,7 @@ void MovementSystem::dash(Entity& entity, float deltaTime) {
         Velocity& vel = entity.getComponent<Velocity>();
         if (!dash.isDashing && dash.currentCooldown <= 0) {
             dash.isDashing = true;
-            Utils::publishEvent("dash", &entity);
+            EventManager::getInstance().publish("dash", {&entity});
             // Set a specific velocity for the dash
             // TODO: magic numbers
             if (std::abs(input.joystickDirection.first) > 0.2 || std::abs(input.joystickDirection.second) > 0.2) {
@@ -131,7 +131,7 @@ void MovementSystem::dash(Entity& entity, float deltaTime) {
         if (dash.isDashing) {
             dash.currentDuration -= deltaTime;
             if (dash.currentDuration <= 0) {
-                Utils::publishEvent("dashEnd", &entity);
+                EventManager::getInstance().publish("dashEnd", {&entity});
                 dash.isDashing = false;
                 dash.currentCooldown = dash.initCooldown; // Reset cooldown
                 dash.currentDuration = dash.initDuration; // Reset duration

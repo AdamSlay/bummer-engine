@@ -41,7 +41,7 @@ void AttackSystem::handleIntent(Entity& entity) {
 
         if (intent.action == Action::ATTACK) {
             // publish event to StateMachine
-            Utils::publishEvent("basicAttack", &entity);
+            EventManager::getInstance().publish("basicAttack", {&entity});
 
             // if state is basic attack, set attack to active
             State& state = entity.getComponent<State>();
@@ -131,7 +131,7 @@ void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& attacker, Entity& ot
         }
 
         // Publish enemyHit event
-        Utils::publishEvent("enemyHit", &attacker, &other);
+        EventManager::getInstance().publish("enemyHit", {&attacker, &other});
 
         // Reduce health
         std::cout << "Health: " << otherHealth.currentHealth << std::endl;
