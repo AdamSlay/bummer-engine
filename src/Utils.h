@@ -10,7 +10,5 @@ namespace Utils {
     Direction stringToDirection(const std::string& direction);
     std::string playerStateToString(playerStates state);
     std::string actionToString(Action action);
-
-    // TODO: These functions need to be moved to their respective systems
 }
 #endif //BUMMERENGINE_UTILS_H
