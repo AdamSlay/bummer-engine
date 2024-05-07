@@ -95,7 +95,7 @@ void CollisionSystem::handleCollisionX(Entity& entity, Entity& other) {
      * @param entity: The entity entity
      * @param other: The other entity
      */
-    Velocity& vel = entity.getComponent<Velocity>();
+    auto& vel = entity.getComponent<Velocity>();
     SDL_Rect playerCollider = entity.getColliderRect();
     SDL_Rect otherCollider = other.getColliderRect();
 
@@ -115,7 +115,7 @@ void CollisionSystem::stopAndRepositionToLeft(Entity& entity, const SDL_Rect& pl
      * @param playerCollider: The player collider
      * @param otherCollider: The other collider
      */
-    Velocity& velocity = entity.getComponent<Velocity>();
+    auto& velocity = entity.getComponent<Velocity>();
     velocity.dx = 0;
     int newX = otherCollider.x - (playerCollider.w + collisionBuffer);
     entity.setTransformX(newX);
@@ -129,10 +129,10 @@ void CollisionSystem::stopAndRepositionToRight(Entity& entity, const SDL_Rect& p
      * @param playerCollider: The player collider
      * @param otherCollider: The other collider
      */
-    Velocity& velocity = entity.getComponent<Velocity>();
+    auto& velocity = entity.getComponent<Velocity>();
     velocity.dx = 0;
     int newX = otherCollider.x + otherCollider.w + collisionBuffer;
-//    newX += 1;  // Don't think this is needed?? it's just an extra pixel buffer on the right side. remove if unnoticed
+//    newX += 1;  // is this needed given the collisionBuffer already accounts for this? remove if unnoticed
     entity.setTransformX(newX);
 }
 
@@ -143,15 +143,14 @@ void CollisionSystem::handleCollisionY(Entity& entity, Entity& other) {
      * @param entity: The primary entity
      * @param other: The other entity
      */
-    Velocity &vel = entity.getComponent<Velocity>();
+    auto& vel = entity.getComponent<Velocity>();
     SDL_Rect playerCollider = entity.getColliderRect();
     SDL_Rect otherCollider = other.getColliderRect();
 
-    if (vel.dy > 0) {
-        // Player is moving down
+    if (vel.dy > 0) {  // Player is moving down
         stopAndRepositionAbove(entity, playerCollider, otherCollider);
-    } else if (vel.dy < 0) {
-        // Player is moving up
+    }
+    else if (vel.dy < 0) {  // Player is moving up
         stopAndRepositionBelow(entity, playerCollider, otherCollider);
     }
 }
@@ -173,9 +172,9 @@ void CollisionSystem::stopAndRepositionAbove(Entity& entity, const SDL_Rect& pla
         entity.getComponent<Jumps>().jumps = 0;  // Reset the number of jumps
     }
 
-    int newPos = otherCollider.y - (playerCollider.h + collisionBuffer);
-    int y = newPos + 1;
-    entity.setTransformY(y);
+    int newY = otherCollider.y - (playerCollider.h + collisionBuffer);
+    newY += 1;  // there must be a better way to handle this, increasing collisionBuffer by 1 doesn't work
+    entity.setTransformY(newY);
     entity.getComponent<Gravity>().gravity = entity.getComponent<Gravity>().baseGravity;
 }
 
