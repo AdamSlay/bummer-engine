@@ -10,15 +10,15 @@ void CollisionSystem::update(EntityManager &entityManager) {
     /**
      * Update the collision system
      *
-     * @param entityManager: The entity manager
+     * @param entityManager: The EntityManager
      */
-    auto& entities = entityManager.getEntities();
-    for (auto& entity : entities) {
-        if (entity.hasComponent<Player>() || entity.hasComponent<Npc>()) {
-            for (auto& other : entities) {
-                if (entity.id != other.id && checkCollision(entity, other)) {
-                    handleCollision(entity, other);  // *player and *other are dereferenced Entity objects
-                }
+    auto& movableCollidableEntities = entityManager.getMovableCollidableEntities();
+    auto& collidableEntities = entityManager.getCollidableEntities();
+
+    for (auto& primaryEntity : movableCollidableEntities) {
+        for (auto& otherEntity : collidableEntities) {
+            if (primaryEntity.id != otherEntity.id && checkCollision(primaryEntity, otherEntity)) {
+                handleCollision(primaryEntity, otherEntity);
             }
         }
     }
