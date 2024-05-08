@@ -25,14 +25,18 @@ void CollisionSystem::update(EntityManager &entityManager) {
 }
 
 void CollisionSystem::handleCollision(Entity& primaryEntity, Entity& otherEntity) {
+    /**
+     * Handle primaryEntity collision with otherEntity
+     *
+     * @param primaryEntity: The primary Entity
+     * @param otherEntity: The other Entity
+     */
     SDL_Rect primaryCollider = primaryEntity.getColliderRect();
     SDL_Rect otherCollider = otherEntity.getColliderRect();
 
-    // Calculate the intersection rectangle
     SDL_Rect intersection_rect;
     SDL_IntersectRect(&primaryCollider, &otherCollider, &intersection_rect);
 
-    // Determine whether to handle collision on X or Y axis
     if (intersection_rect.h > intersection_rect.w) {
         handleCollisionX(primaryEntity, otherEntity);
     }
