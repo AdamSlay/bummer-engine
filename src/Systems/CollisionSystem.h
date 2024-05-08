@@ -10,15 +10,15 @@ class CollisionSystem {
 public:
     void updateX(EntityManager& entityManager);
     void updateY(EntityManager& entityManager);
-    bool checkCollision(Entity& player, Entity& other);
-    bool checkCollisionX(Entity& player, Entity& other);
-    bool checkCollisionY(Entity& player, Entity& other);
-    void handleCollisionX(Entity& entity, Entity& other);
-    void handleCollisionY(Entity& entity, Entity& other);
-    void stopAndRepositionToLeft(Entity& entity, const SDL_Rect& playerCollider, const SDL_Rect& otherCollider);
-    void stopAndRepositionToRight(Entity& entity, const SDL_Rect& playerCollider, const SDL_Rect& otherCollider);
-    void stopAndRepositionAbove(Entity& entity, const SDL_Rect& playerCollider, const SDL_Rect& otherCollider);
-    void stopAndRepositionBelow(Entity& entity, const SDL_Rect& playerCollider, const SDL_Rect& otherCollider);
+    bool checkCollision(Entity& primaryEntity, Entity& otherEntity);
+    bool checkCollisionX(Entity& primaryEntity, Entity& otherEntity);
+    bool checkCollisionY(Entity& primaryEntity, Entity& otherEntity);
+    void handleCollisionX(Entity& primaryEntity, Entity& otherEntity);
+    void handleCollisionY(Entity& primaryEntity, Entity& otherEntity);
+    void stopAndRepositionToLeft(Entity& primaryEntity, const SDL_Rect& primaryCollider, const SDL_Rect& otherCollider);
+    void stopAndRepositionToRight(Entity& primaryEntity, const SDL_Rect& otherCollider);
+    void stopAndRepositionAbove(Entity& primaryEntity, const SDL_Rect& primaryCollider, const SDL_Rect& otherCollider);
+    void stopAndRepositionBelow(Entity& primaryEntity, const SDL_Rect& otherCollider);
 
 private:
     int collisionBuffer = 1;

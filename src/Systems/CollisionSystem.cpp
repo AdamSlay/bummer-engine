@@ -41,148 +41,147 @@ void CollisionSystem::updateY(EntityManager& entityManager) {
         }
     }
 }
-bool CollisionSystem::checkCollision(Entity &player, Entity &other) {
+bool CollisionSystem::checkCollision(Entity &primaryEntity, Entity &otherEntity) {
     /**
-     * Check if the player is colliding with another entity
-     * check
+     * Check if the primaryEntity is colliding with another Entity on both the X and Y axis
      *
-     * @param player: The player entity
-     * @param other: The other entity
+     * @param primaryEntity: The primary Entity
+     * @param otherEntity: The other Entity
      */
-    return checkCollisionX(player, other) && checkCollisionY(player, other);
+    return checkCollisionX(primaryEntity, otherEntity) && checkCollisionY(primaryEntity, otherEntity);
 }
 
-bool CollisionSystem::checkCollisionX(Entity &player, Entity &other) {
+bool CollisionSystem::checkCollisionX(Entity &primaryEntity, Entity &otherEntity) {
     /**
-     * Check if the player is colliding with another entity on the X axis
+     * Check if the primaryEntity is colliding with another Entity on the X axis
      *
-     * @param player: The player entity
-     * @param other: The other entity
+     * @param primaryEntity: The primary Entity
+     * @param otherEntity: The other Entity
      */
-    SDL_Rect playerCollider = player.getColliderRect();
-    SDL_Rect otherCollider = other.getColliderRect();
+    SDL_Rect primaryCollider = primaryEntity.getColliderRect();
+    SDL_Rect otherCollider = otherEntity.getColliderRect();
 
-    if (playerCollider.x + playerCollider.w < otherCollider.x ||  // player is left of obj
-        playerCollider.x > otherCollider.x + otherCollider.w) {  // player is right of obj
+    if (primaryCollider.x + primaryCollider.w < otherCollider.x ||  // player is left of obj
+        primaryCollider.x > otherCollider.x + otherCollider.w) {  // player is right of obj
         return false;
     }
 
     return true;
 }
 
-bool CollisionSystem::checkCollisionY(Entity &player, Entity &other) {
+bool CollisionSystem::checkCollisionY(Entity &primaryEntity, Entity &otherEntity) {
     /**
-     * Check if the player is colliding with another entity on the Y axis
+     * Check if the primaryEntity is colliding with another Entity on the Y axis
      *
-     * @param player: The player entity
-     * @param other: The other entity
+     * @param primaryEntity: The primary Entity
+     * @param otherEntity: The other Entity
      */
-    SDL_Rect playerCollider = player.getColliderRect();
-    SDL_Rect otherCollider = other.getColliderRect();
+    SDL_Rect primaryCollider = primaryEntity.getColliderRect();
+    SDL_Rect otherCollider = otherEntity.getColliderRect();
 
-    if (playerCollider.y + playerCollider.h < otherCollider.y ||  // player is above obj
-        playerCollider.y + collisionBuffer > otherCollider.y + otherCollider.h) {  // player is below obj
+    if (primaryCollider.y + primaryCollider.h < otherCollider.y ||  // player is above obj
+        primaryCollider.y + collisionBuffer > otherCollider.y + otherCollider.h) {  // player is below obj
         return false;
     }
 
     return true;
 }
 
-void CollisionSystem::handleCollisionX(Entity& entity, Entity& other) {
+void CollisionSystem::handleCollisionX(Entity& primaryEntity, Entity& otherEntity) {
     /**
-     * Handle entity collision with other entities on the X axis
+     * Handle primaryEntity collision with other Entities on the X axis
      *
-     * @param entity: The entity entity
-     * @param other: The other entity
+     * @param entity: The primaryEntity primaryEntity
+     * @param other: The otherEntity primaryEntity
      */
-    auto& vel = entity.getComponent<Velocity>();
-    SDL_Rect playerCollider = entity.getColliderRect();
-    SDL_Rect otherCollider = other.getColliderRect();
+    auto& velocity = primaryEntity.getComponent<Velocity>();
+    SDL_Rect primaryCollider = primaryEntity.getColliderRect();
+    SDL_Rect otherCollider = otherEntity.getColliderRect();
 
-    if (vel.dx > 0) {  // Player is moving right
-        stopAndRepositionToLeft(entity, playerCollider, otherCollider);
+    if (velocity.dx > 0) {  // Player is moving right
+        stopAndRepositionToLeft(primaryEntity, primaryCollider, otherCollider);
     }
-    else if (vel.dx < 0) {  // Player is moving left
-        stopAndRepositionToRight(entity, playerCollider, otherCollider);
+    else if (velocity.dx < 0) {  // Player is moving left
+        stopAndRepositionToRight(primaryEntity, otherCollider);
     }
 }
 
-void CollisionSystem::stopAndRepositionToLeft(Entity& entity, const SDL_Rect& playerCollider, const SDL_Rect& otherCollider) {
+void CollisionSystem::stopAndRepositionToLeft(Entity& primaryEntity, const SDL_Rect& primaryCollider, const SDL_Rect& otherCollider) {
     /**
-     * Stop the entity and reposition it to the left of the other entity
+     * Stop the primaryEntity and reposition it to the left of the other Entity
      *
-     * @param entity: The entity
-     * @param playerCollider: The player collider
+     * @param entity: The primaryEntity
+     * @param entityCollider: The player collider
      * @param otherCollider: The other collider
      */
-    auto& velocity = entity.getComponent<Velocity>();
+    auto& velocity = primaryEntity.getComponent<Velocity>();
     velocity.dx = 0;
-    int newX = otherCollider.x - (playerCollider.w + collisionBuffer);
-    entity.setTransformX(newX);
+    int newX = otherCollider.x - (primaryCollider.w + collisionBuffer);
+    primaryEntity.setTransformX(newX);
 }
 
-void CollisionSystem::stopAndRepositionToRight(Entity& entity, const SDL_Rect& playerCollider, const SDL_Rect& otherCollider) {
+void CollisionSystem::stopAndRepositionToRight(Entity& primaryEntity, const SDL_Rect& otherCollider) {
     /**
-     * Stop the entity and reposition it to the right of the other entity
+     * Stop the primaryEntity and reposition it to the right of the other Entity
      *
-     * @param entity: The entity
+     * @param entity: The primaryEntity
      * @param playerCollider: The player collider
      * @param otherCollider: The other collider
      */
-    auto& velocity = entity.getComponent<Velocity>();
+    auto& velocity = primaryEntity.getComponent<Velocity>();
     velocity.dx = 0;
     int newX = otherCollider.x + otherCollider.w + collisionBuffer;
 //    newX += 1;  // is this needed given the collisionBuffer already accounts for this? remove if unnoticed
-    entity.setTransformX(newX);
+    primaryEntity.setTransformX(newX);
 }
 
-void CollisionSystem::handleCollisionY(Entity& entity, Entity& other) {
+void CollisionSystem::handleCollisionY(Entity& primaryEntity, Entity& otherEntity) {
     /**
-     * Handle entity collision with other entities on the Y axis
+     * Handle primaryEntity collision with other Entities on the Y axis
      *
-     * @param entity: The primary entity
-     * @param other: The other entity
+     * @param primaryEntity: The primary Entity
+     * @param otherEntity: The other Entity
      */
-    auto& vel = entity.getComponent<Velocity>();
-    SDL_Rect playerCollider = entity.getColliderRect();
-    SDL_Rect otherCollider = other.getColliderRect();
+    auto& velocity = primaryEntity.getComponent<Velocity>();
+    SDL_Rect primaryCollider = primaryEntity.getColliderRect();
+    SDL_Rect otherCollider = otherEntity.getColliderRect();
 
-    if (vel.dy > 0) {  // Player is moving down
-        stopAndRepositionAbove(entity, playerCollider, otherCollider);
+    if (velocity.dy > 0) {  // Player is moving down
+        stopAndRepositionAbove(primaryEntity, primaryCollider, otherCollider);
     }
-    else if (vel.dy < 0) {  // Player is moving up
-        stopAndRepositionBelow(entity, playerCollider, otherCollider);
+    else if (velocity.dy < 0) {  // Player is moving up
+        stopAndRepositionBelow(primaryEntity, otherCollider);
     }
 }
 
-void CollisionSystem::stopAndRepositionAbove(Entity& entity, const SDL_Rect& playerCollider, const SDL_Rect& otherCollider) {
+void CollisionSystem::stopAndRepositionAbove(Entity& primaryEntity, const SDL_Rect& primaryCollider, const SDL_Rect& otherCollider) {
     /**
-     * Stop the entity and reposition it above the other entity
+     * Stop the primaryEntity and reposition it above the other Entity
      *
-     * @param entity: The entity
-     * @param playerCollider: The player collider
-     * @param otherCollider: The other collider
+     * @param primaryEntity: The primary Entity
+     * @param primaryCollider: The primary Entity collider
+     * @param otherCollider: The other Entity collider
      */
-    auto& velocity = entity.getComponent<Velocity>();
+    auto& velocity = primaryEntity.getComponent<Velocity>();
     velocity.dy = 0;
-    EventManager::getInstance().publish("groundCollision", {&entity});
+    EventManager::getInstance().publish("groundCollision", {&primaryEntity});
 
-    int newY = otherCollider.y - (playerCollider.h + collisionBuffer);
+    int newY = otherCollider.y - (primaryCollider.h + collisionBuffer);
 //    newY += 1;  // is this necessary? Used when collisionBuffer was 2, but now it's 1. Seems to work without it. Remove if unnoticed
-    entity.setTransformY(newY);
-    entity.getComponent<Gravity>().gravity = entity.getComponent<Gravity>().baseGravity;
+    primaryEntity.setTransformY(newY);
+    primaryEntity.getComponent<Gravity>().gravity = primaryEntity.getComponent<Gravity>().baseGravity;
 }
 
-void CollisionSystem::stopAndRepositionBelow(Entity& entity, const SDL_Rect& playerCollider, const SDL_Rect& otherCollider) {
+void CollisionSystem::stopAndRepositionBelow(Entity& primaryEntity, const SDL_Rect& otherCollider) {
     /**
-     * Stop the entity and reposition it below the other entity
+     * Stop the primaryEntity and reposition it below the other other Entity
      *
-     * @param entity: The entity
-     * @param playerCollider: The player collider
-     * @param otherCollider: The other collider
+     * @param entity: The primary Entity
+     * @param primaryCollider: The primary Entity collider
+     * @param otherCollider: The other Entity collider
      */
-    auto& velocity = entity.getComponent<Velocity>();
+    auto& velocity = primaryEntity.getComponent<Velocity>();
     velocity.dy = 0;
     int newY = otherCollider.y + otherCollider.h + collisionBuffer;
-    entity.setTransformY(newY);
+    primaryEntity.setTransformY(newY);
 }
