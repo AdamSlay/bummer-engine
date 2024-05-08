@@ -288,3 +288,23 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
     // Return the new entity
     return entity;
 }
+
+std::vector<Entity>& EntityManager::getCollidableEntities() {
+    collidableEntities.clear();
+    for (auto& entity : entities) {
+        if (entity.hasComponent<Collider>()) {
+            collidableEntities.push_back(entity);
+        }
+    }
+    return collidableEntities;
+}
+
+std::vector<Entity>& EntityManager::getMovableCollidableEntities() {
+    movableCollidableEntities.clear();
+    for (auto& entity : entities) {
+        if (entity.hasComponent<Transform>() && entity.hasComponent<Velocity>() && entity.hasComponent<Collider>()) {
+            movableCollidableEntities.push_back(entity);
+        }
+    }
+    return movableCollidableEntities;
+}

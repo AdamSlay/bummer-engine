@@ -192,12 +192,17 @@ private:
 
 class EntityManager {
 public:
+    std::vector<Entity> collidableEntities;
+    std::vector<Entity> movableCollidableEntities;
+
     EntityManager(TextureManager* texManager, SDL_Renderer* ecsRenderer);
     Entity& createEntity();
     void removeEntity(int entityId);
     std::vector<Entity>& getEntities();
     Entity& createEntityFromTemplate(const std::string& templatePath);
     void clearEntities();
+    std::vector<Entity>& getCollidableEntities();
+    std::vector<Entity>& getMovableCollidableEntities();
     Entity& createPlayer(int x, int y, int w, int h);
     void configureAnimator(Entity& entity, std::map<playerStates, AnimationClip>& animations);
     Entity& getPlayer();
