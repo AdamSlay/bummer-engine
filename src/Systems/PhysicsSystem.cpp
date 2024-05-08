@@ -5,9 +5,8 @@
 void PhysicsSystem::update(SceneManager& sceneManager, EntityManager& entityManager, MovementSystem& movementSystem, CollisionSystem& collisionSystem, float deltaTime) {
     movementSystem.handleIntent(entityManager, deltaTime);
     movementSystem.moveX(entityManager);
-    collisionSystem.updateX(entityManager);
     movementSystem.moveY(entityManager);
-    collisionSystem.updateY(entityManager);
+    collisionSystem.update(entityManager);
 
     // reset player position if it falls off the screen
     Entity player = entityManager.getPlayer();

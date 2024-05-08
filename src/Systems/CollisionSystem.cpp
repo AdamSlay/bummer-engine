@@ -6,9 +6,9 @@
 #include <iostream>
 
 
-void CollisionSystem::updateX(EntityManager& entityManager) {
+void CollisionSystem::update(EntityManager &entityManager) {
     /**
-     * Update the X axis collision
+     * Update the collision system
      *
      * @param entityManager: The entity manager
      */
@@ -17,28 +17,27 @@ void CollisionSystem::updateX(EntityManager& entityManager) {
         if (entity.hasComponent<Player>() || entity.hasComponent<Npc>()) {
             for (auto& other : entities) {
                 if (entity.id != other.id && checkCollision(entity, other)) {
-                    handleCollisionX(entity, other);  // *player and *other are dereferenced Entity objects
+                    handleCollision(entity, other);  // *player and *other are dereferenced Entity objects
                 }
             }
         }
     }
 }
 
-void CollisionSystem::updateY(EntityManager& entityManager) {
-    /**
-     * Update the Y axis collision
-     *
-     * @param entityManager: The entity manager
-     */
-    auto& entities = entityManager.getEntities();
-    for (auto& entity : entities) {
-        if (entity.hasComponent<Player>() || entity.hasComponent<Npc>()) {
-            for (auto& other : entities) {
-                if (entity.id != other.id && checkCollision(entity, other)) {
-                    handleCollisionY(entity, other);  // *player and *other are dereferenced Entity objects
-                }
-            }
-        }
+void CollisionSystem::handleCollision(Entity& primaryEntity, Entity& otherEntity) {
+    SDL_Rect primaryCollider = primaryEntity.getColliderRect();
+    SDL_Rect otherCollider = otherEntity.getColliderRect();
+
+    // Calculate the intersection rectangle
+    SDL_Rect intersection_rect;
+    SDL_IntersectRect(&primaryCollider, &otherCollider, &intersection_rect);
+
+    // Determine whether to handle collision on X or Y axis
+    if (intersection_rect.h > intersection_rect.w) {
+        handleCollisionX(primaryEntity, otherEntity);
+    }
+    else {
+        handleCollisionY(primaryEntity, otherEntity);
     }
 }
 
@@ -99,10 +98,10 @@ void CollisionSystem::handleCollisionX(Entity& primaryEntity, Entity& otherEntit
     SDL_Rect primaryCollider = primaryEntity.getColliderRect();
     SDL_Rect otherCollider = otherEntity.getColliderRect();
 
-    if (velocity.dx > 0) {  // Player is moving right
+    if (primaryCollider.x < otherCollider.x) {  // primaryEntity is to the left of other otherEntity
         stopAndRepositionToLeft(primaryEntity, primaryCollider, otherCollider);
     }
-    else if (velocity.dx < 0) {  // Player is moving left
+    else if (primaryCollider.x > otherCollider.y) {  // primaryEntity is to the right of other otherEntity
         stopAndRepositionToRight(primaryEntity, otherCollider);
     }
 }
@@ -147,10 +146,10 @@ void CollisionSystem::handleCollisionY(Entity& primaryEntity, Entity& otherEntit
     SDL_Rect primaryCollider = primaryEntity.getColliderRect();
     SDL_Rect otherCollider = otherEntity.getColliderRect();
 
-    if (velocity.dy > 0) {  // Player is moving down
+    if (primaryCollider.y < otherCollider.y) {  // primaryEntity is above other otherEntity
         stopAndRepositionAbove(primaryEntity, primaryCollider, otherCollider);
     }
-    else if (velocity.dy < 0) {  // Player is moving up
+    else if (primaryCollider.y > otherCollider.y) {  // primaryEntity is below other otherEntity
         stopAndRepositionBelow(primaryEntity, otherCollider);
     }
 }
