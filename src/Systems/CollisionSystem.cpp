@@ -41,6 +41,7 @@ void CollisionSystem::updateY(EntityManager& entityManager) {
         }
     }
 }
+
 bool CollisionSystem::checkCollision(Entity &primaryEntity, Entity &otherEntity) {
     /**
      * Check if the primaryEntity is colliding with another Entity on both the X and Y axis
