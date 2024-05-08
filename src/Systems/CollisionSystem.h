@@ -10,8 +10,6 @@ class CollisionSystem {
 public:
     void update(EntityManager& entityManager);
     void handleCollision(Entity& primaryEntity, Entity& otherEntity);
-    void updateX(EntityManager& entityManager);
-    void updateY(EntityManager& entityManager);
     bool checkCollision(Entity& primaryEntity, Entity& otherEntity);
     bool checkCollisionX(Entity& primaryEntity, Entity& otherEntity);
     bool checkCollisionY(Entity& primaryEntity, Entity& otherEntity);
