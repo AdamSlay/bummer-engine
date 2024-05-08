@@ -161,6 +161,9 @@ void MovementSystem::applyGravity(Entity &entity) {
         }
         else {
             gravity.gravity *= gravity.descendFactor; // Increase gravity when descending
+            if (gravity.gravity > 3) {
+                gravity.gravity = 3;
+            }
         }
         // Apply gravity
         vel.dy += gravity.gravity;
