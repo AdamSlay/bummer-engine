@@ -94,7 +94,6 @@ void CollisionSystem::handleCollisionX(Entity& primaryEntity, Entity& otherEntit
      * @param entity: The primaryEntity primaryEntity
      * @param other: The otherEntity primaryEntity
      */
-    auto& velocity = primaryEntity.getComponent<Velocity>();
     SDL_Rect primaryCollider = primaryEntity.getColliderRect();
     SDL_Rect otherCollider = otherEntity.getColliderRect();
 
@@ -142,7 +141,6 @@ void CollisionSystem::handleCollisionY(Entity& primaryEntity, Entity& otherEntit
      * @param primaryEntity: The primary Entity
      * @param otherEntity: The other Entity
      */
-    auto& velocity = primaryEntity.getComponent<Velocity>();
     SDL_Rect primaryCollider = primaryEntity.getColliderRect();
     SDL_Rect otherCollider = otherEntity.getColliderRect();
 
