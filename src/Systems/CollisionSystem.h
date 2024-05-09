@@ -9,10 +9,10 @@
 class CollisionSystem {
 public:
     void update(EntityManager& entityManager);
-    void handleCollision(Entity& primaryEntity, Entity& otherEntity);
     bool checkCollision(Entity& primaryEntity, Entity& otherEntity);
     bool checkCollisionX(Entity& primaryEntity, Entity& otherEntity);
     bool checkCollisionY(Entity& primaryEntity, Entity& otherEntity);
+    void handleCollision(Entity& primaryEntity, Entity& otherEntity);
     void handleCollisionX(Entity& primaryEntity, Entity& otherEntity);
     void handleCollisionY(Entity& primaryEntity, Entity& otherEntity);
     void stopAndRepositionToLeft(Entity& primaryEntity, const SDL_Rect& primaryCollider, const SDL_Rect& otherCollider);
