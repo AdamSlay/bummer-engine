@@ -12,6 +12,12 @@ public:
     bool checkCollision(Entity& primaryEntity, Entity& otherEntity);
     bool checkCollisionX(Entity& primaryEntity, Entity& otherEntity);
     bool checkCollisionY(Entity& primaryEntity, Entity& otherEntity);
+    static bool notTouchingXaxis(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider);
+    static bool notTouchingYaxis(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider);
+    static bool notTouchingAndRightOf(const SDL_Rect& primaryCollider, const SDL_Rect& otherCollider);
+    static bool notTouchingAndLeftOf(const SDL_Rect& primaryCollider, const SDL_Rect& otherCollider);
+    static bool notTouchingAndAbove(const SDL_Rect& primaryCollider, const SDL_Rect& otherCollider);
+    static bool notTouchingAndBelow(const SDL_Rect& primaryCollider, const SDL_Rect& otherCollider) ;
     void handleCollision(Entity& primaryEntity, Entity& otherEntity);
     void handleCollisionX(Entity& primaryEntity, Entity& otherEntity);
     void handleCollisionY(Entity& primaryEntity, Entity& otherEntity);

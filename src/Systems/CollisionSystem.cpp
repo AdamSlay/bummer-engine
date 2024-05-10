@@ -65,17 +65,46 @@ bool CollisionSystem::checkCollisionX(Entity &primaryEntity, Entity &otherEntity
     SDL_Rect primaryCollider = primaryEntity.getColliderRect();
     SDL_Rect otherCollider = otherEntity.getColliderRect();
 
-    if (primaryCollider.x + primaryCollider.w < otherCollider.x ||  // player is left of obj
-        primaryCollider.x > otherCollider.x + otherCollider.w) {  // player is right of obj
+    if (notTouchingXaxis(primaryCollider, otherCollider)) {
         return false;
     }
 
     return true;
 }
 
+bool CollisionSystem::notTouchingXaxis(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider) {
+    /**
+     * Check if the primaryEntity is touching otherEntity on the X axis
+     *
+     * @param primaryCollider: The primaryEntity collider
+     * @param otherCollider: The otherEntity collider
+     */
+    return notTouchingAndLeftOf(primaryCollider, otherCollider) || notTouchingAndRightOf(primaryCollider, otherCollider);
+}
+
+bool CollisionSystem::notTouchingAndLeftOf(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider) {
+    /**
+     * Check if the primaryEntity is to the left of and not touching otherEntity
+     *
+     * @param primaryCollider: The primaryEntity collider
+     * @param otherCollider: The otherEntity collider
+     */
+    return primaryCollider.x + primaryCollider.w < otherCollider.x;
+}
+
+bool CollisionSystem::notTouchingAndRightOf(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider) {
+    /**
+     * Check if the primaryEntity is to the right of not touching otherEntity
+     *
+     * @param primaryCollider: The primaryEntity collider
+     * @param otherCollider: The otherEntity collider
+     */
+    return primaryCollider.x > otherCollider.x + otherCollider.w;
+}
+
 bool CollisionSystem::checkCollisionY(Entity &primaryEntity, Entity &otherEntity) {
     /**
-     * Check if the primaryEntity is colliding with another Entity on the Y axis
+     * Check if the primaryEntity is colliding with otherEntity on the Y axis
      *
      * @param primaryEntity: The primary Entity
      * @param otherEntity: The other Entity
@@ -83,17 +112,46 @@ bool CollisionSystem::checkCollisionY(Entity &primaryEntity, Entity &otherEntity
     SDL_Rect primaryCollider = primaryEntity.getColliderRect();
     SDL_Rect otherCollider = otherEntity.getColliderRect();
 
-    if (primaryCollider.y + primaryCollider.h < otherCollider.y ||  // player is above obj
-        primaryCollider.y + collisionBuffer > otherCollider.y + otherCollider.h) {  // player is below obj
+    if (notTouchingYaxis(primaryCollider, otherCollider)) {
         return false;
     }
 
     return true;
 }
 
+bool CollisionSystem::notTouchingYaxis(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider) {
+    /**
+     * Check if the primaryEntity is touching otherEntity on the Y axis
+     *
+     * @param primaryCollider: The primaryEntity collider
+     * @param otherCollider: The otherEntity collider
+     */
+    return notTouchingAndAbove(primaryCollider, otherCollider) || notTouchingAndBelow(primaryCollider, otherCollider);
+}
+
+bool CollisionSystem::notTouchingAndAbove(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider) {
+    /**
+     * Check if the primaryEntity is above otherEntity
+     *
+     * @param primaryCollider: The primaryEntity collider
+     * @param otherCollider: The otherEntity collider
+     */
+    return primaryCollider.y + primaryCollider.h < otherCollider.y;
+}
+
+bool CollisionSystem::notTouchingAndBelow(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider) {
+    /**
+     * Check if the primaryEntity is below the otherEntity
+     *
+     * @param primaryCollider: The primaryEntity collider
+     * @param otherCollider: The otherEntity collider
+     */
+    return primaryCollider.y > otherCollider.y + otherCollider.h;
+}
+
 void CollisionSystem::handleCollisionX(Entity& primaryEntity, Entity& otherEntity) {
     /**
-     * Handle primaryEntity collision with other Entities on the X axis
+     * Handle primaryEntity collision with otherEntity on the X axis
      *
      * @param entity: The primaryEntity primaryEntity
      * @param other: The otherEntity primaryEntity
