@@ -3,8 +3,6 @@
 #include "../ECS/EventManager.h"
 #include "../Utils.h"
 
-#include <iostream>
-
 
 void CollisionSystem::update(EntityManager &entityManager) {
     /**
