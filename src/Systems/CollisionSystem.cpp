@@ -190,7 +190,6 @@ void CollisionSystem::stopAndRepositionToRight(Entity& primaryEntity, const SDL_
     auto& velocity = primaryEntity.getComponent<Velocity>();
     velocity.dx = 0;
     int newX = otherCollider.x + otherCollider.w + collisionBuffer;
-//    newX += 1;  // is this needed given the collisionBuffer already accounts for this? remove if unnoticed
     primaryEntity.setTransformX(newX);
 }
 
@@ -225,7 +224,6 @@ void CollisionSystem::stopAndRepositionAbove(Entity& primaryEntity, const SDL_Re
     EventManager::getInstance().publish("groundCollision", {&primaryEntity});
 
     int newY = otherCollider.y - (primaryCollider.h + collisionBuffer);
-//    newY += 1;  // is this necessary? Used when collisionBuffer was 2, but now it's 1. Seems to work without it. Remove if unnoticed
     primaryEntity.setTransformY(newY);
     primaryEntity.getComponent<Gravity>().gravity = primaryEntity.getComponent<Gravity>().baseGravity;
 }
