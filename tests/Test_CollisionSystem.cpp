@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 #include "../src/Systems/CollisionSystem.h"
-#include "../src/ECS/Components.h"
 
 TEST(CollisionSystemTest, CheckCollision) {
     CollisionSystem collisionSystem;
