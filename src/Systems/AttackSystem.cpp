@@ -34,7 +34,7 @@ void AttackSystem::handleIntent(Entity& entity) {
      *
      * @param entity: The entity
      */
-
+    // TODO: this function is too long and should be broken up into smaller functions
     if (entity.hasComponent<Intent>() && entity.hasComponent<AttackMap>()) {
         Intent& intent = entity.getComponent<Intent>();
         AttackMap& attackMap = entity.getComponent<AttackMap>();
@@ -46,6 +46,7 @@ void AttackSystem::handleIntent(Entity& entity) {
             // if state is basic attack, set attack to active
             State& state = entity.getComponent<State>();
             if (state.state == playerStates::BASIC_ATTACK) {
+                // TODO: AttackSystem::setBasicAttackActive() or similar
                 attackMap.attacks["basic"].isActive = true;
                 auto& vel = entity.getComponent<Velocity>();
                 auto& gravity = entity.getComponent<Gravity>();
@@ -67,7 +68,7 @@ void AttackSystem::handleActiveAttacks(Entity &attacker, EntityManager &entityMa
      * @param entity: The entity
      * @param entityManager: The entity manager
      */
-
+     // TODO: This function is too long and should be broken up into smaller functions
     for (auto& [name, attackInfo] : attacker.getComponent<AttackMap>().attacks) {
         if (attackInfo.isActive) {
             // Could the issue with the knockback involve the enemy having an active attack at the time that it gets hit/stunned?
@@ -121,10 +122,11 @@ void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& attacker, Entity& ot
      * @param attackInfo: The attack info
      * @param other: The other entity
      */
-
+    // TODO: This needs to be broken up into smaller functions
     Health& otherHealth = other.getComponent<Health>();
     if (otherHealth.invincibilityRemaining == 0) {
         // Set state to hit
+        // TODO: all state logic should be handled by the StateMachine on event publish
         State& otherState = other.getComponent<State>();
         if (otherState.state != playerStates::HIT) {
             other.changeState(playerStates::HIT);
@@ -134,11 +136,13 @@ void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& attacker, Entity& ot
         EventManager::getInstance().publish("enemyHit", {&attacker, &other});
 
         // Reduce health
+        // TODO: AttackSystem::reduceHealth()
         std::cout << "Health: " << otherHealth.currentHealth << std::endl;
         otherHealth.currentHealth -= attackInfo.damage;
         otherHealth.invincibilityRemaining = otherHealth.invincibilityFrames;
 
         // Apply knockback
+        // TODO: AttackSystem::applyKnockback()
         Transform& attackerTransform = attacker.getComponent<Transform>();
         Transform& otherTransform = other.getComponent<Transform>();
         Velocity& otherVel = other.getComponent<Velocity>();
@@ -181,7 +185,7 @@ bool AttackSystem::checkCollision(SDL_Rect& hitbox, Entity& other) {
      * @param hitbox: The hitbox
      * @param entity2: The other entity
      */
-
+    // TODO: Use the CollisionSystem's checkCollision method so that we can use the same collision detection logic
     SDL_Rect otherCollider = other.getColliderRect();
 
     if (hitbox.x + hitbox.w < otherCollider.x ||  // hitbox is left of obj
