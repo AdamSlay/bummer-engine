@@ -126,13 +126,6 @@ void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& attacker, Entity& ot
     // TODO: This needs to be broken up into smaller functions
     Health& otherHealth = other.getComponent<Health>();
     if (otherHealth.invincibilityRemaining == 0) {
-        // Set state to hit
-        // TODO: all state logic should be handled by the StateMachine on event publish
-        State& otherState = other.getComponent<State>();
-        if (otherState.state != playerStates::HIT) {
-            other.changeState(playerStates::HIT);
-        }
-
         // Publish enemyHit event
         EventManager::getInstance().publish("enemyHit", {&attacker, &other});
 

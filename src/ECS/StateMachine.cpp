@@ -72,6 +72,24 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
         }
     });
 
+    EventManager::getInstance().subscribe("enemyHit", [&](EventData data) {
+        /**
+         * Handle the enemy hit event
+         *
+         * @param data: The event data
+         */
+        try {
+            Entity* other = data.secondaryEntity;
+            auto& state = other->getComponent<State>();
+            if (state.state != playerStates::HIT) {
+                other->changeState(playerStates::HIT);
+            }
+        }
+        catch (const std::runtime_error& e) {
+            std::cout << "Could not find entity with id: " << data.primaryEntity->id << std::endl;
+        }
+    });
+
     EventManager::getInstance().subscribe("dash", [&](EventData data) {
         try {
             Entity* entity = data.primaryEntity;
