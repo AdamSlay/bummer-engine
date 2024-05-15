@@ -1,12 +1,20 @@
 #include "CollisionSystem.h"
-#include "../ECS/Components.h"
 #include "../ECS/EventManager.h"
 #include "../Utils.h"
 
-
-void CollisionSystem::update(EntityManager &entityManager) {
+CollisionSystem::CollisionSystem() {
     /**
-     * Update the collision system
+     * Constructor for the CollisionSystem
+     *
+     * The collisionBuffer defined here is the number of pixels that entities' colliders should be separated by
+     * when a collision is detected. This is to prevent entities from continually colliding with each other.
+     */
+    collisionBuffer = 1;
+}
+
+void CollisionSystem::update(EntityManager& entityManager) {
+    /**
+     * Iterate through all movable + collidable entities and check for collisions with other collidable entities
      *
      * @param entityManager: The EntityManager
      */
@@ -22,9 +30,28 @@ void CollisionSystem::update(EntityManager &entityManager) {
     }
 }
 
+bool CollisionSystem::checkCollision(Entity &primaryEntity, Entity &otherEntity) {
+    /**
+     * Check if the primaryEntity collider is intersecting with the otherEntity collider on both the X and Y axis
+     *
+     * @param primaryEntity: The primary Entity
+     * @param otherEntity: The other Entity
+     */
+    return checkCollisionX(primaryEntity, otherEntity) && checkCollisionY(primaryEntity, otherEntity);
+}
+
 void CollisionSystem::handleCollision(Entity& primaryEntity, Entity& otherEntity) {
     /**
-     * Handle primaryEntity collision with otherEntity
+     * Determine the type of collision and handle it.
+     *
+     * The intersection rectangle is used to determine the type of collision
+     * where the intersection rectangle is the area where the two colliders overlap.
+     *
+     * If the height of the intersection rectangle is greater than the width, the collision is on the X axis,
+     * and the primaryEntity will be stopped and repositioned to the left or right of the otherEntity.
+     *
+     * If the width of the intersection rectangle is greater than the height, the collision is on the Y axis,
+     * and the primaryEntity will be stopped and repositioned above or below the otherEntity.
      *
      * @param primaryEntity: The primary Entity
      * @param otherEntity: The other Entity
@@ -41,16 +68,6 @@ void CollisionSystem::handleCollision(Entity& primaryEntity, Entity& otherEntity
     else {
         handleCollisionY(primaryEntity, otherEntity);
     }
-}
-
-bool CollisionSystem::checkCollision(Entity &primaryEntity, Entity &otherEntity) {
-    /**
-     * Check if the primaryEntity is colliding with another Entity on both the X and Y axis
-     *
-     * @param primaryEntity: The primary Entity
-     * @param otherEntity: The other Entity
-     */
-    return checkCollisionX(primaryEntity, otherEntity) && checkCollisionY(primaryEntity, otherEntity);
 }
 
 bool CollisionSystem::checkCollisionX(Entity &primaryEntity, Entity &otherEntity) {
@@ -72,7 +89,7 @@ bool CollisionSystem::checkCollisionX(Entity &primaryEntity, Entity &otherEntity
 
 bool CollisionSystem::notTouchingXaxis(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider) {
     /**
-     * Check if the primaryEntity is touching otherEntity on the X axis
+     * Check if the primaryEntity is colliding with the otherEntity on the X axis
      *
      * @param primaryCollider: The primaryEntity collider
      * @param otherCollider: The otherEntity collider
@@ -195,7 +212,7 @@ void CollisionSystem::stopAndRepositionToRight(Entity& primaryEntity, const SDL_
 
 void CollisionSystem::handleCollisionY(Entity& primaryEntity, Entity& otherEntity) {
     /**
-     * Handle primaryEntity collision with other Entities on the Y axis
+     * Handle primaryEntity collision with otherEntity on the Y axis
      *
      * @param primaryEntity: The primary Entity
      * @param otherEntity: The other Entity
@@ -213,7 +230,7 @@ void CollisionSystem::handleCollisionY(Entity& primaryEntity, Entity& otherEntit
 
 void CollisionSystem::stopAndRepositionAbove(Entity& primaryEntity, const SDL_Rect& primaryCollider, const SDL_Rect& otherCollider) {
     /**
-     * Stop the primaryEntity and reposition it above the other Entity
+     * Stop the primaryEntity and reposition it above the otherEntity
      *
      * @param primaryEntity: The primary Entity
      * @param primaryCollider: The primary Entity collider
@@ -230,7 +247,7 @@ void CollisionSystem::stopAndRepositionAbove(Entity& primaryEntity, const SDL_Re
 
 void CollisionSystem::stopAndRepositionBelow(Entity& primaryEntity, const SDL_Rect& otherCollider) {
     /**
-     * Stop the primaryEntity and reposition it below the other other Entity
+     * Stop the primaryEntity and reposition it below the otherEntity
      *
      * @param entity: The primary Entity
      * @param primaryCollider: The primary Entity collider
