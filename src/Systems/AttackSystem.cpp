@@ -89,14 +89,8 @@ void AttackSystem::handleActiveAttacks(Entity &attacker, EntityManager &entityMa
                 }
             }
         }
-        else if (attacker.getComponent<State>().state == playerStates::BASIC_ATTACK) {
-            Velocity& vel = attacker.getComponent<Velocity>();
-            if (vel.dx == 0) {
-                attacker.changeState(playerStates::IDLE);
-            }
-            else {
-                attacker.changeState(playerStates::RUN);
-            }
+        else {
+            EventManager::getInstance().publish("attackEnd", {&attacker});
         }
     }
 }
