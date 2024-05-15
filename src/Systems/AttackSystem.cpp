@@ -128,6 +128,7 @@ void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& attacker, Entity& ot
     if (otherHealth.invincibilityRemaining == 0) {
         // Publish enemyHit event
         EventManager::getInstance().publish("enemyHit", {&attacker, &other});
+        applyKnockback(attackInfo, attacker, other);
 
         // Reduce health
         // TODO: AttackSystem::reduceHealth()
@@ -135,21 +136,27 @@ void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& attacker, Entity& ot
         otherHealth.currentHealth -= attackInfo.damage;
         otherHealth.invincibilityRemaining = otherHealth.invincibilityFrames;
 
-        // Apply knockback
-        // TODO: AttackSystem::applyKnockback()
-        Transform& attackerTransform = attacker.getComponent<Transform>();
-        Transform& otherTransform = other.getComponent<Transform>();
-        Velocity& otherVel = other.getComponent<Velocity>();
-        int knockbackDirection = (attackerTransform.x < otherTransform.x) ? 1 : -1;
-        otherVel.dx = attackInfo.knockback * knockbackDirection;
-        otherVel.direction = knockbackDirection * -1;
-
         if (otherHealth.currentHealth <= 0) {
             if (!other.hasComponent<Player>()) {
                 entitiesToRemove.push_back(other.getID());
             }
         }
     }
+}
+
+void AttackSystem::applyKnockback(AttackInfo& attackInfo, Entity& attacker, Entity& other) {
+    /**
+     * Apply knockback to the other entity
+     *
+     * @param attackInfo: The attack info
+     * @param other: The other entity
+     */
+    auto& attackerTransform = attacker.getComponent<Transform>();
+    auto& otherTransform = other.getComponent<Transform>();
+    auto& otherVel = other.getComponent<Velocity>();
+    int knockbackDirection = (attackerTransform.x < otherTransform.x) ? 1 : -1;
+    otherVel.dx = attackInfo.knockback * knockbackDirection;
+    otherVel.direction = knockbackDirection * -1;
 }
 
 void AttackSystem::decrementInvincibiltyFrames(Entity& entity) {

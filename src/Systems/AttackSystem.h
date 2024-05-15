@@ -15,6 +15,7 @@ private:
     void decrementInvincibiltyFrames(Entity& entity);
     void handleActiveAttacks(Entity& entity, EntityManager& entityManager);
     void hitOther(AttackInfo& attackInfo, Entity& attacker, Entity& other);
+    void applyKnockback(AttackInfo& attackInfo, Entity& attacker, Entity& other);
     bool checkCollision(SDL_Rect& hitbox, Entity& other);
 
 };
