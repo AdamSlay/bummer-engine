@@ -123,30 +123,18 @@ void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& attacker, Entity& ot
      * @param attackInfo: The attack info
      * @param other: The other entity
      */
-    // TODO: This needs to be broken up into smaller functions
-    Health& otherHealth = other.getComponent<Health>();
+    auto& otherHealth = other.getComponent<Health>();
     if (otherHealth.invincibilityRemaining == 0) {
         // Publish enemyHit event
         EventManager::getInstance().publish("enemyHit", {&attacker, &other});
         applyKnockback(attackInfo, attacker, other);
-
-        // Reduce health
-        // TODO: AttackSystem::reduceHealth()
-        std::cout << "Health: " << otherHealth.currentHealth << std::endl;
-        otherHealth.currentHealth -= attackInfo.damage;
-        otherHealth.invincibilityRemaining = otherHealth.invincibilityFrames;
-
-        if (otherHealth.currentHealth <= 0) {
-            if (!other.hasComponent<Player>()) {
-                entitiesToRemove.push_back(other.getID());
-            }
-        }
+        reduceHealth(attackInfo, other);
     }
 }
 
 void AttackSystem::applyKnockback(AttackInfo& attackInfo, Entity& attacker, Entity& other) {
     /**
-     * Apply knockback to the other entity
+     * Apply knockback to the other entity based on the attack's knockback
      *
      * @param attackInfo: The attack info
      * @param other: The other entity
@@ -157,6 +145,26 @@ void AttackSystem::applyKnockback(AttackInfo& attackInfo, Entity& attacker, Enti
     int knockbackDirection = (attackerTransform.x < otherTransform.x) ? 1 : -1;
     otherVel.dx = attackInfo.knockback * knockbackDirection;
     otherVel.direction = knockbackDirection * -1;
+}
+
+void AttackSystem::reduceHealth(AttackInfo& attackInfo, Entity& entity) {
+    /**
+     * Reduce the health of an entity based on the attack's damage
+     *
+     * If the entity's health is less than or equal to 0, add the entity to the list of entities to remove
+     *
+     * @param attackInfo: The attack info
+     * @param entity: The entity
+     */
+    auto& health = entity.getComponent<Health>();
+    health.currentHealth -= attackInfo.damage;
+    health.invincibilityRemaining = health.invincibilityFrames;
+
+    if (health.currentHealth <= 0) {
+        if (!entity.hasComponent<Player>()) {
+            entitiesToRemove.push_back(entity.getID());
+        }
+    }
 }
 
 void AttackSystem::decrementInvincibiltyFrames(Entity& entity) {

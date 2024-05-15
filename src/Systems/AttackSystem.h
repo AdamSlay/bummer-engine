@@ -16,6 +16,7 @@ private:
     void handleActiveAttacks(Entity& entity, EntityManager& entityManager);
     void hitOther(AttackInfo& attackInfo, Entity& attacker, Entity& other);
     void applyKnockback(AttackInfo& attackInfo, Entity& attacker, Entity& other);
+    void reduceHealth(AttackInfo& attackInfo, Entity& entity);
     bool checkCollision(SDL_Rect& hitbox, Entity& other);
 
 };
