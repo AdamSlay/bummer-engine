@@ -1,6 +1,7 @@
 #include "AttackSystem.h"
 #include "../Utils.h"
 #include "../ECS/EventManager.h"
+#include "./CollisionSystem.h"
 
 #include <iostream>
 
@@ -185,13 +186,10 @@ bool AttackSystem::checkCollision(SDL_Rect& hitbox, Entity& other) {
      * @param hitbox: The hitbox
      * @param entity2: The other entity
      */
-    // TODO: Use the CollisionSystem's checkCollision method so that we can use the same collision detection logic
     SDL_Rect otherCollider = other.getColliderRect();
 
-    if (hitbox.x + hitbox.w < otherCollider.x ||  // hitbox is left of obj
-        hitbox.x > otherCollider.x + otherCollider.w ||  // hitbox is right of obj
-        hitbox.y + hitbox.h < otherCollider.y ||  // hitbox is above obj
-        hitbox.y > otherCollider.y + otherCollider.h) {  // hitbox is below obj
+    if (CollisionSystem::notTouchingXaxis(hitbox, otherCollider) ||
+        CollisionSystem::notTouchingYaxis(hitbox, otherCollider)) {
         return false;
     }
     return true;
