@@ -37,15 +37,15 @@ void AttackSystem::handleIntent(Entity& entity) {
      */
     // TODO: this function is too long and should be broken up into smaller functions
     if (entity.hasComponent<Intent>() && entity.hasComponent<AttackMap>()) {
-        Intent& intent = entity.getComponent<Intent>();
-        AttackMap& attackMap = entity.getComponent<AttackMap>();
+        auto& intent = entity.getComponent<Intent>();
+        auto& attackMap = entity.getComponent<AttackMap>();
 
         if (intent.action == Action::ATTACK) {
             // publish event to StateMachine
             EventManager::getInstance().publish("basicAttack", {&entity});
 
             // if state is basic attack, set attack to active
-            State& state = entity.getComponent<State>();
+            auto& state = entity.getComponent<State>();
             if (state.state == playerStates::BASIC_ATTACK) {
                 // TODO: AttackSystem::setBasicAttackActive() or similar
                 attackMap.attacks["basic"].isActive = true;
@@ -73,7 +73,7 @@ void AttackSystem::handleActiveAttacks(Entity &attacker, EntityManager &entityMa
     for (auto& [name, attackInfo] : attacker.getComponent<AttackMap>().attacks) {
         if (attackInfo.isActive) {
             // Could the issue with the knockback involve the enemy having an active attack at the time that it gets hit/stunned?
-            State& state = attacker.getComponent<State>();
+            auto& state = attacker.getComponent<State>();
             if (state.state == playerStates::STUNNED || state.state == playerStates::HIT) {
                 attackInfo.isActive = false;
                 break;
@@ -169,7 +169,7 @@ void AttackSystem::decrementInvincibiltyFrames(Entity& entity) {
      */
 
     if (entity.hasComponent<Health>()) {
-        Health& health = entity.getComponent<Health>();
+        auto& health = entity.getComponent<Health>();
 
         if (health.invincibilityRemaining > 0) {
             entity.changeState(playerStates::STUNNED);
