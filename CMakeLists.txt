@@ -3,11 +3,9 @@ project(BummerEngine)
 
 set(CMAKE_CXX_STANDARD 17)
 
-# Include the vcpkg toolchain file
 set(CMAKE_TOOLCHAIN_FILE "./vcpkg/scripts/buildsystems/vcpkg.cmake"
         CACHE STRING "Vcpkg toolchain file")
 
-# Find the SDL2 package
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
 find_package(SDL2_ttf CONFIG REQUIRED)
@@ -15,7 +13,6 @@ find_package(SDL2_mixer CONFIG REQUIRED)
 find_package(nlohmann_json 3.2.0 REQUIRED)
 find_package(GTest CONFIG REQUIRED)
 
-# Set the source files for your project
 set(SOURCE_FILES
         src/Resources/ResourceUtils.cpp
         src/Resources/ResourceUtils.h
@@ -62,10 +59,8 @@ set(SOURCE_FILES
 
 add_library(BummerLib ${SOURCE_FILES})
 
-# Create the executable
 add_executable(${PROJECT_NAME} src/main.cpp)
 
-# Link the SDL2 framework
 target_link_libraries(BummerLib PUBLIC
         SDL2::SDL2
         $<IF:$<TARGET_EXISTS:SDL2_image::SDL2_image>,SDL2_image::SDL2_image,SDL2_image::SDL2_image-static>
@@ -78,8 +73,6 @@ target_link_libraries(BummerLib PUBLIC
 
 target_link_libraries(${PROJECT_NAME} PRIVATE BummerLib)
 
-# Enable testing
 enable_testing()
 
-# Add the test subdirectory
 add_subdirectory(tests)
