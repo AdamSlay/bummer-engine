@@ -8,19 +8,6 @@
 
 using json = nlohmann::json;
 
-int Entity::nextId = 0;
-
-Entity::Entity() {
-    /**
-     * Constructor for the Entity
-     */
-    id = nextId++;
-}
-
-bool Entity::operator==(const Entity& other) const {
-    return this->id == other.id;
-}
-
 std::map<std::string, playerStates> EntityManager::playerStatesMap = {
         {"IDLE", playerStates::IDLE},
         {"GROUNDED", playerStates::GROUNDED},

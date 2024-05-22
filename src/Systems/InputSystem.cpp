@@ -216,7 +216,7 @@ SDL_Scancode InputSystem::mapControllerButtonToScancode(Uint8 button) {
 
 void InputSystem::updateIntent(Entity& player) {
     // clear previous intent
-    player.resetIntent();
+    player.resetIntent(true);
 
     auto& input = player.getComponent<Input>();
     auto& intent = player.getComponent<Intent>();

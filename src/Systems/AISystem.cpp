@@ -9,7 +9,7 @@
 void AISystem::update(EntityManager& entityManager) {
     for (Entity& entity : entityManager.getEntities()) {
         if (entity.hasComponent<Npc>()) {
-            entity.resetIntent();
+            entity.resetIntent(true);
             patrol(entity);
             attack(entityManager, entity);
         }
