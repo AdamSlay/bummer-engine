@@ -22,8 +22,10 @@ void CollisionSystem::update(EntityManager& entityManager) {
     auto& collidableEntities = entityManager.getCollidableEntities();
 
     for (auto& primaryEntity : movableCollidableEntities) {
+
         for (auto& otherEntity : collidableEntities) {
-            if (primaryEntity.id != otherEntity.id && checkCollision(primaryEntity, otherEntity)) {
+
+            if (primaryEntity!=otherEntity && checkCollision(primaryEntity, otherEntity)){
                 handleCollision(primaryEntity, otherEntity);
             }
         }

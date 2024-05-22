@@ -1,5 +1,3 @@
-#include <unordered_map>
-#include <typeindex>
 #include <vector>
 #include "../Resources/TextureManager.h"
 #include "../ECS/Components.h"
@@ -17,6 +15,10 @@ Entity::Entity() {
 
 bool Entity::operator==(const Entity& other) const {
     return this->id == other.id;
+}
+
+bool Entity::operator!=(const Entity& other) const {
+    return this->id != other.id;
 }
 
 void Entity::changeState(playerStates newState) {

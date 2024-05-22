@@ -16,6 +16,7 @@ public:
 
     Entity();
     bool operator==(const Entity& other) const;
+    bool operator!=(const Entity& other) const;
 
     template <typename T>
     void addComponent(T component);
