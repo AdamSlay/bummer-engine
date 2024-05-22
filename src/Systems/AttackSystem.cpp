@@ -80,8 +80,13 @@ void AttackSystem::handleActiveAttacks(Entity &attacker, EntityManager &entityMa
             }
             incrementAttackFrames(attackInfo);
 
+            //
             SDL_Rect hitbox = attacker.getHitboxRect(attackInfo.hitbox);
             for (Entity& other : entityManager.getEntities()) {
+
+                // TODO: this is a lot of logic to have in a conditional statement. Could this be broken up?
+
+                // if they are colliding && the other has health && the attack has exhausted its windup frames(therefore it's active)
                 int attackFrame = attackInfo.frameCounter;
                 int windupFrames = attackInfo.windupFrames;
                 if (checkCollision(hitbox, other) && other.hasComponent<Health>() && attackFrame >= windupFrames) {
@@ -119,8 +124,11 @@ void AttackSystem::hitOther(AttackInfo& attackInfo, Entity& attacker, Entity& ot
      */
     auto& otherHealth = other.getComponent<Health>();
     if (otherHealth.invincibilityRemaining == 0) {
-        // Publish enemyHit event
+
         EventManager::getInstance().publish("enemyHit", {&attacker, &other});
+
+        // TODO: AttackSystem should not be responsible for applying knockback. That's what the MovementSystem is for.
+        // TODO: AttackSystem should not be responsible for reducing health. That's what the HealthSystem is for.
         applyKnockback(attackInfo, attacker, other);
         reduceHealth(attackInfo, other);
     }
@@ -133,6 +141,9 @@ void AttackSystem::applyKnockback(AttackInfo& attackInfo, Entity& attacker, Enti
      * @param attackInfo: The attack info
      * @param other: The other entity
      */
+
+    // TODO: the AttackSystem shouldn't be responsible for 'moving' any entities. That's what the MovementSystem is for.
+
     auto& attackerTransform = attacker.getComponent<Transform>();
     auto& otherTransform = other.getComponent<Transform>();
     auto& otherVel = other.getComponent<Velocity>();
@@ -150,6 +161,9 @@ void AttackSystem::reduceHealth(AttackInfo& attackInfo, Entity& entity) {
      * @param attackInfo: The attack info
      * @param entity: The entity
      */
+
+     // TODO: should the AttackSystem be responsible for reducing health? Could that be a job for the HealthSystem.
+
     auto& health = entity.getComponent<Health>();
     health.currentHealth -= attackInfo.damage;
     health.invincibilityRemaining = health.invincibilityFrames;
@@ -170,6 +184,8 @@ void AttackSystem::decrementInvincibiltyFrames(Entity& entity) {
 
     if (entity.hasComponent<Health>()) {
         auto& health = entity.getComponent<Health>();
+
+        // TODO: AttackSystem should not be responsible for changing the state of an entity. That's what the StateMachine is for.
 
         if (health.invincibilityRemaining > 0) {
             entity.changeState(playerStates::STUNNED);

@@ -9,6 +9,8 @@
 #include "../ECS/Components.h"
 
 class Entity
+        // TODO: This needs to be it's own class with it's own header file
+        // TODO: Should there be an OnHit() function that takes in an attackInfo struct and determines what to do?
 {
 public:
     Entity();
