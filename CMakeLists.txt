@@ -64,10 +64,10 @@ add_library(BummerLib ${SOURCE_FILES})
 add_executable(${PROJECT_NAME} src/main.cpp)
 
 target_link_libraries(BummerLib PUBLIC
-        SDL2::SDL2
-        $<IF:$<TARGET_EXISTS:SDL2_image::SDL2_image>,SDL2_image::SDL2_image,SDL2_image::SDL2_image-static>
-        $<IF:$<TARGET_EXISTS:SDL2_ttf::SDL2_ttf>,SDL2_ttf::SDL2_ttf,SDL2_ttf::SDL2_ttf-static>
-        $<IF:$<TARGET_EXISTS:SDL2_mixer::SDL2_mixer>,SDL2_mixer::SDL2_mixer,SDL2_mixer::SDL2_mixer-static>
+        SDL2::SDL2-static
+        SDL2_image::SDL2_image-static
+        SDL2_ttf::SDL2_ttf-static
+        SDL2_mixer::SDL2_mixer-static
         nlohmann_json::nlohmann_json
         GTest::gtest
         GTest::gtest_main
