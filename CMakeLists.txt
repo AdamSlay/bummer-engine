@@ -14,49 +14,49 @@ find_package(nlohmann_json 3.2.0 REQUIRED)
 find_package(GTest CONFIG REQUIRED)
 
 set(SOURCE_FILES
-        src/Resources/ResourceUtils.cpp
-        src/Resources/ResourceUtils.h
-        src/GameEngine/GameEngine.cpp
-        src/GameEngine/GameEngine.h
-        src/ECS/Components.h
-        src/ECS/EntityManager.cpp
-        src/ECS/EntityManager.h
-        src/UI/Menu.cpp
-        src/UI/Menu.h
         src/Config.cpp
         src/Config.h
-        src/Systems/RenderSystem.cpp
-        src/Systems/RenderSystem.h
-        src/Resources/TextureManager.cpp
-        src/Resources/TextureManager.h
-        src/Systems/MovementSystem.cpp
-        src/Systems/MovementSystem.h
-        src/Systems/CollisionSystem.cpp
-        src/Systems/CollisionSystem.h
-        src/Systems/AnimationSystem.cpp
-        src/Systems/AnimationSystem.h
-        src/Utils.cpp
-        src/Systems/InputSystem.cpp
-        src/Systems/InputSystem.h
-        src/Utils.h
-        src/Systems/PhysicsSystem.cpp
-        src/Systems/PhysicsSystem.h
-        src/Systems/SoundSystem.cpp
-        src/Systems/SoundSystem.h
+        src/ECS/Components.h
+        src/ECS/Entity.cpp
+        src/ECS/Entity.h
+        src/ECS/EntityManager.cpp
+        src/ECS/EntityManager.h
         src/ECS/EventManager.cpp
         src/ECS/EventManager.h
         src/ECS/SceneManager.cpp
         src/ECS/SceneManager.h
-        src/Systems/AttackSystem.cpp
-        src/Systems/AttackSystem.h
-        src/Systems/AISystem.cpp
-        src/Systems/AISystem.h
         src/ECS/StateMachine.cpp
         src/ECS/StateMachine.h
+        src/GameEngine/GameEngine.cpp
+        src/GameEngine/GameEngine.h
+        src/Resources/ResourceUtils.cpp
+        src/Resources/ResourceUtils.h
+        src/Resources/TextureManager.cpp
+        src/Resources/TextureManager.h
+        src/Systems/AISystem.cpp
+        src/Systems/AISystem.h
+        src/Systems/AnimationSystem.cpp
+        src/Systems/AnimationSystem.h
+        src/Systems/AttackSystem.cpp
+        src/Systems/AttackSystem.h
+        src/Systems/CollisionSystem.cpp
+        src/Systems/CollisionSystem.h
         src/Systems/CooldownSystem.cpp
         src/Systems/CooldownSystem.h
-        src/ECS/Entity.cpp
-        src/ECS/Entity.h
+        src/Systems/InputSystem.cpp
+        src/Systems/InputSystem.h
+        src/Systems/MovementSystem.cpp
+        src/Systems/MovementSystem.h
+        src/Systems/PhysicsSystem.cpp
+        src/Systems/PhysicsSystem.h
+        src/Systems/RenderSystem.h
+        src/Systems/RenderSystem.cpp
+        src/Systems/SoundSystem.cpp
+        src/Systems/SoundSystem.h
+        src/UI/Menu.cpp
+        src/UI/Menu.h
+        src/Utils.cpp
+        src/Utils.h
 )
 
 add_library(BummerLib ${SOURCE_FILES})
