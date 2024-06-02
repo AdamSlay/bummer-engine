@@ -12,11 +12,8 @@
 class Entity {
 public:
     int id;
-    static int nextId;
 
-    Entity();
-    bool operator==(const Entity& other) const;
-    bool operator!=(const Entity& other) const;
+    Entity(int id);
 
     template <typename T>
     void addComponent(T component);

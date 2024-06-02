@@ -51,7 +51,8 @@ Entity& EntityManager::createEntity() {
     /**
      * Create a new entity, append it to the entities vector and return a reference to it
      */
-    entities.emplace_back();
+    Entity newEntity = Entity(entities.size());
+    entities.emplace_back(newEntity);
     return entities.back();
 }
 

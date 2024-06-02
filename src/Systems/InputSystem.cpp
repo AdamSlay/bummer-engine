@@ -22,7 +22,7 @@ void InputSystem::update(EntityManager &entityManager, bool &quit) {
      * @param quit: The quit flag
      */
     // Clear justPressed for all entities
-    Entity player;
+    Entity player = entityManager.getPlayer();
     for (Entity &entity : entityManager.getEntities()) {
         if (entity.hasComponent<Player>()) {
             auto& input = entity.getComponent<Input>();

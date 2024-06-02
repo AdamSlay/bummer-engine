@@ -4,11 +4,11 @@
 TEST(CollisionSystemTest, CheckCollision) {
     CollisionSystem collisionSystem;
 
-    Entity entityA;
+    Entity entityA(1);
     entityA.addComponent<Transform>({0, 0, 1});
     entityA.addComponent<Collider>({0, 0, 50, 50});
 
-    Entity entityB;
+    Entity entityB(2);
     entityB.addComponent<Transform>({25, 25, 1});
     entityB.addComponent<Collider>({0, 0, 50, 50});
 
@@ -21,12 +21,12 @@ TEST(CollisionSystemTest, CheckCollision) {
 TEST(CollisionSystemTest, HandleCollisionXLeft) {
     CollisionSystem collisionSystem;
 
-    Entity entityA;
+    Entity entityA(1);
     entityA.addComponent<Transform>({100, 50, 1});
     entityA.addComponent<Collider>({0, 0, 50, 50});
     entityA.addComponent<Velocity>({5, 0, 1, 0});
 
-    Entity entityB;
+    Entity entityB(2);
     entityB.addComponent<Transform>({140, 50, 1});
     entityB.addComponent<Collider>({0, 0, 50, 50});
 
@@ -39,12 +39,12 @@ TEST(CollisionSystemTest, HandleCollisionXLeft) {
 TEST(CollisionSystemTest, HandleCollisionXRight) {
     CollisionSystem collisionSystem;
 
-    Entity entityA;
+    Entity entityA(1);
     entityA.addComponent<Transform>({100, 50, 1});
     entityA.addComponent<Collider>({0, 0, 50, 50});
     entityA.addComponent<Velocity>({-5, 0, 1, 0});
 
-    Entity entityB;
+    Entity entityB(2);
     entityB.addComponent<Transform>({40, 50, 1});
     entityB.addComponent<Collider>({0, 0, 50, 50});
 
@@ -57,13 +57,13 @@ TEST(CollisionSystemTest, HandleCollisionXRight) {
 TEST(CollisionSystemTest, HandleCollisionYAbove) {
     CollisionSystem collisionSystem;
 
-    Entity entityA;
+    Entity entityA(1);
     entityA.addComponent<Transform>({50, 100, 1});
     entityA.addComponent<Collider>({0, 0, 50, 50});
     entityA.addComponent<Velocity>({0, 5, 0, 1});
     entityA.addComponent<Gravity>({1.0, 2.0, 0.5, 1.5});
 
-    Entity entityB;
+    Entity entityB(2);
     entityB.addComponent<Transform>({50, 140, 1});
     entityB.addComponent<Collider>({0, 0, 50, 50});
 
@@ -77,12 +77,12 @@ TEST(CollisionSystemTest, HandleCollisionYAbove) {
 TEST(CollisionSystemTest, HandleCollisionYBelow) {
     CollisionSystem collisionSystem;
 
-    Entity entityA;
+    Entity entityA(1);
     entityA.addComponent<Transform>({50, 100, 1});
     entityA.addComponent<Collider>({0, 0, 50, 50});
     entityA.addComponent<Velocity>({0, -5, 0, 1});
 
-    Entity entityB;
+    Entity entityB(2);
     entityB.addComponent<Transform>({50, 40, 1});
     entityB.addComponent<Collider>({0, 0, 50, 50});
 
@@ -95,11 +95,11 @@ TEST(CollisionSystemTest, HandleCollisionYBelow) {
 TEST(CollisionSystemTest, CheckCollisionX) {
     CollisionSystem collisionSystem;
 
-    Entity entityA;
+    Entity entityA(1);
     entityA.addComponent<Transform>({0, 0, 1});
     entityA.addComponent<Collider>({0, 0, 50, 50});
 
-    Entity entityB;
+    Entity entityB(2);
     entityB.addComponent<Transform>({60, 0, 1});
     entityB.addComponent<Collider>({0, 0, 50, 50});
 
@@ -145,11 +145,11 @@ TEST(CollisionSystemTest, NotTouchingAndRightOf) {
 TEST(CollisionSystemTest, CheckCollisionY) {
     CollisionSystem collisionSystem;
 
-    Entity entityA;
+    Entity entityA(1);
     entityA.addComponent<Transform>({0, 0, 1});
     entityA.addComponent<Collider>({0, 0, 50, 50});
 
-    Entity entityB;
+    Entity entityB(2);
     entityB.addComponent<Transform>({0, 60, 1});
     entityB.addComponent<Collider>({0, 0, 50, 50});
 
@@ -195,12 +195,12 @@ TEST(CollisionSystemTest, NotTouchingAndBelow) {
 TEST(CollisionSystemTest, StopAndRepositionToLeft) {
     CollisionSystem collisionSystem;
 
-    Entity entityA;
+    Entity entityA(1);
     entityA.addComponent<Transform>({100, 50, 1});
     entityA.addComponent<Collider>({0, 0, 50, 50});
     entityA.addComponent<Velocity>({5, 0, 1, 0});
 
-    Entity entityB;
+    Entity entityB(2);
     entityB.addComponent<Transform>({140, 50, 1});
     entityB.addComponent<Collider>({0, 0, 50, 50});
 
@@ -213,12 +213,12 @@ TEST(CollisionSystemTest, StopAndRepositionToLeft) {
 TEST(CollisionSystemTest, StopAndRepositionToRight) {
     CollisionSystem collisionSystem;
 
-    Entity entityA;
+    Entity entityA(1);
     entityA.addComponent<Transform>({100, 50, 1});
     entityA.addComponent<Collider>({0, 0, 50, 50});
     entityA.addComponent<Velocity>({-5, 0, 1, 0});
 
-    Entity entityB;
+    Entity entityB(2);
     entityB.addComponent<Transform>({40, 50, 1});
     entityB.addComponent<Collider>({0, 0, 50, 50});
 
@@ -231,13 +231,13 @@ TEST(CollisionSystemTest, StopAndRepositionToRight) {
 TEST(CollisionSystemTest, StopAndRepositionAbove) {
     CollisionSystem collisionSystem;
 
-    Entity entityA;
+    Entity entityA(1);
     entityA.addComponent<Transform>({50, 100, 1});
     entityA.addComponent<Collider>({0, 0, 50, 50});
     entityA.addComponent<Velocity>({0, 5, 0, 1});
     entityA.addComponent<Gravity>({1.0, 2.0, 0.5, 1.5});
 
-    Entity entityB;
+    Entity entityB(2);
     entityB.addComponent<Transform>({50, 140, 1});
     entityB.addComponent<Collider>({0, 0, 50, 50});
 
@@ -251,12 +251,12 @@ TEST(CollisionSystemTest, StopAndRepositionAbove) {
 TEST(CollisionSystemTest, StopAndRepositionBelow) {
     CollisionSystem collisionSystem;
 
-    Entity entityA;
+    Entity entityA(1);
     entityA.addComponent<Transform>({50, 100, 1});
     entityA.addComponent<Collider>({0, 0, 50, 50});
     entityA.addComponent<Velocity>({0, -5, 0, 1});
 
-    Entity entityB;
+    Entity entityB(2);
     entityB.addComponent<Transform>({50, 40, 1});
     entityB.addComponent<Collider>({0, 0, 50, 50});
 

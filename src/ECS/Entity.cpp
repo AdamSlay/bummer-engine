@@ -4,21 +4,11 @@
 
 #include "Entity.h"
 
-int Entity::nextId = 0;
 
-Entity::Entity() {
+Entity::Entity(int id): id(id) {
     /**
-     * Constructor for the Entity
+     * Constructor sets the id of the entity
      */
-    id = nextId++;
-}
-
-bool Entity::operator==(const Entity& other) const {
-    return this->id == other.id;
-}
-
-bool Entity::operator!=(const Entity& other) const {
-    return this->id != other.id;
 }
 
 void Entity::changeState(playerStates newState) {
