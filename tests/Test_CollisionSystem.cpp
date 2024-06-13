@@ -109,18 +109,18 @@ TEST(CollisionSystemTest, CheckCollisionX) {
     EXPECT_TRUE(collisionSystem.checkCollisionX(entityA, entityB));
 }
 
-TEST(CollisionSystemTest, NotTouchingXaxis) {
+TEST(CollisionSystemTest, isTouchingXaxis) {
     CollisionSystem collisionSystem;
 
     SDL_Rect rectA = {0, 0, 50, 50};
     SDL_Rect rectB = {60, 0, 50, 50};
-    EXPECT_TRUE(collisionSystem.notTouchingXaxis(rectA, rectB));
+    EXPECT_FALSE(collisionSystem.isTouchingXaxis(rectA, rectB));
 
     rectB.x = 40;
-    EXPECT_FALSE(collisionSystem.notTouchingXaxis(rectA, rectB));
+    EXPECT_TRUE(collisionSystem.isTouchingXaxis(rectA, rectB));
 }
 
-TEST(CollisionSystemTest, NotTouchingAndLeftOf) {
+TEST(CollisionSystemTest, isLeftOf) {
     CollisionSystem collisionSystem;
 
     SDL_Rect rectA = {0, 0, 50, 50};
@@ -131,7 +131,7 @@ TEST(CollisionSystemTest, NotTouchingAndLeftOf) {
     EXPECT_FALSE(collisionSystem.isLeftOf(rectA, rectB));
 }
 
-TEST(CollisionSystemTest, NotTouchingAndRightOf) {
+TEST(CollisionSystemTest, isRightOf) {
     CollisionSystem collisionSystem;
 
     SDL_Rect rectA = {60, 0, 50, 50};
@@ -159,37 +159,37 @@ TEST(CollisionSystemTest, CheckCollisionY) {
     EXPECT_TRUE(collisionSystem.checkCollisionY(entityA, entityB));
 }
 
-TEST(CollisionSystemTest, NotTouchingYaxis) {
+TEST(CollisionSystemTest, isTouchingYaxis) {
     CollisionSystem collisionSystem;
 
     SDL_Rect rectA = {0, 0, 50, 50};
     SDL_Rect rectB = {0, 60, 50, 50};
-    EXPECT_TRUE(collisionSystem.notTouchingYaxis(rectA, rectB));
+    EXPECT_FALSE(collisionSystem.isTouchingYaxis(rectA, rectB));
 
     rectB.y = 40;
-    EXPECT_FALSE(collisionSystem.notTouchingYaxis(rectA, rectB));
+    EXPECT_TRUE(collisionSystem.isTouchingYaxis(rectA, rectB));
 }
 
-TEST(CollisionSystemTest, NotTouchingAndAbove) {
+TEST(CollisionSystemTest, isAbove) {
     CollisionSystem collisionSystem;
 
     SDL_Rect rectA = {0, 0, 50, 50};
     SDL_Rect rectB = {0, 60, 50, 50};
-    EXPECT_TRUE(collisionSystem.notTouchingAndAbove(rectA, rectB));
+    EXPECT_TRUE(collisionSystem.isAbove(rectA, rectB));
 
     rectB.y = 40;
-    EXPECT_FALSE(collisionSystem.notTouchingAndAbove(rectA, rectB));
+    EXPECT_FALSE(collisionSystem.isAbove(rectA, rectB));
 }
 
-TEST(CollisionSystemTest, NotTouchingAndBelow) {
+TEST(CollisionSystemTest, isBelow) {
     CollisionSystem collisionSystem;
 
     SDL_Rect rectA = {0, 60, 50, 50};
     SDL_Rect rectB = {0, 0, 50, 50};
-    EXPECT_TRUE(collisionSystem.notTouchingAndBelow(rectA, rectB));
+    EXPECT_TRUE(collisionSystem.isBelow(rectA, rectB));
 
     rectA.y = 40;
-    EXPECT_FALSE(collisionSystem.notTouchingAndBelow(rectA, rectB));
+    EXPECT_FALSE(collisionSystem.isBelow(rectA, rectB));
 }
 
 TEST(CollisionSystemTest, StopAndRepositionToLeft) {

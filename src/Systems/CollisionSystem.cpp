@@ -82,21 +82,21 @@ bool CollisionSystem::checkCollisionX(Entity &primaryEntity, Entity &otherEntity
     SDL_Rect primaryCollider = primaryEntity.getColliderRect();
     SDL_Rect otherCollider = otherEntity.getColliderRect();
 
-    if (notTouchingXaxis(primaryCollider, otherCollider)) {
-        return false;
+    if (isTouchingXaxis(primaryCollider, otherCollider)) {
+        return true;
     }
 
-    return true;
+    return false;
 }
 
-bool CollisionSystem::notTouchingXaxis(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider) {
+bool CollisionSystem::isTouchingXaxis(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider) {
     /**
      * Check if the primaryEntity is colliding with the otherEntity on the X axis
      *
      * @param primaryCollider: The primaryEntity collider
      * @param otherCollider: The otherEntity collider
      */
-    return isLeftOf(primaryCollider, otherCollider) || isRightOf(primaryCollider, otherCollider);
+    return !isLeftOf(primaryCollider, otherCollider) && !isRightOf(primaryCollider, otherCollider);
 }
 
 bool CollisionSystem::isLeftOf(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider) {
@@ -129,24 +129,24 @@ bool CollisionSystem::checkCollisionY(Entity &primaryEntity, Entity &otherEntity
     SDL_Rect primaryCollider = primaryEntity.getColliderRect();
     SDL_Rect otherCollider = otherEntity.getColliderRect();
 
-    if (notTouchingYaxis(primaryCollider, otherCollider)) {
-        return false;
+    if (isTouchingYaxis(primaryCollider, otherCollider)) {
+        return true;
     }
 
-    return true;
+    return false;
 }
 
-bool CollisionSystem::notTouchingYaxis(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider) {
+bool CollisionSystem::isTouchingYaxis(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider) {
     /**
      * Check if the primaryEntity is touching otherEntity on the Y axis
      *
      * @param primaryCollider: The primaryEntity collider
      * @param otherCollider: The otherEntity collider
      */
-    return notTouchingAndAbove(primaryCollider, otherCollider) || notTouchingAndBelow(primaryCollider, otherCollider);
+    return !isAbove(primaryCollider, otherCollider) && !isBelow(primaryCollider, otherCollider);
 }
 
-bool CollisionSystem::notTouchingAndAbove(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider) {
+bool CollisionSystem::isAbove(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider) {
     /**
      * Check if the primaryEntity is above otherEntity
      *
@@ -156,7 +156,7 @@ bool CollisionSystem::notTouchingAndAbove(const SDL_Rect &primaryCollider, const
     return primaryCollider.y + primaryCollider.h < otherCollider.y;
 }
 
-bool CollisionSystem::notTouchingAndBelow(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider) {
+bool CollisionSystem::isBelow(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider) {
     /**
      * Check if the primaryEntity is below the otherEntity
      *

@@ -206,9 +206,9 @@ bool AttackSystem::checkCollision(SDL_Rect& hitbox, Entity& other) {
      */
     SDL_Rect otherCollider = other.getColliderRect();
 
-    if (CollisionSystem::notTouchingXaxis(hitbox, otherCollider) ||
-        CollisionSystem::notTouchingYaxis(hitbox, otherCollider)) {
-        return false;
+    if (CollisionSystem::isTouchingXaxis(hitbox, otherCollider) &&
+            CollisionSystem::isTouchingYaxis(hitbox, otherCollider)) {
+        return true;
     }
-    return true;
+    return false;
 }
