@@ -125,10 +125,10 @@ TEST(CollisionSystemTest, NotTouchingAndLeftOf) {
 
     SDL_Rect rectA = {0, 0, 50, 50};
     SDL_Rect rectB = {60, 0, 50, 50};
-    EXPECT_TRUE(collisionSystem.notTouchingAndLeftOf(rectA, rectB));
+    EXPECT_TRUE(collisionSystem.isLeftOf(rectA, rectB));
 
     rectB.x = 40;
-    EXPECT_FALSE(collisionSystem.notTouchingAndLeftOf(rectA, rectB));
+    EXPECT_FALSE(collisionSystem.isLeftOf(rectA, rectB));
 }
 
 TEST(CollisionSystemTest, NotTouchingAndRightOf) {
@@ -136,10 +136,10 @@ TEST(CollisionSystemTest, NotTouchingAndRightOf) {
 
     SDL_Rect rectA = {60, 0, 50, 50};
     SDL_Rect rectB = {0, 0, 50, 50};
-    EXPECT_TRUE(collisionSystem.notTouchingAndRightOf(rectA, rectB));
+    EXPECT_TRUE(collisionSystem.isRightOf(rectA, rectB));
 
     rectA.x = 40;
-    EXPECT_FALSE(collisionSystem.notTouchingAndRightOf(rectA, rectB));
+    EXPECT_FALSE(collisionSystem.isRightOf(rectA, rectB));
 }
 
 TEST(CollisionSystemTest, CheckCollisionY) {

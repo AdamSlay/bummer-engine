@@ -96,10 +96,10 @@ bool CollisionSystem::notTouchingXaxis(const SDL_Rect &primaryCollider, const SD
      * @param primaryCollider: The primaryEntity collider
      * @param otherCollider: The otherEntity collider
      */
-    return notTouchingAndLeftOf(primaryCollider, otherCollider) || notTouchingAndRightOf(primaryCollider, otherCollider);
+    return isLeftOf(primaryCollider, otherCollider) || isRightOf(primaryCollider, otherCollider);
 }
 
-bool CollisionSystem::notTouchingAndLeftOf(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider) {
+bool CollisionSystem::isLeftOf(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider) {
     /**
      * Check if the primaryEntity is to the left of and not touching otherEntity
      *
@@ -109,7 +109,7 @@ bool CollisionSystem::notTouchingAndLeftOf(const SDL_Rect &primaryCollider, cons
     return primaryCollider.x + primaryCollider.w < otherCollider.x;
 }
 
-bool CollisionSystem::notTouchingAndRightOf(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider) {
+bool CollisionSystem::isRightOf(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider) {
     /**
      * Check if the primaryEntity is to the right of not touching otherEntity
      *
