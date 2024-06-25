@@ -7,6 +7,7 @@
 class CooldownSystem {
 public:
     void update(EntityManager &entityManager, float deltaTim);
+    void decrementDashCooldown(Entity &entity, float deltaTime);
 
 };
 
