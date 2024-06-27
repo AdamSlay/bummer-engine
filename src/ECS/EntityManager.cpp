@@ -197,11 +197,7 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
         }
 
         if (componentsJson.contains("Health")) {
-            json healthJson = componentsJson["Health"];
-            int maxHealth = healthJson["maxHealth"];
-            int currentHealth = healthJson["currentHealth"];
-            int invincibilityFrames = healthJson["invincibilityFrames"];
-            entity.addComponent<Health>({maxHealth, currentHealth, invincibilityFrames});
+            addComponentHealth(entity, componentsJson["Health"]);
         }
 
         if (componentsJson.contains("AttackMap")) {
@@ -315,7 +311,10 @@ void EntityManager::addComponentDash(Entity& entity, const json& componentJson) 
 }
 
 void EntityManager::addComponentHealth(Entity& entity, const json& componentJson) {
-
+    int maxHealth = componentJson["maxHealth"];
+    int currentHealth = componentJson["currentHealth"];
+    int invincibilityFrames = componentJson["invincibilityFrames"];
+    entity.addComponent<Health>({maxHealth, currentHealth, invincibilityFrames});
 }
 
 void EntityManager::addComponentAttackMap(Entity& entity, const json& componentJson) {
