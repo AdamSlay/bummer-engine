@@ -149,14 +149,7 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
         }
 
         if (componentsJson.contains("Sprite")) {
-            json spriteJson = componentsJson["Sprite"];
-            SDL_Texture* texture = textureManager->loadTexture(renderer, spriteJson["texturePath"]);
-            int x = static_cast<int>(spriteJson["srcRect"]["x"]);
-            int y = static_cast<int>(spriteJson["srcRect"]["y"]);
-            int w = static_cast<int>(spriteJson["srcRect"]["w"]);
-            int h = static_cast<int>(spriteJson["srcRect"]["h"]);
-            SDL_Rect srcRect = {x, y, w, h};
-            entity.addComponent<Sprite>({texture, srcRect});
+            addComponentSprite(entity, componentsJson["Sprite"]);
         }
 
         if (componentsJson.contains("State")) {
@@ -311,4 +304,14 @@ void EntityManager::addComponentTransform(Entity& entity, const json& componentJ
 
 void EntityManager::addComponentCollider(Entity& entity, const json& componentJson) {
     entity.addComponent<Collider>({componentJson["offsetX"], componentJson["offsetY"], componentJson["width"], componentJson["height"]});
+}
+
+void EntityManager::addComponentSprite(Entity& entity, const json& componentJson) {
+    SDL_Texture* texture = textureManager->loadTexture(renderer, componentJson["texturePath"]);
+    int x = static_cast<int>(componentJson["srcRect"]["x"]);
+    int y = static_cast<int>(componentJson["srcRect"]["y"]);
+    int w = static_cast<int>(componentJson["srcRect"]["w"]);
+    int h = static_cast<int>(componentJson["srcRect"]["h"]);
+    SDL_Rect srcRect = {x, y, w, h};
+    entity.addComponent<Sprite>({texture, srcRect});
 }
