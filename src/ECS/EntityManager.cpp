@@ -23,15 +23,15 @@ std::map<std::string, playerStates> EntityManager::playerStatesMap = {
         {"DASHING", playerStates::DASHING}
 };
 
-EntityManager::EntityManager(TextureManager* texManager, SDL_Renderer* ecsRenderer) {
+EntityManager::EntityManager(TextureManager* textureManager, SDL_Renderer* renderer) {
     /**
      * Constructor for the EntityManager
      *
      * @param texManager: The texture manager
      * @param ecsRenderer: The SDL renderer
      */
-    this->textureManager = texManager;
-    this->renderer = ecsRenderer;
+    this->textureManager = textureManager;
+    this->renderer = renderer;
 }
 
 void EntityManager::clearEntities() {
@@ -85,6 +85,26 @@ Entity& EntityManager::getPlayer() {
         }
     }
     throw std::runtime_error("Player not found");
+}
+
+std::vector<Entity>& EntityManager::getCollidableEntities() {
+    collidableEntities.clear();
+    for (auto& entity : entities) {
+        if (entity.hasComponent<Collider>()) {
+            collidableEntities.push_back(entity);
+        }
+    }
+    return collidableEntities;
+}
+
+std::vector<Entity>& EntityManager::getMovableCollidableEntities() {
+    movableCollidableEntities.clear();
+    for (auto& entity : entities) {
+        if (entity.hasComponent<Transform>() && entity.hasComponent<Velocity>() && entity.hasComponent<Collider>()) {
+            movableCollidableEntities.push_back(entity);
+        }
+    }
+    return movableCollidableEntities;
 }
 
 Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath) {
@@ -275,24 +295,4 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
 
     // Return the new entity
     return entity;
-}
-
-std::vector<Entity>& EntityManager::getCollidableEntities() {
-    collidableEntities.clear();
-    for (auto& entity : entities) {
-        if (entity.hasComponent<Collider>()) {
-            collidableEntities.push_back(entity);
-        }
-    }
-    return collidableEntities;
-}
-
-std::vector<Entity>& EntityManager::getMovableCollidableEntities() {
-    movableCollidableEntities.clear();
-    for (auto& entity : entities) {
-        if (entity.hasComponent<Transform>() && entity.hasComponent<Velocity>() && entity.hasComponent<Collider>()) {
-            movableCollidableEntities.push_back(entity);
-        }
-    }
-    return movableCollidableEntities;
 }

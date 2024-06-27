@@ -14,7 +14,7 @@ public:
     std::vector<Entity> collidableEntities;
     std::vector<Entity> movableCollidableEntities;
 
-    EntityManager(TextureManager* texManager, SDL_Renderer* ecsRenderer);
+    EntityManager(TextureManager* textureManager, SDL_Renderer* renderer);
     Entity& createEntity();
     void removeEntity(int entityId);
     std::vector<Entity>& getEntities();
