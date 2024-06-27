@@ -12,6 +12,8 @@
 #include "../ECS/Components.h"
 #include "Entity.h"
 
+using ordered_json = nlohmann::ordered_json;
+
 
 class EntityManager {
 public:
@@ -37,24 +39,26 @@ private:
     std::vector<Entity> entities;
     TextureManager* textureManager;
     SDL_Renderer* renderer;
+    using ComponentAdder = void (EntityManager::*)(Entity&, const ordered_json&);
+    std::unordered_map<std::string, ComponentAdder> componentAdders;
 
-    void addComponentAI(Entity& entity, const nlohmann::json& componentJson);
-    void addComponentAnimator(Entity& entity, const nlohmann::json& componentJson);
-    void addComponentAttackMap(Entity& entity, const nlohmann::json& componentJson);
-    void addComponentCollider(Entity& entity, const nlohmann::json& componentJson);
-    void addComponentDash(Entity& entity, const nlohmann::json& componentJson);
-    void addComponentGravity(Entity& entity, const nlohmann::json& componentJson);
-    void addComponentHealth(Entity& entity, const nlohmann::json& componentJson);
-    void addComponentInput(Entity& entity, const nlohmann::json& componentJson);
-    void addComponentIntent(Entity& entity, const nlohmann::json& componentJson);
-    void addComponentJumps(Entity& entity, const nlohmann::json& componentJson);
-    void addComponentPlayer(Entity& entity, const nlohmann::json& componentJson);
-    void addComponentNpc(Entity& entity, const nlohmann::json& componentJson);
-    void addComponentSound(Entity& entity, const nlohmann::json& componentJson);
-    void addComponentSprite(Entity& entity, const nlohmann::json& componentJson);
-    void addComponentState(Entity& entity, const nlohmann::json& componentJson);
-    void addComponentTransform(Entity& entity, const nlohmann::json& componentJson);
-    void addComponentVelocity(Entity& entity, const nlohmann::json& componentJson);
+    void addComponentAI(Entity& entity, const ordered_json& componentJson);
+    void addComponentAnimator(Entity& entity, const ordered_json& componentJson);
+    void addComponentAttackMap(Entity& entity, const ordered_json& componentJson);
+    void addComponentCollider(Entity& entity, const ordered_json& componentJson);
+    void addComponentDash(Entity& entity, const ordered_json& componentJson);
+    void addComponentGravity(Entity& entity, const ordered_json& componentJson);
+    void addComponentHealth(Entity& entity, const ordered_json& componentJson);
+    void addComponentInput(Entity& entity, const ordered_json& componentJson);
+    void addComponentIntent(Entity& entity, const ordered_json& componentJson);
+    void addComponentJumps(Entity& entity, const ordered_json& componentJson);
+    void addComponentPlayer(Entity& entity, const ordered_json& componentJson);
+    void addComponentNpc(Entity& entity, const ordered_json& componentJson);
+    void addComponentSound(Entity& entity, const ordered_json& componentJson);
+    void addComponentSprite(Entity& entity, const ordered_json& componentJson);
+    void addComponentState(Entity& entity, const ordered_json& componentJson);
+    void addComponentTransform(Entity& entity, const ordered_json& componentJson);
+    void addComponentVelocity(Entity& entity, const ordered_json& componentJson);
 };
 
 #endif // BUMMERENGINE_ENTITYMANAGER_H

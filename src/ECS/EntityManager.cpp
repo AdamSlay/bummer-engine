@@ -4,8 +4,6 @@
 #include "EntityManager.h"
 #include "../Utils.h"
 
-using json = nlohmann::json;
-
 std::map<std::string, playerState> EntityManager::playerStatesMap = {
         {"IDLE",              playerState::IDLE},
         {"GROUNDED",          playerState::GROUNDED},
@@ -30,6 +28,25 @@ EntityManager::EntityManager(TextureManager* textureManager, SDL_Renderer* rende
      */
     this->textureManager = textureManager;
     this->renderer = renderer;
+
+    componentAdders = {
+            {"Player", &EntityManager::addComponentPlayer},
+            {"Npc", &EntityManager::addComponentNpc},
+            {"Intent", &EntityManager::addComponentIntent},
+            {"Transform", &EntityManager::addComponentTransform},
+            {"Collider", &EntityManager::addComponentCollider},
+            {"Sprite", &EntityManager::addComponentSprite},
+            {"State", &EntityManager::addComponentState},
+            {"Velocity", &EntityManager::addComponentVelocity},
+            {"Gravity", &EntityManager::addComponentGravity},
+            {"Input", &EntityManager::addComponentInput},
+            {"Jumps", &EntityManager::addComponentJumps},
+            {"Dash", &EntityManager::addComponentDash},
+            {"Health", &EntityManager::addComponentHealth},
+            {"AttackMap", &EntityManager::addComponentAttackMap},
+            {"Animator", &EntityManager::addComponentAnimator},
+            {"AI", &EntityManager::addComponentAI}
+    };
 }
 
 void EntityManager::clearEntities() {
@@ -118,7 +135,7 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
     }
 
     // Parse the JSON
-    json templateJson;
+    ordered_json templateJson;
     file >> templateJson;
 
     // Create a new entity
@@ -126,100 +143,43 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
 
     // For each component in the template, add the component to the entity with the specified values
     if (templateJson.contains("components")) {
-        json componentsJson = templateJson["components"];
+        ordered_json componentsJson = templateJson["components"];
 
-        if (componentsJson.contains("Player")) {
-            addComponentPlayer(entity, componentsJson["Player"]);
-        }
-
-        if (componentsJson.contains("Npc")) {
-            addComponentNpc(entity, componentsJson["Npc"]);
-        }
-
-        if (componentsJson.contains("Intent")) {
-            addComponentIntent(entity, componentsJson["Intent"]);
-        }
-
-        if (componentsJson.contains("Transform")) {
-            addComponentTransform(entity, componentsJson["Transform"]);
-        }
-
-        if (componentsJson.contains("Collider")) {
-            addComponentCollider(entity, componentsJson["Collider"]);
-        }
-
-        if (componentsJson.contains("Sprite")) {
-            addComponentSprite(entity, componentsJson["Sprite"]);
-        }
-
-        if (componentsJson.contains("State")) {
-            addComponentState(entity, componentsJson["State"]);
-        }
-
-        if (componentsJson.contains("Velocity")) {
-            addComponentVelocity(entity, componentsJson["Velocity"]);
-        }
-
-        if (componentsJson.contains("Gravity")) {
-            addComponentGravity(entity, componentsJson["Gravity"]);
-        }
-
-        if (componentsJson.contains("Input")) {
-            addComponentInput(entity, componentsJson["Input"]);
-        }
-
-        if (componentsJson.contains("Jumps")) {
-            addComponentJumps(entity, componentsJson["Jumps"]);
-        }
-
-        if (componentsJson.contains("Dash")) {
-            addComponentDash(entity, componentsJson["Dash"]);
-        }
-
-        if (componentsJson.contains("Health")) {
-            addComponentHealth(entity, componentsJson["Health"]);
-        }
-
-        if (componentsJson.contains("AttackMap")) {
-            addComponentAttackMap(entity, componentsJson["AttackMap"]);
-        }
-
-        if (componentsJson.contains("Animator")) {
-            addComponentAnimator(entity, componentsJson);
-        }
-        
-        if (componentsJson.contains("AI")) {
-            addComponentAI(entity, componentsJson["AI"]);
+        for (auto& [componentName, componentJson] : componentsJson.items()) {
+            std::cout << componentName << std::endl;
+            if (componentAdders.count(componentName) > 0) {
+                (this->*componentAdders[componentName])(entity, componentJson);
+            }
         }
     }
     return entity;
 }
 
-void EntityManager::addComponentPlayer(Entity& entity, const json& componentJson) {
+void EntityManager::addComponentPlayer(Entity& entity, const ordered_json& componentJson) {
     int playerNum = componentJson["playerNum"];
     entity.addComponent<Player>({playerNum});
 }
 
-void EntityManager::addComponentNpc(Entity& entity, const json& componentJson) {
+void EntityManager::addComponentNpc(Entity& entity, const ordered_json& componentJson) {
     std::string npcType = componentJson["type"];
     entity.addComponent<Npc>({npcType});
 }
 
-void EntityManager::addComponentIntent(Entity& entity, const json& componentJson) {
+void EntityManager::addComponentIntent(Entity& entity, const ordered_json& componentJson) {
     Action action = Utils::stringToAction(componentJson["action"]);
     Direction direction = Utils::stringToDirection(componentJson["direction"]);
     entity.addComponent<Intent>({action, direction});
 }
 
-void EntityManager::addComponentTransform(Entity& entity, const json& componentJson) {
+void EntityManager::addComponentTransform(Entity& entity, const ordered_json& componentJson) {
     entity.addComponent<Transform>({componentJson["x"], componentJson["y"], componentJson["scale"]});
 }
 
-void EntityManager::addComponentCollider(Entity& entity, const json& componentJson) {
+void EntityManager::addComponentCollider(Entity& entity, const ordered_json& componentJson) {
     entity.addComponent<Collider>({componentJson["offsetX"], componentJson["offsetY"], componentJson["width"], componentJson["height"]});
 }
 
-void EntityManager::addComponentSprite(Entity& entity, const json& componentJson) {
+void EntityManager::addComponentSprite(Entity& entity, const ordered_json& componentJson) {
     SDL_Texture* texture = textureManager->loadTexture(renderer, componentJson["texturePath"]);
     int x = static_cast<int>(componentJson["srcRect"]["x"]);
     int y = static_cast<int>(componentJson["srcRect"]["y"]);
@@ -229,11 +189,11 @@ void EntityManager::addComponentSprite(Entity& entity, const json& componentJson
     entity.addComponent<Sprite>({texture, srcRect});
 }
 
-void EntityManager::addComponentVelocity(Entity& entity, const json& componentJson) {
+void EntityManager::addComponentVelocity(Entity& entity, const ordered_json& componentJson) {
     entity.addComponent<Velocity>({componentJson["dx"], componentJson["dy"], componentJson["direction"], componentJson["speed"]});
 }
 
-void EntityManager::addComponentGravity(Entity& entity, const json& componentJson) {
+void EntityManager::addComponentGravity(Entity& entity, const ordered_json& componentJson) {
     float baseGravity = componentJson["baseGravity"];
     float gravity = componentJson["gravity"];
     float ascendFactor = componentJson["ascendFactor"];
@@ -241,7 +201,7 @@ void EntityManager::addComponentGravity(Entity& entity, const json& componentJso
     entity.addComponent<Gravity>({baseGravity, gravity, ascendFactor, descendFactor});
 }
 
-void EntityManager::addComponentInput(Entity& entity, const json& componentJson) {
+void EntityManager::addComponentInput(Entity& entity, const ordered_json& componentJson) {
     std::map<SDL_Scancode, bool> keyStates;
     std::map<SDL_Scancode, bool> justPressed;
     std::map<SDL_Scancode, bool> justReleased;
@@ -249,15 +209,15 @@ void EntityManager::addComponentInput(Entity& entity, const json& componentJson)
     entity.addComponent<Input>({keyStates, justPressed, justReleased, actionInput});
 }
 
-void EntityManager::addComponentAnimator(Entity& entity, const json& componentJson) {
+void EntityManager::addComponentAnimator(Entity& entity, const ordered_json& componentJson) {
 
     // open the animator file
-    std::string animatorPath = componentJson["Animator"]["animatorPath"];
+    std::string animatorPath = componentJson["animatorPath"];
     std::ifstream animatorFile(animatorPath);
     if (!animatorFile.is_open()) {
-        throw std::runtime_error("Could not open animator file: " + componentJson["Animator"]["animatorPath"].get<std::string>());
+        throw std::runtime_error("Could not open animator file: " + componentJson["animatorPath"].get<std::string>());
     }
-    json animatorJson;
+    ordered_json animatorJson;
     animatorFile >> animatorJson;
 
     // iterate through the animator file and add the animations to the entity
@@ -288,7 +248,7 @@ void EntityManager::addComponentAnimator(Entity& entity, const json& componentJs
 
 }
 
-void EntityManager::addComponentJumps(Entity& entity, const json& componentJson) {
+void EntityManager::addComponentJumps(Entity& entity, const ordered_json& componentJson) {
     int jumps = componentJson["jumps"];
     int maxJumps = componentJson["maxJumps"];
     int jumpForce = componentJson["jumpVelocity"];
@@ -296,7 +256,7 @@ void EntityManager::addComponentJumps(Entity& entity, const json& componentJson)
 
 }
 
-void EntityManager::addComponentDash(Entity& entity, const json& componentJson) {
+void EntityManager::addComponentDash(Entity& entity, const ordered_json& componentJson) {
     int speed = componentJson["speed"];
     bool isDashing = false;
     float initCooldown = componentJson["initCooldown"];
@@ -305,14 +265,14 @@ void EntityManager::addComponentDash(Entity& entity, const json& componentJson) 
 
 }
 
-void EntityManager::addComponentHealth(Entity& entity, const json& componentJson) {
+void EntityManager::addComponentHealth(Entity& entity, const ordered_json& componentJson) {
     int maxHealth = componentJson["maxHealth"];
     int currentHealth = componentJson["currentHealth"];
     int invincibilityFrames = componentJson["invincibilityFrames"];
     entity.addComponent<Health>({maxHealth, currentHealth, invincibilityFrames});
 }
 
-void EntityManager::addComponentAttackMap(Entity& entity, const json& componentJson) {
+void EntityManager::addComponentAttackMap(Entity& entity, const ordered_json& componentJson) {
     std::map<std::string, AttackInfo> attacks;
 
     for (auto& [attackName, attackPath] : componentJson.items()) {
@@ -320,12 +280,12 @@ void EntityManager::addComponentAttackMap(Entity& entity, const json& componentJ
         if (!attackFile.is_open()) {
             throw std::runtime_error("Could not open attack file: " + attackPath.get<std::string>());
         }
-        json attackInfoJson;
+        ordered_json attackInfoJson;
         attackFile >> attackInfoJson;
 
         int damage = attackInfoJson["damage"];
         bool isActive = false;
-        json hitboxJson = attackInfoJson["hitbox"];
+       ordered_json hitboxJson = attackInfoJson["hitbox"];
         Hitbox hitbox = {hitboxJson["offsetX"], hitboxJson["offsetY"], hitboxJson["width"], hitboxJson["height"]};
         int knockback = attackInfoJson["knockback"];
         int windupframes = attackInfoJson["windupFrames"];
@@ -337,12 +297,12 @@ void EntityManager::addComponentAttackMap(Entity& entity, const json& componentJ
 
 }
 
-void EntityManager::addComponentState(Entity& entity, const json& componentJson) {
+void EntityManager::addComponentState(Entity& entity, const ordered_json& componentJson) {
     playerState state = playerStatesMap[componentJson["state"]];
     entity.addComponent<State>(state);
 }
 
-void EntityManager::addComponentAI(Entity& entity, const json& componentJson) {
+void EntityManager::addComponentAI(Entity& entity, const ordered_json& componentJson) {
     Transform& transform = entity.getComponent<Transform>();
     std::pair<int, int> patrolStart = {transform.x, transform.y};
     std::string state = componentJson["state"];
