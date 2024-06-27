@@ -141,8 +141,7 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
         }
 
         if (componentsJson.contains("Transform")) {
-            json transformJson = componentsJson["Transform"];
-            entity.addComponent<Transform>({transformJson["x"], transformJson["y"], transformJson["scale"]});
+            addComponentTransform(entity, componentsJson["Transform"]);
         }
 
         if (componentsJson.contains("Collider")) {
@@ -305,4 +304,8 @@ void EntityManager::addComponentIntent(Entity& entity, const json& componentJson
     Action action = Utils::stringToAction(componentJson["action"]);
     Direction direction = Utils::stringToDirection(componentJson["direction"]);
     entity.addComponent<Intent>({action, direction});
+}
+
+void EntityManager::addComponentTransform(Entity& entity, const json& componentJson) {
+    entity.addComponent<Transform>({componentJson["x"], componentJson["y"], componentJson["scale"]});
 }

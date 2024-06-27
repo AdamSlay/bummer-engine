@@ -41,6 +41,7 @@ private:
     void addComponentPlayer(Entity& entity, const nlohmann::json& componentJson);
     void addComponentNpc(Entity& entity, const nlohmann::json& componentJson);
     void addComponentIntent(Entity& entity, const nlohmann::json& componentJson);
+    void addComponentTransform(Entity& entity, const nlohmann::json& componentJson);
 };
 
 #endif // BUMMERENGINE_ENTITYMANAGER_H
