@@ -145,8 +145,7 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
         }
 
         if (componentsJson.contains("Collider")) {
-            json colliderJson = componentsJson["Collider"];
-            entity.addComponent<Collider>({colliderJson["offsetX"], colliderJson["offsetY"], colliderJson["width"], colliderJson["height"]});
+            addComponentCollider(entity, componentsJson["Collider"]);
         }
 
         if (componentsJson.contains("Sprite")) {
@@ -308,4 +307,8 @@ void EntityManager::addComponentIntent(Entity& entity, const json& componentJson
 
 void EntityManager::addComponentTransform(Entity& entity, const json& componentJson) {
     entity.addComponent<Transform>({componentJson["x"], componentJson["y"], componentJson["scale"]});
+}
+
+void EntityManager::addComponentCollider(Entity& entity, const json& componentJson) {
+    entity.addComponent<Collider>({componentJson["offsetX"], componentJson["offsetY"], componentJson["width"], componentJson["height"]});
 }
