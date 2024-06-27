@@ -161,20 +161,11 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
         }
 
         if (componentsJson.contains("Gravity")) {
-            json gravityJson = componentsJson["Gravity"];
-            float baseGravity = gravityJson["baseGravity"];
-            float gravity = gravityJson["gravity"];
-            float ascendFactor = gravityJson["ascendFactor"];
-            float descendFactor = gravityJson["descendFactor"];
-            entity.addComponent<Gravity>({baseGravity, gravity, ascendFactor, descendFactor});
+            addComponentGravity(entity, componentsJson["Gravity"]);
         }
 
         if (componentsJson.contains("Input")) {
-            std::map<SDL_Scancode, bool> keyStates;
-            std::map<SDL_Scancode, bool> justPressed;
-            std::map<SDL_Scancode, bool> justReleased;
-            std::map<Action, bool> actionInput;
-            entity.addComponent<Input>({keyStates, justPressed, justReleased, actionInput});
+            addComponentInput(entity, componentsJson["Input"]);
         }
 
         if (componentsJson.contains("Jumps")) {
@@ -245,11 +236,19 @@ void EntityManager::addComponentVelocity(Entity& entity, const json& componentJs
 }
 
 void EntityManager::addComponentGravity(Entity& entity, const json& componentJson) {
-
+    float baseGravity = componentJson["baseGravity"];
+    float gravity = componentJson["gravity"];
+    float ascendFactor = componentJson["ascendFactor"];
+    float descendFactor = componentJson["descendFactor"];
+    entity.addComponent<Gravity>({baseGravity, gravity, ascendFactor, descendFactor});
 }
 
 void EntityManager::addComponentInput(Entity& entity, const json& componentJson) {
-
+    std::map<SDL_Scancode, bool> keyStates;
+    std::map<SDL_Scancode, bool> justPressed;
+    std::map<SDL_Scancode, bool> justReleased;
+    std::map<Action, bool> actionInput;
+    entity.addComponent<Input>({keyStates, justPressed, justReleased, actionInput});
 }
 
 void EntityManager::addComponentAnimator(Entity& entity, const json& componentJson) {
