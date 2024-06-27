@@ -205,28 +205,7 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
         }
 
         if (componentsJson.contains("AttackMap")) {
-            json attackJson = componentsJson["AttackMap"];
-            std::map<std::string, AttackInfo> attacks;
-
-            for (auto& [attackName, attackPath] : attackJson.items()) {
-                std::ifstream attackFile(attackPath.get<std::string>());
-                if (!attackFile.is_open()) {
-                    throw std::runtime_error("Could not open attack file: " + attackPath.get<std::string>());
-                }
-                json attackInfoJson;
-                attackFile >> attackInfoJson;
-
-                int damage = attackInfoJson["damage"];
-                bool isActive = false;
-                json hitboxJson = attackInfoJson["hitbox"];
-                Hitbox hitbox = {hitboxJson["offsetX"], hitboxJson["offsetY"], hitboxJson["width"], hitboxJson["height"]};
-                int knockback = attackInfoJson["knockback"];
-                int windupframes = attackInfoJson["windupFrames"];
-                int duration = attackInfoJson["duration"];
-                attacks.emplace(attackName, AttackInfo{damage, isActive, hitbox, knockback, duration, windupframes});
-            }
-
-            entity.addComponent<AttackMap>({attacks});
+            addComponentAttackMap(entity, componentsJson["AttackMap"]);
         }
 
         if (componentsJson.contains("Animator")) {
@@ -340,6 +319,27 @@ void EntityManager::addComponentHealth(Entity& entity, const json& componentJson
 }
 
 void EntityManager::addComponentAttackMap(Entity& entity, const json& componentJson) {
+    std::map<std::string, AttackInfo> attacks;
+
+    for (auto& [attackName, attackPath] : componentJson.items()) {
+        std::ifstream attackFile(attackPath.get<std::string>());
+        if (!attackFile.is_open()) {
+            throw std::runtime_error("Could not open attack file: " + attackPath.get<std::string>());
+        }
+        json attackInfoJson;
+        attackFile >> attackInfoJson;
+
+        int damage = attackInfoJson["damage"];
+        bool isActive = false;
+        json hitboxJson = attackInfoJson["hitbox"];
+        Hitbox hitbox = {hitboxJson["offsetX"], hitboxJson["offsetY"], hitboxJson["width"], hitboxJson["height"]};
+        int knockback = attackInfoJson["knockback"];
+        int windupframes = attackInfoJson["windupFrames"];
+        int duration = attackInfoJson["duration"];
+        attacks.emplace(attackName, AttackInfo{damage, isActive, hitbox, knockback, duration, windupframes});
+    }
+
+    entity.addComponent<AttackMap>({attacks});
 
 }
 
