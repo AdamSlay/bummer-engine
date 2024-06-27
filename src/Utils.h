@@ -8,7 +8,7 @@
 namespace Utils {
     Action stringToAction(const std::string& action);
     Direction stringToDirection(const std::string& direction);
-    std::string playerStateToString(playerStates state);
+    std::string playerStateToString(playerState state);
     std::string actionToString(Action action);
 }
 #endif //BUMMERENGINE_UTILS_H

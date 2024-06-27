@@ -23,12 +23,12 @@ public:
     std::vector<Entity>& getCollidableEntities();
     std::vector<Entity>& getMovableCollidableEntities();
     Entity& createPlayer(int x, int y, int w, int h);
-    void configureAnimator(Entity& entity, std::map<playerStates, AnimationClip>& animations);
+    void configureAnimator(Entity& entity, std::map<playerState, AnimationClip>& animations);
     Entity& getPlayer();
     Entity& getEntityById(int id);
 
 private:
-    static std::map<std::string, playerStates> playerStatesMap;
+    static std::map<std::string, playerState> playerStatesMap;
     static std::map<std::string, Action> actionMap;
     std::vector<Entity> entities;
     TextureManager* textureManager;

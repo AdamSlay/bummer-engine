@@ -6,7 +6,7 @@
 
 #include <SDL2/SDL.h>
 
-enum class playerStates
+enum class playerState
 {
     IDLE,
     GROUNDED,
@@ -123,19 +123,19 @@ struct AnimationClip
 
 struct Animator
 {
-    std::map<playerStates, AnimationClip> animations;
-    playerStates currentAnimation;
+    std::map<playerState, AnimationClip> animations;
+    playerState currentAnimation;
     int currentFrame;
     int currentImage;
     bool isPlaying;
-    Animator(std::map<playerStates, AnimationClip> animations, playerStates currentAnimation, int currentFrame, int currentImage, bool isPlaying)
+    Animator(std::map<playerState, AnimationClip> animations, playerState currentAnimation, int currentFrame, int currentImage, bool isPlaying)
         : animations(animations), currentAnimation(currentAnimation), currentFrame(currentFrame), currentImage(currentImage), isPlaying(isPlaying) {}
 };
 
 struct State
 {
-    playerStates state;
-    State(playerStates state) : state(state) {}
+    playerState state;
+    State(playerState state) : state(state) {}
 };
 
 struct Player

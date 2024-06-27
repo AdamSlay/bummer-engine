@@ -46,7 +46,7 @@ void AttackSystem::handleIntent(Entity& entity) {
 
             // if state is basic attack, set attack to active
             auto& state = entity.getComponent<State>();
-            if (state.state == playerStates::BASIC_ATTACK) {
+            if (state.state == playerState::BASIC_ATTACK) {
                 // TODO: AttackSystem::setBasicAttackActive() or similar
                 attackMap.attacks["basic"].isActive = true;
                 auto& vel = entity.getComponent<Velocity>();
@@ -74,7 +74,7 @@ void AttackSystem::handleActiveAttacks(Entity &attacker, EntityManager &entityMa
         if (attackInfo.isActive) {
             // Could the issue with the knockback involve the enemy having an active attack at the time that it gets hit/stunned?
             auto& state = attacker.getComponent<State>();
-            if (state.state == playerStates::STUNNED || state.state == playerStates::HIT) {
+            if (state.state == playerState::STUNNED || state.state == playerState::HIT) {
                 attackInfo.isActive = false;
                 break;
             }
@@ -188,10 +188,10 @@ void AttackSystem::decrementInvincibiltyFrames(Entity& entity) {
         // TODO: AttackSystem should not be responsible for changing the state of an entity. That's what the StateMachine is for.
 
         if (health.invincibilityRemaining > 0) {
-            entity.changeState(playerStates::STUNNED);
+            entity.changeState(playerState::STUNNED);
             health.invincibilityRemaining -= 1;
             if (health.invincibilityRemaining == 0) {
-                entity.changeState(playerStates::IDLE);
+                entity.changeState(playerState::IDLE);
             }
         }
     }

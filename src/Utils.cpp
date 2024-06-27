@@ -63,25 +63,25 @@ std::string Utils::actionToString(Action action) {
     return actionMap[action];
 }
 
-std::string Utils::playerStateToString(playerStates state) {
+std::string Utils::playerStateToString(playerState state) {
     /**
-     * Convert playerStates to string
+     * Convert playerState to string
      *
      * @param state: The player state
      */
-    std::map<playerStates, std::string> stateMap = {
-            {playerStates::IDLE,                             "IDLE"},
-            {playerStates::GROUNDED,                 "GROUNDED"},
-            {playerStates::RUN,                              "RUN"},
-            {playerStates::JUMP_ASCEND,            "JUMP_ASCEND"},
-            {playerStates::JUMP_DESCEND,          "JUMP_DESCEND"},
-            {playerStates::JUMP_APEX,                  "JUMP_APEX"},
-            {playerStates::JUMP_APEX_DESCEND,"JUMP_APEX_DESCEND"},
-            {playerStates::JUMP_APEX_ASCEND,  "JUMP_APEX_ASCEND"},
-            {playerStates::BASIC_ATTACK,             "BASIC_ATTACK"},
-            {playerStates::HIT,                                  "HIT"},
-            {playerStates::STUNNED,                       "STUNNED"},
-            {playerStates::DASHING,                        "DASHING"}
+    std::map<playerState, std::string> stateMap = {
+            {playerState::IDLE,              "IDLE"},
+            {playerState::GROUNDED,          "GROUNDED"},
+            {playerState::RUN,               "RUN"},
+            {playerState::JUMP_ASCEND,       "JUMP_ASCEND"},
+            {playerState::JUMP_DESCEND,      "JUMP_DESCEND"},
+            {playerState::JUMP_APEX,         "JUMP_APEX"},
+            {playerState::JUMP_APEX_DESCEND, "JUMP_APEX_DESCEND"},
+            {playerState::JUMP_APEX_ASCEND,  "JUMP_APEX_ASCEND"},
+            {playerState::BASIC_ATTACK,      "BASIC_ATTACK"},
+            {playerState::HIT,               "HIT"},
+            {playerState::STUNNED,           "STUNNED"},
+            {playerState::DASHING,           "DASHING"}
     };
     return stateMap[state];
 }

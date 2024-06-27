@@ -44,7 +44,7 @@ void MovementSystem::handleIntent(EntityManager& entityManager, float deltaTime)
                 }
             }
 
-            else if (entity.getComponent<State>().state == playerStates::DASHING){
+            else if (entity.getComponent<State>().state == playerState::DASHING){
                 dash(entity, deltaTime);
             }
         }

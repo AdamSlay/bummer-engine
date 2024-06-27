@@ -33,10 +33,10 @@ TEST(UtilsTest, Test_actionToString) {
 }
 
 TEST(UtilsTest, Test_playerStateToString) {
-    std::string idleState = Utils::playerStateToString(playerStates::IDLE);
+    std::string idleState = Utils::playerStateToString(playerState::IDLE);
     EXPECT_EQ(idleState, "IDLE");
 
-    std::string runState = Utils::playerStateToString(playerStates::RUN);
+    std::string runState = Utils::playerStateToString(playerState::RUN);
     EXPECT_EQ(runState, "RUN");
 }
 

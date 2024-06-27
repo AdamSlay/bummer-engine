@@ -27,7 +27,7 @@ public:
     template <typename T>
     bool hasComponent() const;
 
-    void changeState(playerStates newState);
+    void changeState(playerState newState);
     void resetIntent(bool direction);
     int getID() const;
     void setTransformPos(int x, int y);

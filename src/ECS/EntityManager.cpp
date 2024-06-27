@@ -8,19 +8,19 @@
 
 using json = nlohmann::json;
 
-std::map<std::string, playerStates> EntityManager::playerStatesMap = {
-        {"IDLE", playerStates::IDLE},
-        {"GROUNDED", playerStates::GROUNDED},
-        {"RUN", playerStates::RUN},
-        {"JUMP_ASCEND", playerStates::JUMP_ASCEND},
-        {"JUMP_DESCEND", playerStates::JUMP_DESCEND},
-        {"JUMP_APEX", playerStates::JUMP_APEX},
-        {"JUMP_APEX_DESCEND", playerStates::JUMP_APEX_DESCEND},
-        {"JUMP_APEX_ASCEND", playerStates::JUMP_APEX_ASCEND},
-        {"BASIC_ATTACK", playerStates::BASIC_ATTACK},
-        {"HIT", playerStates::HIT},
-        {"STUNNED", playerStates::STUNNED},
-        {"DASHING", playerStates::DASHING}
+std::map<std::string, playerState> EntityManager::playerStatesMap = {
+        {"IDLE",              playerState::IDLE},
+        {"GROUNDED",          playerState::GROUNDED},
+        {"RUN",               playerState::RUN},
+        {"JUMP_ASCEND",       playerState::JUMP_ASCEND},
+        {"JUMP_DESCEND",      playerState::JUMP_DESCEND},
+        {"JUMP_APEX",         playerState::JUMP_APEX},
+        {"JUMP_APEX_DESCEND", playerState::JUMP_APEX_DESCEND},
+        {"JUMP_APEX_ASCEND",  playerState::JUMP_APEX_ASCEND},
+        {"BASIC_ATTACK",      playerState::BASIC_ATTACK},
+        {"HIT",               playerState::HIT},
+        {"STUNNED",           playerState::STUNNED},
+        {"DASHING",           playerState::DASHING}
 };
 
 EntityManager::EntityManager(TextureManager* textureManager, SDL_Renderer* renderer) {
@@ -168,7 +168,7 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
         }
 
         if (componentsJson.contains("State")) {
-            playerStates state = playerStatesMap[componentsJson["State"]["state"]];
+            playerState state = playerStatesMap[componentsJson["State"]["state"]];
             entity.addComponent<State>(state);
         }
 
@@ -256,9 +256,9 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
             animatorFile >> animatorJson;
 
             // iterate through the animator file and add the animations to the entity
-            std::map<playerStates, AnimationClip> animations;
+            std::map<playerState, AnimationClip> animations;
             for (auto& [animation, animationClips] : animatorJson["Animations"].items()) {
-                playerStates state = playerStatesMap[animation];
+                playerState state = playerStatesMap[animation];
                 SDL_Texture *texture = textureManager->loadTexture(renderer, animationClips["spriteSheetPath"]);
                 std::vector<SDL_Rect> frames;
                 int framesPerImage = animationClips["framesPerImage"];
@@ -279,7 +279,7 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
                 animations.emplace(state, clip);
             }
 
-            entity.addComponent<Animator>({animations, playerStates::IDLE, 0, 0, true});
+            entity.addComponent<Animator>({animations, playerState::IDLE, 0, 0, true});
         }
         
         if (componentsJson.contains("AI")) {

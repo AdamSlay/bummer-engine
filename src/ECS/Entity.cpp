@@ -11,7 +11,7 @@ Entity::Entity(int id): id(id) {
      */
 }
 
-void Entity::changeState(playerStates newState) {
+void Entity::changeState(playerState newState) {
     /**
      * Change the state of the entity
      *
