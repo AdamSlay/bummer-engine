@@ -178,20 +178,11 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
         }
 
         if (componentsJson.contains("Jumps")) {
-            json jumpsJson = componentsJson["Jumps"];
-            int jumps = jumpsJson["jumps"];
-            int maxJumps = jumpsJson["maxJumps"];
-            int jumpForce = jumpsJson["jumpVelocity"];
-            entity.addComponent<Jumps>({jumps, maxJumps, jumpForce});
+            addComponentJumps(entity, componentsJson["Jumps"]);
         }
 
         if (componentsJson.contains("Dash")) {
-            json dashJson = componentsJson["Dash"];
-            int speed = dashJson["speed"];
-            bool isDashing = false;
-            float initCooldown = dashJson["initCooldown"];
-            float initDuration = dashJson["initDuration"];
-            entity.addComponent<Dash>({speed, isDashing, initCooldown, initDuration});
+            addComponentDash(entity, componentsJson["Dash"]);
         }
 
         if (componentsJson.contains("Health")) {
@@ -301,10 +292,19 @@ void EntityManager::addComponentAnimator(Entity& entity, const json& componentJs
 }
 
 void EntityManager::addComponentJumps(Entity& entity, const json& componentJson) {
+    int jumps = componentJson["jumps"];
+    int maxJumps = componentJson["maxJumps"];
+    int jumpForce = componentJson["jumpVelocity"];
+    entity.addComponent<Jumps>({jumps, maxJumps, jumpForce});
 
 }
 
 void EntityManager::addComponentDash(Entity& entity, const json& componentJson) {
+    int speed = componentJson["speed"];
+    bool isDashing = false;
+    float initCooldown = componentJson["initCooldown"];
+    float initDuration = componentJson["initDuration"];
+    entity.addComponent<Dash>({speed, isDashing, initCooldown, initDuration});
 
 }
 
