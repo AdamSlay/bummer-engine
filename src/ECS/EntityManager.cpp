@@ -1,8 +1,6 @@
 #include <fstream>
 #include <iostream>
 
-#include <nlohmann/json.hpp>
-
 #include "EntityManager.h"
 #include "../Utils.h"
 
@@ -131,19 +129,15 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
         json componentsJson = templateJson["components"];
 
         if (componentsJson.contains("Player")) {
-            int playerNum = componentsJson["Player"]["playerNum"];
-            entity.addComponent<Player>({playerNum});
+            addComponentPlayer(entity, componentsJson["Player"]);
         }
 
         if (componentsJson.contains("Npc")) {
-            std::string npcType = componentsJson["Npc"]["type"];
-            entity.addComponent<Npc>({npcType});
+            addComponentNpc(entity, componentsJson["Npc"]);
         }
 
         if (componentsJson.contains("Intent")) {
-            Action action = Utils::stringToAction(componentsJson["Intent"]["action"]);
-            Direction direction = Utils::stringToDirection(componentsJson["Intent"]["direction"]);
-            entity.addComponent<Intent>({action, direction});
+            addComponentIntent(entity, componentsJson["Intent"]);
         }
 
         if (componentsJson.contains("Transform")) {
@@ -295,4 +289,20 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
 
     // Return the new entity
     return entity;
+}
+
+void EntityManager::addComponentPlayer(Entity& entity, const json& componentJson) {
+    int playerNum = componentJson["playerNum"];
+    entity.addComponent<Player>({playerNum});
+}
+
+void EntityManager::addComponentNpc(Entity& entity, const json& componentJson) {
+    std::string npcType = componentJson["type"];
+    entity.addComponent<Npc>({npcType});
+}
+
+void EntityManager::addComponentIntent(Entity& entity, const json& componentJson) {
+    Action action = Utils::stringToAction(componentJson["action"]);
+    Direction direction = Utils::stringToDirection(componentJson["direction"]);
+    entity.addComponent<Intent>({action, direction});
 }

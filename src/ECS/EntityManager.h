@@ -5,9 +5,13 @@
 #include <unordered_map>
 #include <typeindex>
 #include <vector>
+
+#include <nlohmann/json.hpp>
+
 #include "../Resources/TextureManager.h"
 #include "../ECS/Components.h"
 #include "Entity.h"
+
 
 class EntityManager {
 public:
@@ -33,6 +37,10 @@ private:
     std::vector<Entity> entities;
     TextureManager* textureManager;
     SDL_Renderer* renderer;
+
+    void addComponentPlayer(Entity& entity, const nlohmann::json& componentJson);
+    void addComponentNpc(Entity& entity, const nlohmann::json& componentJson);
+    void addComponentIntent(Entity& entity, const nlohmann::json& componentJson);
 };
 
 #endif // BUMMERENGINE_ENTITYMANAGER_H
