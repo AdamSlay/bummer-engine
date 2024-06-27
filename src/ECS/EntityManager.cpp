@@ -230,51 +230,11 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
         }
 
         if (componentsJson.contains("Animator")) {
-
-            // open the animator file
-            std::string animatorPath = componentsJson["Animator"]["animatorPath"];
-            std::ifstream animatorFile(animatorPath);
-            if (!animatorFile.is_open()) {
-                throw std::runtime_error("Could not open animator file: " + componentsJson["Animator"]["animatorPath"].get<std::string>());
-            }
-            json animatorJson;
-            animatorFile >> animatorJson;
-
-            // iterate through the animator file and add the animations to the entity
-            std::map<playerState, AnimationClip> animations;
-            for (auto& [animation, animationClips] : animatorJson["Animations"].items()) {
-                playerState state = playerStatesMap[animation];
-                SDL_Texture *texture = textureManager->loadTexture(renderer, animationClips["spriteSheetPath"]);
-                std::vector<SDL_Rect> frames;
-                int framesPerImage = animationClips["framesPerImage"];
-                int startImage = animationClips["startImage"];
-                int imageCount = animationClips["imageCount"];
-                int imageWidth = animationClips["imageWidth"];
-                int imageHeight = animationClips["imageHeight"];
-                int imageY = animationClips["imageY"];
-                std::string spritePath = animationClips["spriteSheetPath"];
-
-
-                for (int i = 0; i < imageCount; i++) {
-                    SDL_Rect frame = {startImage * imageWidth, imageY, imageWidth, imageHeight};
-                    frames.push_back(frame);
-                    startImage++;
-                }
-                AnimationClip clip = {texture, frames, framesPerImage, true, spritePath};
-                animations.emplace(state, clip);
-            }
-
-            entity.addComponent<Animator>({animations, playerState::IDLE, 0, 0, true});
+            addComponentAnimator(entity, componentsJson);
         }
         
         if (componentsJson.contains("AI")) {
-            Transform& transform = entity.getComponent<Transform>();
-            std::pair<int, int> patrolStart = {transform.x, transform.y};
-            std::string state = componentsJson["AI"]["state"];
-            float patrolRange = componentsJson["AI"]["patrolRange"];
-            float attackRange = componentsJson["AI"]["attackRange"];
-            float pursuitRange = componentsJson["AI"]["pursuitRange"];
-            entity.addComponent<AI>({state, patrolStart, patrolRange, attackRange, pursuitRange});
+            addComponentAI(entity, componentsJson["AI"]);
         }
     }
 
@@ -314,4 +274,85 @@ void EntityManager::addComponentSprite(Entity& entity, const json& componentJson
     int h = static_cast<int>(componentJson["srcRect"]["h"]);
     SDL_Rect srcRect = {x, y, w, h};
     entity.addComponent<Sprite>({texture, srcRect});
+}
+
+void EntityManager::addComponentVelocity(Entity& entity, const json& componentJson) {
+
+}
+
+void EntityManager::addComponentGravity(Entity& entity, const json& componentJson) {
+
+}
+
+void EntityManager::addComponentInput(Entity& entity, const json& componentJson) {
+
+}
+
+void EntityManager::addComponentAnimator(Entity& entity, const json& componentJson) {
+
+    // open the animator file
+    std::string animatorPath = componentJson["Animator"]["animatorPath"];
+    std::ifstream animatorFile(animatorPath);
+    if (!animatorFile.is_open()) {
+        throw std::runtime_error("Could not open animator file: " + componentJson["Animator"]["animatorPath"].get<std::string>());
+    }
+    json animatorJson;
+    animatorFile >> animatorJson;
+
+    // iterate through the animator file and add the animations to the entity
+    std::map<playerState, AnimationClip> animations;
+    for (auto& [animation, animationClips] : animatorJson["Animations"].items()) {
+        playerState state = playerStatesMap[animation];
+        SDL_Texture *texture = textureManager->loadTexture(renderer, animationClips["spriteSheetPath"]);
+        std::vector<SDL_Rect> frames;
+        int framesPerImage = animationClips["framesPerImage"];
+        int startImage = animationClips["startImage"];
+        int imageCount = animationClips["imageCount"];
+        int imageWidth = animationClips["imageWidth"];
+        int imageHeight = animationClips["imageHeight"];
+        int imageY = animationClips["imageY"];
+        std::string spritePath = animationClips["spriteSheetPath"];
+
+
+        for (int i = 0; i < imageCount; i++) {
+            SDL_Rect frame = {startImage * imageWidth, imageY, imageWidth, imageHeight};
+            frames.push_back(frame);
+            startImage++;
+        }
+        AnimationClip clip = {texture, frames, framesPerImage, true, spritePath};
+        animations.emplace(state, clip);
+    }
+
+    entity.addComponent<Animator>({animations, playerState::IDLE, 0, 0, true});
+
+}
+
+void EntityManager::addComponentJumps(Entity& entity, const json& componentJson) {
+
+}
+
+void EntityManager::addComponentDash(Entity& entity, const json& componentJson) {
+
+}
+
+void EntityManager::addComponentHealth(Entity& entity, const json& componentJson) {
+
+}
+
+void EntityManager::addComponentAttackMap(Entity& entity, const json& componentJson) {
+
+}
+
+void EntityManager::addComponentState(Entity& entity, const json& componentJson) {
+
+}
+
+void EntityManager::addComponentAI(Entity& entity, const json& componentJson) {
+    Transform& transform = entity.getComponent<Transform>();
+    std::pair<int, int> patrolStart = {transform.x, transform.y};
+    std::string state = componentJson["state"];
+    float patrolRange = componentJson["patrolRange"];
+    float attackRange = componentJson["attackRange"];
+    float pursuitRange = componentJson["pursuitRange"];
+    entity.addComponent<AI>({state, patrolStart, patrolRange, attackRange, pursuitRange});
 }

@@ -38,12 +38,23 @@ private:
     TextureManager* textureManager;
     SDL_Renderer* renderer;
 
+    void addComponentAI(Entity& entity, const nlohmann::json& componentJson);
+    void addComponentAnimator(Entity& entity, const nlohmann::json& componentJson);
+    void addComponentAttackMap(Entity& entity, const nlohmann::json& componentJson);
+    void addComponentCollider(Entity& entity, const nlohmann::json& componentJson);
+    void addComponentDash(Entity& entity, const nlohmann::json& componentJson);
+    void addComponentGravity(Entity& entity, const nlohmann::json& componentJson);
+    void addComponentHealth(Entity& entity, const nlohmann::json& componentJson);
+    void addComponentInput(Entity& entity, const nlohmann::json& componentJson);
+    void addComponentIntent(Entity& entity, const nlohmann::json& componentJson);
+    void addComponentJumps(Entity& entity, const nlohmann::json& componentJson);
     void addComponentPlayer(Entity& entity, const nlohmann::json& componentJson);
     void addComponentNpc(Entity& entity, const nlohmann::json& componentJson);
-    void addComponentIntent(Entity& entity, const nlohmann::json& componentJson);
-    void addComponentTransform(Entity& entity, const nlohmann::json& componentJson);
+    void addComponentSound(Entity& entity, const nlohmann::json& componentJson);
     void addComponentSprite(Entity& entity, const nlohmann::json& componentJson);
-    void addComponentCollider(Entity& entity, const nlohmann::json& componentJson);
+    void addComponentState(Entity& entity, const nlohmann::json& componentJson);
+    void addComponentTransform(Entity& entity, const nlohmann::json& componentJson);
+    void addComponentVelocity(Entity& entity, const nlohmann::json& componentJson);
 };
 
 #endif // BUMMERENGINE_ENTITYMANAGER_H
