@@ -157,8 +157,7 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
         }
 
         if (componentsJson.contains("Velocity")) {
-            json velocityJson = componentsJson["Velocity"];
-            entity.addComponent<Velocity>({velocityJson["dx"], velocityJson["dy"], velocityJson["direction"], velocityJson["speed"]});
+            addComponentVelocity(entity, componentsJson["Velocity"]);
         }
 
         if (componentsJson.contains("Gravity")) {
@@ -251,7 +250,7 @@ void EntityManager::addComponentSprite(Entity& entity, const json& componentJson
 }
 
 void EntityManager::addComponentVelocity(Entity& entity, const json& componentJson) {
-
+    entity.addComponent<Velocity>({componentJson["dx"], componentJson["dy"], componentJson["direction"], componentJson["speed"]});
 }
 
 void EntityManager::addComponentGravity(Entity& entity, const json& componentJson) {
