@@ -192,8 +192,6 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
             addComponentAI(entity, componentsJson["AI"]);
         }
     }
-
-    // Return the new entity
     return entity;
 }
 
