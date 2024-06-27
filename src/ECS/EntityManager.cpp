@@ -153,8 +153,7 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
         }
 
         if (componentsJson.contains("State")) {
-            playerState state = playerStatesMap[componentsJson["State"]["state"]];
-            entity.addComponent<State>(state);
+            addComponentState(entity, componentsJson["State"]);
         }
 
         if (componentsJson.contains("Velocity")) {
@@ -343,7 +342,8 @@ void EntityManager::addComponentAttackMap(Entity& entity, const json& componentJ
 }
 
 void EntityManager::addComponentState(Entity& entity, const json& componentJson) {
-
+    playerState state = playerStatesMap[componentJson["state"]];
+    entity.addComponent<State>(state);
 }
 
 void EntityManager::addComponentAI(Entity& entity, const json& componentJson) {
