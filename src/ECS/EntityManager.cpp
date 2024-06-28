@@ -128,12 +128,9 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
      *
      * @param templatePath: The path to the template file
      */
+    Entity& entity = createEntity();
     ordered_json templateJson = loadTemplateFile(templatePath);
 
-    // Create a new entity
-    Entity& entity = createEntity();
-
-    // For each component in the template, add the component to the entity with the specified values
     if (templateJson.contains("components")) {
         ordered_json componentsJson = templateJson["components"];
 
@@ -291,7 +288,7 @@ void EntityManager::addComponentAttackMap(Entity& entity, const ordered_json& co
 
         int damage = attackInfoJson["damage"];
         bool isActive = false;
-       ordered_json hitboxJson = attackInfoJson["hitbox"];
+        ordered_json hitboxJson = attackInfoJson["hitbox"];
         Hitbox hitbox = {hitboxJson["offsetX"], hitboxJson["offsetY"], hitboxJson["width"], hitboxJson["height"]};
         int knockback = attackInfoJson["knockback"];
         int windupframes = attackInfoJson["windupFrames"];
