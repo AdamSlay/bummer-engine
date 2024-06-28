@@ -33,15 +33,6 @@ public:
     Entity& getPlayer();
     Entity& getEntityById(int id);
 
-private:
-    static std::map<std::string, playerState> playerStatesMap;
-    static std::map<std::string, Action> actionMap;
-    std::vector<Entity> entities;
-    TextureManager* textureManager;
-    SDL_Renderer* renderer;
-    using ComponentAdder = void (EntityManager::*)(Entity&, const ordered_json&);
-    std::unordered_map<std::string, ComponentAdder> componentAdders;
-
     ordered_json loadTemplateFile(const std::string& templatePath);
     void addComponentAI(Entity& entity, const ordered_json& componentJson);
     void addComponentAnimator(Entity& entity, const ordered_json& componentJson);
@@ -60,6 +51,16 @@ private:
     void addComponentState(Entity& entity, const ordered_json& componentJson);
     void addComponentTransform(Entity& entity, const ordered_json& componentJson);
     void addComponentVelocity(Entity& entity, const ordered_json& componentJson);
+
+private:
+    static std::map<std::string, playerState> playerStatesMap;
+    static std::map<std::string, Action> actionMap;
+    std::vector<Entity> entities;
+    TextureManager* textureManager;
+    SDL_Renderer* renderer;
+    using ComponentAdder = void (EntityManager::*)(Entity&, const ordered_json&);
+    std::unordered_map<std::string, ComponentAdder> componentAdders;
+
 };
 
 #endif // BUMMERENGINE_ENTITYMANAGER_H
