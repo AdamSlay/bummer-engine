@@ -112,3 +112,56 @@ TEST(EntityManagerTest, TestAddComponentCollider) {
     // Cleanup
     SDL_DestroyRenderer(renderer);
 }
+
+TEST(EntityManagerTest, TestAddComponentSprite) {
+    // Arrange
+    TextureManager textureManager;
+    SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
+    EntityManager entityManager(&textureManager, renderer);
+    Entity& entity = entityManager.createEntity();
+    nlohmann::ordered_json componentJson;
+    componentJson["texturePath"] = "path/to/texture.png";
+    componentJson["srcRect"]["x"] = 0;
+    componentJson["srcRect"]["y"] = 0;
+    componentJson["srcRect"]["w"] = 32;
+    componentJson["srcRect"]["h"] = 32;
+
+    // Act
+    entityManager.addComponentSprite(entity, componentJson);
+
+    // Assert
+    ASSERT_TRUE(entity.hasComponent<Sprite>());
+    ASSERT_EQ(entity.getComponent<Sprite>().srcRect.x, 0);
+    ASSERT_EQ(entity.getComponent<Sprite>().srcRect.y, 0);
+    ASSERT_EQ(entity.getComponent<Sprite>().srcRect.w, 32);
+    ASSERT_EQ(entity.getComponent<Sprite>().srcRect.h, 32);
+
+    // Cleanup
+    SDL_DestroyRenderer(renderer);
+}
+
+TEST(EntityManagerTest, TestAddComponentVelocity) {
+    // Arrange
+    TextureManager textureManager;
+    SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
+    EntityManager entityManager(&textureManager, renderer);
+    Entity& entity = entityManager.createEntity();
+    nlohmann::ordered_json componentJson;
+    componentJson["dx"] = 1.0;
+    componentJson["dy"] = 2.0;
+    componentJson["direction"] = 1;
+    componentJson["speed"] = 3.0;
+
+    // Act
+    entityManager.addComponentVelocity(entity, componentJson);
+
+    // Assert
+    ASSERT_TRUE(entity.hasComponent<Velocity>());
+    ASSERT_EQ(entity.getComponent<Velocity>().dx, 1.0);
+    ASSERT_EQ(entity.getComponent<Velocity>().dy, 2.0);
+    ASSERT_EQ(entity.getComponent<Velocity>().direction, 1);
+    ASSERT_EQ(entity.getComponent<Velocity>().speed, 3.0);
+
+    // Cleanup
+    SDL_DestroyRenderer(renderer);
+}
