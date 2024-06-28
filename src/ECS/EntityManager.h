@@ -52,7 +52,6 @@ public:
     void addComponentTransform(Entity& entity, const ordered_json& componentJson);
     void addComponentVelocity(Entity& entity, const ordered_json& componentJson);
 
-private:
     static std::map<std::string, playerState> playerStatesMap;
     static std::map<std::string, Action> actionMap;
     std::vector<Entity> entities;

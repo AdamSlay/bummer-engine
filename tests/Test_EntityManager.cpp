@@ -285,3 +285,23 @@ TEST(EntityManagerTest, TestAddComponentHealth) {
     // Cleanup
     SDL_DestroyRenderer(renderer);
 }
+
+TEST(EntityManagerTest, TestAddComponentState) {
+    // Arrange
+    TextureManager textureManager;
+    SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
+    EntityManager entityManager(&textureManager, renderer);
+    Entity& entity = entityManager.createEntity();
+    nlohmann::ordered_json componentJson;
+    componentJson["state"] = "IDLE";
+
+    // Act
+    entityManager.addComponentState(entity, componentJson);
+
+    // Assert
+    ASSERT_TRUE(entity.hasComponent<State>());
+    ASSERT_EQ(entity.getComponent<State>().state, EntityManager::playerStatesMap["IDLE"]);
+
+    // Cleanup
+    SDL_DestroyRenderer(renderer);
+}
