@@ -264,7 +264,7 @@ void EntityManager::addComponentDash(Entity& entity, const ordered_json& compone
     bool isDashing = false;
     float initCooldown = componentJson["initCooldown"];
     float initDuration = componentJson["initDuration"];
-    entity.addComponent<Dash>({speed, isDashing, initCooldown, initDuration});
+    entity.addComponent<Dash>({speed, isDashing, initDuration, initCooldown});
 
 }
 
