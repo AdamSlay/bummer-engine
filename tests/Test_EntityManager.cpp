@@ -348,7 +348,7 @@ TEST(EntityManagerTest, TestAddComponentAttackMap) {
     Entity& entity = entityManager.createEntity();
     nlohmann::ordered_json componentJson;
     componentJson["attack1"] = "../../etc/templates/attacks/alien_basic.json";
-    componentJson["attack2"] = "../../etc/templates/attacks/alien_basic.json";
+    componentJson["attack2"] = "../../etc/templates/attacks/basic.json";
 
     // Act
     entityManager.addComponentAttackMap(entity, componentJson);
