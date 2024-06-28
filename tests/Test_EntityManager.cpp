@@ -233,3 +233,31 @@ TEST(EntityManagerTest, TestAddComponentJumps) {
     // Cleanup
     SDL_DestroyRenderer(renderer);
 }
+
+TEST(EntityManagerTest, TestAddComponentDash) {
+    // Arrange
+    TextureManager textureManager;
+    SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
+    EntityManager entityManager(&textureManager, renderer);
+    Entity& entity = entityManager.createEntity();
+    nlohmann::ordered_json componentJson;
+    componentJson["speed"] = 10;
+    componentJson["isDashing"] = false;
+    componentJson["initCooldown"] = 1.0f;
+    componentJson["initDuration"] = 2.0f;
+
+    // Act
+    entityManager.addComponentDash(entity, componentJson);
+
+    // Assert
+    ASSERT_TRUE(entity.hasComponent<Dash>());
+    ASSERT_EQ(entity.getComponent<Dash>().speed, 10);
+    ASSERT_EQ(entity.getComponent<Dash>().isDashing, false);
+    ASSERT_EQ(entity.getComponent<Dash>().initCooldown, 1.0f);
+    ASSERT_EQ(entity.getComponent<Dash>().initDuration, 2.0f);
+    ASSERT_EQ(entity.getComponent<Dash>().currentDuration, 2.0f);
+    ASSERT_EQ(entity.getComponent<Dash>().currentCooldown, 0.0f);
+
+    // Cleanup
+    SDL_DestroyRenderer(renderer);
+}
