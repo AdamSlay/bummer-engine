@@ -128,15 +128,7 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
      *
      * @param templatePath: The path to the template file
      */
-    // Load the template file
-    std::ifstream file(templatePath);
-    if (!file.is_open()) {
-        throw std::runtime_error("Could not open template file: " + templatePath);
-    }
-
-    // Parse the JSON
-    ordered_json templateJson;
-    file >> templateJson;
+    ordered_json templateJson = loadTemplateFile(templatePath);
 
     // Create a new entity
     Entity& entity = createEntity();
@@ -153,6 +145,20 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
         }
     }
     return entity;
+}
+
+ordered_json EntityManager::loadTemplateFile(const std::string& templatePath) {
+    // Open the template file
+    std::ifstream file(templatePath);
+    if (!file.is_open()) {
+        throw std::runtime_error("Could not open template file: " + templatePath);
+    }
+
+    // Parse the JSON
+    ordered_json templateJson;
+    file >> templateJson;
+
+    return templateJson;
 }
 
 void EntityManager::addComponentPlayer(Entity& entity, const ordered_json& componentJson) {

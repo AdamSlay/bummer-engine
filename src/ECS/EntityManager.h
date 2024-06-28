@@ -42,6 +42,7 @@ private:
     using ComponentAdder = void (EntityManager::*)(Entity&, const ordered_json&);
     std::unordered_map<std::string, ComponentAdder> componentAdders;
 
+    ordered_json loadTemplateFile(const std::string& templatePath);
     void addComponentAI(Entity& entity, const ordered_json& componentJson);
     void addComponentAnimator(Entity& entity, const ordered_json& componentJson);
     void addComponentAttackMap(Entity& entity, const ordered_json& componentJson);
