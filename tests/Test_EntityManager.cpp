@@ -362,3 +362,24 @@ TEST(EntityManagerTest, TestAddComponentAttackMap) {
     // Cleanup
     SDL_DestroyRenderer(renderer);
 }
+
+TEST(EntityManagerTest, TestAddComponentAnimator) {
+    // Arrange
+    TextureManager textureManager;
+    SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
+    EntityManager entityManager(&textureManager, renderer);
+    Entity& entity = entityManager.createEntity();
+    nlohmann::ordered_json componentJson;
+    componentJson["animatorPath"] = "../../assets/animations/player_anim.json";
+
+    // Act
+    entityManager.addComponentAnimator(entity, componentJson);
+
+    // Assert
+    ASSERT_TRUE(entity.hasComponent<Animator>());
+    auto& animations = entity.getComponent<Animator>().animations;
+    ASSERT_TRUE(animations.find(EntityManager::playerStatesMap["IDLE"]) != animations.end());
+
+    // Cleanup
+    SDL_DestroyRenderer(renderer);
+}
