@@ -165,3 +165,47 @@ TEST(EntityManagerTest, TestAddComponentVelocity) {
     // Cleanup
     SDL_DestroyRenderer(renderer);
 }
+
+TEST(EntityManagerTest, TestAddComponentInput) {
+    // Arrange
+    TextureManager textureManager;
+    SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
+    EntityManager entityManager(&textureManager, renderer);
+    Entity& entity = entityManager.createEntity();
+    nlohmann::ordered_json componentJson;
+
+    // Act
+    entityManager.addComponentInput(entity, componentJson);
+
+    // Assert
+    ASSERT_TRUE(entity.hasComponent<Input>());
+
+    // Cleanup
+    SDL_DestroyRenderer(renderer);
+}
+
+TEST(EntityManagerTest, TestAddComponentGravity) {
+    // Arrange
+    TextureManager textureManager;
+    SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
+    EntityManager entityManager(&textureManager, renderer);
+    Entity& entity = entityManager.createEntity();
+    nlohmann::ordered_json componentJson;
+    componentJson["baseGravity"] = 1.0;
+    componentJson["gravity"] = 2.0;
+    componentJson["ascendFactor"] = 3.0;
+    componentJson["descendFactor"] = 4.0;
+
+    // Act
+    entityManager.addComponentGravity(entity, componentJson);
+
+    // Assert
+    ASSERT_TRUE(entity.hasComponent<Gravity>());
+    ASSERT_EQ(entity.getComponent<Gravity>().baseGravity, 1.0);
+    ASSERT_EQ(entity.getComponent<Gravity>().gravity, 2.0);
+    ASSERT_EQ(entity.getComponent<Gravity>().ascendFactor, 3.0);
+    ASSERT_EQ(entity.getComponent<Gravity>().descendFactor, 4.0);
+
+    // Cleanup
+    SDL_DestroyRenderer(renderer);
+}
