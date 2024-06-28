@@ -261,3 +261,27 @@ TEST(EntityManagerTest, TestAddComponentDash) {
     // Cleanup
     SDL_DestroyRenderer(renderer);
 }
+
+TEST(EntityManagerTest, TestAddComponentHealth) {
+    // Arrange
+    TextureManager textureManager;
+    SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
+    EntityManager entityManager(&textureManager, renderer);
+    Entity& entity = entityManager.createEntity();
+    nlohmann::ordered_json componentJson;
+    componentJson["maxHealth"] = 100;
+    componentJson["currentHealth"] = 80;
+    componentJson["invincibilityFrames"] = 10;
+
+    // Act
+    entityManager.addComponentHealth(entity, componentJson);
+
+    // Assert
+    ASSERT_TRUE(entity.hasComponent<Health>());
+    ASSERT_EQ(entity.getComponent<Health>().maxHealth, 100);
+    ASSERT_EQ(entity.getComponent<Health>().currentHealth, 80);
+    ASSERT_EQ(entity.getComponent<Health>().invincibilityFrames, 10);
+
+    // Cleanup
+    SDL_DestroyRenderer(renderer);
+}
