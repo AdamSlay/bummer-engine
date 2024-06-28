@@ -305,3 +305,37 @@ TEST(EntityManagerTest, TestAddComponentState) {
     // Cleanup
     SDL_DestroyRenderer(renderer);
 }
+
+TEST(EntityManagerTest, TestAddComponentAI) {
+    // Arrange
+    TextureManager textureManager;
+    SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
+    EntityManager entityManager(&textureManager, renderer);
+    Entity& entity = entityManager.createEntity();
+
+    // Add a Transform component to the entity
+    nlohmann::ordered_json transformJson;
+    transformJson["x"] = 0;
+    transformJson["y"] = 0;
+    transformJson["scale"] = 1.0;
+    entityManager.addComponentTransform(entity, transformJson);
+
+    nlohmann::ordered_json componentJson;
+    componentJson["state"] = "IDLE";
+    componentJson["patrolRange"] = 100.0;
+    componentJson["attackRange"] = 50.0;
+    componentJson["pursuitRange"] = 150.0;
+
+    // Act
+    entityManager.addComponentAI(entity, componentJson);
+
+    // Assert
+    ASSERT_TRUE(entity.hasComponent<AI>());
+    ASSERT_EQ(entity.getComponent<AI>().state, "IDLE");
+    ASSERT_EQ(entity.getComponent<AI>().patrolRange, 100.0);
+    ASSERT_EQ(entity.getComponent<AI>().attackRange, 50.0);
+    ASSERT_EQ(entity.getComponent<AI>().pursuitRange, 150.0);
+
+    // Cleanup
+    SDL_DestroyRenderer(renderer);
+}
