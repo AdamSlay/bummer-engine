@@ -209,3 +209,27 @@ TEST(EntityManagerTest, TestAddComponentGravity) {
     // Cleanup
     SDL_DestroyRenderer(renderer);
 }
+
+TEST(EntityManagerTest, TestAddComponentJumps) {
+    // Arrange
+    TextureManager textureManager;
+    SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
+    EntityManager entityManager(&textureManager, renderer);
+    Entity& entity = entityManager.createEntity();
+    nlohmann::ordered_json componentJson;
+    componentJson["jumps"] = 1;
+    componentJson["maxJumps"] = 2;
+    componentJson["jumpVelocity"] = 3;
+
+    // Act
+    entityManager.addComponentJumps(entity, componentJson);
+
+    // Assert
+    ASSERT_TRUE(entity.hasComponent<Jumps>());
+    ASSERT_EQ(entity.getComponent<Jumps>().jumps, 1);
+    ASSERT_EQ(entity.getComponent<Jumps>().maxJumps, 2);
+    ASSERT_EQ(entity.getComponent<Jumps>().jumpVelocity, 3);
+
+    // Cleanup
+    SDL_DestroyRenderer(renderer);
+}
