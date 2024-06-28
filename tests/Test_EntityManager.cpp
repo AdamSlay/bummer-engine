@@ -339,3 +339,26 @@ TEST(EntityManagerTest, TestAddComponentAI) {
     // Cleanup
     SDL_DestroyRenderer(renderer);
 }
+
+TEST(EntityManagerTest, TestAddComponentAttackMap) {
+    // Arrange
+    TextureManager textureManager;
+    SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
+    EntityManager entityManager(&textureManager, renderer);
+    Entity& entity = entityManager.createEntity();
+    nlohmann::ordered_json componentJson;
+    componentJson["attack1"] = "../../etc/templates/attacks/alien_basic.json";
+    componentJson["attack2"] = "../../etc/templates/attacks/alien_basic.json";
+
+    // Act
+    entityManager.addComponentAttackMap(entity, componentJson);
+
+    // Assert
+    ASSERT_TRUE(entity.hasComponent<AttackMap>());
+    auto& attackMap = entity.getComponent<AttackMap>().attacks;
+    ASSERT_TRUE(attackMap.find("attack1") != attackMap.end());
+    ASSERT_TRUE(attackMap.find("attack2") != attackMap.end());
+
+    // Cleanup
+    SDL_DestroyRenderer(renderer);
+}
