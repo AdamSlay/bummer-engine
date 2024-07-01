@@ -2,6 +2,25 @@
 #include "../src/ECS/EntityManager.h"
 
 
+TEST(EntityManagerTest, TestCreateEntity) {
+    // Arrange
+    TextureManager textureManager;
+    SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
+    EntityManager entityManager(&textureManager, renderer);
+
+    // Act
+    Entity& entity = entityManager.createEntity();
+    Entity& entity1 = entityManager.createEntity();
+
+    // Assert
+    ASSERT_TRUE(entityManager.getEntities().size() == 2);
+    ASSERT_EQ(entityManager.getEntities()[0].getID(), 0);
+    ASSERT_EQ(entityManager.getEntities()[1].getID(), 1);
+
+    // Cleanup
+    SDL_DestroyRenderer(renderer);
+}
+
 TEST(EntityManagerTest, TestClearEntities) {
     // Arrange
     TextureManager textureManager;
