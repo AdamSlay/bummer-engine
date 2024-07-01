@@ -1,6 +1,28 @@
 #include <gtest/gtest.h>
 #include "../src/ECS/EntityManager.h"
 
+
+TEST(EntityManagerTest, TestClearEntities) {
+    // Arrange
+    TextureManager textureManager;
+    SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
+    EntityManager entityManager(&textureManager, renderer);
+
+    // Create a few entities
+    entityManager.createEntity();
+    entityManager.createEntity();
+    entityManager.createEntity();
+
+    // Act
+    entityManager.clearEntities();
+
+    // Assert
+    ASSERT_TRUE(entityManager.getEntities().empty());
+
+    // Cleanup
+    SDL_DestroyRenderer(renderer);
+}
+
 TEST(EntityManagerTest, TestAddComponentPlayer) {
     // Arrange
     TextureManager textureManager;
