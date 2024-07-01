@@ -52,6 +52,30 @@ TEST(EntityManagerTest, TestRemoveEntity) {
     SDL_DestroyRenderer(renderer);
 }
 
+TEST(EntityManagerTest, TestGetEntities) {
+    // Arrange
+    TextureManager textureManager;
+    SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
+    EntityManager entityManager(&textureManager, renderer);
+
+    // Create some entities
+    Entity entity1 = entityManager.createEntity();
+    Entity entity2 = entityManager.createEntity();
+    Entity entity3 = entityManager.createEntity();
+
+    // Act
+    std::vector<Entity>& entities = entityManager.getEntities();
+
+    // Assert
+    ASSERT_EQ(entities.size(), 3);
+    ASSERT_EQ(entities[0].getID(), entity1.getID());
+    ASSERT_EQ(entities[1].getID(), entity2.getID());
+    ASSERT_EQ(entities[2].getID(), entity3.getID());
+
+    // Cleanup
+    SDL_DestroyRenderer(renderer);
+}
+
 TEST(EntityManagerTest, TestClearEntities) {
     // Arrange
     TextureManager textureManager;
