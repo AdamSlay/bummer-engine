@@ -9,13 +9,44 @@ TEST(EntityManagerTest, TestCreateEntity) {
     EntityManager entityManager(&textureManager, renderer);
 
     // Act
-    Entity& entity = entityManager.createEntity();
-    Entity& entity1 = entityManager.createEntity();
+    Entity entity = entityManager.createEntity();
+    Entity entity1 = entityManager.createEntity();
 
     // Assert
     ASSERT_TRUE(entityManager.getEntities().size() == 2);
     ASSERT_EQ(entityManager.getEntities()[0].getID(), 0);
+    ASSERT_EQ(entity.getID(), 0);
     ASSERT_EQ(entityManager.getEntities()[1].getID(), 1);
+    ASSERT_EQ(entity1.getID(), 1);
+
+    // Cleanup
+    SDL_DestroyRenderer(renderer);
+}
+
+TEST(EntityManagerTest, TestRemoveEntity) {
+    // Arrange
+    TextureManager textureManager;
+    SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
+    EntityManager entityManager(&textureManager, renderer);
+
+    // Create a few entities
+    Entity entity1 = entityManager.createEntity();
+    Entity entity2 = entityManager.createEntity();
+    Entity entity3 = entityManager.createEntity();
+
+
+    ASSERT_EQ(entity1.getID(), 0);
+    ASSERT_EQ(entity2.getID(), 1);
+    ASSERT_EQ(entity3.getID(), 2);
+
+    // Act
+    entityManager.removeEntity(entity2.getID());
+
+    // Assert
+    auto& entities = entityManager.getEntities();
+    ASSERT_EQ(entities.size(), 2);
+    ASSERT_EQ(entities[0].getID(), entity1.getID());
+    ASSERT_EQ(entities[1].getID(), entity3.getID());
 
     // Cleanup
     SDL_DestroyRenderer(renderer);
