@@ -76,6 +76,31 @@ TEST(EntityManagerTest, TestGetEntities) {
     SDL_DestroyRenderer(renderer);
 }
 
+TEST(EntityManagerTest, TestGetEntityById) {
+    // Arrange
+    TextureManager textureManager;
+    SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
+    EntityManager entityManager(&textureManager, renderer);
+
+    // Create some entities
+    Entity entity1 = entityManager.createEntity();
+    Entity entity2 = entityManager.createEntity();
+    Entity entity3 = entityManager.createEntity();
+
+    // Act
+    Entity retrievedEntity1 = entityManager.getEntityById(entity1.getID());
+    Entity retrievedEntity2 = entityManager.getEntityById(entity2.getID());
+    Entity retrievedEntity3 = entityManager.getEntityById(entity3.getID());
+
+    // Assert
+    ASSERT_EQ(retrievedEntity1.getID(), entity1.getID());
+    ASSERT_EQ(retrievedEntity2.getID(), entity2.getID());
+    ASSERT_EQ(retrievedEntity3.getID(), entity3.getID());
+
+    // Cleanup
+    SDL_DestroyRenderer(renderer);
+}
+
 TEST(EntityManagerTest, TestClearEntities) {
     // Arrange
     TextureManager textureManager;
