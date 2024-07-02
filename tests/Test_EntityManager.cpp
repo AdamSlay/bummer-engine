@@ -161,9 +161,6 @@ TEST(EntityManagerTest, TestGetCollidableEntities) {
 
     // Act
     std::vector<Entity>& collidableEntities = entityManager.getCollidableEntities();
-    for (auto& entity : collidableEntities) {
-        std::cout << entity.getID() << std::endl;
-    }
 
     // Assert
     ASSERT_EQ(collidableEntities.size(), 2);
@@ -196,9 +193,6 @@ TEST(EntityManagerTest, TestGetMovableCollidableEntities) {
 
     // Act
     std::vector<Entity>& movableCollidableEntities = entityManager.getMovableCollidableEntities();
-    for (auto& entity : movableCollidableEntities) {
-        std::cout << entity.getID() << std::endl;
-    }
 
     // Assert
     ASSERT_EQ(movableCollidableEntities.size(), 2);
@@ -326,7 +320,7 @@ TEST(EntityManagerTest, TestAddComponentSprite) {
     EntityManager entityManager(&textureManager, renderer);
     Entity& entity = entityManager.createEntity();
     nlohmann::ordered_json componentJson;
-    componentJson["texturePath"] = "path/to/texture.png";
+    componentJson["texturePath"] = "../../tests/data/test_sprite.png";
     componentJson["srcRect"]["x"] = 0;
     componentJson["srcRect"]["y"] = 0;
     componentJson["srcRect"]["w"] = 32;
