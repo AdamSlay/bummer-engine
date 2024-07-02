@@ -1,0 +1,71 @@
+{
+  "name": "Player",
+  "components": {
+    "Player": {
+      "playerNum": 1
+    },
+    "Transform": {
+      "x": 590,
+      "y": 50,
+      "scale": 2
+    },
+    "Collider": {
+      "offsetX": 24,
+      "offsetY": 55,
+      "width": 16,
+      "height": 40
+    },
+    "Sprite": {
+      "texturePath": "../../assets/sprites/bb/bb_idle_sheet.png",
+      "srcRect": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 100
+      }
+    },
+    "Velocity": {
+      "dx": 0,
+      "dy": 0,
+      "speed": 5,
+      "direction": 1
+    },
+    "Gravity": {
+      "baseGravity": 0.8,
+      "gravity": 0.8,
+      "ascendFactor": 0.9,
+      "descendFactor": 1.1
+    },
+    "State": {
+      "state": "IDLE"
+    },
+    "Animator": {
+      "animatorPath": "../../assets/animations/player_anim.json"
+    },
+    "Input": {
+      "has": "yes"
+    },
+    "Intent": {
+      "action": "WAIT",
+      "direction": "STILL"
+    },
+    "Dash": {
+      "speed": 42,
+      "initCooldown": 0.12,
+      "initDuration": 0.5
+    },
+    "Jumps": {
+      "jumps": 0,
+      "maxJumps": 2,
+      "jumpVelocity": 20
+    },
+    "AttackMap": {
+      "basic": "../../etc/templates/attacks/basic.json"
+    },
+    "Health": {
+      "maxHealth": 50,
+      "currentHealth": 50,
+      "invincibilityFrames": 10
+    }
+  }
+}
