@@ -134,7 +134,6 @@ Entity& EntityManager::createEntityFromTemplate(const std::string& templatePath)
         ordered_json componentsJson = templateJson["components"];
 
         for (auto& [componentName, componentJson] : componentsJson.items()) {
-            std::cout << componentName << std::endl;
             if (componentAdders.count(componentName) > 0) {
                 (this->*componentAdders[componentName])(entity, componentJson);
             }
