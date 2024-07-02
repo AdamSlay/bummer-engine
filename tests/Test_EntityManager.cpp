@@ -206,7 +206,7 @@ TEST(EntityManagerTest, TestCreateEntityFromTemplate) {
     TextureManager textureManager;
     SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
     EntityManager entityManager(&textureManager, renderer);
-    std::string templatePath = "../../tests/data/test_template.json";  // Replace with the path to your test template
+    std::string templatePath = "../../tests/data/test_template.json";
 
     // Act
     Entity& entity = entityManager.createEntityFromTemplate(templatePath);
@@ -232,7 +232,7 @@ TEST(EntityManagerTest, TestLoadTemplateFile) {
     TextureManager textureManager;
     SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
     EntityManager entityManager(&textureManager, renderer);
-    std::string templatePath = "../../tests/data/test_template.json";  // Replace with the path to your test template
+    std::string templatePath = "../../tests/data/test_template.json";
 
     // Act
     nlohmann::ordered_json templateJson = entityManager.loadTemplateFile(templatePath);

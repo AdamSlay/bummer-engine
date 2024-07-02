@@ -16,7 +16,7 @@
       "height": 40
     },
     "Sprite": {
-      "texturePath": "../../assets/sprites/bb/bb_idle_sheet.png",
+      "texturePath": "../../tests/data/test_sprite.png",
       "srcRect": {
         "x": 0,
         "y": 0,
@@ -40,7 +40,7 @@
       "state": "IDLE"
     },
     "Animator": {
-      "animatorPath": "../../assets/animations/player_anim.json"
+      "animatorPath": "../../tests/data/test_anim.json"
     },
     "Input": {
       "has": "yes"
