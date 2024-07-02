@@ -201,6 +201,32 @@ TEST(EntityManagerTest, TestGetMovableCollidableEntities) {
     SDL_DestroyRenderer(renderer);
 }
 
+TEST(EntityManagerTest, TestCreateEntityFromTemplate) {
+    // Arrange
+    TextureManager textureManager;
+    SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
+    EntityManager entityManager(&textureManager, renderer);
+    std::string templatePath = "../../tests/data/test_template.json";  // Replace with the path to your test template
+
+    // Act
+    Entity& entity = entityManager.createEntityFromTemplate(templatePath);
+
+    // Assert
+    ASSERT_TRUE(entity.hasComponent<Transform>());
+    ASSERT_EQ(entity.getComponent<Transform>().x, 590);
+    ASSERT_EQ(entity.getComponent<Transform>().y, 50);
+    ASSERT_EQ(entity.getComponent<Transform>().scale, 2);
+
+    ASSERT_TRUE(entity.hasComponent<Collider>());
+    ASSERT_EQ(entity.getComponent<Collider>().offsetX, 24);
+    ASSERT_EQ(entity.getComponent<Collider>().offsetY, 55);
+    ASSERT_EQ(entity.getComponent<Collider>().width, 16);
+    ASSERT_EQ(entity.getComponent<Collider>().height, 40);
+
+    // Cleanup
+    SDL_DestroyRenderer(renderer);
+}
+
 TEST(EntityManagerTest, TestAddComponentPlayer) {
     // Arrange
     TextureManager textureManager;
