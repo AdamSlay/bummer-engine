@@ -142,6 +142,36 @@ TEST(EntityManagerTest, TestClearEntities) {
     SDL_DestroyRenderer(renderer);
 }
 
+TEST(EntityManagerTest, TestGetCollidableEntities) {
+    // Arrange
+    TextureManager textureManager;
+    SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
+    EntityManager entityManager(&textureManager, renderer);
+
+    // Create a few entities with Collider components
+    Entity& entity1 = entityManager.createEntity();
+    entity1.addComponent<Collider>({0,0,10,10});
+
+    Entity& entity2 = entityManager.createEntity();
+    entity2.addComponent<Collider>({10, 10, 10, 10});
+
+    // Create a few entities without Collider components
+    entityManager.createEntity();
+    entityManager.createEntity();
+
+    // Act
+    std::vector<Entity>& collidableEntities = entityManager.getCollidableEntities();
+    for (auto& entity : collidableEntities) {
+        std::cout << entity.getID() << std::endl;
+    }
+
+    // Assert
+    ASSERT_EQ(collidableEntities.size(), 2);
+
+    // Cleanup
+    SDL_DestroyRenderer(renderer);
+}
+
 TEST(EntityManagerTest, TestAddComponentPlayer) {
     // Arrange
     TextureManager textureManager;

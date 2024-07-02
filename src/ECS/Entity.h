@@ -36,6 +36,9 @@ public:
     SDL_Rect getColliderRect();
     SDL_Rect calculateColliderRect();
     SDL_Rect getHitboxRect(Hitbox& hitbox);
+    bool operator==(const Entity& other) const {
+        return getID() == other.getID();
+    }
 
 private:
     std::unordered_map<std::type_index, void*> components;
