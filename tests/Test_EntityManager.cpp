@@ -227,6 +227,27 @@ TEST(EntityManagerTest, TestCreateEntityFromTemplate) {
     SDL_DestroyRenderer(renderer);
 }
 
+TEST(EntityManagerTest, TestLoadTemplateFile) {
+    // Arrange
+    TextureManager textureManager;
+    SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
+    EntityManager entityManager(&textureManager, renderer);
+    std::string templatePath = "../../tests/data/test_template.json";  // Replace with the path to your test template
+
+    // Act
+    nlohmann::ordered_json templateJson = entityManager.loadTemplateFile(templatePath);
+
+    // Assert
+    ASSERT_TRUE(templateJson.contains("components"));
+    ASSERT_TRUE(templateJson["components"].contains("Transform"));
+    ASSERT_EQ(templateJson["components"]["Transform"]["x"], 590);
+    ASSERT_EQ(templateJson["components"]["Transform"]["y"], 50);
+    ASSERT_EQ(templateJson["components"]["Transform"]["scale"], 2);
+
+    // Cleanup
+    SDL_DestroyRenderer(renderer);
+}
+
 TEST(EntityManagerTest, TestAddComponentPlayer) {
     // Arrange
     TextureManager textureManager;
