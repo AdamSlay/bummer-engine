@@ -576,7 +576,7 @@ TEST(EntityManagerTest, TestAddComponentAnimator) {
     EntityManager entityManager(&textureManager, renderer);
     Entity& entity = entityManager.createEntity();
     nlohmann::ordered_json componentJson;
-    componentJson["animatorPath"] = "../../assets/animations/player_anim.json";
+    componentJson["animatorPath"] = "../../tests/data/test_anim.json";
 
     // Act
     entityManager.addComponentAnimator(entity, componentJson);
