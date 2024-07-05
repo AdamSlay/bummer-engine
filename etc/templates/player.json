@@ -51,8 +51,8 @@
     },
     "Dash": {
       "speed": 42,
-      "initCooldown": 0.12,
-      "initDuration": 0.5
+      "initCooldown": 0.5,
+      "initDuration": 0.15
     },
     "Jumps": {
       "jumps": 0,
