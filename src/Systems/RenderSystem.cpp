@@ -1,6 +1,6 @@
 #include "RenderSystem.h"
 #include "../ECS/Components.h"
-#include "../UI/Menu.h"
+#include "../UI/SplashScreen.h"
 #include "../Config.h"
 #include "../Utils.h"
 

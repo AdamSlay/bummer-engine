@@ -53,8 +53,8 @@ set(SOURCE_FILES
         src/Systems/RenderSystem.cpp
         src/Systems/SoundSystem.cpp
         src/Systems/SoundSystem.h
-        src/UI/Menu.cpp
-        src/UI/Menu.h
+        src/UI/SplashScreen.cpp
+        src/UI/SplashScreen.h
         src/Utils.cpp
         src/Utils.h
 )

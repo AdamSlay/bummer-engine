@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../src/UI/Menu.h"
+#include "../src/UI/SplashScreen.h"
 
 
 TEST(MenuTest, Test1) {

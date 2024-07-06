@@ -1,5 +1,5 @@
 #include "GameEngine.h"
-#include "../UI/Menu.h"
+#include "../UI/SplashScreen.h"
 #include "../Systems/RenderSystem.h"
 #include "../Systems/AnimationSystem.h"
 #include "../Systems/InputSystem.h"

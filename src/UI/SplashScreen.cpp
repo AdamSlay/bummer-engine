@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "../Config.h"
-#include "Menu.h"
+#include "SplashScreen.h"
 
 
 void render_splash_screen(SDL_Renderer* renderer, TTF_Font* font) {
