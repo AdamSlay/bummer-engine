@@ -22,18 +22,17 @@ void InputSystem::update(EntityManager &entityManager, bool &start_menu) {
      * @param quit: The quit flag
      */
     // Clear justPressed for all entities
-    Entity player = entityManager.getPlayer();
     for (Entity &entity : entityManager.getEntities()) {
-        if (entity.hasComponent<Player>()) {
+        if (entity.hasComponent<Input>()) {
             auto& input = entity.getComponent<Input>();
             input.justPressed.clear();
             input.justReleased.clear();
             input.actionInput.clear();
-            player = entity;
         }
     }
 
     SDL_Event e;
+    Entity player = entityManager.getPlayer();
     while (SDL_PollEvent(&e) != 0) {
         if (e.type == SDL_QUIT || (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)) {
             start_menu = true;
