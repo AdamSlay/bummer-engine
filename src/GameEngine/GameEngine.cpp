@@ -26,10 +26,6 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     render_splash_screen(renderer, font);
 
     Menu menu;
-    Menu::MenuResult result = menu.Show(renderer, font);
-    if(result == Menu::Exit) {
-        return;
-    }
 
     TextureManager textureManager;
     EntityManager entityManager(&textureManager, renderer);
@@ -56,9 +52,21 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
     SDL_Event e;
     bool quit = false;
+    bool start_menu = true;
     Uint32 lastTime = SDL_GetTicks();
     SDL_RenderSetLogicalSize(renderer, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
     while (!quit) {
+        // Show Menu if necessary
+        if (start_menu) {
+            Menu::MenuResult result = menu.Show(renderer, font);
+            if(result == Menu::Exit) {
+                quit = true;
+            }
+            if(result == Menu::Play) {
+                start_menu = false;
+            }
+        }
+
         // handle frame timing
         Uint32 currentTime = SDL_GetTicks();
         float deltaTime = (currentTime - lastTime) / 1000.0f;
@@ -73,7 +81,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
         }
 
         // Perform game logic updates
-        inputSystem.update(entityManager, quit);
+        inputSystem.update(entityManager, start_menu);
         aiSystem.update(entityManager);
         cooldownSystem.update(entityManager, deltaTime);
         attackSystem.update(entityManager);

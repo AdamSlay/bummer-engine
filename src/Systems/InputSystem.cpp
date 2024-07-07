@@ -14,7 +14,7 @@ InputSystem::InputSystem() {
     loadInputMaps();
 }
 
-void InputSystem::update(EntityManager &entityManager, bool &quit) {
+void InputSystem::update(EntityManager &entityManager, bool &start_menu) {
     /**
      * Update the input system
      *
@@ -36,7 +36,7 @@ void InputSystem::update(EntityManager &entityManager, bool &quit) {
     SDL_Event e;
     while (SDL_PollEvent(&e) != 0) {
         if (e.type == SDL_QUIT || (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)) {
-            quit = true;
+            start_menu = true;
             break;
         }
 
