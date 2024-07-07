@@ -56,8 +56,8 @@ void Menu::menu_view(SDL_Renderer* renderer, TTF_Font* font) {
 
     std::string poweredByText = "Press ESCAPE to Quit";
     TTF_SizeText(font, mainText.c_str(), &textWidth, &textHeight);
-    int poweredByX = (SCREEN_WIDTH / 2) - (textWidth / 2) + 50;
-    int poweredByY = mainY - FONT_SIZE - 10;
+    int poweredByX = (SCREEN_WIDTH / 2) - (textWidth / 2);
+    int poweredByY = mainY - FONT_SIZE - 50;
     SDL_Color bb_purple{104, 102, 182, 0xFF};
     render_text(renderer, font, poweredByText, bb_purple, poweredByX, poweredByY);
 }
