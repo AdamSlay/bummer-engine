@@ -1,5 +1,6 @@
 #include "GameEngine.h"
 #include "../UI/SplashScreen.h"
+#include "../UI/Menu.h"
 #include "../Systems/RenderSystem.h"
 #include "../Systems/AnimationSystem.h"
 #include "../Systems/InputSystem.h"
@@ -23,6 +24,12 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
      */
     // TODO: Make a Start Screen
     render_splash_screen(renderer, font);
+
+    Menu menu;
+    Menu::MenuResult result = menu.Show(renderer, font);
+    if(result == Menu::Exit) {
+        return;
+    }
 
     TextureManager textureManager;
     EntityManager entityManager(&textureManager, renderer);

@@ -57,6 +57,8 @@ set(SOURCE_FILES
         src/UI/SplashScreen.h
         src/Utils.cpp
         src/Utils.h
+        src/UI/Menu.cpp
+        src/UI/Menu.h
 )
 
 add_library(BummerLib ${SOURCE_FILES})
