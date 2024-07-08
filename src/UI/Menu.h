@@ -14,10 +14,10 @@ public:
     };
     Menu(SDL_Renderer* renderer, TTF_Font* font);
     void update(bool& startMenu, bool& quit);
-    MenuResult Show(SDL_Renderer* renderer, TTF_Font* font);
-    void render_menu(SDL_Renderer* renderer, TTF_Font* font);
-    void menu_view(SDL_Renderer* renderer, TTF_Font* font);
-    void render_text(SDL_Renderer* renderer, TTF_Font* font, const std::string& text, SDL_Color color, int x, int y, int wrapLength = 0);
+    MenuResult Show();
+    void render_menu();
+    void menu_view();
+    void render_text(const std::string& text, SDL_Color color, int x, int y, int wrapLength = 0);
 
 
 private:

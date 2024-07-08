@@ -7,7 +7,15 @@ Menu::Menu(SDL_Renderer* renderer, TTF_Font* font) : renderer(renderer), font(fo
 
 
 void Menu::update(bool& startMenu, bool& quit) {
-    Menu::MenuResult result = Show(renderer, font);
+    /**
+     * Show the start menu and handle user input.
+     * If the user presses the play button, start the game.
+     * If the user presses the exit button, quit the game.
+     *
+     * @param startMenu: A boolean to determine if the start menu should be shown
+     * @param quit: A boolean to determine if the game should quit
+     */
+    Menu::MenuResult result = Show();
     if(result == Menu::Exit) {
         quit = true;
     }
@@ -16,7 +24,11 @@ void Menu::update(bool& startMenu, bool& quit) {
     }
 }
 
-Menu::MenuResult Menu::Show(SDL_Renderer* renderer, TTF_Font* font) {
+Menu::MenuResult Menu::Show() {
+    /**
+     * Show the start menu and handle user input.
+     *
+     */
     SDL_Event menuEvent;
 
     while(true) {
@@ -34,30 +46,25 @@ Menu::MenuResult Menu::Show(SDL_Renderer* renderer, TTF_Font* font) {
             }
         }
 
-        render_menu(renderer, font);
+        render_menu();
     }
 }
 
 
-void Menu::render_menu(SDL_Renderer* renderer, TTF_Font* font) {
+void Menu::render_menu() {
     /**
      * Render the splash screen on startup
-     *
-     * @param renderer: The renderer to render the splash screen to
-     * @param font: The font to use for the splash screen
      */
     SDL_SetRenderDrawColor(renderer, 252,226,137, 0xFF);  // bb_yellow
     SDL_RenderClear(renderer);
-    menu_view(renderer, font);
+    menu_view();
     SDL_RenderPresent(renderer);
 }
 
-void Menu::menu_view(SDL_Renderer* renderer, TTF_Font* font) {
+void Menu::menu_view() {
     /**
      * Render the splash screen
      *
-     * @param renderer: The renderer to render the splash screen to
-     * @param font: The font to use for the splash screen
      */
     std::string mainText = "Press ENTER to Play";
     int textWidth, textHeight;
@@ -65,22 +72,20 @@ void Menu::menu_view(SDL_Renderer* renderer, TTF_Font* font) {
     int mainX = (SCREEN_WIDTH / 2) - (textWidth / 2);
     int mainY = (SCREEN_HEIGHT / 2) - (textHeight / 2);
     SDL_Color bb_green = {36, 188, 148};
-    render_text(renderer, font, mainText, bb_green, mainX, mainY);
+    render_text(mainText, bb_green, mainX, mainY);
 
     std::string poweredByText = "Press ESCAPE to Quit";
     TTF_SizeText(font, mainText.c_str(), &textWidth, &textHeight);
     int poweredByX = (SCREEN_WIDTH / 2) - (textWidth / 2);
     int poweredByY = mainY - FONT_SIZE - 50;
     SDL_Color bb_purple{104, 102, 182, 0xFF};
-    render_text(renderer, font, poweredByText, bb_purple, poweredByX, poweredByY);
+    render_text(poweredByText, bb_purple, poweredByX, poweredByY);
 }
 
-void Menu::render_text(SDL_Renderer* renderer, TTF_Font* font, const std::string& text, SDL_Color color, int x, int y, int wrapLength) {
+void Menu::render_text(const std::string& text, SDL_Color color, int x, int y, int wrapLength) {
     /**
      * Render text to the screen
      *
-     * @param renderer: The renderer to render the text to
-     * @param font: The font to use for the text
      * @param text: The text to render
      * @param color: The color of the text
      * @param x: The x position of the text
