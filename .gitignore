@@ -1,9 +1,10 @@
 bin/
 build/
 cmake-build-debug/
+vcpkg/
+./cache/
 .cursorignore
+.DS_Store
 .idea/
 .vscode/
-vcpkg/
 .zed/
-.DS_Store
