@@ -17,5 +17,6 @@ void render_all_colliders(SDL_Renderer* renderer, EntityManager& entityManager);
 void render_collider(Entity& entity, SDL_Renderer* renderer);
 void player_controller(SDL_Event& e, bool& quit, Entity& player, MovementSystem& movementSystem);
 void sandbox(SceneManager& SceneManager);
+std::tuple<Uint32, float> incrementTime(Uint32 lastTime, float deltaTime);
 
 #endif //BUMMERENGINE_GAMEENGINE_H

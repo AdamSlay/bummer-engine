@@ -22,7 +22,6 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
      * @param renderer: The SDL renderer
      * @param font: The TTF font
      */
-    // TODO: Make a Start Screen
     render_splash_screen(renderer, font);
 
     Menu menu(renderer, font);
@@ -50,27 +49,22 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     sandbox(sceneManager);
     EventManager::getInstance().publish("start", {});
 
-    SDL_Event e;
     bool quit = false;
     bool startMenu = true;
     Uint32 lastTime = SDL_GetTicks();
     float deltaTime = 0.0f;
     SDL_RenderSetLogicalSize(renderer, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+
     while (!quit) {
         // handle frame timing
-        Uint32 currentTime = SDL_GetTicks();
-        deltaTime = (currentTime - lastTime) / 1000.0f;
-        lastTime = currentTime;
-        if (deltaTime < 1000 / 60) {
-            SDL_Delay((1000 / 60) - deltaTime);
-        }
+        std::tie(lastTime, deltaTime) = incrementTime(lastTime, deltaTime);
 
         // Open controller if added during runtime
         if (SDL_NumJoysticks() > 0) {
             controller = SDL_GameControllerOpen(0);
         }
 
-        // Show Menu if necessary
+        // Show Start Menu if necessary
         if (startMenu) {
             menu.update(startMenu, quit);
         }
@@ -104,4 +98,20 @@ void sandbox(SceneManager& sceneManager) {
      * @param entityManager: The entity manager
      */
      sceneManager.nextScene();
+}
+
+std::tuple<Uint32, float> incrementTime(Uint32 lastTime, float deltaTime) {
+    /**
+     * Increment time between frames
+     *
+     * @param lastTime: The time of the last frame
+     * @param deltaTime: The time between frames
+     */
+    Uint32 currentTime = SDL_GetTicks();
+    deltaTime = (currentTime - lastTime) / 1000.0f;
+    lastTime = currentTime;
+    if (deltaTime < 1000 / 60) {
+        SDL_Delay((1000 / 60) - deltaTime);
+    }
+    return {lastTime, deltaTime};
 }
