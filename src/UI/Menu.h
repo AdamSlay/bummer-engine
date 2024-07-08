@@ -12,7 +12,8 @@ public:
         SDL_Rect rect;
         MenuResult action;
     };
-
+    Menu(SDL_Renderer* renderer, TTF_Font* font);
+    void update(bool& startMenu, bool& quit);
     MenuResult Show(SDL_Renderer* renderer, TTF_Font* font);
     void render_menu(SDL_Renderer* renderer, TTF_Font* font);
     void menu_view(SDL_Renderer* renderer, TTF_Font* font);
@@ -21,6 +22,8 @@ public:
 
 private:
     // Add private member variables and methods here if needed
+    SDL_Renderer* renderer;
+    TTF_Font* font;
 };
 
 #endif //BUMMERENGINE_MENU_H

@@ -3,6 +3,19 @@
 #include "Menu.h"
 #include "../Config.h"
 
+Menu::Menu(SDL_Renderer* renderer, TTF_Font* font) : renderer(renderer), font(font) {};
+
+
+void Menu::update(bool& startMenu, bool& quit) {
+    Menu::MenuResult result = Show(renderer, font);
+    if(result == Menu::Exit) {
+        quit = true;
+    }
+    if(result == Menu::Play) {
+        startMenu = false;
+    }
+}
+
 Menu::MenuResult Menu::Show(SDL_Renderer* renderer, TTF_Font* font) {
     SDL_Event menuEvent;
 

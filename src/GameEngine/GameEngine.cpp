@@ -25,7 +25,7 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
     // TODO: Make a Start Screen
     render_splash_screen(renderer, font);
 
-    Menu menu;
+    Menu menu(renderer, font);
 
     TextureManager textureManager;
     EntityManager entityManager(&textureManager, renderer);
@@ -52,24 +52,14 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
 
     SDL_Event e;
     bool quit = false;
-    bool start_menu = true;
+    bool startMenu = true;
     Uint32 lastTime = SDL_GetTicks();
+    float deltaTime = 0.0f;
     SDL_RenderSetLogicalSize(renderer, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
     while (!quit) {
-        // Show Menu if necessary
-        if (start_menu) {
-            Menu::MenuResult result = menu.Show(renderer, font);
-            if(result == Menu::Exit) {
-                quit = true;
-            }
-            if(result == Menu::Play) {
-                start_menu = false;
-            }
-        }
-
         // handle frame timing
         Uint32 currentTime = SDL_GetTicks();
-        float deltaTime = (currentTime - lastTime) / 1000.0f;
+        deltaTime = (currentTime - lastTime) / 1000.0f;
         lastTime = currentTime;
         if (deltaTime < 1000 / 60) {
             SDL_Delay((1000 / 60) - deltaTime);
@@ -80,18 +70,22 @@ void game_loop(SDL_Renderer* renderer, TTF_Font* font) {
             controller = SDL_GameControllerOpen(0);
         }
 
+        // Show Menu if necessary
+        if (startMenu) {
+            menu.update(startMenu, quit);
+        }
+
         // Perform game logic updates
-        inputSystem.update(entityManager, start_menu);
+        inputSystem.update(entityManager, startMenu);
         aiSystem.update(entityManager);
         cooldownSystem.update(entityManager, deltaTime);
         attackSystem.update(entityManager);
         physicsSystem.update(sceneManager, entityManager, movementSystem, collisionSystem, deltaTime);
         animationSystem.update(entityManager);
 
+        // Render updates
         SDL_SetRenderDrawColor(renderer, 124, 200, 255, 255);  // sky blue
         SDL_RenderClear(renderer);
-
-        // Copy game to renderer here
         renderSystem.render(renderer, entityManager, font);
         SDL_RenderPresent(renderer);
 
