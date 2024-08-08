@@ -1,16 +1,17 @@
 cmake_minimum_required(VERSION 3.22)
-project(BummerEngine)
 
 set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_TOOLCHAIN_FILE "./vcpkg/scripts/buildsystems/vcpkg.cmake"
         CACHE STRING "Vcpkg toolchain file")
 
+project(BummerEngine)
+
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
-find_package(SDL2_ttf CONFIG REQUIRED)
 find_package(SDL2_mixer CONFIG REQUIRED)
-find_package(nlohmann_json 3.2.0 REQUIRED)
+find_package(SDL2_ttf CONFIG REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
 find_package(GTest CONFIG REQUIRED)
 
 set(SOURCE_FILES
