@@ -2,6 +2,7 @@ bin/
 build/
 cmake-build-debug/
 vcpkg/
+vcpkg_installed/
 .cache/
 .cursorignore
 .DS_Store
