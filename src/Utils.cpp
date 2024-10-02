@@ -8,6 +8,7 @@ Action Utils::stringToAction(const std::string& action) {
      *
      * @param action: The action string
      */
+    // TODO: Add some failure state for when the Action is not found like Action::UNKNOWN_ACTION or similar
     std::map<std::string, Action> actionMap = {
             {"WAIT",       Action::WAIT},
             {"JUMP",       Action::JUMP},
@@ -20,6 +21,9 @@ Action Utils::stringToAction(const std::string& action) {
     if (it != actionMap.end()) {
         return it->second;
     } else {
+        // this is when the action is not found
+        // return Action::UNKNOWN_ACTION or similar
+        // TODO: add logging here
         return Action::WAIT;
     }
 }
