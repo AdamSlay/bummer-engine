@@ -9,4 +9,4 @@ vcpkg_installed/
 .idea/
 .vscode/
 .zed/
-tests/Testing/Temporary
+tests/Testing/Temporary/*
