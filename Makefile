@@ -11,3 +11,6 @@ run: build
 
 run-only:
 	./build/BummerEngine
+
+test: build
+	./build/tests/BummerTests

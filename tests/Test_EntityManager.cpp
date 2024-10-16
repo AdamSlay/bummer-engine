@@ -206,7 +206,7 @@ TEST(EntityManagerTest, TestCreateEntityFromTemplate) {
     TextureManager textureManager;
     SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
     EntityManager entityManager(&textureManager, renderer);
-    std::string templatePath = "../../tests/data/test_template.json";
+    std::string templatePath = "tests/data/test_template.json";
 
     // Act
     Entity& entity = entityManager.createEntityFromTemplate(templatePath);
@@ -232,7 +232,7 @@ TEST(EntityManagerTest, TestLoadTemplateFile) {
     TextureManager textureManager;
     SDL_Renderer* renderer = SDL_CreateRenderer(SDL_CreateWindow("", 0, 0, 0, 0, 0), -1, 0);
     EntityManager entityManager(&textureManager, renderer);
-    std::string templatePath = "../../tests/data/test_template.json";
+    std::string templatePath = "tests/data/test_template.json";
 
     // Act
     nlohmann::ordered_json templateJson = entityManager.loadTemplateFile(templatePath);
@@ -367,7 +367,7 @@ TEST(EntityManagerTest, TestAddComponentSprite) {
     EntityManager entityManager(&textureManager, renderer);
     Entity& entity = entityManager.createEntity();
     nlohmann::ordered_json componentJson;
-    componentJson["texturePath"] = "../../tests/data/test_sprite.png";
+    componentJson["texturePath"] = "tests/data/test_sprite.png";
     componentJson["srcRect"]["x"] = 0;
     componentJson["srcRect"]["y"] = 0;
     componentJson["srcRect"]["w"] = 32;
@@ -594,8 +594,8 @@ TEST(EntityManagerTest, TestAddComponentAttackMap) {
     EntityManager entityManager(&textureManager, renderer);
     Entity& entity = entityManager.createEntity();
     nlohmann::ordered_json componentJson;
-    componentJson["attack1"] = "../../etc/templates/attacks/alien_basic.json";
-    componentJson["attack2"] = "../../etc/templates/attacks/basic.json";
+    componentJson["attack1"] = "etc/templates/attacks/alien_basic.json";
+    componentJson["attack2"] = "etc/templates/attacks/basic.json";
 
     // Act
     entityManager.addComponentAttackMap(entity, componentJson);
@@ -617,7 +617,7 @@ TEST(EntityManagerTest, TestAddComponentAnimator) {
     EntityManager entityManager(&textureManager, renderer);
     Entity& entity = entityManager.createEntity();
     nlohmann::ordered_json componentJson;
-    componentJson["animatorPath"] = "../../tests/data/test_anim.json";
+    componentJson["animatorPath"] = "tests/data/test_anim.json";
 
     // Act
     entityManager.addComponentAnimator(entity, componentJson);

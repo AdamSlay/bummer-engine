@@ -1,7 +1,7 @@
 {
   "Animations": {
     "RUN": {
-      "spriteSheetPath": "../../assets/sprites/bb/bb_run_sheet.png",
+      "spriteSheetPath": "assets/sprites/bb/bb_run_sheet.png",
       "framesPerImage": 4,
       "startImage": 0,
       "imageCount": 8,
@@ -10,7 +10,7 @@
       "imageY": 0
     },
     "JUMP_ASCEND": {
-      "spriteSheetPath": "../../assets/sprites/bb/bb_jump_sheet.png",
+      "spriteSheetPath": "assets/sprites/bb/bb_jump_sheet.png",
       "framesPerImage": 1,
       "startImage": 2,
       "imageCount": 1,
@@ -19,7 +19,7 @@
       "imageY": 0
     },
     "JUMP_APEX_ASCEND": {
-      "spriteSheetPath": "../../assets/sprites/bb/bb_jump_sheet.png",
+      "spriteSheetPath": "assets/sprites/bb/bb_jump_sheet.png",
       "framesPerImage": 1,
       "startImage": 3,
       "imageCount": 1,
@@ -28,7 +28,7 @@
       "imageY": 0
     },
     "JUMP_APEX": {
-      "spriteSheetPath": "../../assets/sprites/bb/bb_jump_sheet.png",
+      "spriteSheetPath": "assets/sprites/bb/bb_jump_sheet.png",
       "framesPerImage": 1,
       "startImage": 4,
       "imageCount": 1,
@@ -37,7 +37,7 @@
       "imageY": 0
     },
     "JUMP_APEX_DESCEND": {
-      "spriteSheetPath": "../../assets/sprites/bb/bb_jump_sheet.png",
+      "spriteSheetPath": "assets/sprites/bb/bb_jump_sheet.png",
       "framesPerImage": 1,
       "startImage": 5,
       "imageCount": 1,
@@ -46,7 +46,7 @@
       "imageY": 0
     },
     "JUMP_DESCEND": {
-      "spriteSheetPath": "../../assets/sprites/bb/bb_jump_sheet.png",
+      "spriteSheetPath": "assets/sprites/bb/bb_jump_sheet.png",
       "framesPerImage": 1,
       "startImage": 6,
       "imageCount": 1,
@@ -55,7 +55,7 @@
       "imageY": 0
     },
     "BASIC_ATTACK": {
-      "spriteSheetPath": "../../assets/sprites/bb/bb_attack_sheet.png",
+      "spriteSheetPath": "assets/sprites/bb/bb_attack_sheet.png",
       "framesPerImage": 4,
       "startImage": 0,
       "imageCount": 3,
@@ -64,7 +64,7 @@
       "imageY": 0
     },
     "IDLE": {
-      "spriteSheetPath": "../../assets/sprites/bb/bb_idle_sheet.png",
+      "spriteSheetPath": "assets/sprites/bb/bb_idle_sheet.png",
       "framesPerImage": 4,
       "startImage": 0,
       "imageCount": 8,
@@ -73,7 +73,7 @@
       "imageY": 0
     },
     "GROUNDED": {
-      "spriteSheetPath": "../../assets/sprites/bb/bb_idle_sheet.png",
+      "spriteSheetPath": "assets/sprites/bb/bb_idle_sheet.png",
       "framesPerImage": 4,
       "startImage": 0,
       "imageCount": 8,
@@ -82,7 +82,7 @@
       "imageY": 0
     },
     "HIT": {
-      "spriteSheetPath": "../../assets/sprites/bb/bb_hit.png",
+      "spriteSheetPath": "assets/sprites/bb/bb_hit.png",
       "framesPerImage": 4,
       "startImage": 0,
       "imageCount": 1,
@@ -91,7 +91,7 @@
       "imageY": 0
     },
     "STUNNED": {
-      "spriteSheetPath": "../../assets/sprites/bb/bb_hit.png",
+      "spriteSheetPath": "assets/sprites/bb/bb_hit.png",
       "framesPerImage": 4,
       "startImage": 0,
       "imageCount": 1,

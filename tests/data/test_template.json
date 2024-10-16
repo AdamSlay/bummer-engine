@@ -16,7 +16,7 @@
       "height": 40
     },
     "Sprite": {
-      "texturePath": "../../tests/data/test_sprite.png",
+      "texturePath": "tests/data/test_sprite.png",
       "srcRect": {
         "x": 0,
         "y": 0,
@@ -40,7 +40,7 @@
       "state": "IDLE"
     },
     "Animator": {
-      "animatorPath": "../../tests/data/test_anim.json"
+      "animatorPath": "tests/data/test_anim.json"
     },
     "Input": {
       "has": "yes"
@@ -60,7 +60,7 @@
       "jumpVelocity": 20
     },
     "AttackMap": {
-      "basic": "../../etc/templates/attacks/basic.json"
+      "basic": "etc/templates/attacks/basic.json"
     },
     "Health": {
       "maxHealth": 50,
