@@ -10,4 +10,4 @@ vcpkg_installed/
 .vscode/
 .zed/
 */Testing/
-Testing/*
+Testing/
