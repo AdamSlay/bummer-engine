@@ -15,6 +15,14 @@ InputSystem::InputSystem() {
     loadInputMaps();
 }
 
+void InputSystem::loadInputMaps() {
+    /**
+     * Load input maps from path defined in run config
+     */
+    loadScancodeMap(SCANCODE_MAP_PATH);
+    loadControllerMap(CONTROLLER_MAP_PATH);
+}
+
 void InputSystem::update(EntityManager &entityManager, bool &start_menu) {
     /**
      * Update the input system
@@ -52,14 +60,6 @@ void InputSystem::update(EntityManager &entityManager, bool &start_menu) {
         }
     }
     updateIntent(player);
-}
-
-void InputSystem::loadInputMaps() {
-    /**
-     * Load input maps from path defined in run config
-     */
-    loadScancodeMap(SCANCODE_MAP_PATH);
-    loadControllerMap(CONTROLLER_MAP_PATH);
 }
 
 void InputSystem::loadScancodeMap(const std::string& filePath) {
