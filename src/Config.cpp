@@ -12,6 +12,8 @@ int SCREEN_HEIGHT;
 int VIRTUAL_WIDTH;
 int VIRTUAL_HEIGHT;
 std::string FONT_PATH;
+std::string SCANCODE_MAP_PATH;
+std::string CONTROLLER_MAP_PATH;
 int FONT_SIZE;
 
 void loadConfig(const std::string& path) {
@@ -39,4 +41,6 @@ void loadConfig(const std::string& path) {
     VIRTUAL_HEIGHT = j["VIRTUAL_HEIGHT"];
     FONT_PATH = j["FONT_PATH"].get<std::string>();
     FONT_SIZE = j["FONT_SIZE"];
+    SCANCODE_MAP_PATH = j["SCANCODE_MAP_PATH"];
+    CONTROLLER_MAP_PATH = j["CONTROLLER_MAP_PATH"];
 }

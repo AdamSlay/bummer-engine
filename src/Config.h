@@ -11,6 +11,8 @@ extern int SCREEN_HEIGHT;
 extern int VIRTUAL_WIDTH;
 extern int VIRTUAL_HEIGHT;
 extern std::string FONT_PATH;
+extern std::string SCANCODE_MAP_PATH;
+extern std::string CONTROLLER_MAP_PATH;
 extern int FONT_SIZE;
 
 void loadConfig(const std::string& path);

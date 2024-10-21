@@ -7,6 +7,7 @@
 
 #include "InputSystem.h"
 #include "../Utils.h"
+#include "../Config.h"
 
 using json = nlohmann::json;
 
@@ -55,11 +56,10 @@ void InputSystem::update(EntityManager &entityManager, bool &start_menu) {
 
 void InputSystem::loadInputMaps() {
     /**
-     * Load input maps
+     * Load input maps from path defined in run config
      */
-
-    loadScancodeMap("etc/input_maps/scancode_map.json");
-    loadControllerMap("etc/input_maps/controller_map.json");
+    loadScancodeMap(SCANCODE_MAP_PATH);
+    loadControllerMap(CONTROLLER_MAP_PATH);
 }
 
 void InputSystem::loadScancodeMap(const std::string& filePath) {
