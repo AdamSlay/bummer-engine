@@ -23,45 +23,6 @@ void InputSystem::loadInputMaps() {
     loadControllerMap(CONTROLLER_MAP_PATH);
 }
 
-void InputSystem::update(EntityManager &entityManager, bool &start_menu) {
-    /**
-     * Update the input system
-     *
-     * @param entityManager: The entity manager
-     * @param quit: The quit flag
-     */
-    // Clear justPressed for all entities
-    for (Entity &entity : entityManager.getEntities()) {
-        if (entity.hasComponent<Input>()) {
-            auto& input = entity.getComponent<Input>();
-            input.justPressed.clear();
-            input.justReleased.clear();
-            input.actionInput.clear();
-        }
-    }
-
-    SDL_Event e;
-    Entity player = entityManager.getPlayer();
-    while (SDL_PollEvent(&e) != 0) {
-        if (e.type == SDL_QUIT || (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)) {
-            start_menu = true;
-            break;
-        }
-
-        auto& input = player.getComponent<Input>();
-        if (e.type == SDL_KEYDOWN || e.type == SDL_KEYUP) {
-            handleKeyboardInput(e, input);
-        }
-        else if (e.type == SDL_CONTROLLERBUTTONDOWN || e.type == SDL_CONTROLLERBUTTONUP) {
-            handleControllerInput(e, input);
-        }
-        else if (e.type == SDL_JOYAXISMOTION) {
-            handleJoystickInput(e, input);
-        }
-    }
-    updateIntent(player);
-}
-
 void InputSystem::loadScancodeMap(const std::string& filePath) {
     /**
      * Load scancode map from file
@@ -99,6 +60,52 @@ void InputSystem::loadControllerMap(const std::string& filePath) {
         SDL_GameControllerButton button = SDL_GameControllerGetButtonFromString(element.key().c_str());
         Action action = Utils::stringToAction(element.value());
         controllerMap[button] = action;
+    }
+}
+
+void InputSystem::update(EntityManager &entityManager, bool &start_menu) {
+    /**
+     * Update the input system
+     *
+     * @param entityManager: The entity manager
+     * @param quit: The quit flag
+     */
+
+    clearPreviousInputs(entityManager);
+
+    SDL_Event e;
+    Entity player = entityManager.getPlayer();
+    while (SDL_PollEvent(&e) != 0) {
+        if (e.type == SDL_QUIT || (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)) {
+            start_menu = true;
+            break;
+        }
+
+        auto& input = player.getComponent<Input>();
+        if (e.type == SDL_KEYDOWN || e.type == SDL_KEYUP) {
+            handleKeyboardInput(e, input);
+        }
+        else if (e.type == SDL_CONTROLLERBUTTONDOWN || e.type == SDL_CONTROLLERBUTTONUP) {
+            handleControllerInput(e, input);
+        }
+        else if (e.type == SDL_JOYAXISMOTION) {
+            handleJoystickInput(e, input);
+        }
+    }
+    updateIntent(player);
+}
+
+void InputSystem::clearPreviousInputs(EntityManager& entityManager) {
+    /**
+     * Clear all previous inputs from last frame
+     */
+    for (Entity &entity : entityManager.getEntities()) {
+        if (entity.hasComponent<Input>()) {
+            auto& input = entity.getComponent<Input>();
+            input.justPressed.clear();
+            input.justReleased.clear();
+            input.actionInput.clear();
+        }
     }
 }
 

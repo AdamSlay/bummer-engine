@@ -17,6 +17,7 @@ private:
     void loadInputMaps();
     void loadControllerMap(const std::string& filepath);
     void loadScancodeMap(const std::string& filepath);
+    void clearPreviousInputs(EntityManager& entityManager);
     void handleKeyboardInput(SDL_Event& e, Input& input);
     void handleControllerInput(SDL_Event& e, Input& input);
     void handleJoystickInput(SDL_Event& e, Input& input) const;
