@@ -111,7 +111,7 @@ bool CollisionSystem::isLeftOf(const SDL_Rect &primaryCollider, const SDL_Rect &
 
 bool CollisionSystem::isRightOf(const SDL_Rect &primaryCollider, const SDL_Rect &otherCollider) {
     /**
-     * Check if the primaryEntity is to the right of not touching otherEntity
+     * Check if the primaryEntity is to the right of and not touching otherEntity
      *
      * @param primaryCollider: The primaryEntity collider
      * @param otherCollider: The otherEntity collider
