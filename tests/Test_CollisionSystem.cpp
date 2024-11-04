@@ -61,7 +61,7 @@ TEST(CollisionSystemTest, HandleCollisionYAbove) {
     entityA.addComponent<Transform>({50, 100, 1});
     entityA.addComponent<Collider>({0, 0, 50, 50});
     entityA.addComponent<Velocity>({0, 5, 0, 1});
-    entityA.addComponent<Gravity>({1.0, 2.0, 0.5, 1.5});
+    entityA.addComponent<Gravity>({1.0, 2.0, 0.5, 1.5, 0.65, 3.0});
 
     Entity entityB(2);
     entityB.addComponent<Transform>({50, 140, 1});
@@ -235,7 +235,7 @@ TEST(CollisionSystemTest, StopAndRepositionAbove) {
     entityA.addComponent<Transform>({50, 100, 1});
     entityA.addComponent<Collider>({0, 0, 50, 50});
     entityA.addComponent<Velocity>({0, 5, 0, 1});
-    entityA.addComponent<Gravity>({1.0, 2.0, 0.5, 1.5});
+    entityA.addComponent<Gravity>({1.0, 2.0, 0.5, 1.5, 0.65, 3.0});
 
     Entity entityB(2);
     entityB.addComponent<Transform>({50, 140, 1});

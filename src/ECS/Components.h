@@ -183,8 +183,10 @@ struct Gravity
     float gravity;
     float ascendFactor;
     float descendFactor;
-    Gravity(float baseGravity, float gravity, float ascendFactor, float descendFactor)
-        : baseGravity(baseGravity), gravity(gravity), ascendFactor(ascendFactor), descendFactor(descendFactor) {}
+    float ascendMin;
+    float descendMax;
+    Gravity(float baseGravity, float gravity, float ascendFactor, float descendFactor, float ascendMin, float descendMax)
+        : baseGravity(baseGravity), gravity(gravity), ascendFactor(ascendFactor), descendFactor(descendFactor), ascendMin(ascendMin), descendMax(descendMax) {}
 };
 
 struct Hitbox

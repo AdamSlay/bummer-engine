@@ -8,8 +8,7 @@
 class MovementSystem {
 public:
     void handleIntent(EntityManager& entityManager, float deltaTime);
-    void moveX(EntityManager& entityManager);
-    void moveY(EntityManager& entityManager);
+    void move(EntityManager& entityManager);
     void jump(Entity& entity);
     void dash(Entity& entity, float deltaTime);
     void applyGravity(Entity& entity);

@@ -199,7 +199,9 @@ void EntityManager::addComponentGravity(Entity& entity, const ordered_json& comp
     float gravity = componentJson["gravity"];
     float ascendFactor = componentJson["ascendFactor"];
     float descendFactor = componentJson["descendFactor"];
-    entity.addComponent<Gravity>({baseGravity, gravity, ascendFactor, descendFactor});
+    float ascendMin = componentJson["ascendMin"];
+    float descendMax = componentJson["descendMax"];
+    entity.addComponent<Gravity>({baseGravity, gravity, ascendFactor, descendFactor, ascendMin, descendMax});
 }
 
 void EntityManager::addComponentInput(Entity& entity, const ordered_json& componentJson) {

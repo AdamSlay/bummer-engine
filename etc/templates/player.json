@@ -34,7 +34,9 @@
       "baseGravity": 0.8,
       "gravity": 0.8,
       "ascendFactor": 0.9,
-      "descendFactor": 1.1
+      "descendFactor": 1.1,
+      "ascendMin": 0.65,
+      "descendMax": 3.0
     },
     "State": {
       "state": "IDLE"
