@@ -46,6 +46,8 @@ set(SOURCE_FILES
         src/Systems/CooldownSystem.h
         src/Systems/InputSystem.cpp
         src/Systems/InputSystem.h
+        src/Systems/LevelSystem.cpp
+        src/Systems/LevelSystem.h
         src/Systems/MovementSystem.cpp
         src/Systems/MovementSystem.h
         src/Systems/PhysicsSystem.cpp
