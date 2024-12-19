@@ -52,7 +52,7 @@ void CollisionSystem::handleCollision(Entity& primaryEntity, Entity& otherEntity
      * If the height of the intersection rectangle is greater than the width, the collision is on the X axis,
      * and the primaryEntity will be stopped and repositioned to the left or right of the otherEntity.
      *
-     * If the width of the intersection rectangle is greater than the height, the collision is on the Y axis,
+     * If the width of the intersection rectangle is greater than or equal to the height, the collision is on the Y axis,
      * and the primaryEntity will be stopped and repositioned above or below the otherEntity.
      *
      * @param primaryEntity: The primary Entity
@@ -64,7 +64,7 @@ void CollisionSystem::handleCollision(Entity& primaryEntity, Entity& otherEntity
     SDL_Rect intersection_rect;
     SDL_IntersectRect(&primaryCollider, &otherCollider, &intersection_rect);
 
-    if (intersection_rect.h > intersection_rect.w) {
+    if (intersection_rect.h > intersection_rect.w && intersection_rect.w < primaryCollider.w) {
         handleCollisionX(primaryEntity, otherEntity);
     }
     else {
