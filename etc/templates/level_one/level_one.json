@@ -1,0 +1,13 @@
+{
+  "entities": [
+    {
+      "templatePath": "etc/templates/level_one/entities/ground.json"
+    },
+    {
+      "templatePath": "etc/templates/player.json"
+    },
+    {
+      "templatePath": "etc/templates/level_one/entities/platform2.json"
+    }
+  ]
+}

@@ -8,6 +8,7 @@
   "SCANCODE_MAP_PATH": "etc/input_maps/scancode_map.json",
   "CONTROLLER_MAP_PATH": "etc/input_maps/controller_map.json",
   "SCENE_TEMPLATES": {
-    "home": "etc/templates/home/home_scene.json"
+    "home": "etc/templates/home/home_scene.json",
+    "level_one": "etc/templates/level_one/level_one.json"
   }
 }
