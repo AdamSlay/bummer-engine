@@ -98,6 +98,15 @@
       "imageWidth": 64,
       "imageHeight": 100,
       "imageY": 0
+    },
+    "DASHING": {
+      "spriteSheetPath": "assets/sprites/bb/bb_run_sheet.png",
+      "framesPerImage": 4,
+      "startImage": 5,
+      "imageCount": 1,
+      "imageWidth": 64,
+      "imageHeight": 100,
+      "imageY": 0
     }
   }
 }
