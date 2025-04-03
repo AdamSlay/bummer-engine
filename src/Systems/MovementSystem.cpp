@@ -31,9 +31,13 @@ void MovementSystem::handleIntent(EntityManager& entityManager, float deltaTime)
 
                 // handle movement in y direction
                 if (intent.action == Action::JUMP) {
-                    jump(entity);
+                    // jump(entity);
+                    velocity.dy = -velocity.speed;
                 }
-                if (intent.action == Action::STOP_JUMP && velocity.dy < 0) {  // If the jump button is released while ascending, stop ascending
+                if (intent.action == Action::DOWN) {
+                    velocity.dy = velocity.speed;
+                }
+                if (intent.action == Action::STOP_JUMP && velocity.dy != 0) {  // If the jump button is released while ascending, stop ascending
                     velocity.dy = 0;
                 }
                 if (velocity.dy != 0) {
@@ -78,7 +82,7 @@ void MovementSystem::jump(Entity& entity) {
      *
      * @param entity: The entity
      */
-    if (entity.hasComponent<Velocity>() && entity.hasComponent<State>()) {
+    if (entity.hasComponent<Velocity>() && entity.hasComponent<Gravity>() && entity.hasComponent<Jumps>()) {
         Velocity& velocity = entity.getComponent<Velocity>();
         Gravity& gravity = entity.getComponent<Gravity>();
         Jumps& jumps = entity.getComponent<Jumps>();

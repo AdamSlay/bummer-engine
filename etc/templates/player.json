@@ -30,14 +30,6 @@
       "speed": 5,
       "direction": 1
     },
-    "Gravity": {
-      "baseGravity": 0.8,
-      "gravity": 0.8,
-      "ascendFactor": 0.9,
-      "descendFactor": 1.1,
-      "ascendMin": 0.65,
-      "descendMax": 3.0
-    },
     "State": {
       "state": "IDLE"
     },
@@ -55,11 +47,6 @@
       "speed": 42,
       "initCooldown": 0.5,
       "initDuration": 0.15
-    },
-    "Jumps": {
-      "jumps": 0,
-      "maxJumps": 2,
-      "jumpVelocity": 20
     },
     "AttackMap": {
       "basic": "etc/templates/attacks/basic.json"

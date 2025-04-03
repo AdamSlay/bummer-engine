@@ -12,6 +12,7 @@ Action Utils::stringToAction(const std::string& action) {
     std::map<std::string, Action> actionMap = {
             {"WAIT",       Action::WAIT},
             {"JUMP",       Action::JUMP},
+            {"DOWN",       Action::DOWN},
             {"MOVE_LEFT",  Action::MOVE_LEFT},
             {"MOVE_RIGHT", Action::MOVE_RIGHT},
             {"ATTACK",     Action::ATTACK},
@@ -62,7 +63,8 @@ std::string Utils::actionToString(Action action) {
             {Action::MOVE_LEFT,  "MOVE_LEFT"},
             {Action::MOVE_RIGHT, "MOVE_RIGHT"},
             {Action::ATTACK,     "ATTACK"},
-            {Action::DASH,       "DASH"}
+            {Action::DASH,       "DASH"},
+            {Action::DOWN,       "DOWN"}
     };
     return actionMap[action];
 }

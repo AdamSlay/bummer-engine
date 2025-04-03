@@ -25,6 +25,7 @@ enum class playerState
 enum class Action
 {
     JUMP,
+    DOWN,
     MOVE_LEFT,
     MOVE_RIGHT,
     ATTACK,

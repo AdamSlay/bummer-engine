@@ -244,7 +244,6 @@ void CollisionSystem::stopAndRepositionAbove(Entity& primaryEntity, const SDL_Re
 
     int newY = otherCollider.y - (primaryCollider.h + collisionBuffer);
     primaryEntity.setTransformY(newY);
-    primaryEntity.getComponent<Gravity>().gravity = primaryEntity.getComponent<Gravity>().baseGravity;
 }
 
 void CollisionSystem::stopAndRepositionBelow(Entity& primaryEntity, const SDL_Rect& otherCollider) {
