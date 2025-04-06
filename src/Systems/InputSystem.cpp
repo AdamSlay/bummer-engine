@@ -232,8 +232,11 @@ void InputSystem::updateIntent(Entity& player) {
     if (input.actionInput[Action::DOWN]) {
         intent.action = Action::DOWN;
     }
-    if (input.justReleased[SDL_SCANCODE_UP] || input.justReleased[SDL_SCANCODE_DOWN]) {
+    if (input.justReleased[SDL_SCANCODE_UP]) {
         intent.action = Action::STOP_JUMP;
+    }
+    if (input.justReleased[SDL_SCANCODE_DOWN]) {
+        intent.action = Action::STOP_DOWN;
     }
     if (input.actionInput[Action::DASH]) {
         intent.action = Action::DASH;

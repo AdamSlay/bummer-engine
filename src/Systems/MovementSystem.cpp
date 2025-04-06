@@ -37,7 +37,7 @@ void MovementSystem::handleIntent(EntityManager& entityManager, float deltaTime)
                 if (intent.action == Action::DOWN) {
                     velocity.dy = velocity.speed;
                 }
-                if (intent.action == Action::STOP_JUMP && velocity.dy != 0) {  // If the jump button is released while ascending, stop ascending
+                if (intent.action == Action::STOP_JUMP || intent.action == Action::STOP_DOWN) {
                     velocity.dy = 0;
                 }
                 if (velocity.dy != 0) {

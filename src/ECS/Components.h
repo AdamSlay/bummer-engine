@@ -31,6 +31,7 @@ enum class Action
     ATTACK,
     WAIT,
     DASH,
+    STOP_DOWN,
     STOP_JUMP
 };
 
