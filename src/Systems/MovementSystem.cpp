@@ -140,8 +140,6 @@ void MovementSystem::dash(Entity& entity, float deltaTime) {
                 dash.currentDuration = dash.initDuration; // Reset duration
                 velocity.dx /= dash.speed; // Reset velocity
                 velocity.dy /= dash.speed;
-                Gravity& gravity = entity.getComponent<Gravity>();
-                gravity.gravity = 0.5;
             }
         }
     }
