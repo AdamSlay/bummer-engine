@@ -9,6 +9,7 @@
 enum class playerState
 {
     IDLE,
+    FLYING,
     GROUNDED,
     RUN,
     JUMP_ASCEND,

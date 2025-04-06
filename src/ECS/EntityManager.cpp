@@ -6,6 +6,7 @@
 
 std::map<std::string, playerState> EntityManager::playerStatesMap = {
         {"IDLE",              playerState::IDLE},
+        {"FLYING",              playerState::FLYING},
         {"GROUNDED",          playerState::GROUNDED},
         {"RUN",               playerState::RUN},
         {"JUMP_ASCEND",       playerState::JUMP_ASCEND},

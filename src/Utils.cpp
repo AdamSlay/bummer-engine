@@ -77,6 +77,7 @@ std::string Utils::playerStateToString(playerState state) {
      */
     std::map<playerState, std::string> stateMap = {
             {playerState::IDLE,              "IDLE"},
+            {playerState::FLYING,              "FLYING"},
             {playerState::GROUNDED,          "GROUNDED"},
             {playerState::RUN,               "RUN"},
             {playerState::JUMP_ASCEND,       "JUMP_ASCEND"},

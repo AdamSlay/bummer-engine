@@ -99,6 +99,15 @@
       "imageHeight": 100,
       "imageY": 0
     },
+    "FLYING": {
+      "spriteSheetPath": "assets/sprites/bb/bb_fly_idle.png",
+      "framesPerImage": 8,
+      "startImage": 0,
+      "imageCount": 8,
+      "imageWidth": 64,
+      "imageHeight": 100,
+      "imageY": 0
+    },
     "DASHING": {
       "spriteSheetPath": "assets/sprites/bb/bb_run_sheet.png",
       "framesPerImage": 4,
