@@ -14,6 +14,8 @@ extern std::string FONT_PATH;
 extern std::string SCANCODE_MAP_PATH;
 extern std::string CONTROLLER_MAP_PATH;
 extern int FONT_SIZE;
+extern int CAMERA_X;
+extern int CAMERA_Y;
 
 void loadConfig(const std::string& path);
 

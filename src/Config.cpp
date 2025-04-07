@@ -15,6 +15,8 @@ std::string FONT_PATH;
 std::string SCANCODE_MAP_PATH;
 std::string CONTROLLER_MAP_PATH;
 int FONT_SIZE;
+int CAMERA_X;
+int CAMERA_Y;
 
 void loadConfig(const std::string& path) {
     /**
@@ -43,4 +45,6 @@ void loadConfig(const std::string& path) {
     FONT_SIZE = j["FONT_SIZE"];
     SCANCODE_MAP_PATH = j["SCANCODE_MAP_PATH"];
     CONTROLLER_MAP_PATH = j["CONTROLLER_MAP_PATH"];
+    CAMERA_X = j["CAMERA_X"];
+    CAMERA_Y = j["CAMERA_Y"];
 }

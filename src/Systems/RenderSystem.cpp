@@ -4,20 +4,17 @@
 #include "../Config.h"
 #include "../Utils.h"
 
+RenderSystem::RenderSystem() : camera() {
+    // Initialize any other members if necessary
+}
+
 void RenderSystem::render(SDL_Renderer* renderer, EntityManager& entityManager, TTF_Font* font) {
-    /**
-     * Renders all entities with a position and collider component
-     *
-     * @param renderer: The SDL renderer
-     * @param entityManager: The entity manager
-     */
-
     SDL_SetRenderDrawColor(renderer, 36, 188, 148, 255);  // bb_green
+    Entity& player = entityManager.getPlayer();
+    camera.center_on_object(player.getColliderRect(), SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 
-    for (Entity &entity : entityManager.getEntities())
-    {
-        if (entity.hasComponent<Transform>() && entity.hasComponent<Collider>() && entity.hasComponent<Sprite>())
-        {
+    for (Entity &entity : entityManager.getEntities()) {
+        if (entity.hasComponent<Transform>() && entity.hasComponent<Collider>() && entity.hasComponent<Sprite>()) {
             Transform &transform = entity.getComponent<Transform>();
             Collider &col = entity.getComponent<Collider>();
             Sprite &spr = entity.getComponent<Sprite>();
@@ -32,7 +29,7 @@ void RenderSystem::render(SDL_Renderer* renderer, EntityManager& entityManager, 
 
             int scaledW = static_cast<int>(spr.srcRect.w * transform.scale);
             int scaledH = static_cast<int>(spr.srcRect.h * transform.scale);
-            SDL_Rect destRect = {transform.x, transform.y, scaledW, scaledH};
+            SDL_Rect destRect = {transform.x - camera.getCameraRect().x, transform.y - camera.getCameraRect().y, scaledW, scaledH};
             if (entity.hasComponent<Velocity>()) {
                 SDL_RendererFlip flip = (entity.getComponent<Velocity>().direction == -1) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
                 SDL_RenderCopyEx(renderer, spr.texture, &spr.srcRect, &destRect, 0.0, nullptr, flip);
@@ -43,7 +40,6 @@ void RenderSystem::render(SDL_Renderer* renderer, EntityManager& entityManager, 
         }
     }
 }
-
 
 void RenderSystem::render_hitboxes(EntityManager &entityManager, SDL_Renderer *renderer) {
     /**
@@ -92,8 +88,8 @@ void RenderSystem::render_collider(Entity &entity, SDL_Renderer *renderer) {
 
     Transform &transform = entity.getComponent<Transform>();
     Collider &col = entity.getComponent<Collider>();
-    int x = transform.x + (col.offsetX * transform.scale);
-    int y = transform.y + (col.offsetY * transform.scale);
+    int x = transform.x + (col.offsetX * transform.scale) - camera.getCameraRect().x;
+    int y = transform.y + (col.offsetY * transform.scale) - camera.getCameraRect().y;
     int w = col.width * transform.scale;
     int h = col.height * transform.scale;
     SDL_Rect collider = {x, y, w, h};
