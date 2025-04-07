@@ -9,7 +9,7 @@ CollisionSystem::CollisionSystem() {
      * The collisionBuffer defined here is the number of pixels that entities' colliders should be separated by
      * when a collision is detected. This is to prevent entities from continually colliding with each other.
      */
-    collisionBuffer = 1;
+    collisionBuffer = 0;
 }
 
 void CollisionSystem::update(EntityManager& entityManager) {
@@ -22,12 +22,18 @@ void CollisionSystem::update(EntityManager& entityManager) {
     auto& collidableEntities = entityManager.getCollidableEntities();
 
     for (auto& primaryEntity : movableCollidableEntities) {
-
+        bool collision = false;
         for (auto& otherEntity : collidableEntities) {
 
             if (primaryEntity.id != otherEntity.id && checkCollision(primaryEntity, otherEntity)){
+                collision = true;
                 handleCollision(primaryEntity, otherEntity);
             }
+        }
+        if (!collision) {
+            // publish airborne event if the entity is not colliding with anything
+            // groundCollision is published if the entity is colliding with the ground
+            EventManager::getInstance().publish("airborne", {&primaryEntity});
         }
     }
 }
@@ -133,7 +139,6 @@ bool CollisionSystem::checkCollisionY(Entity &primaryEntity, Entity &otherEntity
         return true;
     }
 
-    // EventManager::getInstance().publish("airborne", {&primaryEntity});
     return false;
 }
 
@@ -224,10 +229,9 @@ void CollisionSystem::handleCollisionY(Entity& primaryEntity, Entity& otherEntit
     SDL_Rect otherCollider = otherEntity.getColliderRect();
 
     if (primaryCollider.y < otherCollider.y) {  // primaryEntity is above other otherEntity
-        EventManager::getInstance().publish("groundCollision", {&primaryEntity});
         stopAndRepositionAbove(primaryEntity, primaryCollider, otherCollider);
     }
-    else if (primaryCollider.y > otherCollider.y) {  // primaryEntity is below other otherEntity
+    else {  // primaryEntity is below other otherEntity
         stopAndRepositionBelow(primaryEntity, otherCollider);
     }
 }
@@ -240,10 +244,12 @@ void CollisionSystem::stopAndRepositionAbove(Entity& primaryEntity, const SDL_Re
      * @param primaryCollider: The primary Entity collider
      * @param otherCollider: The other Entity collider
      */
+    EventManager::getInstance().publish("groundCollision", {&primaryEntity});
+
     auto& velocity = primaryEntity.getComponent<Velocity>();
     velocity.dy = 0;
 
-    int newY = otherCollider.y - (primaryCollider.h + collisionBuffer);
+    int newY = otherCollider.y - (primaryCollider.h);
     primaryEntity.setTransformY(newY);
 }
 

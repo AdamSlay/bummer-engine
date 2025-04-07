@@ -43,9 +43,9 @@ void MovementSystem::handleIntent(EntityManager& entityManager, float deltaTime)
                 if (intent.action == Action::STOP_JUMP || intent.action == Action::STOP_DOWN) {
                     velocity.dy = 0;
                 }
-                if (velocity.dy != 0) {
-                    EventManager::getInstance().publish("airborne", {&entity});
-                }
+                // if (velocity.dy != 0) {
+                //     EventManager::getInstance().publish("airborne", {&entity});
+                // }
 
                 // handle dash
                 if (intent.action == Action::DASH) {

@@ -39,11 +39,15 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
             // change the entity's state based on its velocity
             if (vel.dx != 0 && state.state != playerState::STUNNED && state.state != playerState::BASIC_ATTACK && state.state != playerState::DASHING) {
                 // moving side to side, not stunned or attacking
-                entity.changeState(playerState::RUN);
+                if (state.state != playerState::RUN) {
+                    entity.changeState(playerState::RUN);
+                }
             }
             else if (state.state != playerState::STUNNED && state.state != playerState::BASIC_ATTACK && state.state != playerState::DASHING) {
                 // not moving, not stunned or attacking
-                entity.changeState(playerState::IDLE);
+                if (state.state != playerState::IDLE) {
+                    entity.changeState(playerState::IDLE);
+                }
             }
 
         }
@@ -190,6 +194,7 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
             if (entity->hasComponent<Velocity>() && entity->getComponent<State>().state != playerState::BASIC_ATTACK) {
                 Velocity &vel = entity->getComponent<Velocity>();
                 entity->changeFlyingState(true);
+                entity->changeState(playerState::FLYING);
                 // if (vel.dy < -3) {
                 //     entity->changeState(playerState::JUMP_ASCEND);
                 // }

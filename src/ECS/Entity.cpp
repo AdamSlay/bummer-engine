@@ -1,8 +1,10 @@
 #include <vector>
+#include <iostream>
 #include "../Resources/TextureManager.h"
 #include "../ECS/Components.h"
 
 #include "Entity.h"
+#include "../Utils.h"
 
 
 Entity::Entity(int id): id(id) {
@@ -23,6 +25,7 @@ void Entity::changeState(playerState newState) {
         animator.currentFrame = 0;
         animator.currentImage = 0;
         animator.isPlaying = true;
+        std::cout << "State changed to: " << Utils::playerStateToString(getComponent<State>().state) << std::endl;
     }
 }
 
