@@ -49,11 +49,6 @@ void AttackSystem::handleIntent(Entity& entity) {
             if (state.state == playerState::BASIC_ATTACK) {
                 // TODO: AttackSystem::setBasicAttackActive() or similar
                 attackMap.attacks["basic"].isActive = true;
-                auto& vel = entity.getComponent<Velocity>();
-                auto& gravity = entity.getComponent<Gravity>();
-                vel.dy = 0;
-                vel.dx = 0;
-                gravity.gravity = 0.5;
             }
         }
     }
