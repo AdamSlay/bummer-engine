@@ -133,6 +133,7 @@ bool CollisionSystem::checkCollisionY(Entity &primaryEntity, Entity &otherEntity
         return true;
     }
 
+    // EventManager::getInstance().publish("airborne", {&primaryEntity});
     return false;
 }
 
@@ -223,6 +224,7 @@ void CollisionSystem::handleCollisionY(Entity& primaryEntity, Entity& otherEntit
     SDL_Rect otherCollider = otherEntity.getColliderRect();
 
     if (primaryCollider.y < otherCollider.y) {  // primaryEntity is above other otherEntity
+        EventManager::getInstance().publish("groundCollision", {&primaryEntity});
         stopAndRepositionAbove(primaryEntity, primaryCollider, otherCollider);
     }
     else if (primaryCollider.y > otherCollider.y) {  // primaryEntity is below other otherEntity
@@ -240,7 +242,6 @@ void CollisionSystem::stopAndRepositionAbove(Entity& primaryEntity, const SDL_Re
      */
     auto& velocity = primaryEntity.getComponent<Velocity>();
     velocity.dy = 0;
-    EventManager::getInstance().publish("groundCollision", {&primaryEntity});
 
     int newY = otherCollider.y - (primaryCollider.h + collisionBuffer);
     primaryEntity.setTransformY(newY);

@@ -26,6 +26,15 @@ void Entity::changeState(playerState newState) {
     }
 }
 
+void Entity::changeFlyingState(bool isFlying) {
+    /**
+     * Change the flying state of the entity
+     *
+     * @param isFlying: The new flying state
+     */
+    getComponent<State>().isFlying = isFlying;
+}
+
 void Entity::resetIntent(bool direction) {
     /**
      * Reset the intent of the entity

@@ -28,9 +28,13 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
                 state.state == playerState::JUMP_DESCEND ||
                 state.state == playerState::JUMP_APEX ||
                 state.state == playerState::JUMP_APEX_DESCEND ||
-                state.state == playerState::JUMP_APEX_ASCEND) {
+                state.state == playerState::JUMP_APEX_ASCEND ||
+                state.state == playerState::FLYING) {
                 EventManager::getInstance().publish("landed", {data.primaryEntity});
             }
+
+            // The entity is now grounded
+            entity.changeFlyingState(false);
 
             // change the entity's state based on its velocity
             if (vel.dx != 0 && state.state != playerState::STUNNED && state.state != playerState::BASIC_ATTACK && state.state != playerState::DASHING) {
@@ -50,6 +54,38 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
 
     });
 
+    EventManager::getInstance().subscribe("moveLeft", [&](EventData data) {
+        Entity* entity = data.primaryEntity;
+        State& state = entity->getComponent<State>();
+        if (state.isFlying) {
+           state.state = playerState::FLYING;
+        }
+        else {
+            state.state = playerState::RUN;
+        }
+    });
+
+    EventManager::getInstance().subscribe("moveRight", [&](EventData data) {
+        Entity* entity = data.primaryEntity;
+        State& state = entity->getComponent<State>();
+        if (state.isFlying) {
+           state.state = playerState::FLYING;
+        }
+        else {
+            state.state = playerState::RUN;
+        }
+    });
+
+    EventManager::getInstance().subscribe("idle", [&](EventData data) {
+        Entity* entity = data.primaryEntity;
+        State& state = entity->getComponent<State>();
+        if (state.isFlying) {
+           state.state = playerState::FLYING;
+        }
+        else {
+            state.state = playerState::IDLE;
+        }
+    });
 
     EventManager::getInstance().subscribe("basicAttack", [&](EventData data) {
         /**
@@ -138,7 +174,7 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
     EventManager::getInstance().subscribe("jump", [&](EventData data) {
         try {
             Entity* entity = data.primaryEntity;
-            entity->changeState(playerState::JUMP_ASCEND);
+            entity->changeState(playerState::FLYING);
             EventManager::getInstance().publish("jumpSound", {entity});
 
         }
@@ -153,8 +189,7 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
 
             if (entity->hasComponent<Velocity>() && entity->getComponent<State>().state != playerState::BASIC_ATTACK) {
                 Velocity &vel = entity->getComponent<Velocity>();
-                // TODO: Swap these states with flying states
-                entity->changeState(playerState::FLYING);
+                entity->changeFlyingState(true);
                 // if (vel.dy < -3) {
                 //     entity->changeState(playerState::JUMP_ASCEND);
                 // }
@@ -170,6 +205,17 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
                 // else if (vel.dy >= 5) {
                 //     entity->changeState(playerState::JUMP_DESCEND);
                 // }
+            }
+        }
+        catch (const std::runtime_error& e) {
+            std::cout << "Could not find entity with id: " << data.primaryEntity->id << std::endl;
+        }
+    });
+    EventManager::getInstance().subscribe("runLeft", [&](EventData data) {
+        try {
+            Entity* entity = data.primaryEntity;
+            if (entity->getComponent<State>().state != playerState::BASIC_ATTACK) {
+                entity->changeState(playerState::RUN);
             }
         }
         catch (const std::runtime_error& e) {

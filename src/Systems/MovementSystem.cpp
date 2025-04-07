@@ -19,10 +19,13 @@ void MovementSystem::handleIntent(EntityManager& entityManager, float deltaTime)
 
                 // handle movement in x direction
                 if (intent.direction == Direction::LEFT) {
+                    EventManager::getInstance().publish("moveLeft", {&entity});
                     velocity.dx = -velocity.speed;
                 } else if (intent.direction == Direction::RIGHT) {
+                    EventManager::getInstance().publish("moveRight", {&entity});
                     velocity.dx = velocity.speed;
                 } else {
+                    EventManager::getInstance().publish("idle", {&entity});
                     velocity.dx = 0;
                 }
                 if (velocity.dx != 0) {

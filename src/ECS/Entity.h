@@ -28,6 +28,7 @@ public:
     bool hasComponent() const;
 
     void changeState(playerState newState);
+    void changeFlyingState(bool isFlying);
     void resetIntent(bool direction);
     int getID() const;
     void setTransformPos(int x, int y);

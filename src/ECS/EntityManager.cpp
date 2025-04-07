@@ -303,7 +303,7 @@ void EntityManager::addComponentAttackMap(Entity& entity, const ordered_json& co
 
 void EntityManager::addComponentState(Entity& entity, const ordered_json& componentJson) {
     playerState state = playerStatesMap[componentJson["state"]];
-    entity.addComponent<State>(state);
+    entity.addComponent<State>({state, false});
 }
 
 void EntityManager::addComponentAI(Entity& entity, const ordered_json& componentJson) {

@@ -138,7 +138,8 @@ struct Animator
 struct State
 {
     playerState state;
-    State(playerState state) : state(state) {}
+    bool isFlying;
+    State(playerState state, bool isFlying) : state(state), isFlying(isFlying) {}
 };
 
 struct Player
