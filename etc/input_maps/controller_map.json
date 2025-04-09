@@ -4,5 +4,6 @@
   "rightshoulder": "DASH",
   "dpleft": "MOVE_LEFT",
   "dpright": "MOVE_RIGHT",
-  "dpup": "JUMP"
+  "dpup": "JUMP",
+  "dpdown": "DOWN"
 }

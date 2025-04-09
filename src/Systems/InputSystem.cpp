@@ -187,8 +187,8 @@ void InputSystem::handleJoystickInput(SDL_Event& e, Input& input) const {
             input.keyStates[SDL_SCANCODE_UP] = true;
             input.keyStates[SDL_SCANCODE_DOWN] = false;
         } else if (input.joystickDirection.second > deadZone) {
-            input.keyStates[SDL_SCANCODE_DOWN] = true;
             input.keyStates[SDL_SCANCODE_UP] = false;
+            input.keyStates[SDL_SCANCODE_DOWN] = true;
         } else {
             input.keyStates[SDL_SCANCODE_DOWN] = false;
             input.keyStates[SDL_SCANCODE_UP] = false;
@@ -205,7 +205,7 @@ SDL_Scancode InputSystem::mapControllerButtonToScancode(Uint8 button) {
     switch (button) {
     case SDL_CONTROLLER_BUTTON_A:
         return SDL_SCANCODE_UP; // Map 'A' button to up key
-    case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:  // Map 'X' button to Space key
+    case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:  // Map 'RB' button to Space key
         return SDL_SCANCODE_SPACE;
     case SDL_CONTROLLER_BUTTON_X:
         return SDL_SCANCODE_R;
@@ -215,6 +215,8 @@ SDL_Scancode InputSystem::mapControllerButtonToScancode(Uint8 button) {
         return SDL_SCANCODE_RIGHT; // Map right D-pad button to right arrow key
     case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
         return SDL_SCANCODE_DOWN;  // Map down D-pad button to down arrow key
+    case SDL_CONTROLLER_BUTTON_DPAD_UP:
+        return SDL_SCANCODE_UP;  // Map down D-pad button to down arrow key
     default:
         return SDL_SCANCODE_UNKNOWN;
     }
@@ -228,6 +230,12 @@ void InputSystem::updateIntent(Entity& player) {
     auto& intent = player.getComponent<Intent>();
     if (input.actionInput[Action::JUMP]) {
         intent.action = Action::JUMP;
+    }
+    if (input.keyStates[SDL_SCANCODE_UP] == true) {
+        intent.action = Action::JUMP;
+    }
+    if (input.keyStates[SDL_SCANCODE_DOWN] == true) {
+        intent.action = Action::DOWN;
     }
     if (input.actionInput[Action::DOWN]) {
         intent.action = Action::DOWN;
