@@ -192,24 +192,13 @@ StateMachine::StateMachine(EntityManager& entityManager) : entityManager(entityM
             Entity* entity = data.primaryEntity;
 
             if (entity->hasComponent<Velocity>() && entity->getComponent<State>().state != playerState::BASIC_ATTACK) {
-                Velocity &vel = entity->getComponent<Velocity>();
+                if (entity->hasComponent<Dash>()) {
+                    if (entity->getComponent<Dash>().isDashing) {
+                        return;
+                    }
+                }
                 entity->changeFlyingState(true);
                 entity->changeState(playerState::FLYING);
-                // if (vel.dy < -3) {
-                //     entity->changeState(playerState::JUMP_ASCEND);
-                // }
-                // else if (vel.dy < -1) {
-                //     entity->changeState(playerState::JUMP_APEX_ASCEND);
-                // }
-                // else if (0 < vel.dy && vel.dy < 2) {
-                //     entity->changeState(playerState::JUMP_APEX);
-                // }
-                // else if (0 < vel.dy && vel.dy < 5) {
-                //     entity->changeState(playerState::JUMP_APEX_DESCEND);
-                // }
-                // else if (vel.dy >= 5) {
-                //     entity->changeState(playerState::JUMP_DESCEND);
-                // }
             }
         }
         catch (const std::runtime_error& e) {
