@@ -190,6 +190,7 @@ void InputSystem::handleJoystickInput(SDL_Event& e, Input& input) const {
             input.keyStates[SDL_SCANCODE_UP] = false;
             input.keyStates[SDL_SCANCODE_DOWN] = true;
         } else {
+            input.justReleased[SDL_SCANCODE_UP] = true;
             input.keyStates[SDL_SCANCODE_DOWN] = false;
             input.keyStates[SDL_SCANCODE_UP] = false;
         }
